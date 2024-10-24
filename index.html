@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skript Viewer</title>
+
+    <style>
+        body h1 {
+            margin-top: 2em;
+        }
+        #roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            margin-top: 1em;
+            padding: 100px 20% 50px 20%;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 0.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="margin-top: 2em;">Rollenauswahl</h1>
+    <div id="roles"></div>
+
+    <script>
+        // fetch('https://docs.google.com/document/d/e/2PACX-1vQlvGxayblW_Iobt79sywcbYLkIhTmn2M8Xnn3MsoVQUoFnLcXT_9scRJAdTCGCbJa8012HYdVHGn04/pub').then(response => response.text()).then(text => {
+        fetch('out.html').then(response => response.text()).then(text => {
+            const parser = new DOMParser();
+            const htmlDocument = parser.parseFromString(text, 'text/html');
+
+            // Categories
+            const categories = {
+                "🚶": "Anweisungen Schauspieler:innen",
+                "🔧": "Anweisungen Bühnentechniker",
+                "🎵": "Aweisungen Ton / Musikeinspieler",
+                "💡": "Anweisungen Licht",
+                "🎥": "Anweisungen Bildschirme / Livebild"
+            }
+            const roles = document.querySelector('#roles');
+
+            // Inject the class into every element that has a category emoji
+            for (const [emoji, category] of Object.entries(categories)) {
+                const elements = htmlDocument.querySelectorAll(`span`);
+                elements.forEach(element => {
+                    if (element.textContent.includes(emoji)) {
+                        element.parentElement.classList.add(emoji);
+                    }
+                });
+
+                // Create a checkbox for each category
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = true;
+                checkbox.id = emoji;
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(`${emoji} ${category}`));
+                roles.appendChild(label);
+            }
+
+            // Trigger the change event for each checkbox to set initial state
+            const checkboxes = roles.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.dispatchEvent(new Event('change'));
+            });
+
+            const categoriesKeys = Object.keys(categories);
+
+            // Add styles
+            const head = htmlDocument.querySelector('head');
+            document.head.innerHTML += head.innerHTML;
+
+            // Remove 'publish-banner' element
+            const publishBanner = htmlDocument.querySelector('#publish-banner');
+            publishBanner.remove();
+
+            const body = htmlDocument.querySelector('body');
+            document.body.innerHTML += body.innerHTML;
+
+            // Add event listener to checkboxes
+            
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    for (category of categoriesKeys) {
+                        const checkbox = document.querySelector(`input[type="checkbox"]#${category}`)
+                        const elements = document.querySelectorAll(`.${category}`);
+                        elements.forEach(element => {
+                            element.style.display = checkbox.checked ? 'block' : 'none';
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
