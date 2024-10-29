@@ -1,109 +1,435 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skript Viewer</title>
-
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kolpingtheater Ramsen - Drehbuch Viewer</title>
     <style>
-        body h1 {
-            margin-top: 2em;
-        }
-        #roles {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1em;
-            margin-top: 1em;
-            padding: 100px 20% 50px 20%;
+      /* General Styles */
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f0f2f5;
+      }
+
+      .controls {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .controls > div {
+        margin-bottom: 15px;
+      }
+
+      /* Script Styles */
+      .script-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .script-line {
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 4px;
+      }
+
+      .actor-name {
+        font-weight: bold;
+        color: #2c5282;
+      }
+
+      .instruction {
+        background: #f7fafc;
+        font-style: italic;
+        color: #4a5568;
+      }
+
+      .technical {
+        background: #f3e8ff;
+        color: #6b21a8;
+      }
+
+      .lighting {
+        background: #fffbeb;
+        color: #92400e;
+      }
+
+      .highlighted {
+        background: #ebf8ff;
+        border-left: 4px solid #3182ce;
+        padding-left: 15px;
+      }
+
+      .micro {
+        font-size: 0.875rem;
+        color: #718096;
+        margin-top: 4px;
+      }
+
+      .scene-separator {
+        border-top: 2px solid #4299e1;
+        margin: 0 30px 0 0;
+        padding-bottom: 20px;
+      }
+
+      h2 {
+        margin-top: 30px;
+        color: black;
+      }
+
+      .scene-overview {
+        background: #ebf8ff;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+
+      .scene-overview h3 {
+        margin-top: 0;
+        color: #2c5282;
+      }
+
+      .scene-overview ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .scene-overview li {
+        margin-bottom: 5px;
+      }
+
+      /* Print Styles */
+      @media print {
+        .controls,
+        .no-print {
+          display: none !important;
         }
 
-        label {
-            display: flex;
-            align-items: center;
-            width: 100%;
+        body {
+          background: white;
+          padding: 0;
+          margin: 0;
         }
 
-        input[type="checkbox"] {
-            margin-right: 0.5em;
+        .script-container {
+          box-shadow: none;
+          padding: 0;
+          margin: 32px;
         }
+
+        .script-line {
+          break-inside: avoid;
+        }
+      }
+
+      /* Buttons */
+      button {
+        background: #4299e1;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-right: 10px;
+      }
+
+      button:hover {
+        background: #3182ce;
+      }
+
+      /* Select and Checkbox Styles */
+      select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #e2e8f0;
+        margin-top: 4px;
+      }
+
+      .checkbox-group {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 8px;
+      }
     </style>
-</head>
+  </head>
+  <body>
+    <div class="controls no-print">
+      <h1>Kolpingtheater Ramsen - Drehbuch Viewer</h1>
 
-<body>
-    <h1 style="margin-top: 2em;">Rollenauswahl</h1>
-    <div id="roles"></div>
+      <div>
+        <label for="actor-select">Schauspieler auswählen:</label>
+        <select id="actor-select">
+          <option value="">Alle Schauspieler</option>
+        </select>
+      </div>
 
+      <div id="checkboxes">
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-directions" checked />
+          <label for="show-directions">Bühnenanweisungen anzeigen</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-technical" checked />
+          <label for="show-technical">Technische Informationen anzeigen</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-lighting" checked />
+          <label for="show-lighting">Beleuchtungshinweise anzeigen</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-actor-text" checked />
+          <label for="show-actor-text">Schauspielertexte anzeigen</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-micro" checked />
+          <label for="show-micro">Mikrofon anzeigen</label>
+        </div>
+
+        <!-- Einspieler -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-einspieler" checked />
+          <label for="show-einspieler">Einspieler anzeigen</label>
+        </div>
+
+        <!-- Szenenübersicht -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-scene-overview" checked />
+          <label for="show-scene-overview">Szenenübersicht anzeigen</label>
+        </div>
+
+        <div>
+          <button onclick="window.print()">Als PDF drucken</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="script-container" class="script-container">
+      <!-- Script content will be inserted here -->
+    </div>
+
+    <script src="papaparse.min.js"></script>
     <script>
-        // fetch('https://docs.google.com/document/d/e/2PACX-1vQlvGxayblW_Iobt79sywcbYLkIhTmn2M8Xnn3MsoVQUoFnLcXT_9scRJAdTCGCbJa8012HYdVHGn04/pub').then(response => response.text()).then(text => {
-        fetch('out.html').then(response => response.text()).then(text => {
-            const parser = new DOMParser();
-            const htmlDocument = parser.parseFromString(text, 'text/html');
+      // Load and parse CSV
+      async function loadScript() {
+        try {
+          const response = await fetch('Nexus - Skript - Skript.csv')
+          const csvText = await response.text()
+          const data = Papa.parse(csvText, { header: true }).data
 
-            // Categories
-            const categories = {
-                "🚶": "Anweisungen Schauspieler:innen",
-                "🔧": "Anweisungen Bühnentechniker",
-                "🎵": "Aweisungen Ton / Musikeinspieler",
-                "💡": "Anweisungen Licht",
-                "🎥": "Anweisungen Bildschirme / Livebild"
+          return data
+        } catch (error) {
+          console.error('Error loading script:', error)
+          return []
+        }
+      }
+
+      // Populate actors dropdown
+      function populateActors(data) {
+        const actors = [
+          ...new Set(
+            data
+              .filter((row) => row.Schauspieler)
+              .map((row) => row.Schauspieler)
+          ),
+        ].sort()
+
+        const select = document.getElementById('actor-select')
+        select.innerHTML = '<option value="">Alle Schauspieler</option>'
+        actors.forEach((actor) => {
+          const option = document.createElement('option')
+          option.value = actor
+          option.textContent = actor
+          select.appendChild(option)
+        })
+      }
+
+      // Create scene overview
+      function createSceneOverview(sceneData, selectedActor) {
+        let actors = new Set()
+        const micros = new Map()
+
+        sceneData.forEach((row) => {
+          if (row.Schauspieler) {
+            actors.add(row.Schauspieler)
+            if (row.Mikro) {
+              micros.set(row.Schauspieler, row.Mikro)
             }
-            const roles = document.querySelector('#roles');
+          }
+        })
 
-            // Inject the class into every element that has a category emoji
-            for (const [emoji, category] of Object.entries(categories)) {
-                const elements = htmlDocument.querySelectorAll(`span`);
-                elements.forEach(element => {
-                    if (element.textContent.includes(emoji)) {
-                        element.parentElement.classList.add(emoji);
-                    }
-                });
+        if (actors.size === 0) return document.createElement('div')
 
-                // Create a checkbox for each category
-                const label = document.createElement('label');
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.checked = true;
-                checkbox.id = emoji;
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(`${emoji} ${category}`));
-                roles.appendChild(label);
+        const overview = document.createElement('div')
+        overview.className = 'scene-overview'
+
+        const title = document.createElement('h3')
+        title.textContent = 'Szenenübersicht'
+        overview.appendChild(title)
+
+        const table = document.createElement('table')
+
+        const tr = document.createElement('tr')
+        const th1 = document.createElement('th')
+        th1.textContent = 'Mikro'
+        tr.appendChild(th1)
+        const th2 = document.createElement('th')
+        th2.textContent = 'Schauspieler'
+        tr.appendChild(th2)
+        table.appendChild(tr)
+
+        // Sort actors by micro and try to parse micros as numbers
+        actors = Array.from(actors).sort((a, b) => {
+          const microA = parseInt(micros.get(a), 10)
+          const microB = parseInt(micros.get(b), 10)
+          return microA - microB
+        })
+
+        actors.forEach((actor) => {
+          const tr = document.createElement('tr')
+          const td1 = document.createElement('td')
+          td1.textContent = micros.get(actor) || ''
+          tr.appendChild(td1)
+          const td2 = document.createElement('td')
+          td2.innerHTML = selectedActor === actor ? `<b>${actor}</b>` : actor
+          tr.appendChild(td2)
+          table.appendChild(tr)
+        })
+
+        overview.appendChild(table)
+
+        return overview
+      }
+
+      // Render script
+      function renderScript(data) {
+        const container = document.getElementById('script-container')
+        const selectedActor = document.getElementById('actor-select').value
+        const showDirections =
+          document.getElementById('show-directions').checked
+        const showTechnical = document.getElementById('show-technical').checked
+        const showLighting = document.getElementById('show-lighting').checked
+        const showActorText = document.getElementById('show-actor-text').checked
+        const showMicro = document.getElementById('show-micro').checked
+        const showEinspieler =
+          document.getElementById('show-einspieler').checked
+        const showSceneOverview = document.getElementById(
+          'show-scene-overview'
+        ).checked
+
+        container.innerHTML = ''
+
+        let currentScene = ''
+        let sceneData = []
+
+        data.forEach((row, index) => {
+          // Check for new scene
+          const isNewScene = row.Szene !== currentScene
+
+          if (isNewScene) {
+            const szeneTitel = document.createElement('h2')
+            szeneTitel.textContent = `Szene ${row.Szene}`
+            container.appendChild(szeneTitel)
+            const separator = document.createElement('div')
+            separator.className = 'scene-separator'
+            container.appendChild(separator)
+
+            if (showSceneOverview) {
+              for (let i = index, j = 0; i < data.length; i++) {
+                if (data[i].Szene === row.Szene) {
+                  sceneData.push(data[i])
+                } else {
+                  break
+                }
+              }
+              if (sceneData.length > 0)
+                container.appendChild(
+                  createSceneOverview(sceneData, selectedActor)
+                )
+              sceneData = []
+              currentScene = row.Szene
             }
+          }
 
-            // Trigger the change event for each checkbox to set initial state
-            const checkboxes = roles.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                checkbox.dispatchEvent(new Event('change'));
-            });
+          // Apply filters
+          if (!showDirections && row.Kategorie === 'Anweisung') return
+          if (!showTechnical && row.Kategorie === 'Technik') return
+          if (!showLighting && row.Kategorie === 'Licht') return
+          if (!showEinspieler && row.Kategorie === 'Einspieler') return
+          if (!showActorText && row.Schauspieler) return
 
-            const categoriesKeys = Object.keys(categories);
+          const div = document.createElement('div')
+          div.className = 'script-line'
 
-            // Add styles
-            const head = htmlDocument.querySelector('head');
-            document.head.innerHTML += head.innerHTML;
+          // Apply styling based on type
+          if (row.Kategorie === 'Anweisung') div.classList.add('instruction')
+          if (row.Kategorie === 'Technik') div.classList.add('technical')
+          if (row.Kategorie === 'Licht') div.classList.add('lighting')
+          if (row.Schauspieler === selectedActor && selectedActor)
+            div.classList.add('highlighted')
 
-            // Remove 'publish-banner' element
-            const publishBanner = htmlDocument.querySelector('#publish-banner');
-            publishBanner.remove();
+          // Create content
+          if (row.Schauspieler) {
+            const nameSpan = document.createElement('div')
+            nameSpan.className = 'actor-name'
+            nameSpan.textContent =
+              row.Mikro && showMicro
+                ? `${row.Schauspieler} (${row.Mikro})`
+                : row.Schauspieler
+            div.appendChild(nameSpan)
+          }
 
-            const body = htmlDocument.querySelector('body');
-            document.body.innerHTML += body.innerHTML;
+          const textDiv = document.createElement('div')
+          textDiv.textContent = row.Text
 
-            // Add event listener to checkboxes
-            
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    for (category of categoriesKeys) {
-                        const checkbox = document.querySelector(`input[type="checkbox"]#${category}`)
-                        const elements = document.querySelectorAll(`.${category}`);
-                        elements.forEach(element => {
-                            element.style.display = checkbox.checked ? 'block' : 'none';
-                        });
-                    }
-                });
-            });
-        });
+          // Bold text for instruction
+          if (row.Kategorie === 'Anweisung') {
+            textDiv.innerHTML = textDiv.textContent.replace(
+              selectedActor,
+              `<b>${selectedActor}</b>`
+            )
+          }
+
+          div.appendChild(textDiv)
+
+          container.appendChild(div)
+        })
+      }
+
+      // Initialize
+      async function init() {
+        const data = await loadScript()
+        window.scriptData = data
+        populateActors(data)
+
+        // Add event listeners
+        document.querySelectorAll('#checkboxes input').forEach((input) => {
+          input.addEventListener('change', () => renderScript(data))
+        })
+
+        document
+          .getElementById('actor-select')
+          .addEventListener('change', () => renderScript(data))
+
+        // Initial render
+        renderScript(data)
+      }
+
+      init()
     </script>
-</body>
-
+  </body>
 </html>
