@@ -28,7 +28,7 @@ Szene,Kategorie,Schauspieler,Mikro,Text
 1,Schauspieler,DANTE,4,Du siehst unglücklich aus. Schlecht geschlafen?
 1,Schauspieler,HUNTER,3,Ihr Trottel könnt einfach nicht pünktlich sein. Aber dieses Mal hängt das Gelingen des Plans davon ab.
 1,Schauspieler,DANTE,4,"Man, du bist echt mit dem falschen Fuß aufgestanden. (holt Schokoriegel hervor) Hier nimm ein Snickers. Immer wenn du hungrig bist, wirst du zur Diva."
-1,Schauspieler,,,HUNTER nimmt den Schokoriegel und wirft ihn weg.
+1,Anweisung,,,HUNTER nimmt den Schokoriegel und wirft ihn weg.
 1,Schauspieler,HUNTER,3,Steck dir deinen Riegel sonstwohin.
 1,Schauspieler,DANTE,4,Ich hab gehört Thai Chi soll gegen Aggressionsprobleme helfen. Finde deine innere Mitte.
 1,Schauspieler,HUNTER,3,"Ach, halt einfach die Fresse. (winkt ab)"
@@ -49,7 +49,7 @@ Szene,Kategorie,Schauspieler,Mikro,Text
 1,Schauspieler,BLADE,1,"Wer was auf sich hält, lässt auf sich warten."
 1,Schauspieler,HUNTER,3,Hast du wenigstens den Code dabei?
 1,Schauspieler,BLADE,1,(zieht etwas triumphierend aus seinem Mantel) Klar doch.
-1,Schauspieler,,,HUNTER reißt es BLADE aus der Hand.
+1,Anweisung,,,HUNTER reißt es BLADE aus der Hand.
 1,Schauspieler,HUNTER,3,"Hervorragend, dann können wir endlich anfangen."
 1,Anweisung,,,"HUNTER, RAVEN, DANTE und BLADE versammeln sich um den Tisch. VEGA, NYRA und ARIA stellen sich hinten zusammen und beobachten das Geschehen."
 1,Schauspieler,HUNTER,3,"Heute ist unser großer Tag. Nach meinen aktuellen Informationen hat die Forschungsabteilung von Digitech einen Durchbruch erzielt. Sie haben es geschafft, einen Chip zu entwickeln, der sich direkt mit dem Gehirn verbindet. Wie ein PC im eigenen Körper, versteht ihr. Im Gegensatz zu den Implantaten, die unsere körperlichen Fähigkeiten verbessern, ist das der Durchbruch. Jetzt können wir auch unsere geistige Leistung erhöhen. Das ist Wahnsinn!"
