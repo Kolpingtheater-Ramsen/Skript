@@ -73,6 +73,14 @@
         margin-top: 4px;
       }
 
+      .tag {
+        border-radius: 4px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        width: fit-content;
+      }
+
       .scene-separator {
         border-top: 2px solid #4299e1;
         margin: 0 30px 0 0;
@@ -104,6 +112,22 @@
 
       .scene-overview li {
         margin-bottom: 5px;
+      }
+
+      .toc {
+        background: #f7fafc;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+
+      .toc a {
+        display: block;
+        margin-bottom: 10px;
+        text-decoration: none;
+        color: #2c5282;
+        width: fit-content;
+        padding-left: 10px;
       }
 
       /* Print Styles */
@@ -258,6 +282,39 @@
         })
       }
 
+      // ToC
+      function createToC(data, selectedActor) {
+        // Get all scenes & actors in each scene
+        const scenes = new Map()
+        data.forEach((row) => {
+          if (!scenes.has(row.Szene)) {
+            scenes.set(row.Szene, new Set())
+          }
+          if (row.Schauspieler) scenes.get(row.Szene).add(row.Schauspieler)
+        })
+
+        const toc = document.createElement('div')
+        toc.className = 'toc'
+
+        const title = document.createElement('h2')
+        title.textContent = 'Inhaltsverzeichnis'
+        toc.appendChild(title)
+
+        scenes.forEach((actors, scene) => {
+          const a = document.createElement('a')
+          a.href = `#scene-${scene}`
+          if (actors.has(selectedActor)) {
+            a.style.fontWeight = 'bold'
+            a.style.borderLeft = '4px solid #4299e1'
+          }
+          a.textContent = `Szene ${scene}`
+
+          toc.appendChild(a)
+        })
+
+        return toc
+      }
+
       // Create scene overview
       function createSceneOverview(sceneData, selectedActor) {
         let actors = new Set()
@@ -333,6 +390,9 @@
 
         container.innerHTML = ''
 
+        const toc = createToC(data, selectedActor)
+        container.appendChild(toc)
+
         let currentScene = ''
         let sceneData = []
 
@@ -341,6 +401,9 @@
           const isNewScene = row.Szene !== currentScene
 
           if (isNewScene) {
+            const a = document.createElement('a')
+            a.name = `scene-${row.Szene}`
+            container.appendChild(a)
             const szeneTitel = document.createElement('h2')
             szeneTitel.textContent = `Szene ${row.Szene}`
             container.appendChild(szeneTitel)
@@ -376,11 +439,25 @@
           div.className = 'script-line'
 
           // Apply styling based on type
-          if (row.Kategorie === 'Anweisung') div.classList.add('instruction')
-          if (row.Kategorie === 'Technik') div.classList.add('technical')
-          if (row.Kategorie === 'Licht') div.classList.add('lighting')
-          if (row.Schauspieler === selectedActor && selectedActor)
+          if (row.Kategorie === 'Anweisung') {
+            div.classList.add('instruction')
+          } else if (row.Kategorie === 'Technik') {
+            // Add small Techink tag
+            const techSpan = document.createElement('div')
+            techSpan.className = 'tag'
+            techSpan.textContent = 'Technik'
+            div.appendChild(techSpan)
+            div.classList.add('technical')
+          } else if (row.Kategorie === 'Licht') {
+            // Add small Licht tag
+            const lightSpan = document.createElement('div')
+            lightSpan.className = 'tag'
+            lightSpan.textContent = 'Licht'
+            div.appendChild(lightSpan)
+            div.classList.add('lighting')
+          } else if (row.Schauspieler === selectedActor && selectedActor) {
             div.classList.add('highlighted')
+          }
 
           // Create content
           if (row.Schauspieler) {
