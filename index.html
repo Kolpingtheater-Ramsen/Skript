@@ -200,6 +200,11 @@
 
       <div id="checkboxes">
         <div class="checkbox-group">
+          <input type="checkbox" id="blur-lines" />
+          <label for="blur-lines">Meine Text verstecken</label>
+        </div>
+
+        <div class="checkbox-group">
           <input type="checkbox" id="show-directions" checked />
           <label for="show-directions">Bühnenanweisungen anzeigen</label>
         </div>
@@ -387,6 +392,7 @@
         const showSceneOverview = document.getElementById(
           'show-scene-overview'
         ).checked
+        const blurLines = document.getElementById('blur-lines').checked
 
         container.innerHTML = ''
 
@@ -457,6 +463,9 @@
             div.classList.add('lighting')
           } else if (row.Schauspieler === selectedActor && selectedActor) {
             div.classList.add('highlighted')
+            if (blurLines) {
+              div.style.filter = 'blur(4px)'
+            }
           }
 
           // Create content
