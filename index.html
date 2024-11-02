@@ -12,6 +12,12 @@
         margin: 0 auto;
         padding: 20px;
         background: #f0f2f5;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      body.dark-mode {
+        background: #1a202c;
+        color: #cbd5e0;
       }
 
       .controls {
@@ -20,29 +26,45 @@
         border-radius: 8px;
         margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background 0.3s, color 0.3s;
       }
 
-      .controls > div {
-        margin-bottom: 15px;
+      body.dark-mode .controls {
+        background: #2d3748;
+        color: #cbd5e0;
       }
 
-      /* Script Styles */
       .script-container {
         background: white;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background 0.3s, color 0.3s;
+      }
+
+      body.dark-mode .script-container {
+        background: #2d3748;
+        color: #cbd5e0;
       }
 
       .script-line {
         padding: 10px;
         margin: 5px 0;
         border-radius: 4px;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      body.dark-mode .script-line {
+        background: #4a5568;
       }
 
       .actor-name {
         font-weight: bold;
         color: #2c5282;
+      }
+
+      body.dark-mode .actor-name {
+        color: #63b3ed;
       }
 
       .instruction {
@@ -51,14 +73,29 @@
         color: #4a5568;
       }
 
+      body.dark-mode .instruction {
+        background: #2d3748;
+        color: #a0aec0;
+      }
+
       .technical {
         background: #f3e8ff;
         color: #6b21a8;
       }
 
+      body.dark-mode .technical {
+        background: #553c9a;
+        color: #d6bcfa;
+      }
+
       .lighting {
         background: #fffbeb;
         color: #92400e;
+      }
+
+      body.dark-mode .lighting {
+        background: #744210;
+        color: #fbd38d;
       }
 
       .highlighted {
@@ -67,10 +104,19 @@
         padding-left: 15px;
       }
 
+      body.dark-mode .highlighted {
+        background: #2b6cb0;
+        border-left: 4px solid #63b3ed;
+      }
+
       .micro {
         font-size: 0.875rem;
         color: #718096;
         margin-top: 4px;
+      }
+
+      body.dark-mode .micro {
+        color: #a0aec0;
       }
 
       .tag {
@@ -87,9 +133,17 @@
         padding-bottom: 20px;
       }
 
+      body.dark-mode .scene-separator {
+        border-top: 2px solid #63b3ed;
+      }
+
       h2 {
         margin-top: 30px;
         color: black;
+      }
+
+      body.dark-mode h2 {
+        color: #cbd5e0;
       }
 
       .scene-overview {
@@ -99,19 +153,17 @@
         margin-bottom: 20px;
       }
 
+      body.dark-mode .scene-overview {
+        background: #2b6cb0;
+      }
+
       .scene-overview h3 {
         margin-top: 0;
         color: #2c5282;
       }
 
-      .scene-overview ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .scene-overview li {
-        margin-bottom: 5px;
+      body.dark-mode .scene-overview h3 {
+        color: #63b3ed;
       }
 
       .toc {
@@ -121,6 +173,10 @@
         margin-bottom: 20px;
       }
 
+      body.dark-mode .toc {
+        background: #2d3748;
+      }
+
       .toc a {
         display: block;
         margin-bottom: 10px;
@@ -128,6 +184,10 @@
         color: #2c5282;
         width: fit-content;
         padding-left: 10px;
+      }
+
+      body.dark-mode .toc a {
+        color: #63b3ed;
       }
 
       /* Print Styles */
@@ -444,6 +504,10 @@
         })
         const actorSelect = document.getElementById('actor-select')
         localStorage.setItem('actor-select', actorSelect.value)
+        localStorage.setItem(
+          'dark-mode',
+          document.body.classList.contains('dark-mode')
+        )
       }
 
       // Load state from localStorage
@@ -457,6 +521,9 @@
         })
         const actorSelect = document.getElementById('actor-select')
         actorSelect.value = localStorage.getItem('actor-select') || ''
+        const darkMode = localStorage.getItem('dark-mode') === 'true'
+        document.body.classList.toggle('dark-mode', darkMode)
+        document.getElementById('dark-mode').checked = darkMode
       }
 
       // Initialize
@@ -480,6 +547,11 @@
             saveState()
             renderScript(data)
           })
+
+        document.getElementById('dark-mode').addEventListener('change', () => {
+          document.body.classList.toggle('dark-mode')
+          saveState()
+        })
 
         // Initial render
         renderScript(data)
@@ -540,6 +612,12 @@
         <div class="checkbox-group">
           <input type="checkbox" id="show-scene-overview" checked />
           <label for="show-scene-overview">Szenenübersicht anzeigen</label>
+        </div>
+
+        <!-- Dark Mode -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="dark-mode" />
+          <label for="dark-mode">Dark Mode</label>
         </div>
 
         <div>
