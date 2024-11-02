@@ -45,7 +45,7 @@ Szene,Kategorie,Schauspieler,Mikro,Text
 1,Schauspieler,RAVEN,2,Ich werde mir nach dem gelungenen Coup ordentlich einen hinter die Binde kippen.
 1,Schauspieler,DANTE,4,"Also ich wollte damit eigentlich fragen, ob wir nicht möglicherweise… eventuell, wenn du magst…"
 1,Anweisung,,,BLADE (Louis) kommt von hinten auf die Bühne.
-1,Anweisung,HUNTER,3,Da bist du ja endlich.
+1,Schauspieler,HUNTER,3,Da bist du ja endlich.
 1,Schauspieler,BLADE,1,"Wer was auf sich hält, lässt auf sich warten."
 1,Schauspieler,HUNTER,3,Hast du wenigstens den Code dabei?
 1,Schauspieler,BLADE,1,(zieht etwas triumphierend aus seinem Mantel) Klar doch.
