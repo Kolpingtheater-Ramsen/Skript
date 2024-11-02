@@ -186,71 +186,6 @@
         margin-bottom: 8px;
       }
     </style>
-  </head>
-  <body>
-    <div class="controls no-print">
-      <h1>Kolpingtheater Ramsen - Drehbuch Viewer</h1>
-
-      <div>
-        <label for="actor-select">Schauspieler auswählen:</label>
-        <select id="actor-select">
-          <option value="">Alle Schauspieler</option>
-        </select>
-      </div>
-
-      <div id="checkboxes">
-        <div class="checkbox-group">
-          <input type="checkbox" id="blur-lines" />
-          <label for="blur-lines">Meine Text verstecken</label>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-directions" checked />
-          <label for="show-directions">Bühnenanweisungen anzeigen</label>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-technical" checked />
-          <label for="show-technical">Technische Informationen anzeigen</label>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-lighting" checked />
-          <label for="show-lighting">Beleuchtungshinweise anzeigen</label>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-actor-text" checked />
-          <label for="show-actor-text">Schauspielertexte anzeigen</label>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-micro" checked />
-          <label for="show-micro">Mikrofon anzeigen</label>
-        </div>
-
-        <!-- Einspieler -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-einspieler" checked />
-          <label for="show-einspieler">Einspieler anzeigen</label>
-        </div>
-
-        <!-- Szenenübersicht -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-scene-overview" checked />
-          <label for="show-scene-overview">Szenenübersicht anzeigen</label>
-        </div>
-
-        <div>
-          <button onclick="window.print()">Als PDF drucken</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="script-container" class="script-container">
-      <!-- Script content will be inserted here -->
-    </div>
-
     <script src="papaparse.min.js"></script>
     <script>
       // Load and parse CSV
@@ -496,20 +431,50 @@
         })
       }
 
+      // Save state to localStorage
+      function saveState() {
+        const checkboxes = document.querySelectorAll('#checkboxes input')
+        checkboxes.forEach((checkbox) => {
+          localStorage.setItem(checkbox.id, checkbox.checked)
+        })
+        const actorSelect = document.getElementById('actor-select')
+        localStorage.setItem('actor-select', actorSelect.value)
+      }
+
+      // Load state from localStorage
+      function loadState() {
+        const checkboxes = document.querySelectorAll('#checkboxes input')
+        checkboxes.forEach((checkbox) => {
+          const storedValue = localStorage.getItem(checkbox.id)
+          if (storedValue !== null) {
+            checkbox.checked = storedValue === 'true'
+          }
+        })
+        const actorSelect = document.getElementById('actor-select')
+        actorSelect.value = localStorage.getItem('actor-select') || ''
+      }
+
       // Initialize
       async function init() {
         const data = await loadScript()
         window.scriptData = data
         populateActors(data)
+        loadState()
 
         // Add event listeners
         document.querySelectorAll('#checkboxes input').forEach((input) => {
-          input.addEventListener('change', () => renderScript(data))
+          input.addEventListener('change', () => {
+            saveState()
+            renderScript(data)
+          })
         })
 
         document
           .getElementById('actor-select')
-          .addEventListener('change', () => renderScript(data))
+          .addEventListener('change', () => {
+            saveState()
+            renderScript(data)
+          })
 
         // Initial render
         renderScript(data)
@@ -517,5 +482,69 @@
 
       init()
     </script>
+  </head>
+  <body>
+    <div class="controls no-print">
+      <h1>Kolpingtheater Ramsen - Drehbuch Viewer</h1>
+
+      <div>
+        <label for="actor-select">Schauspieler auswählen:</label>
+        <select id="actor-select">
+          <option value="">Alle Schauspieler</option>
+        </select>
+      </div>
+
+      <div id="checkboxes">
+        <div class="checkbox-group">
+          <input type="checkbox" id="blur-lines" />
+          <label for="blur-lines">Meine Text verstecken</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-directions" checked />
+          <label for="show-directions">Bühnenanweisungen anzeigen</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-technical" checked />
+          <label for="show-technical">Technische Informationen anzeigen</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-lighting" checked />
+          <label for="show-lighting">Beleuchtungshinweise anzeigen</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-actor-text" checked />
+          <label for="show-actor-text">Schauspielertexte anzeigen</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-micro" checked />
+          <label for="show-micro">Mikrofon anzeigen</label>
+        </div>
+
+        <!-- Einspieler -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-einspieler" checked />
+          <label for="show-einspieler">Einspieler anzeigen</label>
+        </div>
+
+        <!-- Szenenübersicht -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="show-scene-overview" checked />
+          <label for="show-scene-overview">Szenenübersicht anzeigen</label>
+        </div>
+
+        <div>
+          <button onclick="window.print()">Als PDF drucken</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="script-container" class="script-container">
+      <!-- Script content will be inserted here -->
+    </div>
   </body>
 </html>
