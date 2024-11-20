@@ -275,7 +275,9 @@
       function populateActors(data) {
         const actors = [
           ...new Set(
-            data.filter((row) => row.Charakter).map((row) => row.Charakter)
+            data
+              .filter((row) => row.Charakter)
+              .map((row) => row.Charakter.trim())
           ),
         ].sort()
 
@@ -329,7 +331,7 @@
 
         sceneData.forEach((row) => {
           if (row.Charakter) {
-            actors.add(row.Charakter)
+            actors.add(row.Charakter.trim())
             if (row.Mikrofon) {
               micros.set(row.Charakter, row.Mikrofon)
             }
