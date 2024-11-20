@@ -177,6 +177,7 @@
             <th>Szene</th>
             <th>Kategorie</th>
             <th>Charakter</th>
+            <th>Mikrofon</th>
             <th>Text/Anweisung</th>
           </tr>
         </thead>
@@ -194,46 +195,29 @@
           line = line.trim()
 
           // Scene detection
-          if (line.match(/^\d+\.\s*Szene:/)) {
+          if (line.toUpperCase().match(/^\d+\.\s*SZENE:/)) {
             currentScene = line.match(/^\d+/)[0]
             parsedData.push({
               scene: currentScene,
               category: 'Szenenbeginn',
               character: '',
-              text: line,
+              microphone: '',
+              text: '',
             })
             continue
           }
 
-          // Stage directions in parentheses
-          if (line.startsWith('(')) {
-            const match = line.match(/\((.*?)\)\s*(.*?):\s*(.*)/)
-            if (match) {
-              parsedData.push({
-                scene: currentScene,
-                category: 'Schauspieler',
-                character: `${match[2]} (${match[1]})`,
-                text: match[3],
-              })
-            } else {
-              parsedData.push({
-                scene: currentScene,
-                category: 'Anweisung',
-                character: '',
-                text: line,
-              })
-            }
-            continue
-          }
-
           // Regular dialogue
-          const dialogMatch = line.match(/(.*?):\s*(.*)/)
+          const dialogMatch = line.match(/(.*?) \(MIKRO (\d+)\):\s*(.*)/)
           if (dialogMatch) {
             parsedData.push({
               scene: currentScene,
               category: 'Schauspieler',
-              character: dialogMatch[1],
-              text: dialogMatch[2],
+              character: dialogMatch[1].replace('(off)', ''),
+              microphone: dialogMatch[2],
+              text: dialogMatch[1].includes('(off)')
+                ? '(off) ' + dialogMatch[3]
+                : dialogMatch[3],
             })
             continue
           }
@@ -244,6 +228,7 @@
               scene: currentScene,
               category: 'Anweisung',
               character: '',
+              microphone: '',
               text: line,
             })
           }
@@ -285,6 +270,7 @@
                     <td>${row.scene}</td>
                     <td>${row.category}</td>
                     <td>${row.character}</td>
+                    <td>${row.microphone}</td>
                     <td>${row.text}</td>
                 `
           tbody.appendChild(tr)
