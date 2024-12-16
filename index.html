@@ -463,6 +463,8 @@
           // Apply styling based on type
           if (row.Kategorie === 'Anweisung') {
             div.classList.add('instruction')
+          } else if (row.Kategorie === 'Szenenbeginn') {
+            div.style.display = 'none'
           } else if (row.Kategorie === 'Einspieler') {
             div.classList.add('audio')
             // Add small Audio tag
