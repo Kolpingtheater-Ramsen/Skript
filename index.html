@@ -98,6 +98,16 @@
         color: #fbd38d;
       }
 
+      .audio {
+        background: rgba(128, 255, 136, 0.39);
+        color: #1a202c;
+      }
+
+      body.dark-mode .audio {
+        background: #1a202c;
+        color: rgb(128, 255, 136, 0.7);
+      }
+
       .highlighted {
         background: #ebf8ff;
         border-left: 4px solid #3182ce;
@@ -453,6 +463,14 @@
           // Apply styling based on type
           if (row.Kategorie === 'Anweisung') {
             div.classList.add('instruction')
+          } else if (row.Kategorie === 'Einspieler') {
+            div.classList.add('audio')
+            // Add small Audio tag
+            const audioSpan = document.createElement('div')
+            audioSpan.className = 'tag'
+            audioSpan.textContent = 'Einspieler'
+            div.appendChild(audioSpan)
+            div.classList.add('audio')
           } else if (row.Kategorie === 'Technik') {
             // Add small Techink tag
             const techSpan = document.createElement('div')
