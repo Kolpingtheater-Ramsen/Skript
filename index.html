@@ -1189,30 +1189,6 @@
         return lines
       }
 
-      function getCurrentLineIndex(actorLines) {
-        const currentSceneNum = getCurrentSceneFromScroll()
-        const scrollPos = window.scrollY
-        
-        // Find all script line elements for the actor
-        const lineElements = document.querySelectorAll('.script-line.highlighted')
-        
-        // Find which line is closest to the middle of the viewport
-        let closestIndex = 0
-        let closestDistance = Infinity
-        
-        // Find which line is closest to the middle of the viewport
-        for (let i = 0; i < lineElements.length; i++) {
-          const rect = lineElements[i].getBoundingClientRect()
-          const distanceToMiddle = Math.abs(rect.top - window.innerHeight / 2)
-          
-          if (distanceToMiddle < closestDistance) {
-            closestDistance = distanceToMiddle
-            closestIndex = i
-          }
-        }
-        
-        return closestIndex
-      }
 
       function jumpToLine(lineIndex) {
         const lines = document.querySelectorAll('.script-line.highlighted')
@@ -1239,9 +1215,12 @@
       function jumpToNextLine() {
         const lines = document.querySelectorAll('.script-line.highlighted')
         const currentIndex = getCurrentLineIndex(lines)
-        // If at the end, jump to the beginning, otherwise go to next line
-        const nextIndex = currentIndex >= lines.length - 1 ? 0 : currentIndex + 1
-        jumpToLine(nextIndex)
+        // If at the end, jump to the top
+        if (currentIndex >= lines.length - 1) {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        } else {
+          jumpToLine(currentIndex + 1)
+        }
       }
 
       function jumpToPreviousLine() {
@@ -1287,6 +1266,37 @@
           jumpToPreviousLine()
         }
       })
+
+      // Add this function after updateBottomNav
+      function getCurrentLineIndex(lines) {
+        if (!lines.length) return -1;
+        
+        // Get the viewport height and scroll position
+        const viewportHeight = window.innerHeight;
+        const viewportCenter = window.scrollY + (viewportHeight / 2);
+        
+        // If we're near the top of the page (within first 100px), return 0
+        if (window.scrollY < 1000) {
+          return -1;
+        }
+        
+        // Find the line closest to the center of the viewport
+        let closestLine = 0;
+        let closestDistance = Infinity;
+        
+        lines.forEach((line, index) => {
+          const rect = line.getBoundingClientRect();
+          const lineCenter = window.scrollY + rect.top + (rect.height / 2);
+          const distance = Math.abs(viewportCenter - lineCenter);
+          
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestLine = index;
+          }
+        });
+        
+        return closestLine;
+      }
     </script>
   </head>
   <body>
