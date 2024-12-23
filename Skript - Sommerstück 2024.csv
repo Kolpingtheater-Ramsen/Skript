@@ -1,0 +1,65 @@
+Szene,Kategorie,Charakter,Mikrofon,Text/Anweisung
+0,Licht,,,Dunkel
+1,Licht,,,Licht 2 MH 2
+1,Technik,,,Nebelschwaden stehen auf der Bühne.
+1,Anweisung,,,"Von hinten betreten ALESA (Caro), XION (Yunus) und Ripper die Bühne. Sie verteilen sich gleichmäßig am vorderen Bühnenrand."
+1,Schauspieler,ALESA,8,Wir haben das Jahr 2086.
+1,Schauspieler,RIPPER,14,"Die Erde, wie wir sie kennen, existiert nicht mehr."
+1,Schauspieler,XION,9,Katastrophen und Klimaerwärmung haben dem Planeten ordentlich zugesetzt.
+1,Schauspieler,ALESA,8,Inmitten der Ödnis haben sich Inseln der Zivilisation gebildet.
+1,Schauspieler,RIPPER,14,In diesen geht es aber alles andere als zivilisiert zu.
+1,Schauspieler,XION,9,"Geld regiert die Welt. Jetzt mehr, als je zuvor."
+1,Anweisung,,,"ALESA, XION und RIPPER gehen nach links und rechts ab. Von hinten kommen SERAPHINA (Maria), SERENITY (Magda) und SYBELLA (Nora). Sie verteilen sich gleichmäßig am Bühnenrand."
+1,Schauspieler,SERAPHINA,10,Doch nicht nur Geld bedeutet Macht.
+1,Schauspieler,SERENITY,11,Auch das Wissen um die modernste Technik ist viel wert.
+1,Schauspieler,SYBELLA,12,In den Zivilisationsoasen mitten im Nirgendwo haben die Menschen sich weiterentwickelt.
+1,Schauspieler,SERAPHINA,10,"So weiterentwickelt, dass sie mittlerweile versuchen ihre Körper mit Technik zu verbessern."
+1,Schauspieler,SERENITY,11,"Nur wer die beste technische Ausstattung implantiert hat, ist für das harte Leben in den Straßen gewappnet."
+1,Schauspieler,SYBELLA,12,"So streben die Menschen immer nach der neuesten und besten technischen Ausstattung, die sie dann auf legalem,..."
+1,Schauspieler,SERAPHINA,10,…oder aber auf illegalem Wege erlangen.
+1,Anweisung,,,SERAPHINA; SERENITY und SYBELLA gehen nach links und rechts ab. HUNTER (Anton) kommt von rechts auf die Bühne gestürmt und umkreist hektisch einen Tisch. VEGA (Nele) kommt von hinten und bleibt erhöht stehen.
+1,Schauspieler,HUNTER,3,"Wo bleiben diese Idioten? Wenn wir uns verspäten, klappt der ganze, verdammte Plan nicht mehr."
+1,Schauspieler,VEGA,5,"Das ist Hunter. Er ist das Oberhaupt einer Gang, die in der Unterstadt verehrt, aber auch gefürchtet ist. Er hält die Gruppe zusammen und zieht die Aufträge an Land."
+1,Anweisung,,,DANTE (Sebastian) kommt verwirrt von rechts. Ihm folgt NYRA (Theresa).
+1,Schauspieler,DANTE,4,"Entschuldige Hunter, aber die U-Bahn hatte Verspätung und dann bin ich auf dem Weg hierher noch beinahe in eine Schlägerei geraten. Da wollten mir so zwei Typen meine neueste Cyberware abnehmen. Aber denen habe ich es natürlich gezeigt."
+1,Anweisung,,,DANTE und HUNTER frieren ein.
+1,Schauspieler,NYRA,7,Das ist Dante: Genie und Wahnsinn in einem. Er ist einer der besten Hacker der Unterstadt. Nur wenige können sich wie er in die technischen Implantate seiner Mitmenschen hacken.
+1,Anweisung,,,DANTE und HUNTER gehen aus dem Freeze.
+1,Schauspieler,DANTE,4,Du siehst unglücklich aus. Schlecht geschlafen?
+1,Schauspieler,HUNTER,3,Ihr Trottel könnt einfach nicht pünktlich sein. Aber dieses Mal hängt das Gelingen des Plans davon ab.
+1,Schauspieler,DANTE,4,"Man, du bist echt mit dem falschen Fuß aufgestanden. (holt Schokoriegel hervor) Hier nimm ein Snickers. Immer wenn du hungrig bist, wirst du zur Diva."
+1,Anweisung,,,HUNTER nimmt den Schokoriegel und wirft ihn weg.
+1,Schauspieler,HUNTER,3,Steck dir deinen Riegel sonstwohin.
+1,Schauspieler,DANTE,4,Ich hab gehört Thai Chi soll gegen Aggressionsprobleme helfen. Finde deine innere Mitte.
+1,Schauspieler,HUNTER,3,"Ach, halt einfach die Fresse. (winkt ab)"
+1,Anweisung,,,RAVEN (Lea) kommt von links. ARIA (Elena) folgt ihr.
+1,Schauspieler,RAVEN,2,"So, können wir mit der Besprechung beginnen?"
+1,Schauspieler,HUNTER,3,Raven: Fokussiert wie immer!
+1,Anweisung,,,"HUNTER, RAVEN und DANTE frieren ein."
+1,Schauspieler,ARIA,6,"Raven ist nicht nur die Frau fürs Grobe, sondern auch scharfsinnig und clever. So hat sie sich und den Rest der Bande schon oft aus brenzligen Situationen gerettet."
+1,Anweisung,,,"HUNTER, RAVEN und DANTE lösen sich aus dem Freeze."
+1,Schauspieler,RAVEN,2,"Also, was ist? Fangen wir an?"
+1,Schauspieler,HUNTER,3,"Wir müssen noch auf Blade warten. Ich hoffe, er hat alles dabei. Ich drehe hier noch durch…"
+1,Anweisung,,,HUNTER wendet sich nach hinten ab.
+1,Schauspieler,DANTE,4,"Na, heute Abend schon was vor?"
+1,Schauspieler,RAVEN,2,Ich werde mir nach dem gelungenen Coup ordentlich einen hinter die Binde kippen.
+1,Schauspieler,DANTE,4,"Also ich wollte damit eigentlich fragen, ob wir nicht möglicherweise… eventuell, wenn du magst…"
+1,Anweisung,,,BLADE (Louis) kommt von hinten auf die Bühne.
+1,Schauspieler,HUNTER,3,Da bist du ja endlich.
+1,Schauspieler,BLADE,1,"Wer was auf sich hält, lässt auf sich warten."
+1,Schauspieler,HUNTER,3,Hast du wenigstens den Code dabei?
+1,Schauspieler,BLADE,1,(zieht etwas triumphierend aus seinem Mantel) Klar doch.
+1,Anweisung,,,HUNTER reißt es BLADE aus der Hand.
+1,Schauspieler,HUNTER,3,"Hervorragend, dann können wir endlich anfangen."
+1,Anweisung,,,"HUNTER, RAVEN, DANTE und BLADE versammeln sich um den Tisch. VEGA, NYRA und ARIA stellen sich hinten zusammen und beobachten das Geschehen."
+1,Schauspieler,HUNTER,3,"Heute ist unser großer Tag. Nach meinen aktuellen Informationen hat die Forschungsabteilung von Digitech einen Durchbruch erzielt. Sie haben es geschafft, einen Chip zu entwickeln, der sich direkt mit dem Gehirn verbindet. Wie ein PC im eigenen Körper, versteht ihr. Im Gegensatz zu den Implantaten, die unsere körperlichen Fähigkeiten verbessern, ist das der Durchbruch. Jetzt können wir auch unsere geistige Leistung erhöhen. Das ist Wahnsinn!"
+1,Schauspieler,DANTE,4,Aber sowas von. Das wäre eine digitale Revolution!
+1,Schauspieler,HUNTER,3,"Und die Konkurrenz wird uns für einen Prototypen dieses Chips saftig entlohnen. Der Plan sieht Folgendes vor: Dante, du bekommst den Code, den Blade besorgt hat. So hackst du dich von außen in das Sicherheitssystem von Digitech. Raven und Blade werden dann in das Labor einbrechen und den Prototypen besorgen. Ich stehe Schmiere, falls irgendetwas schief laufen sollte. Soweit klar?"
+1,Schauspieler,RAVEN,2,Absolut. Lasst uns losschlagen.
+1,Schauspieler,HUNTER,3,Das wollte ich hören.
+1,Anweisung,,,"HUNTER, RAVEN, DANTE und BLADE gehen nach hinten ab. VEGA, NYRA und ARIA kommen nach vorne. VEGA stellt sich auf den Tisch."
+1,Schauspieler,VEGA,5,"So beginnt der Abend, der die Geschichte der Menschheit verändern sollte. Technik, die uns stärker und schneller macht, kennt man schon. Aber ein Chip, der unmittelbar mit dem Gehirn verbunden ist, ist eine bahnbrechende Erfindung."
+1,Schauspieler,ARIA,6,"Die vier machten sich auf, um den Prototypen von “Digitech” zu stehlen. Am Anfang schien alles gut zu laufen, doch wer sich seiner Sache zu sicher ist, wird unvorsichtig."
+1,Anweisung,,,"VEGA, NYRA und ARIA gehen nach links und nach rechts ab."
+1.5,Technik,,,Abbau Tisch
+2,Einspieler,,,Test
