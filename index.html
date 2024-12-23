@@ -709,6 +709,12 @@
       body.pink-mode .flash-highlight {
         animation-name: flash-highlight-pink;
       }
+
+      /* Add ellipsis styling */
+      .skipped-lines {
+        color: #999;
+        font-style: italic;
+      }
     </style>
     <script src="papaparse.min.js"></script>
     <script>
@@ -904,6 +910,7 @@
         const showEinspieler = document.getElementById('show-einspieler').checked
         const showSceneOverview = document.getElementById('show-scene-overview').checked
         const blurLines = document.getElementById('blur-lines').checked
+        const contextLines = !showActorText ? parseInt(document.getElementById('actor-context').value) : 0
 
         container.innerHTML = ''
 
@@ -912,7 +919,34 @@
 
         let currentScene = ''
         let sceneData = []
+        let visibleLines = []
 
+        // First pass: determine which lines should be visible based on context
+        if (!showActorText && contextLines > 0) {
+          data.forEach((row, index) => {
+            if (row.Kategorie !== 'Anweisung' && 
+                row.Kategorie !== 'Technik' && 
+                row.Kategorie !== 'Licht' && 
+                row.Kategorie !== 'Einspieler' && 
+                row.Charakter) {
+              // Skip actor lines by default when showActorText is false
+              return;
+            }
+            visibleLines.push(index);
+          });
+
+          // Add context lines around visible lines
+          const expandedVisibleLines = new Set(visibleLines);
+          visibleLines.forEach(index => {
+            for (let i = Math.max(0, index - contextLines); i <= Math.min(data.length - 1, index + contextLines); i++) {
+              expandedVisibleLines.add(i);
+            }
+          });
+          visibleLines = Array.from(expandedVisibleLines).sort((a, b) => a - b);
+        }
+
+        // Second pass: render the lines
+        let lastRenderedIndex = -1;
         data.forEach((row, index) => {
           // Check for new scene
           const isNewScene = row.Szene !== currentScene
@@ -942,6 +976,7 @@
               sceneData = []
             }
             currentScene = row.Szene
+            lastRenderedIndex = -1; // Reset on new scene
           }
 
           // Apply filters
@@ -949,7 +984,16 @@
           if (!showTechnical && row.Kategorie === 'Technik') return
           if (!showLighting && row.Kategorie === 'Licht') return
           if (!showEinspieler && row.Kategorie === 'Einspieler') return
-          if (!showActorText && row.Charakter) return
+          if (!showActorText && row.Charakter && !visibleLines.includes(index)) return
+
+          // Add ellipsis for skipped lines
+          if (!showActorText && lastRenderedIndex !== -1 && index > lastRenderedIndex + 1 && row.Szene === currentScene) {
+            const ellipsisDiv = document.createElement('div')
+            ellipsisDiv.className = 'script-line skipped-lines'
+            ellipsisDiv.textContent = '...'
+            container.appendChild(ellipsisDiv)
+          }
+          lastRenderedIndex = index;
 
           const div = document.createElement('div')
           div.className = 'script-line'
@@ -1027,6 +1071,10 @@
         localStorage.setItem('actor-select', actorSelect.value)
         localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'))
         localStorage.setItem('pink-mode', document.body.classList.contains('pink-mode'))
+        
+        // Save slider value
+        const contextSlider = document.getElementById('actor-context')
+        localStorage.setItem('actor-context', contextSlider.value)
       }
 
       // Load state from localStorage
@@ -1038,8 +1086,31 @@
             checkbox.checked = storedValue === 'true'
           }
         })
+        
+        // Load slider value
+        const contextSlider = document.getElementById('actor-context')
+        const storedContextValue = localStorage.getItem('actor-context')
+        if (storedContextValue !== null) {
+          contextSlider.value = storedContextValue
+          document.getElementById('actor-context-value').textContent = storedContextValue
+        }
+        
         const actorSelect = document.getElementById('actor-select')
         actorSelect.value = localStorage.getItem('actor-select') || ''
+        
+        // Handle show-actor-text and blur-lines visibility based on actor selection
+        const showActorTextCheckbox = document.getElementById('show-actor-text');
+        const showActorTextGroup = showActorTextCheckbox.parentElement;
+        const blurLinesGroup = document.getElementById('blur-lines').parentElement;
+        
+        if (actorSelect.value) {
+          showActorTextGroup.style.display = 'none';
+          showActorTextCheckbox.checked = true;
+          blurLinesGroup.style.display = 'block';
+        } else {
+          showActorTextGroup.style.display = 'block';
+          blurLinesGroup.style.display = 'none';
+        }
         
         // Load theme modes
         const darkMode = localStorage.getItem('dark-mode') === 'true'
@@ -1048,6 +1119,11 @@
         document.body.classList.toggle('pink-mode', pinkMode)
         document.getElementById('dark-mode').checked = darkMode
         document.getElementById('pink-mode').checked = pinkMode
+        
+        // Show/hide context slider based on show-actor-text state
+        const showActorText = document.getElementById('show-actor-text').checked
+        const contextSliderGroup = document.getElementById('context-slider-group')
+        contextSliderGroup.style.display = showActorText ? 'none' : 'block'
       }
 
       // Initialize
@@ -1062,12 +1138,42 @@
           input.addEventListener('change', () => {
             saveState()
             renderScript(data)
+            
+            // Show/hide context slider based on show-actor-text state
+            if (input.id === 'show-actor-text') {
+              const contextSliderGroup = document.getElementById('context-slider-group')
+              contextSliderGroup.style.display = input.checked ? 'none' : 'block'
+            }
           })
+        })
+
+        // Add slider value display update
+        document.getElementById('actor-context').addEventListener('input', (e) => {
+          document.getElementById('actor-context-value').textContent = e.target.value
+          saveState()
+          renderScript(data)
         })
 
         document
           .getElementById('actor-select')
-          .addEventListener('change', () => {
+          .addEventListener('change', (e) => {
+            const showActorTextCheckbox = document.getElementById('show-actor-text');
+            const showActorTextGroup = showActorTextCheckbox.parentElement;
+            const blurLinesGroup = document.getElementById('blur-lines').parentElement;
+            
+            // Hide/show checkboxes based on actor selection
+            if (e.target.value) {
+              showActorTextGroup.style.display = 'none';
+              showActorTextCheckbox.checked = true;
+              blurLinesGroup.style.display = 'block';
+            } else {
+              showActorTextGroup.style.display = 'block';
+              blurLinesGroup.style.display = 'none';
+              // Restore the previous state from localStorage when no actor is selected
+              const storedValue = localStorage.getItem('show-actor-text');
+              showActorTextCheckbox.checked = storedValue === 'true';
+            }
+            
             saveState()
             renderScript(data)
           })
@@ -1322,7 +1428,7 @@
       </div>
 
       <div id="checkboxes">
-        <div class="checkbox-group">
+        <div class="checkbox-group" style="display: none;">
           <input type="checkbox" id="blur-lines" />
           <label for="blur-lines">Meine Text verstecken</label>
         </div>
@@ -1345,6 +1451,12 @@
         <div class="checkbox-group">
           <input type="checkbox" id="show-actor-text" checked />
           <label for="show-actor-text">Schauspielertexte anzeigen</label>
+        </div>
+
+        <div class="checkbox-group" id="context-slider-group" style="display: none;">
+          <label for="actor-context">Kontext Zeilen:</label>
+          <input type="range" id="actor-context" min="0" max="5" value="2" />
+          <span id="actor-context-value">2</span>
         </div>
 
         <div class="checkbox-group">
