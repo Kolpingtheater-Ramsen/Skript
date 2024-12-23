@@ -709,6 +709,22 @@
       body.pink-mode .flash-highlight {
         animation-name: flash-highlight-pink;
       }
+
+      .context-slider-group {
+        margin-left: 20px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .context-line {
+        opacity: 0.5;
+      }
+
+      input[type="range"] {
+        width: 100px;
+      }
     </style>
     <script src="papaparse.min.js"></script>
     <script>
@@ -905,6 +921,12 @@
         const showSceneOverview = document.getElementById('show-scene-overview').checked
         const blurLines = document.getElementById('blur-lines').checked
 
+        // Get context values
+        const directionsContext = parseInt(document.getElementById('directions-context').value)
+        const technicalContext = parseInt(document.getElementById('technical-context').value)
+        const lightingContext = parseInt(document.getElementById('lighting-context').value)
+        const einspielContext = parseInt(document.getElementById('einspieler-context').value)
+
         container.innerHTML = ''
 
         const toc = createToC(data, selectedActor)
@@ -913,7 +935,43 @@
         let currentScene = ''
         let sceneData = []
 
+        // First pass: determine which lines should be visible or context
+        const lineStates = new Map() // Maps index to {visible: boolean, isContext: boolean}
         data.forEach((row, index) => {
+          const state = { visible: false, isContext: false }
+          
+          // Check if line should be visible based on filters
+          if ((showDirections && row.Kategorie === 'Anweisung') ||
+              (showTechnical && row.Kategorie === 'Technik') ||
+              (showLighting && row.Kategorie === 'Licht') ||
+              (showEinspieler && row.Kategorie === 'Einspieler') ||
+              (showActorText && row.Charakter)) {
+            state.visible = true
+            
+            // Add context lines based on category
+            let contextRange = 0
+            if (row.Kategorie === 'Anweisung') contextRange = directionsContext
+            else if (row.Kategorie === 'Technik') contextRange = technicalContext
+            else if (row.Kategorie === 'Licht') contextRange = lightingContext
+            else if (row.Kategorie === 'Einspieler') contextRange = einspielContext
+
+            // Mark context lines
+            for (let i = Math.max(0, index - contextRange); i <= Math.min(data.length - 1, index + contextRange); i++) {
+              if (i !== index) {
+                const contextState = lineStates.get(i) || { visible: false, isContext: false }
+                contextState.isContext = true
+                lineStates.set(i, contextState)
+              }
+            }
+          }
+          
+          lineStates.set(index, state)
+        })
+
+        // Second pass: render lines
+        data.forEach((row, index) => {
+          const state = lineStates.get(index)
+          
           // Check for new scene
           const isNewScene = row.Szene !== currentScene
 
@@ -944,15 +1002,15 @@
             currentScene = row.Szene
           }
 
-          // Apply filters
-          if (!showDirections && row.Kategorie === 'Anweisung') return
-          if (!showTechnical && row.Kategorie === 'Technik') return
-          if (!showLighting && row.Kategorie === 'Licht') return
-          if (!showEinspieler && row.Kategorie === 'Einspieler') return
-          if (!showActorText && row.Charakter) return
-
           const div = document.createElement('div')
           div.className = 'script-line'
+
+          // Set visibility based on state
+          if (!state.visible && !state.isContext) {
+            div.style.display = 'none'
+          } else if (state.isContext && !state.visible) {
+            div.classList.add('context-line')
+          }
 
           // Apply styling based on type
           if (row.Kategorie === 'Anweisung') {
@@ -1019,10 +1077,17 @@
 
       // Save state to localStorage
       function saveState() {
-        const checkboxes = document.querySelectorAll('#checkboxes input')
+        const checkboxes = document.querySelectorAll('#checkboxes input[type="checkbox"]')
         checkboxes.forEach((checkbox) => {
           localStorage.setItem(checkbox.id, checkbox.checked)
         })
+
+        // Save context slider values
+        const sliders = document.querySelectorAll('input[type="range"]')
+        sliders.forEach((slider) => {
+          localStorage.setItem(slider.id, slider.value)
+        })
+
         const actorSelect = document.getElementById('actor-select')
         localStorage.setItem('actor-select', actorSelect.value)
         localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'))
@@ -1031,17 +1096,34 @@
 
       // Load state from localStorage
       function loadState() {
-        const checkboxes = document.querySelectorAll('#checkboxes input')
+        const checkboxes = document.querySelectorAll('#checkboxes input[type="checkbox"]')
         checkboxes.forEach((checkbox) => {
           const storedValue = localStorage.getItem(checkbox.id)
           if (storedValue !== null) {
             checkbox.checked = storedValue === 'true'
           }
         })
+
+        // Load context slider values
+        const sliders = document.querySelectorAll('input[type="range"]')
+        sliders.forEach((slider) => {
+          const storedValue = localStorage.getItem(slider.id)
+          if (storedValue !== null) {
+            slider.value = storedValue
+            document.getElementById(`${slider.id}-value`).textContent = storedValue
+          }
+        })
+
         const actorSelect = document.getElementById('actor-select')
         actorSelect.value = localStorage.getItem('actor-select') || ''
         
-        // Load theme modes
+        // Handle blur-lines visibility based on actor selection
+        const blurLinesGroup = document.getElementById('blur-lines').parentElement
+        blurLinesGroup.style.display = actorSelect.value ? 'flex' : 'none'
+        
+        // Update context slider visibility
+        updateContextSliderVisibility()
+        
         const darkMode = localStorage.getItem('dark-mode') === 'true'
         const pinkMode = localStorage.getItem('pink-mode') === 'true'
         document.body.classList.toggle('dark-mode', darkMode)
@@ -1056,10 +1138,14 @@
         window.scriptData = data
         populateActors(data)
         loadState()
+        addContextSliderListeners()
 
-        // Add event listeners
-        document.querySelectorAll('#checkboxes input').forEach((input) => {
+        // Add event listeners for checkboxes
+        document.querySelectorAll('#checkboxes input[type="checkbox"]').forEach((input) => {
           input.addEventListener('change', () => {
+            if (input.id === 'show-actor-text') {
+              updateContextSliderVisibility()
+            }
             saveState()
             renderScript(data)
           })
@@ -1067,7 +1153,11 @@
 
         document
           .getElementById('actor-select')
-          .addEventListener('change', () => {
+          .addEventListener('change', (e) => {
+            // Show/hide blur-lines checkbox based on actor selection
+            const blurLinesGroup = document.getElementById('blur-lines').parentElement
+            blurLinesGroup.style.display = e.target.value ? 'flex' : 'none'
+            
             saveState()
             renderScript(data)
           })
@@ -1297,6 +1387,27 @@
         
         return closestLine;
       }
+
+      // Add event listeners for context sliders
+      function addContextSliderListeners() {
+        const sliders = document.querySelectorAll('input[type="range"]')
+        sliders.forEach(slider => {
+          slider.addEventListener('input', (e) => {
+            document.getElementById(`${e.target.id}-value`).textContent = e.target.value
+            saveState()
+            renderScript(window.scriptData)
+          })
+        })
+      }
+
+      function updateContextSliderVisibility() {
+        const showActorText = document.getElementById('show-actor-text').checked
+        const contextSliders = document.querySelectorAll('.context-slider-group')
+        
+        contextSliders.forEach(slider => {
+          slider.style.display = showActorText ? 'none' : 'flex'
+        })
+      }
     </script>
   </head>
   <body>
@@ -1330,16 +1441,31 @@
         <div class="checkbox-group">
           <input type="checkbox" id="show-directions" checked />
           <label for="show-directions">Bühnenanweisungen anzeigen</label>
+          <div class="context-slider-group" id="directions-context-group">
+            <label for="directions-context">Kontext Zeilen:</label>
+            <input type="range" id="directions-context" min="0" max="5" value="0" />
+            <span id="directions-context-value">0</span>
+          </div>
         </div>
 
         <div class="checkbox-group">
           <input type="checkbox" id="show-technical" checked />
           <label for="show-technical">Technische Informationen anzeigen</label>
+          <div class="context-slider-group" id="technical-context-group">
+            <label for="technical-context">Kontext Zeilen:</label>
+            <input type="range" id="technical-context" min="0" max="5" value="0" />
+            <span id="technical-context-value">0</span>
+          </div>
         </div>
 
         <div class="checkbox-group">
           <input type="checkbox" id="show-lighting" checked />
           <label for="show-lighting">Beleuchtungshinweise anzeigen</label>
+          <div class="context-slider-group" id="lighting-context-group">
+            <label for="lighting-context">Kontext Zeilen:</label>
+            <input type="range" id="lighting-context" min="0" max="5" value="0" />
+            <span id="lighting-context-value">0</span>
+          </div>
         </div>
 
         <div class="checkbox-group">
@@ -1356,6 +1482,11 @@
         <div class="checkbox-group">
           <input type="checkbox" id="show-einspieler" checked />
           <label for="show-einspieler">Einspieler anzeigen</label>
+          <div class="context-slider-group" id="einspieler-context-group">
+            <label for="einspieler-context">Kontext Zeilen:</label>
+            <input type="range" id="einspieler-context" min="0" max="5" value="0" />
+            <span id="einspieler-context-value">0</span>
+          </div>
         </div>
 
         <!-- Szenenübersicht -->
