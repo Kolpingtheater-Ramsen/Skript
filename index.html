@@ -760,6 +760,59 @@
       input[type="range"] {
         width: 100px;
       }
+
+      /* Add FAB styles */
+      .fab {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #48bb78;
+        color: white;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        cursor: pointer;
+        z-index: 996;
+        font-size: 24px;
+        border: none;
+      }
+
+      .fab:hover {
+        background: #38a169;
+      }
+
+      body.dark-mode .fab {
+        background: #68d391;
+      }
+
+      body.dark-mode .fab:hover {
+        background: #48bb78;
+      }
+
+      body.pink-mode .fab {
+        background: #ed64a6;
+      }
+
+      body.pink-mode .fab:hover {
+        background: #d53f8c;
+      }
+
+      .marked-line {
+        border-left: 4px solid #48bb78 !important;
+      }
+
+      body.dark-mode .marked-line {
+        border-left: 4px solid #68d391 !important;
+      }
+
+      body.pink-mode .marked-line {
+        border-left: 4px solid #ed64a6 !important;
+      }
+
     </style>
     <script src="papaparse.min.js"></script>
     <script>
@@ -1074,12 +1127,18 @@
             div.classList.add('highlighted')
             if (blurLines) {
               div.style.filter = 'blur(4px)'
-              div.style.cursor = 'pointer'
-              div.addEventListener('click', () => {
-                div.style.filter = div.style.filter === 'none' ? 'blur(4px)' : 'none'
-              })
             }
           }
+
+          // Add click handler for all lines
+          div.style.cursor = 'pointer'
+          div.addEventListener('click', () => {
+            if (document.getElementById('set-marker').checked) {
+              markLine(div)
+            } else if (blurLines && row.Charakter === selectedActor) {
+              div.style.filter = div.style.filter === 'none' ? 'blur(4px)' : 'none'
+            }
+          })
 
           // Create content
           if (row.Charakter) {
@@ -1154,7 +1213,10 @@
         
         // Handle blur-lines visibility based on actor selection
         const blurLinesGroup = document.getElementById('blur-lines').parentElement
+        const markerGroup = document.getElementById('set-marker').parentElement
+        
         blurLinesGroup.style.display = actorSelect.value ? 'flex' : 'none'
+        markerGroup.style.display = 'flex' // Always show marker checkbox
         
         // Update context slider visibility
         updateContextSliderVisibility()
@@ -1181,6 +1243,12 @@
             if (input.id === 'show-actor-text') {
               updateContextSliderVisibility()
             }
+            if (input.id === 'set-marker') {
+              document.getElementById('blur-lines').checked = false
+            }
+            if (input.id === 'blur-lines') {
+              document.getElementById('set-marker').checked = false
+            }
             saveState()
             renderScript(data)
           })
@@ -1191,7 +1259,10 @@
           .addEventListener('change', (e) => {
             // Show/hide blur-lines checkbox based on actor selection
             const blurLinesGroup = document.getElementById('blur-lines').parentElement
+            const markerGroup = document.getElementById('set-marker').parentElement
+            
             blurLinesGroup.style.display = e.target.value ? 'flex' : 'none'
+            markerGroup.style.display = 'flex' // Always show marker checkbox
             
             saveState()
             renderScript(data)
@@ -1223,6 +1294,7 @@
         window.addEventListener('scroll', () => {
           updateCurrentScene()
           updateBottomNav()
+          updateFabVisibility()
         })
 
         // Initial render and scene check
@@ -1449,6 +1521,52 @@
           slider.style.display = showActorText ? 'none' : 'flex'
         })
       }
+
+      let markedLine = null
+
+      function markLine(element) {
+        if (!document.getElementById('set-marker').checked) return
+        
+        // Clear previous mark
+        clearMarkedLine()
+        
+        // Set new mark
+        element.classList.add('marked-line')
+        markedLine = element
+        
+        // Show/hide FAB based on scroll position
+        updateFabVisibility()
+      }
+
+      function clearMarkedLine() {
+        if (markedLine) {
+          markedLine.classList.remove('marked-line')
+          markedLine = null
+        }
+        document.querySelector('.fab').style.display = 'none'
+      }
+
+      function jumpToMarkedLine() {
+        if (markedLine) {
+          markedLine.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }
+
+      function updateFabVisibility() {
+        const fab = document.querySelector('.fab')
+        if (!markedLine) {
+          fab.style.display = 'none'
+          return
+        }
+
+        const markedRect = markedLine.getBoundingClientRect()
+        const isMarkedLineVisible = markedRect.top >= 0 && markedRect.bottom <= window.innerHeight
+
+        // set content to be arrow up or down
+        fab.textContent = markedRect.top >= 0 ? '↓' : '↑'
+        
+        fab.style.display = isMarkedLineVisible ? 'none' : 'flex'
+      }
     </script>
   </head>
   <body>
@@ -1480,6 +1598,11 @@
         <div class="checkbox-group">
           <input type="checkbox" id="blur-lines" />
           <label for="blur-lines">Meine Text verstecken</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="set-marker" />
+          <label for="set-marker">Marker setzen</label>
         </div>
 
         <div class="checkbox-group">
@@ -1574,5 +1697,8 @@
       <span id="current-line-info"></span>
       <button onclick="jumpToNextLine()">→</button>
     </div>
+
+    <!-- Add FAB button before the closing body tag -->
+    <button class="fab" onclick="jumpToMarkedLine()"></button>
   </body>
 </html>
