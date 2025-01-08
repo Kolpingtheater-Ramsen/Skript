@@ -73,19 +73,20 @@ socket.on('set_director', (data) => {
     directorStatus.textContent = data.director
     if (data.director !== 'Niemand') {
       document.body.classList.add('director-active')
+      isDirector = data.isDirector
       if (data.isDirector) {
         document.body.classList.add('is-director')
-        isDirector = true
       } else {
         document.body.classList.remove('is-director')
-        isDirector = false
       }
     } else {
       document.body.classList.remove('director-active', 'is-director')
+      isDirector = false
     }
   } else {
     directorStatus.textContent = 'Niemand'
     document.body.classList.remove('director-active', 'is-director')
+    isDirector = false
     if (data.message) {
       alert(data.message)
     }
@@ -912,6 +913,7 @@ function toggleDirector() {
   if (isDirector) {
     // If already director, this acts as a logout
     socket.emit('unset_director', { name })
+    isDirector = false
   } else {
     // Attempt to become director
     socket.emit('set_director', { name, password })
@@ -935,8 +937,9 @@ function updateDirectorUI(isDirector) {
     isDirector ? 'Director verlassen' : 'Director werden'
 }
 
-function handleDirectorChange(newDirector, isDirector) {
+function handleDirectorChange(newDirector, newIsDirector) {
   directorName = newDirector
+  isDirector = newIsDirector
 
   // Update UI
   updateDirectorUI(isDirector)
