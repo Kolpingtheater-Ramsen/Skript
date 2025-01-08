@@ -168,6 +168,14 @@ def handle_set_marker(data):
         # Broadcast the marker to all clients except the sender
         emit("marker_update", data, broadcast=True, include_self=False)
 
+
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
-    socketio.run(app, host="0.0.0.0", port=port, debug=True, use_reloader=True)
+    socketio.run(
+        app,
+        host="0.0.0.0",
+        port=port,
+        debug=True,
+        use_reloader=True,
+        allow_unsafe_werkzeug=True,
+    )
