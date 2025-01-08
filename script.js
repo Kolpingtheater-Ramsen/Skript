@@ -451,9 +451,8 @@ function renderScript(data) {
     // Add click handler for all lines
     div.style.cursor = 'pointer'
     div.addEventListener('click', () => {
-      if (document.getElementById('set-marker').checked) {
-        markLine(div)
-      } else if (blurLines && row.Charakter === selectedActor) {
+      markLine(div)
+      if (blurLines && row.Charakter === selectedActor) {
         div.style.filter = div.style.filter === 'none' ? 'blur(4px)' : 'none'
       }
     })
@@ -540,13 +539,6 @@ function loadState() {
   const actorSelect = document.getElementById('actor-select')
   actorSelect.value = localStorage.getItem('actor-select') || ''
 
-  // Handle blur-lines visibility based on actor selection
-  const blurLinesGroup = document.getElementById('blur-lines').parentElement
-  const markerGroup = document.getElementById('set-marker').parentElement
-
-  blurLinesGroup.style.display = actorSelect.value ? 'flex' : 'none'
-  markerGroup.style.display = 'flex' // Always show marker checkbox
-
   // Update context slider visibility
   updateContextSliderVisibility()
 
@@ -574,12 +566,6 @@ async function init() {
         if (input.id === 'show-actor-text') {
           updateContextSliderVisibility()
         }
-        if (input.id === 'set-marker') {
-          document.getElementById('blur-lines').checked = false
-        }
-        if (input.id === 'blur-lines') {
-          document.getElementById('set-marker').checked = false
-        }
         saveState()
         renderScript(data)
       })
@@ -587,11 +573,6 @@ async function init() {
 
   document.getElementById('actor-select').addEventListener('change', (e) => {
     // Show/hide blur-lines checkbox based on actor selection
-    const blurLinesGroup = document.getElementById('blur-lines').parentElement
-    const markerGroup = document.getElementById('set-marker').parentElement
-
-    blurLinesGroup.style.display = e.target.value ? 'flex' : 'none'
-    markerGroup.style.display = 'flex' // Always show marker checkbox
 
     saveState()
     renderScript(data)
@@ -859,8 +840,6 @@ function updateContextSliderVisibility() {
 }
 
 function markLine(element) {
-  if (!document.getElementById('set-marker').checked) return
-
   // Clear previous mark
   clearMarkedLine()
 
@@ -887,11 +866,6 @@ function clearMarkedLine() {
     markedLine.classList.remove('marked-line')
     markedLine = null
     markedLineData = null
-
-    // If we're the director, broadcast the clear
-    if (isDirector) {
-      socket.emit('clear_marker')
-    }
   }
   document.querySelector('.fab').style.display = 'none'
 }

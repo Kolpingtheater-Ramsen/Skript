@@ -168,16 +168,6 @@ def handle_set_marker(data):
         # Broadcast the marker to all clients except the sender
         emit("marker_update", data, broadcast=True, include_self=False)
 
-
-@socketio.on("clear_marker")
-def handle_clear_marker():
-    global current_director_sid
-    # Only allow the director to clear markers
-    if request.sid == current_director_sid:
-        # Broadcast the clear command to all clients except the sender
-        emit("marker_clear", broadcast=True, include_self=False)
-
-
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
     socketio.run(app, host="0.0.0.0", port=port, debug=True, use_reloader=True)
