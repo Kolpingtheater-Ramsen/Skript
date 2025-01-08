@@ -6,4 +6,9 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "edge-tts>=6.1.15",
+    "eventlet==0.33.3",
+    "flask-socketio==5.3.5",
+    "flask==2.3.3",
+    "gevent-websocket==0.10.1",
+    "python-dotenv==1.0.0",
 ]

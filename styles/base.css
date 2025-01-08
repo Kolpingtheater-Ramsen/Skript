@@ -1,0 +1,90 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f0f2f5;
+  transition: background 0.3s, color 0.3s;
+  padding-top: 70px;
+}
+
+h2 {
+  margin-top: 30px;
+  color: black;
+}
+
+/* Print Styles */
+@media print {
+  .controls,
+  .nav-bar,
+  .sidebar,
+  .bottom-nav,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding: 0;
+    margin: 0;
+  }
+
+  .script-container {
+    box-shadow: none;
+    padding: 0;
+    margin: 32px;
+  }
+
+  .script-line {
+    break-inside: avoid;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  body {
+    padding: 20px 10px;
+    padding-top: 60px;
+  }
+
+  .controls {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .controls h1 {
+    display: none;
+  }
+}
+
+/* Animations */
+@keyframes flash-highlight {
+  0% {
+    background-color: rgba(66, 153, 225, 0.8);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.flash-highlight {
+  animation: flash-highlight 1s ease-out forwards;
+}
+
+/* Context Lines */
+.context-slider-group {
+  margin-left: 20px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.context-line {
+  opacity: 0.5;
+}
+
+input[type='range'] {
+  width: 100px;
+}

@@ -1,0 +1,136 @@
+/* Script Container */
+.script-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Script Lines */
+.script-line {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.actor-name {
+  font-weight: bold;
+  color: #2c5282;
+}
+
+/* Line Types */
+.instruction {
+  background: #f7fafc;
+  font-style: italic;
+  color: #4a5568;
+}
+
+.technical {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+.lighting {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.audio {
+  background: rgba(128, 255, 136, 0.39);
+  color: #1a202c;
+}
+
+.highlighted {
+  background: #ebf8ff;
+  border-left: 4px solid #3182ce;
+  padding-left: 15px;
+}
+
+/* Scene Elements */
+.scene-separator {
+  border-top: 2px solid #4299e1;
+  margin: 0 30px 0 0;
+  padding-bottom: 20px;
+}
+
+.scene-overview {
+  background: #ebf8ff;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.scene-overview h3 {
+  margin-top: 0;
+  color: #2c5282;
+}
+
+/* Table of Contents */
+.toc {
+  background: #f7fafc;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.toc a {
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #2c5282;
+  width: fit-content;
+  padding-left: 10px;
+}
+
+/* Utility Classes */
+.micro {
+  font-size: 0.875rem;
+  color: #718096;
+  margin-top: 4px;
+}
+
+.tag {
+  border-radius: 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  width: fit-content;
+}
+
+/* Context Lines */
+.context-line {
+  opacity: 0.5;
+}
+
+.context-slider-group {
+  margin-left: 20px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type='range'] {
+  width: 100px;
+}
+
+/* Animations */
+@keyframes flash-highlight {
+  0% {
+    background-color: rgba(66, 153, 225, 0.8);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.flash-highlight {
+  animation: flash-highlight 1s ease-out forwards;
+}
+
+/* Marked Lines */
+.marked-line {
+  border-left: 4px solid #48bb78 !important;
+}

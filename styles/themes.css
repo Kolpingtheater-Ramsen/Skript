@@ -1,0 +1,201 @@
+/* Dark Mode */
+body.dark-mode {
+  background: #1a202c;
+  color: #cbd5e0;
+}
+
+body.dark-mode .controls,
+body.dark-mode .script-container,
+body.dark-mode .nav-bar,
+body.dark-mode .sidebar,
+body.dark-mode .bottom-nav {
+  background: #2d3748;
+  color: #cbd5e0;
+}
+
+body.dark-mode .script-line {
+  background: #4a5568;
+}
+
+body.dark-mode .actor-name {
+  color: #63b3ed;
+}
+
+body.dark-mode .instruction {
+  background: #2d3748;
+  color: #a0aec0;
+}
+
+body.dark-mode .technical {
+  background: #553c9a;
+  color: #d6bcfa;
+}
+
+body.dark-mode .lighting {
+  background: #744210;
+  color: #fbd38d;
+}
+
+body.dark-mode .audio {
+  background: #1a202c;
+  color: rgb(128, 255, 136, 0.7);
+}
+
+body.dark-mode .highlighted {
+  background: #2b6cb0;
+  border-left: 4px solid #63b3ed;
+}
+
+body.dark-mode .scene-separator {
+  border-top: 2px solid #63b3ed;
+}
+
+body.dark-mode .scene-overview {
+  background: #2b6cb0;
+}
+
+body.dark-mode .scene-overview h3,
+body.dark-mode .toc a {
+  color: #63b3ed;
+}
+
+body.dark-mode .toc {
+  background: #2d3748;
+}
+
+body.dark-mode .fab {
+  background: #68d391;
+}
+
+body.dark-mode .fab:hover {
+  background: #48bb78;
+}
+
+body.dark-mode .marked-line {
+  border-left: 4px solid #68d391 !important;
+}
+
+/* Pink Mode */
+body.pink-mode {
+  background: #fff0f6;
+  color: #702459;
+}
+
+body.pink-mode .controls,
+body.pink-mode .script-container,
+body.pink-mode .nav-bar,
+body.pink-mode .sidebar,
+body.pink-mode .bottom-nav {
+  background: #fff5f7;
+}
+
+body.pink-mode .script-line {
+  background: #fff5f7;
+}
+
+body.pink-mode .actor-name {
+  color: #d53f8c;
+}
+
+body.pink-mode .instruction,
+body.pink-mode .technical,
+body.pink-mode .lighting,
+body.pink-mode .audio {
+  background: #fdf2f8;
+  color: #97266d;
+}
+
+body.pink-mode .highlighted {
+  background: #fdf2f8;
+  border-left: 4px solid #d53f8c;
+}
+
+body.pink-mode .scene-separator {
+  border-top: 2px solid #d53f8c;
+}
+
+body.pink-mode .scene-overview,
+body.pink-mode .toc {
+  background: #fdf2f8;
+}
+
+body.pink-mode .scene-overview h3,
+body.pink-mode .toc a {
+  color: #97266d;
+}
+
+body.pink-mode .fab {
+  background: #ed64a6;
+}
+
+body.pink-mode .fab:hover {
+  background: #d53f8c;
+}
+
+body.pink-mode .marked-line {
+  border-left: 4px solid #ed64a6 !important;
+}
+
+/* Director Mode */
+body.is-director {
+  position: relative;
+}
+
+body.is-director::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 8px solid #e53e3e;
+  pointer-events: none;
+  z-index: 9999;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    border-color: rgba(229, 62, 62, 1);
+  }
+  50% {
+    border-color: rgba(229, 62, 62, 0.5);
+  }
+  100% {
+    border-color: rgba(229, 62, 62, 1);
+  }
+}
+
+body.dark-mode.is-director::before {
+  border-color: #fc8181;
+  animation: pulse-dark 2s infinite;
+}
+
+@keyframes pulse-dark {
+  0% {
+    border-color: rgba(252, 129, 129, 1);
+  }
+  50% {
+    border-color: rgba(252, 129, 129, 0.5);
+  }
+  100% {
+    border-color: rgba(252, 129, 129, 1);
+  }
+}
+
+body.pink-mode.is-director::before {
+  border-color: #d53f8c;
+  animation: pulse-pink 2s infinite;
+}
+
+@keyframes pulse-pink {
+  0% {
+    border-color: rgba(213, 63, 140, 1);
+  }
+  50% {
+    border-color: rgba(213, 63, 140, 0.5);
+  }
+  100% {
+    border-color: rgba(213, 63, 140, 1);
+  }
+}

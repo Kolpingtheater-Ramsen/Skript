@@ -1,3 +1,123 @@
+// Socket.io initialization
+const socket = io({
+  transports: ['websocket'],
+  reconnectionAttempts: Infinity,
+  reconnectionDelay: 1000,
+  timeout: 20000,
+})
+
+// Director mode state
+let isDirector = false
+let directorName = ''
+let isConnected = false
+let reconnectAttempts = 0
+let markedLine = null
+let markedLineData = null
+
+// Socket.IO event handlers
+socket.on('connect', () => {
+  console.log('Connected to server')
+  isConnected = true
+  reconnectAttempts = 0
+  document.getElementById('director-status').textContent = directorName
+    ? `Aktueller Director: ${directorName}`
+    : 'Aktueller Director: Niemand'
+})
+
+socket.on('connect_error', (error) => {
+  console.error('Connection error:', error)
+  isConnected = false
+  reconnectAttempts++
+  document.getElementById(
+    'director-status'
+  ).textContent = `Director Mode: Offline (Verbindungsfehler - Versuch ${reconnectAttempts})`
+})
+
+socket.on('disconnect', (reason) => {
+  console.log('Disconnected from server:', reason)
+  isConnected = false
+  document.getElementById('director-status').textContent =
+    'Director Mode: Offline'
+
+  // If we were the director, clear the state
+  if (isDirector) {
+    isDirector = false
+    directorName = ''
+    document.getElementById('name').value = ''
+    document.getElementById('password').value = ''
+    updateDirectorUI(false)
+  }
+
+  // Clear any markers
+  clearMarkedLine()
+})
+
+socket.on('marker_update', (data) => {
+  // Clear any existing marker
+  clearMarkedLine()
+
+  // Find and mark the line
+  const allLines = document.querySelectorAll('.script-line')
+  if (allLines[data.index]) {
+    markLine(allLines[data.index])
+  }
+})
+
+socket.on('marker_clear', () => {
+  clearMarkedLine()
+})
+
+socket.on('set_director', (data) => {
+  const directorStatus = document.getElementById('director-status')
+  if (data.success) {
+    directorStatus.textContent = data.director
+    if (data.director !== 'Niemand') {
+      document.body.classList.add('director-active')
+      if (data.isDirector) {
+        document.body.classList.add('is-director')
+        isDirector = true
+      } else {
+        document.body.classList.remove('is-director')
+        isDirector = false
+      }
+    } else {
+      document.body.classList.remove('director-active', 'is-director')
+    }
+  } else {
+    directorStatus.textContent = 'Niemand'
+    document.body.classList.remove('director-active', 'is-director')
+    if (data.message) {
+      alert(data.message)
+    }
+  }
+})
+
+socket.on('unset_director', (data) => {
+  handleDirectorChange(null, false)
+  clearMarkedLine() // Clear markers when director leaves
+
+  // Clear inputs if we were the director
+  if (data.previousDirector === directorName) {
+    document.getElementById('name').value = ''
+    document.getElementById('password').value = ''
+  }
+})
+
+socket.on('director_takeover', (data) => {
+  const wasDirector =
+    data.isDirector === false && directorName === data.previousDirector
+
+  // Update state for the new director
+  handleDirectorChange(data.newDirector, data.isDirector)
+
+  // If we were the previous director, clear our inputs
+  if (wasDirector) {
+    document.getElementById('name').value = ''
+    document.getElementById('password').value = ''
+    alert('Ein neuer Director hat übernommen.')
+  }
+})
+
 // Load and parse CSV
 async function loadScript() {
   try {
@@ -737,8 +857,6 @@ function updateContextSliderVisibility() {
   })
 }
 
-let markedLine = null
-
 function markLine(element) {
   if (!document.getElementById('set-marker').checked) return
 
@@ -749,6 +867,16 @@ function markLine(element) {
   element.classList.add('marked-line')
   markedLine = element
 
+  // If we're the director, broadcast the marker
+  console.log('isDirector', isDirector)
+  if (isDirector) {
+    // Find the line's position in the script
+    const allLines = document.querySelectorAll('.script-line')
+    const lineIndex = Array.from(allLines).indexOf(element)
+    markedLineData = { index: lineIndex }
+    socket.emit('set_marker', markedLineData)
+  }
+
   // Show/hide FAB based on scroll position
   updateFabVisibility()
 }
@@ -757,8 +885,64 @@ function clearMarkedLine() {
   if (markedLine) {
     markedLine.classList.remove('marked-line')
     markedLine = null
+    markedLineData = null
+
+    // If we're the director, broadcast the clear
+    if (isDirector) {
+      socket.emit('clear_marker')
+    }
   }
   document.querySelector('.fab').style.display = 'none'
+}
+
+function toggleDirectorPanel() {
+  const content = document.querySelector('.director-content')
+  content.classList.toggle('collapsed')
+}
+
+function toggleDirector() {
+  const name = document.getElementById('name').value
+  const password = document.getElementById('password').value
+
+  if (!name || !password) {
+    alert('Bitte Name und Passwort eingeben')
+    return
+  }
+
+  if (isDirector) {
+    // If already director, this acts as a logout
+    socket.emit('unset_director', { name })
+  } else {
+    // Attempt to become director
+    socket.emit('set_director', { name, password })
+  }
+}
+
+// Update the director state management functions
+function updateDirectorUI(isDirector) {
+  // Toggle the border only if this user is the director
+  document.body.classList.toggle('is-director', isDirector)
+
+  // Keep director-active class if there's any director
+  if (directorName && directorName !== 'Niemand') {
+    document.body.classList.add('director-active')
+  } else {
+    document.body.classList.remove('director-active')
+  }
+
+  // Update button text
+  document.querySelector('button[onclick="toggleDirector()"]').textContent =
+    isDirector ? 'Director verlassen' : 'Director werden'
+}
+
+function handleDirectorChange(newDirector, isDirector) {
+  directorName = newDirector
+
+  // Update UI
+  updateDirectorUI(isDirector)
+  document.getElementById(
+    'director-status'
+  ).textContent = `Aktueller Director: ${newDirector || 'Niemand'}`
 }
 
 function jumpToMarkedLine() {

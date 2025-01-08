@@ -26,6 +26,11 @@
 
     <link rel="stylesheet" href="styles.css" />
     <script src="papaparse.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+      integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+      crossorigin="anonymous"
+    ></script>
     <script src="script.js"></script>
   </head>
   <body>
@@ -159,6 +164,31 @@
 
         <div>
           <button onclick="window.print()">Als PDF drucken</button>
+        </div>
+      </div>
+
+      <!-- Collapsible Director -->
+      <div class="director-section">
+        <button class="director-toggle" onclick="toggleDirectorPanel()">
+          <span>Director Mode</span>
+          <span id="director-status">Aktueller Director: Niemand</span>
+        </button>
+        <div class="director-content collapsed">
+          <div class="director-inputs">
+            <input
+              type="text"
+              id="name"
+              placeholder="Name"
+              class="director-input"
+            />
+            <input
+              type="password"
+              id="password"
+              placeholder="Passwort"
+              class="director-input"
+            />
+            <button onclick="toggleDirector()">Director werden</button>
+          </div>
         </div>
       </div>
     </div>
