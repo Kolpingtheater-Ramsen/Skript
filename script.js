@@ -783,14 +783,45 @@ function updateBottomNav() {
 // Add keyboard navigation
 document.addEventListener('keydown', (e) => {
   const selectedActor = document.getElementById('actor-select').value
-  if (!selectedActor) return
 
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
     e.preventDefault()
-    jumpToNextLine()
+    if (selectedActor) {
+      jumpToNextLine()
+    } else if (markedLine) {
+      // Move marker to next visible line
+      const allLines = document.querySelectorAll('.script-line')
+      let currentIndex = Array.from(allLines).indexOf(markedLine)
+
+      while (currentIndex < allLines.length - 1) {
+        currentIndex++
+        const nextLine = allLines[currentIndex]
+        // Check if line is visible (not display: none)
+        if (window.getComputedStyle(nextLine).display !== 'none') {
+          markLine(nextLine)
+          break
+        }
+      }
+    }
   } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
     e.preventDefault()
-    jumpToPreviousLine()
+    if (selectedActor) {
+      jumpToPreviousLine()
+    } else if (markedLine) {
+      // Move marker to previous visible line
+      const allLines = document.querySelectorAll('.script-line')
+      let currentIndex = Array.from(allLines).indexOf(markedLine)
+
+      while (currentIndex > 0) {
+        currentIndex--
+        const prevLine = allLines[currentIndex]
+        // Check if line is visible (not display: none)
+        if (window.getComputedStyle(prevLine).display !== 'none') {
+          markLine(prevLine)
+          break
+        }
+      }
+    }
   }
 })
 
@@ -862,11 +893,10 @@ function markLine(element) {
     const lineIndex = Array.from(allLines).indexOf(element)
     markedLineData = { index: lineIndex }
     socket.emit('set_marker', markedLineData)
+  }
 
-    // Autoscroll for director if enabled
-    if (document.getElementById('autoscroll').checked) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }
+  if (document.getElementById('autoscroll').checked) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
   // Show/hide FAB based on scroll position

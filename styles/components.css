@@ -317,6 +317,7 @@ body.pink-mode .checkbox-group input[type='checkbox']:hover {
   margin-bottom: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
 /* Active director styles (for all users) */
