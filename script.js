@@ -60,6 +60,14 @@ socket.on('marker_update', (data) => {
   const allLines = document.querySelectorAll('.script-line')
   if (allLines[data.index]) {
     markLine(allLines[data.index])
+    // Autoscroll if enabled (for non-directors) or if director has autoscroll enabled
+    const shouldAutoscroll = document.getElementById('autoscroll').checked
+    if (shouldAutoscroll) {
+      allLines[data.index].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    }
   }
 })
 
@@ -848,13 +856,17 @@ function markLine(element) {
   markedLine = element
 
   // If we're the director, broadcast the marker
-  console.log('isDirector', isDirector)
   if (isDirector) {
     // Find the line's position in the script
     const allLines = document.querySelectorAll('.script-line')
     const lineIndex = Array.from(allLines).indexOf(element)
     markedLineData = { index: lineIndex }
     socket.emit('set_marker', markedLineData)
+
+    // Autoscroll for director if enabled
+    if (document.getElementById('autoscroll').checked) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
   }
 
   // Show/hide FAB based on scroll position

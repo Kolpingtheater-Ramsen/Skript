@@ -124,6 +124,11 @@ select option {
   border-color: #e53e3e;
 }
 
+#autoscroll:checked {
+  background: #4299e1;
+  border-color: #4299e1;
+}
+
 /* Hover states for specific checkboxes */
 #show-directions:hover {
   border-color: #805ad5;
@@ -139,6 +144,10 @@ select option {
 
 #show-einspieler:hover {
   border-color: #e53e3e;
+}
+
+#autoscroll:hover {
+  border-color: #4299e1;
 }
 
 .checkbox-group input[type='checkbox']:checked::after {
@@ -530,4 +539,51 @@ body.pink-mode .director-active #director-status {
   #current-line-info {
     font-size: 0.9rem;
   }
+}
+
+.director-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.director-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.director-input:focus {
+  outline: none;
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.2);
+}
+
+.director-inputs .checkbox-group {
+  margin: 0;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .director-input {
+  background: #2d3748;
+  border-color: #4a5568;
+  color: #cbd5e0;
+}
+
+body.dark-mode .director-input:focus {
+  border-color: #fc8181;
+  box-shadow: 0 0 0 2px rgba(252, 129, 129, 0.2);
+}
+
+/* Pink mode adjustments */
+body.pink-mode .director-input {
+  border-color: #feb2d0;
+}
+
+body.pink-mode .director-input:focus {
+  border-color: #d53f8c;
+  box-shadow: 0 0 0 2px rgba(213, 63, 140, 0.2);
 }
