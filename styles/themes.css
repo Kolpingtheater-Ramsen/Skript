@@ -4,6 +4,15 @@ body.dark-mode {
   color: #cbd5e0;
 }
 
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #cbd5e0;
+}
+
 body.dark-mode .controls,
 body.dark-mode .script-container,
 body.dark-mode .nav-bar,
