@@ -195,8 +195,8 @@
           line = line.trim()
 
           // Scene detection
-          if (line.toUpperCase().match(/^\d+\.\s*SZENE:/)) {
-            currentScene = line.match(/^\d+/)[0]
+          if (line.toUpperCase().match(/^(?:SZENE|SCENE)\s+(\d+):/i)) {
+            currentScene = line.match(/\d+/)[0]
             parsedData.push({
               scene: currentScene,
               category: 'Szenenbeginn',
@@ -207,17 +207,43 @@
             continue
           }
 
-          // Regular dialogue
-          const dialogMatch = line.match(/(.*?) \(MIKRO (\d+)\):\s*(.*)/)
-          if (dialogMatch) {
-            parsedData.push({
-              scene: currentScene,
-              category: 'Schauspieler',
-              character: dialogMatch[1].replace('(off)', ''),
-              microphone: dialogMatch[2],
-              text: dialogMatch[1].includes('(off)')
-                ? '(off) ' + dialogMatch[3]
-                : dialogMatch[3],
+          // Regular dialogue with microphone
+          const dialogMatchWithMic = line.match(/(.*?) \(MIKRO (\d+)\):\s*(.*)/)
+          // Regular dialogue without microphone
+          const dialogMatchNoMic = line.match(/(.*?):\s*(.*)/)
+
+          if (dialogMatchWithMic) {
+            // Split multiple actors
+            const actors = dialogMatchWithMic[1]
+              .split(',')
+              .map((actor) => actor.trim())
+            actors.forEach((actor) => {
+              parsedData.push({
+                scene: currentScene,
+                category: 'Schauspieler',
+                character: actor.replace('(off)', ''),
+                microphone: dialogMatchWithMic[2],
+                text: actor.includes('(off)')
+                  ? '(off) ' + dialogMatchWithMic[3]
+                  : dialogMatchWithMic[3],
+              })
+            })
+            continue
+          } else if (dialogMatchNoMic && !line.startsWith('(')) {
+            // Split multiple actors
+            const actors = dialogMatchNoMic[1]
+              .split(',')
+              .map((actor) => actor.trim())
+            actors.forEach((actor) => {
+              parsedData.push({
+                scene: currentScene,
+                category: 'Schauspieler',
+                character: actor.replace('(off)', ''),
+                microphone: '',
+                text: actor.includes('(off)')
+                  ? '(off) ' + dialogMatchNoMic[2]
+                  : dialogMatchNoMic[2],
+              })
             })
             continue
           }
