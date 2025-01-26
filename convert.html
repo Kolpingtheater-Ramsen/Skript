@@ -325,19 +325,6 @@
         link.download = 'theaterstück.csv'
         link.click()
       }
-
-      // Initialize with sample text if available
-      window.onload = async function () {
-        try {
-          const response = await window.fs.readFile('paste.txt', {
-            encoding: 'utf8',
-          })
-          document.getElementById('scriptInput').value = response
-          parseInputScript()
-        } catch (error) {
-          console.error('Error loading script:', error)
-        }
-      }
     </script>
   </body>
 </html>
