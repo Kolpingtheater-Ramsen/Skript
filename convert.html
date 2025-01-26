@@ -208,9 +208,9 @@
           }
 
           // Regular dialogue with microphone
-          const dialogMatchWithMic = line.match(/(.*?) \(MIKRO (\d+)\):\s*(.*)/)
-          // Regular dialogue without microphone
-          const dialogMatchNoMic = line.match(/(.*?):\s*(.*)/)
+          const dialogMatchWithMic = line.match(/(.+?) \(MIKRO (\d+)\):\s*(.*)/)
+          // Regular dialogue without microphone - updated to handle roles with numbers
+          const dialogMatchNoMic = line.match(/(.+?):\s*(.*)/)
 
           if (dialogMatchWithMic) {
             // Split multiple actors
