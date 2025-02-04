@@ -8,12 +8,12 @@
     <!-- PWA Support -->
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#000000" />
-    
+
     <!-- iOS PWA Support -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Drehbuch">
-    
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Drehbuch" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png" />
     <link rel="apple-touch-icon" href="logo.png" />
@@ -70,41 +70,41 @@
       }
 
       // Installation prompt handling
-      let deferredPrompt;
-      const installButton = document.createElement('button');
-      installButton.style.display = 'none';
-      installButton.className = 'install-button';
-      installButton.textContent = 'App installieren';
+      let deferredPrompt
+      const installButton = document.createElement('button')
+      installButton.style.display = 'none'
+      installButton.className = 'install-button'
+      installButton.textContent = 'App installieren'
 
       window.addEventListener('beforeinstallprompt', (e) => {
         // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
+        e.preventDefault()
         // Stash the event so it can be triggered later
-        deferredPrompt = e;
+        deferredPrompt = e
         // Show the install button
-        installButton.style.display = 'block';
-      });
+        installButton.style.display = 'block'
+      })
 
       installButton.addEventListener('click', async () => {
         if (deferredPrompt) {
           // Show the install prompt
-          deferredPrompt.prompt();
+          deferredPrompt.prompt()
           // Wait for the user to respond to the prompt
-          const { outcome } = await deferredPrompt.userChoice;
+          const { outcome } = await deferredPrompt.userChoice
           // We no longer need the prompt. Clear it up.
-          deferredPrompt = null;
+          deferredPrompt = null
           // Hide the install button
-          installButton.style.display = 'none';
+          installButton.style.display = 'none'
         }
-      });
+      })
 
       // Add the install button to the nav bar
       window.addEventListener('load', () => {
-        const navBar = document.querySelector('.nav-bar');
+        const navBar = document.querySelector('.nav-bar')
         if (navBar) {
-          navBar.appendChild(installButton);
+          navBar.appendChild(installButton)
         }
-      });
+      })
     </script>
     <script src="script.js" defer></script>
   </head>

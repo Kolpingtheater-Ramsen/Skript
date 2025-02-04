@@ -7,7 +7,7 @@ const ASSETS_TO_CACHE = [
   '/papaparse.min.js',
   '/logo.png',
   '/manifest.json',
-  'https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js'
+  'https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js',
 ]
 
 // Install event - cache assets

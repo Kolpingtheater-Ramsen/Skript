@@ -1,33 +1,36 @@
 {
-  "name": "Kolpingtheater Ramsen - Drehbuch Viewer",
-  "short_name": "Drehbuch",
-  "description": "Interaktiver Drehbuch-Viewer für das Kolpingtheater Ramsen",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
-  "orientation": "any",
-  "icons": [
-    {
-      "src": "logo.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "logo.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ],
-  "categories": ["entertainment", "productivity"],
-  "prefer_related_applications": false
-} 
+    "name": "Kolpingtheater Ramsen - Drehbuch Viewer",
+    "short_name": "Drehbuch",
+    "description": "Interaktiver Drehbuch-Viewer für das Kolpingtheater Ramsen",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "categories": [
+        "entertainment",
+        "productivity"
+    ],
+    "prefer_related_applications": false
+}
