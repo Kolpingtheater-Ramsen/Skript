@@ -141,7 +141,7 @@ async function loadScript() {
     }
 
     const response = await fetch(
-      'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=2016971711'
+      'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980'
     )
 
     if (!response.ok) {
