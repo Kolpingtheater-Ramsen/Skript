@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kolpingtheater Ramsen - Drehbuch Viewer</title>
 
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#000000" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png" />
     <link rel="apple-touch-icon" href="logo.png" />
@@ -25,13 +29,42 @@
     <meta property="og:site_name" content="Kolpingtheater Ramsen" />
 
     <link rel="stylesheet" href="styles.css" />
-    <script src="papaparse.min.js"></script>
+    <script src="papaparse.min.js" defer></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
       integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
       crossorigin="anonymous"
+      defer
     ></script>
-    <script src="script.js"></script>
+    <script>
+      // Register Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {
+              console.log('ServiceWorker registration successful')
+            })
+            .catch((err) => {
+              console.log('ServiceWorker registration failed: ', err)
+            })
+        })
+
+        // Listen for messages from service worker
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data.type === 'CONTENT_UPDATED') {
+            if (
+              confirm(
+                'Eine neue Version ist verfügbar. Möchten Sie die Seite neu laden?'
+              )
+            ) {
+              window.location.reload()
+            }
+          }
+        })
+      }
+    </script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <!-- Navigation Bar -->
