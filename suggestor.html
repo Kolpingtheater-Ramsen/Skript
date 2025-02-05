@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rollenvorschläge - Kolpingtheater Ramsen</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .actor-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .actor-checkbox {
+        display: flex;
+        align-items: center;
+        padding: 8px 16px;
+        background: #f0f0f0;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .actor-checkbox:hover {
+        background: #e0e0e0;
+      }
+
+      .actor-checkbox input {
+        margin-right: 8px;
+      }
+
+      .suggestions {
+        margin-top: 20px;
+      }
+
+      .scene-suggestion {
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .scene-suggestion h3 {
+        margin: 0 0 10px 0;
+        color: #333;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .scene-suggestion h3 .percentage {
+        font-size: 0.8em;
+        padding: 4px 8px;
+        border-radius: 12px;
+        background: #f0f0f0;
+      }
+
+      .scene-actors {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .actor-tag {
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 0.9em;
+      }
+
+      .actor-present {
+        background: #4caf50;
+        color: white;
+      }
+
+      .actor-missing {
+        background: #ff5252;
+        color: white;
+      }
+
+      .playable-scene {
+        border-left: 4px solid #4caf50;
+      }
+
+      .unplayable-scene {
+        border-left: 4px solid #ff5252;
+      }
+
+      .summary {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .filter-options {
+        margin-bottom: 20px;
+      }
+
+      .filter-options label {
+        margin-right: 15px;
+      }
+
+      .select-all-btn {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">← Zurück zum Drehbuch</a>
+      <span id="current-scene">Rollenvorschläge</span>
+      <div></div>
+    </nav>
+
+    <div class="container">
+      <h1>Rollenvorschläge</h1>
+
+      <div class="summary">
+        <h2>Übersicht</h2>
+        <p>Anwesende Schauspieler: <span id="present-count">0</span></p>
+        <p>
+          Spielbare Szenen: <span id="playable-scenes">0</span> von
+          <span id="total-scenes">0</span>
+        </p>
+      </div>
+
+      <div class="filter-options">
+        <button class="button select-all-btn" onclick="toggleAllActors()">
+          Alle Abwählen
+        </button>
+      </div>
+
+      <h2>Anwesende Schauspieler</h2>
+      <div id="actor-list" class="actor-list">
+        <!-- Actors will be populated here -->
+      </div>
+
+      <div id="suggestions" class="suggestions">
+        <!-- Scene suggestions will be populated here -->
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+      let scriptData = []
+      let actors = new Set()
+      let presentActors = new Set()
+      let allActorsSelected = true
+      let characterMap = new Map() // Map to store character -> actor name mapping
+
+      async function loadCharacterMap() {
+        try {
+          const response = await fetch('charaktere.csv')
+          if (!response.ok) throw new Error('Network response was not ok')
+
+          const csvText = await response.text()
+          const data = Papa.parse(csvText, { header: true }).data
+
+          data.forEach((row) => {
+            if (row.Charakter && row.Schauspieler) {
+              characterMap.set(
+                row.Charakter.trim().toUpperCase(),
+                row.Schauspieler.trim()
+              )
+            }
+          })
+        } catch (error) {
+          console.error('Error loading character map:', error)
+        }
+      }
+
+      async function loadScript() {
+        try {
+          // Load character map first
+          await loadCharacterMap()
+
+          const response = await fetch(
+            'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980'
+          )
+          if (!response.ok) throw new Error('Network response was not ok')
+
+          const csvText = await response.text()
+          scriptData = Papa.parse(csvText, { header: true }).data
+
+          // Extract unique actors
+          scriptData.forEach((row) => {
+            if (row.Charakter) {
+              actors.add(row.Charakter.trim())
+            }
+          })
+
+          // Initially add all actors to presentActors
+          actors.forEach((actor) => presentActors.add(actor))
+
+          populateActorList()
+          updateSuggestions()
+        } catch (error) {
+          console.error('Error loading script:', error)
+        }
+      }
+
+      function toggleAllActors() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+        allActorsSelected = !allActorsSelected
+
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = allActorsSelected
+        })
+
+        presentActors.clear()
+        if (allActorsSelected) {
+          actors.forEach((actor) => presentActors.add(actor))
+        }
+
+        document.querySelector('.select-all-btn').textContent =
+          allActorsSelected ? 'Alle Abwählen' : 'Alle Auswählen'
+
+        updateSuggestions()
+      }
+
+      function getActorName(character) {
+        const actor = characterMap.get(character)
+        return actor ? ` (${actor})` : ''
+      }
+
+      function populateActorList() {
+        const actorList = document.getElementById('actor-list')
+        actorList.innerHTML = ''
+        ;[...actors].sort().forEach((actor) => {
+          const label = document.createElement('label')
+          label.className = 'actor-checkbox'
+
+          const checkbox = document.createElement('input')
+          checkbox.type = 'checkbox'
+          checkbox.value = actor
+          checkbox.checked = true // Initially checked
+          checkbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+              presentActors.add(actor)
+            } else {
+              presentActors.delete(actor)
+            }
+            updateSuggestions()
+          })
+
+          label.appendChild(checkbox)
+          label.appendChild(
+            document.createTextNode(actor + getActorName(actor))
+          )
+          actorList.appendChild(label)
+        })
+      }
+
+      function getSceneActors(scene) {
+        const sceneActors = new Set()
+        scriptData.forEach((row) => {
+          if (row.Szene === scene && row.Charakter) {
+            sceneActors.add(row.Charakter.trim())
+          }
+        })
+        return sceneActors
+      }
+
+      function calculateScenePercentage(sceneActors) {
+        if (sceneActors.size === 0) return 100
+        const presentCount = [...sceneActors].filter((actor) =>
+          presentActors.has(actor)
+        ).length
+        return Math.round((presentCount / sceneActors.size) * 100)
+      }
+
+      function updateSuggestions() {
+        const suggestions = document.getElementById('suggestions')
+        suggestions.innerHTML = ''
+
+        // Update summary
+        document.getElementById('present-count').textContent =
+          presentActors.size
+
+        // Get unique scenes and calculate their percentages
+        const scenes = new Set(scriptData.map((row) => row.Szene))
+        let playableScenes = 0
+
+        // Create array of scene objects with their data
+        const sceneArray = [...scenes]
+          .filter((scene) => scene)
+          .map((scene) => {
+            const sceneActors = getSceneActors(scene)
+            const percentage = calculateScenePercentage(sceneActors)
+            const missingActors = new Set(
+              [...sceneActors].filter((x) => !presentActors.has(x))
+            )
+            const isPlayable = missingActors.size === 0
+
+            if (isPlayable) playableScenes++
+
+            return {
+              scene,
+              sceneActors,
+              percentage,
+              isPlayable,
+              missingActors,
+            }
+          })
+
+        // Sort scenes by percentage (descending)
+        sceneArray.sort((a, b) => b.percentage - a.percentage)
+
+        document.getElementById('total-scenes').textContent = scenes.size
+        document.getElementById('playable-scenes').textContent = playableScenes
+
+        // Render sorted scenes
+        sceneArray.forEach(({ scene, sceneActors, percentage, isPlayable }) => {
+          const div = document.createElement('div')
+          div.className = `scene-suggestion ${
+            isPlayable ? 'playable-scene' : 'unplayable-scene'
+          }`
+
+          const title = document.createElement('h3')
+          title.innerHTML = `Szene ${scene} <span class="percentage">${percentage}% anwesend</span>`
+          div.appendChild(title)
+
+          const actorsDiv = document.createElement('div')
+          actorsDiv.className = 'scene-actors'
+
+          sceneActors.forEach((actor) => {
+            const tag = document.createElement('span')
+            tag.className = `actor-tag ${
+              presentActors.has(actor) ? 'actor-present' : 'actor-missing'
+            }`
+            tag.textContent = actor + getActorName(actor)
+            actorsDiv.appendChild(tag)
+          })
+
+          div.appendChild(actorsDiv)
+          suggestions.appendChild(div)
+        })
+      }
+
+      // Initialize
+      loadScript()
+    </script>
+  </body>
+</html>

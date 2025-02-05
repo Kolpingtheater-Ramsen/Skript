@@ -3,6 +3,27 @@
 @import 'styles/components.css';
 @import 'styles/themes.css';
 
+.button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #45a049;
+  text-decoration: none;
+  color: white;
+}
+
 .install-button {
   background-color: #4caf50;
   border: none;
