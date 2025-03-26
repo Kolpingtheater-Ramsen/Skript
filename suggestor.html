@@ -255,7 +255,7 @@
           const checkbox = document.createElement('input')
           checkbox.type = 'checkbox'
           checkbox.value = actor
-          checkbox.checked = true // Initially checked
+          checkbox.checked = presentActors.has(actor) // Set based on presentActors state
           checkbox.addEventListener('change', (e) => {
             if (e.target.checked) {
               presentActors.add(actor)
