@@ -151,6 +151,21 @@
       let allActorsSelected = true
       let characterMap = new Map() // Map to store character -> actor name mapping
 
+      // Load present actors from localStorage
+      function loadPresentActorsFromStorage() {
+        const savedActors = localStorage.getItem('presentActors')
+        if (savedActors) {
+          const parsedActors = JSON.parse(savedActors)
+          presentActors = new Set(parsedActors)
+          allActorsSelected = presentActors.size === actors.size
+        }
+      }
+
+      // Save present actors to localStorage
+      function savePresentActorsToStorage() {
+        localStorage.setItem('presentActors', JSON.stringify([...presentActors]))
+      }
+
       async function loadCharacterMap() {
         try {
           const response = await fetch('charaktere.csv')
@@ -195,6 +210,9 @@
           // Initially add all actors to presentActors
           actors.forEach((actor) => presentActors.add(actor))
 
+          // Load saved actors from localStorage
+          loadPresentActorsFromStorage()
+
           populateActorList()
           updateSuggestions()
         } catch (error) {
@@ -214,6 +232,7 @@
         if (allActorsSelected) {
           actors.forEach((actor) => presentActors.add(actor))
         }
+        savePresentActorsToStorage()
 
         document.querySelector('.select-all-btn').textContent =
           allActorsSelected ? 'Alle Abwählen' : 'Alle Auswählen'
@@ -243,6 +262,7 @@
             } else {
               presentActors.delete(actor)
             }
+            savePresentActorsToStorage()
             updateSuggestions()
           })
 
