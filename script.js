@@ -564,6 +564,16 @@ function loadState() {
 async function init() {
   const data = await loadScript()
   window.scriptData = data
+
+  // Strip row.Charakter to prevent multiple entries for the same actor
+  data.forEach((row) => {
+    row.Charakter = row.Charakter?.trim()
+    row.Szene = row.Szene?.trim()
+    row['Text/Anweisung'] = row['Text/Anweisung']?.trim()
+    row.Mikrofon = row.Mikrofon?.trim()
+    row.Kategorie = row.Kategorie?.trim()
+  })
+
   populateActors(data)
   loadState()
   addContextSliderListeners()
