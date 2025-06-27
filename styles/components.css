@@ -280,7 +280,6 @@ body.pink-mode .checkbox-group input[type='checkbox']:hover {
   z-index: 999;
   overflow-y: auto;
   padding: 20px;
-  padding-top: 70px;
 }
 
 .sidebar.active {
