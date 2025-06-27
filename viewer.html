@@ -149,7 +149,7 @@
         background-color: rgba(0, 0, 0, 0.9);
         border-left: 2px solid var(--primary-color);
         padding: 1rem;
-        overflow-y: auto;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
       }
@@ -209,6 +209,32 @@
 
       .scene-info-box.next {
         border-color: #ed8936;
+      }
+
+      /* Custom scrollbar styling for dark theme */
+      .actor-list::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .actor-list::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+
+      .actor-list::-webkit-scrollbar-thumb {
+        background: rgba(66, 153, 225, 0.6);
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      .actor-list::-webkit-scrollbar-thumb:hover {
+        background: rgba(66, 153, 225, 0.8);
+      }
+
+      /* Firefox scrollbar styling */
+      .actor-list {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(66, 153, 225, 0.6) rgba(255, 255, 255, 0.1);
       }
     </style>
 
@@ -432,6 +458,9 @@
 
       // New function to update scene info sidebar
       function updateSceneInfo(data, currentScene) {
+        // Stop any existing auto-scroll intervals
+        stopAllAutoScroll()
+
         const sidebar = document.querySelector('.scene-info-sidebar')
         sidebar.innerHTML = ''
 
@@ -457,6 +486,16 @@
           nextSceneBox.classList.add('next')
           sidebar.appendChild(nextSceneBox)
         }
+
+        // Start auto-scroll for scene boxes with scrollable content
+        // Use setTimeout to ensure DOM is fully updated
+        setTimeout(() => {
+          startAutoScroll(currentSceneBox)
+          if (nextScene) {
+            const nextSceneBox = sidebar.querySelector('.scene-info-box.next')
+            startAutoScroll(nextSceneBox)
+          }
+        }, 100)
       }
 
       // Helper function to create scene info box
@@ -536,6 +575,74 @@
       window.addEventListener('scroll', () => {
         getCurrentSceneFromScroll()
       })
+
+      // Auto-scroll functionality for scene info boxes
+      let autoScrollIntervals = []
+
+      function startAutoScroll(element) {
+        if (!element) return
+
+        const scrollContainer = element.querySelector('.actor-list')
+        if (!scrollContainer) return
+
+        // Check if scrolling is needed
+        if (scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
+          return // No scrollbar needed, no auto-scroll
+        }
+
+        const maxScroll =
+          scrollContainer.scrollHeight - scrollContainer.clientHeight
+
+        // Calculate scroll speed based on total height
+        // Base speed: 1 pixel per step for small heights
+        // Increases proportionally with height
+        const baseSpeed = 0.75
+        const heightFactor = Math.max(1, maxScroll / 100) // 1 pixel per 100px of scrollable height
+        const scrollSpeed = Math.max(1, Math.round(baseSpeed * heightFactor))
+
+        // Calculate pause duration based on content height (longer content = shorter pause)
+        const basePauseDuration = 45 // 3 seconds at 50ms intervals
+        const pauseDuration = Math.max(
+          15,
+          Math.round(basePauseDuration / heightFactor)
+        )
+
+        let scrollDirection = scrollSpeed // Positive for down, negative for up
+        let pauseCounter = 0
+
+        const interval = setInterval(() => {
+          // Pause at top and bottom
+          if (pauseCounter > 0) {
+            pauseCounter--
+            return
+          }
+
+          const currentScroll = scrollContainer.scrollTop
+
+          // Scroll by the calculated speed
+          scrollContainer.scrollTop += scrollDirection
+
+          // Check if we've reached the bottom
+          if (scrollContainer.scrollTop >= maxScroll && scrollDirection > 0) {
+            scrollDirection = -scrollSpeed // Start scrolling up
+            pauseCounter = pauseDuration // Pause at bottom
+            scrollContainer.scrollTop = maxScroll // Ensure we're exactly at bottom
+          }
+          // Check if we've reached the top
+          else if (scrollContainer.scrollTop <= 0 && scrollDirection < 0) {
+            scrollDirection = scrollSpeed // Start scrolling down
+            pauseCounter = pauseDuration // Pause at top
+            scrollContainer.scrollTop = 0 // Ensure we're exactly at top
+          }
+        }, 100) // Scroll every 50ms for smooth movement
+
+        autoScrollIntervals.push(interval)
+      }
+
+      function stopAllAutoScroll() {
+        autoScrollIntervals.forEach((interval) => clearInterval(interval))
+        autoScrollIntervals = []
+      }
     </script>
   </head>
   <body>
