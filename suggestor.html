@@ -163,7 +163,10 @@
 
       // Save present actors to localStorage
       function savePresentActorsToStorage() {
-        localStorage.setItem('presentActors', JSON.stringify([...presentActors]))
+        localStorage.setItem(
+          'presentActors',
+          JSON.stringify([...presentActors])
+        )
       }
 
       async function loadCharacterMap() {
@@ -202,7 +205,7 @@
 
           // Extract unique actors
           scriptData.forEach((row) => {
-            if (row.Charakter) {
+            if (row.Charakter && row.Szene && row.Szene > 0) {
               actors.add(row.Charakter.trim())
             }
           })
