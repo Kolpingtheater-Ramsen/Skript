@@ -309,7 +309,7 @@
 
         // Create array of scene objects with their data
         const sceneArray = [...scenes]
-          .filter((scene) => scene)
+          .filter((scene) => scene && scene > 0)
           .map((scene) => {
             const sceneActors = getSceneActors(scene)
             const percentage = calculateScenePercentage(sceneActors)
