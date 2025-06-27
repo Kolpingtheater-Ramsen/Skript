@@ -179,7 +179,9 @@ async function loadScript() {
 function populateActors(data) {
   const actors = [
     ...new Set(
-      data.filter((row) => row.Charakter).map((row) => row.Charakter.trim())
+      data
+        .filter((row) => row.Charakter && row.Szene && row.Szene > 0)
+        .map((row) => row.Charakter.trim())
     ),
   ].sort()
 
