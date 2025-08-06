@@ -567,7 +567,7 @@ async function init() {
 
   // Strip row.Charakter to prevent multiple entries for the same actor
   data.forEach((row) => {
-    row.Charakter = row.Charakter?.trim()
+    row.Charakter = row.Charakter?.trim().toUpperCase()
     row.Szene = row.Szene?.trim()
     row['Text/Anweisung'] = row['Text/Anweisung']?.trim()
     row.Mikrofon = row.Mikrofon?.trim()
