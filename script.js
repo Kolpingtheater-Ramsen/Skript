@@ -417,6 +417,16 @@ function renderScript(data) {
       const szeneTitel = document.createElement('h2')
       szeneTitel.textContent = `Szene ${row.Szene}`
       container.appendChild(szeneTitel)
+      // Insert scene summary (Kategorie: Szenenbeginn)
+      const sceneStartRow = data.find(
+        (r) => r.Szene === row.Szene && r.Kategorie === 'Szenenbeginn'
+      )
+      if (sceneStartRow && sceneStartRow['Text/Anweisung']) {
+        const summary = document.createElement('div')
+        summary.className = 'scene-summary'
+        summary.textContent = sceneStartRow['Text/Anweisung']
+        container.appendChild(summary)
+      }
       const separator = document.createElement('div')
       separator.className = 'scene-separator'
       container.appendChild(separator)
