@@ -503,7 +503,7 @@ function renderScript(data) {
         if (!useActorNames) return row.Charakter
         // roleToActor keys are uppercased roles
         const actor = window.roleToActor?.get(row.Charakter)
-        return actor || row.Charakter
+        return actor ? `${actor} (${row.Charakter})` : row.Charakter
       })()
       nameSpan.textContent =
         row.Mikrofon && showMicro
@@ -526,7 +526,10 @@ function renderScript(data) {
       for (const [roleUpper, actorName] of window.roleToActor.entries()) {
         try {
           const pattern = new RegExp(`\\b${escapeRegExp(roleUpper)}\\b`, 'gi')
-          displayText = displayText.replace(pattern, actorName)
+          displayText = displayText.replace(
+            pattern,
+            `${actorName} (${roleUpper})`
+          )
         } catch (e) {
           // Fallback: skip problematic patterns
         }
