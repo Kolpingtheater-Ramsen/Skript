@@ -43,12 +43,14 @@
     ></script>
     <!-- End Cloudflare Web Analytics -->
     <script>
-      // Register Service Worker
-      if ('serviceWorker' in navigator) {
+      // Register Service Worker (disabled on localhost/127.0.0.1)
+      const isLocalhost =
+        location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      if ('serviceWorker' in navigator && !isLocalhost) {
         window.addEventListener('load', () => {
           navigator.serviceWorker
             .register('/sw.js')
-            .then((registration) => {
+            .then(() => {
               console.log('ServiceWorker registration successful')
             })
             .catch((err) => {
@@ -139,6 +141,11 @@
             <option value="">Alle Schauspieler</option>
           </select>
         </div>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="show-actor-names" />
+        <label for="show-actor-names">Darstellernamen anzeigen</label>
       </div>
 
       <div id="checkboxes">
