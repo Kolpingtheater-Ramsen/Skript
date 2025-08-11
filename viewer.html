@@ -93,6 +93,10 @@
         color: #9f7aea;
       }
 
+      .props {
+        color: #63b3ed;
+      }
+
       .tag {
         display: inline-block;
         padding: 0.25rem 0.5rem;
@@ -393,6 +397,12 @@
             lightSpan.textContent = 'Licht'
             div.appendChild(lightSpan)
             div.classList.add('lighting')
+          } else if (row.Kategorie === 'Requisiten') {
+            const propsSpan = document.createElement('div')
+            propsSpan.className = 'tag'
+            propsSpan.textContent = 'Requisiten'
+            div.appendChild(propsSpan)
+            div.classList.add('props')
           }
 
           // Create content

@@ -315,6 +315,7 @@ function renderScript(data) {
   const showActorText = document.getElementById('show-actor-text').checked
   const showMicro = document.getElementById('show-micro').checked
   const showEinspieler = document.getElementById('show-einspieler').checked
+  const showRequisiten = document.getElementById('show-requisiten')?.checked
   const showSceneOverview = document.getElementById(
     'show-scene-overview'
   ).checked
@@ -332,6 +333,9 @@ function renderScript(data) {
   )
   const einspielContext = parseInt(
     document.getElementById('einspieler-context').value
+  )
+  const requisitenContext = parseInt(
+    document.getElementById('requisiten-context')?.value || '0'
   )
 
   container.innerHTML = ''
@@ -353,6 +357,7 @@ function renderScript(data) {
       (showTechnical && row.Kategorie === 'Technik') ||
       (showLighting && row.Kategorie === 'Licht') ||
       (showEinspieler && row.Kategorie === 'Einspieler') ||
+      (showRequisiten && row.Kategorie === 'Requisiten') ||
       (showActorText && row.Charakter)
     ) {
       state.visible = true
@@ -363,6 +368,7 @@ function renderScript(data) {
       else if (row.Kategorie === 'Technik') contextRange = technicalContext
       else if (row.Kategorie === 'Licht') contextRange = lightingContext
       else if (row.Kategorie === 'Einspieler') contextRange = einspielContext
+      else if (row.Kategorie === 'Requisiten') contextRange = requisitenContext
 
       // Mark context lines
       for (
@@ -439,6 +445,15 @@ function renderScript(data) {
       audioSpan.className = 'tag'
       audioSpan.textContent = 'Einspieler'
       div.appendChild(audioSpan)
+    } else if (row.Kategorie === 'Requisiten') {
+      const propsSpan = document.createElement('div')
+      propsSpan.className = 'tag'
+      propsSpan.textContent = 'Requisiten'
+      div.appendChild(propsSpan)
+      div.classList.add('props')
+      if (row.Charakter === selectedActor) {
+        div.classList.add('highlighted')
+      }
     } else if (row.Kategorie === 'Technik') {
       const techSpan = document.createElement('div')
       techSpan.className = 'tag'

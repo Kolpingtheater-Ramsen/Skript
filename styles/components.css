@@ -124,6 +124,11 @@ select option {
   border-color: #e53e3e;
 }
 
+#show-requisiten:checked {
+  background: #2c7a7b;
+  border-color: #2c7a7b;
+}
+
 #autoscroll:checked {
   background: #4299e1;
   border-color: #4299e1;
@@ -144,6 +149,10 @@ select option {
 
 #show-einspieler:hover {
   border-color: #e53e3e;
+}
+
+#show-requisiten:hover {
+  border-color: #2c7a7b;
 }
 
 #autoscroll:hover {
