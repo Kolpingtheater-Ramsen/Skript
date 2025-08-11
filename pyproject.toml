@@ -10,5 +10,7 @@ dependencies = [
     "flask-socketio==5.3.5",
     "flask==2.3.3",
     "gevent-websocket==0.10.1",
+    "pandas>=2.2.3",
     "python-dotenv==1.0.0",
+    "requests>=2.32.3",
 ]

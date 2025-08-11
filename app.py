@@ -1,6 +1,10 @@
 from flask import Flask, request, send_from_directory
 from flask_socketio import SocketIO, emit
 import os
+import subprocess
+import threading
+import time
+import datetime
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -20,6 +24,78 @@ socketio = SocketIO(
 current_director = None
 current_director_sid = None
 DIRECTOR_PASSWORD = os.getenv("DIRECTOR_PASSWORD", "your-password-here")
+
+
+def _run_git_pull_once() -> None:
+    """Run a single `git pull` in the repository root and log output."""
+    if os.getenv("ENABLE_DAILY_GIT_PULL", "1") not in {"1", "true", "True"}:
+        return
+
+    repo_root = os.path.dirname(os.path.abspath(__file__))
+    try:
+        result = subprocess.run(
+            ["git", "pull", "--no-edit"],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            timeout=300,
+            check=False,
+        )
+        stdout = (result.stdout or "").strip()
+        stderr = (result.stderr or "").strip()
+        status = f"(code={result.returncode})"
+        if stdout:
+            print(f"[daily-git-pull] stdout {status}:\n{stdout}")
+        if stderr:
+            print(f"[daily-git-pull] stderr {status}:\n{stderr}")
+        if not stdout and not stderr:
+            print(f"[daily-git-pull] completed {status} with no output")
+    except FileNotFoundError:
+        # git not installed / not in PATH
+        print("[daily-git-pull] 'git' executable not found. Skipping.")
+    except Exception as exc:
+        print(f"[daily-git-pull] error: {exc}")
+
+
+def _seconds_until_next_run(target_hour: int, target_minute: int) -> float:
+    now = datetime.datetime.now()
+    next_run = now.replace(
+        hour=target_hour, minute=target_minute, second=0, microsecond=0
+    )
+    if next_run <= now:
+        next_run += datetime.timedelta(days=1)
+    return (next_run - now).total_seconds()
+
+
+def start_daily_git_pull_scheduler() -> None:
+    """Start a background thread that performs a `git pull` once per day.
+
+    Time can be configured with env vars `GIT_PULL_DAILY_HOUR` and
+    `GIT_PULL_DAILY_MINUTE` (defaults 3:00). Enable/disable via
+    `ENABLE_DAILY_GIT_PULL` (default enabled).
+    """
+    if os.getenv("ENABLE_DAILY_GIT_PULL", "1") not in {"1", "true", "True"}:
+        print("[daily-git-pull] disabled via ENABLE_DAILY_GIT_PULL")
+        return
+
+    try:
+        target_hour = int(os.getenv("GIT_PULL_DAILY_HOUR", "3"))
+        target_minute = int(os.getenv("GIT_PULL_DAILY_MINUTE", "0"))
+    except ValueError:
+        target_hour, target_minute = 3, 0
+
+    def scheduler_loop() -> None:
+        while True:
+            sleep_seconds = _seconds_until_next_run(target_hour, target_minute)
+            print(
+                f"[daily-git-pull] next run in ~{int(sleep_seconds)}s at {target_hour:02d}:{target_minute:02d}"
+            )
+            time.sleep(max(1, sleep_seconds))
+            _run_git_pull_once()
+            # Subsequent runs every 24h
+            time.sleep(24 * 60 * 60)
+
+    threading.Thread(target=scheduler_loop, daemon=True).start()
 
 
 @app.route("/")
@@ -171,6 +247,9 @@ def handle_set_marker(data):
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
+    # Avoid double-scheduling under the development reloader
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not os.getenv("FLASK_DEBUG"):
+        start_daily_git_pull_scheduler()
     socketio.run(
         app,
         host="0.0.0.0",
