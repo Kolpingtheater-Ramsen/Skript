@@ -50,7 +50,7 @@
         window.addEventListener('load', () => {
           navigator.serviceWorker
             .register('/sw.js')
-            .then(() => {
+            .then((registration) => {
               console.log('ServiceWorker registration successful')
             })
             .catch((err) => {
@@ -145,7 +145,9 @@
 
       <div class="checkbox-group">
         <input type="checkbox" id="show-actor-names" />
-        <label for="show-actor-names">Darstellernamen anzeigen</label>
+        <label for="show-actor-names"
+          >Akteurnamen statt Rollennamen anzeigen</label
+        >
       </div>
 
       <div id="checkboxes">

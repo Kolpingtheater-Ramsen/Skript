@@ -203,7 +203,14 @@ function createToC(data, selectedActor) {
     if (!scenes.has(row.Szene)) {
       scenes.set(row.Szene, new Set())
     }
-    if (row.Charakter) scenes.get(row.Szene).add(row.Charakter)
+    if (row.Charakter) {
+      const useActorNames = document.getElementById('show-actor-names')?.checked
+      const roleUpper = row.Charakter.trim().toUpperCase()
+      const display = useActorNames
+        ? window.roleToActor?.get(roleUpper) || row.Charakter
+        : row.Charakter
+      scenes.get(row.Szene).add(display)
+    }
   })
 
   const createTocContent = () => {
@@ -255,9 +262,14 @@ function createSceneOverview(sceneData, selectedActor) {
 
   sceneData.forEach((row) => {
     if (row.Charakter) {
-      actors.add(row.Charakter.trim())
+      const useActorNames = document.getElementById('show-actor-names')?.checked
+      const roleUpper = row.Charakter.trim().toUpperCase()
+      const display = useActorNames
+        ? window.roleToActor?.get(roleUpper) || row.Charakter.trim()
+        : row.Charakter.trim()
+      actors.add(display)
       if (row.Mikrofon) {
-        micros.set(row.Charakter, row.Mikrofon)
+        micros.set(display, row.Mikrofon)
       }
     }
   })
@@ -309,6 +321,7 @@ function createSceneOverview(sceneData, selectedActor) {
 function renderScript(data) {
   const container = document.getElementById('script-container')
   const selectedActor = document.getElementById('actor-select').value
+  const useActorNames = document.getElementById('show-actor-names')?.checked
   const showDirections = document.getElementById('show-directions').checked
   const showTechnical = document.getElementById('show-technical').checked
   const showLighting = document.getElementById('show-lighting').checked
@@ -486,22 +499,61 @@ function renderScript(data) {
     if (row.Charakter) {
       const nameSpan = document.createElement('div')
       nameSpan.className = 'actor-name'
+      const displayName = (() => {
+        if (!useActorNames) return row.Charakter
+        // roleToActor keys are uppercased roles
+        const actor = window.roleToActor?.get(row.Charakter)
+        return actor || row.Charakter
+      })()
       nameSpan.textContent =
         row.Mikrofon && showMicro
-          ? `${row.Charakter} (${row.Mikrofon})`
-          : row.Charakter
+          ? `${displayName} (${row.Mikrofon})`
+          : displayName
       div.appendChild(nameSpan)
     }
 
     const textDiv = document.createElement('div')
-    textDiv.textContent = row['Text/Anweisung']
+    const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
-    // Bold text for instruction
-    if (row.Kategorie === 'Anweisung') {
-      textDiv.innerHTML = textDiv.textContent.replace(
-        selectedActor,
-        `<b>${selectedActor}</b>`
-      )
+    // Prepare instruction text, optionally mapping role names to actor names
+    let displayText = row['Text/Anweisung'] || ''
+    if (
+      useActorNames &&
+      row.Kategorie === 'Anweisung' &&
+      window.roleToActor &&
+      window.roleToActor.size > 0
+    ) {
+      for (const [roleUpper, actorName] of window.roleToActor.entries()) {
+        try {
+          const pattern = new RegExp(`\\b${escapeRegExp(roleUpper)}\\b`, 'gi')
+          displayText = displayText.replace(pattern, actorName)
+        } catch (e) {
+          // Fallback: skip problematic patterns
+        }
+      }
+    }
+    textDiv.textContent = displayText
+
+    // Bold name in instruction according to toggle
+    if (row.Kategorie === 'Anweisung' && selectedActor) {
+      const nameToBold = useActorNames
+        ? window.roleToActor?.get(selectedActor) || selectedActor
+        : selectedActor
+      try {
+        const boldPattern = new RegExp(
+          `\\b${escapeRegExp(nameToBold)}\\b`,
+          'gi'
+        )
+        textDiv.innerHTML = textDiv.textContent.replace(
+          boldPattern,
+          `<b>${nameToBold}</b>`
+        )
+      } catch (e) {
+        // If regex fails, fall back to simple replace
+        textDiv.innerHTML = textDiv.textContent
+          .split(nameToBold)
+          .join(`<b>${nameToBold}</b>`)
+      }
     }
 
     div.appendChild(textDiv)
@@ -589,6 +641,19 @@ async function init() {
     row.Kategorie = row.Kategorie?.trim()
   })
 
+  // Build role -> actor mapping from Szene 0 rows where Kategorie == 'Rolle'
+  const roleToActor = new Map()
+  data.forEach((row) => {
+    if (row.Szene === '0' && row.Kategorie === 'Rolle') {
+      const role = row.Charakter?.trim().toUpperCase()
+      const actor = row['Text/Anweisung']?.trim()
+      if (role && actor) {
+        roleToActor.set(role, actor)
+      }
+    }
+  })
+  window.roleToActor = roleToActor
+
   populateActors(data)
   loadState()
   addContextSliderListeners()
@@ -606,12 +671,31 @@ async function init() {
       })
     })
 
+  // Persist and re-render for actor name toggle
+  const showActorNames = document.getElementById('show-actor-names')
+  if (showActorNames) {
+    const stored = localStorage.getItem('show-actor-names')
+    if (stored !== null) showActorNames.checked = stored === 'true'
+    showActorNames.addEventListener('change', () => {
+      localStorage.setItem('show-actor-names', showActorNames.checked)
+      renderScript(data)
+    })
+  }
+
   document.getElementById('actor-select').addEventListener('change', (e) => {
     // Show/hide blur-lines checkbox based on actor selection
 
     saveState()
     renderScript(data)
   })
+
+  // Re-render when toggling actor/role names to keep ToC and overview in sync
+  const showNamesToggle = document.getElementById('show-actor-names')
+  if (showNamesToggle) {
+    showNamesToggle.addEventListener('change', () => {
+      renderScript(data)
+    })
+  }
 
   document.getElementById('pink-mode').addEventListener('change', (e) => {
     if (e.target.checked) {
