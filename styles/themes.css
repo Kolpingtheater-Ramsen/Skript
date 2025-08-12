@@ -50,6 +50,11 @@ body.dark-mode .audio {
   color: rgb(128, 255, 136, 0.7);
 }
 
+body.dark-mode .props {
+  background: #401b07;
+  color: #fbd38d;
+}
+
 body.dark-mode .highlighted {
   background: #2b6cb0;
   border-left: 4px solid #63b3ed;
