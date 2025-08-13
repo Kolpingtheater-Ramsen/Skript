@@ -53,6 +53,10 @@
   padding-left: 15px;
 }
 
+.highlighted.instruction {
+  background: inherit !important;
+}
+
 /* Scene Elements */
 .scene-separator {
   border-top: 2px solid #4299e1;

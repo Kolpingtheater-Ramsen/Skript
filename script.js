@@ -175,22 +175,21 @@ async function loadScript() {
   }
 }
 
-// Populate actors dropdown
-function populateActors(data) {
-  const actors = [
-    ...new Set(
-      data
-        .filter((row) => row.Charakter && row.Szene && row.Szene > 0)
-        .map((row) => row.Charakter.trim())
-    ),
-  ].sort()
+function getActors(data) {
+  const actors = data.filter(
+    (row) => row.Charakter && row.Szene && row.Szene == 0
+  )
+  return actors.map((actor) => [actor.Charakter, actor['Text/Anweisung']])
+}
 
+// Populate actors dropdown
+function populateActors() {
   const select = document.getElementById('actor-select')
   select.innerHTML = '<option value="">Alle Charaktere</option>'
-  actors.forEach((actor) => {
+  window.actors.forEach(([roleName, actorName]) => {
     const option = document.createElement('option')
-    option.value = actor
-    option.textContent = actor
+    option.value = roleName
+    option.textContent = `${roleName} (${actorName})`
     select.appendChild(option)
   })
 }
@@ -364,7 +363,6 @@ function renderScript(data) {
   data.forEach((row, index) => {
     const state = { visible: false, isContext: false }
 
-    // Check if line should be visible based on filters
     if (
       (showDirections && row.Kategorie === 'Anweisung') ||
       (showTechnical && row.Kategorie === 'Technik') ||
@@ -489,7 +487,7 @@ function renderScript(data) {
       lightSpan.textContent = 'Licht'
       div.appendChild(lightSpan)
       div.classList.add('lighting')
-    } else if (row.Charakter === selectedActor && selectedActor) {
+    } else if (row.Charakter.includes(selectedActor) && selectedActor) {
       div.classList.add('highlighted')
       if (blurLines) {
         div.style.filter = 'blur(4px)'
@@ -500,7 +498,7 @@ function renderScript(data) {
     div.style.cursor = 'pointer'
     div.addEventListener('click', () => {
       markLine(div)
-      if (blurLines && row.Charakter === selectedActor) {
+      if (blurLines && row.Charakter.includes(selectedActor)) {
         div.style.filter = div.style.filter === 'none' ? 'blur(4px)' : 'none'
       }
     })
@@ -524,6 +522,10 @@ function renderScript(data) {
 
     const textDiv = document.createElement('div')
     const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+    if (selectedActor && row['Text/Anweisung'].includes(selectedActor)) {
+      div.classList.add('highlighted')
+    }
 
     // Prepare instruction text, optionally mapping role names to actor names
     let displayText = row['Text/Anweisung'] || ''
@@ -642,8 +644,12 @@ function loadState() {
 
 // Initialize
 async function init() {
-  const data = await loadScript()
+  let data = await loadScript()
   window.scriptData = data
+  window.actors = getActors(data)
+
+  // Remove szene 0
+  data = data.filter((row) => row.Szene !== '0')
 
   // Strip row.Charakter to prevent multiple entries for the same actor
   data.forEach((row) => {
