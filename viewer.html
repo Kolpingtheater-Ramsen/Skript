@@ -430,9 +430,10 @@
           if (row.Charakter) {
             const nameSpan = document.createElement('div')
             nameSpan.className = 'actor-name'
-            const actorName = window.actors.find(
-              ([roleName]) => roleName === row.Charakter
-            )[1]
+            const actorName =
+              window.actors.find(
+                ([roleName]) => roleName === row.Charakter
+              )?.[1] || '?'
             nameSpan.textContent = `${row.Charakter} (${actorName})`
             div.appendChild(nameSpan)
           }
