@@ -198,6 +198,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .actor-micro {
@@ -350,6 +353,20 @@
         }
       }
 
+      function getActors(data) {
+        const actors = data.filter(
+          (row) => row.Charakter && row.Szene && row.Szene == 0
+        )
+        const roleName = actors.map((row) => row.Charakter.trim())
+        const actorName = actors.map((row) => row['Text/Anweisung'].trim())
+        // [[roleName, actorName], [roleName, actorName], ...]
+        return [
+          ...new Map(
+            actors.map((actor) => [actor.Charakter, actor['Text/Anweisung']])
+          ).entries(),
+        ]
+      }
+
       // Render script
       function renderScript(data) {
         const container = document.getElementById('script-container')
@@ -358,6 +375,10 @@
         let currentScene = ''
 
         data.forEach((row, index) => {
+          if (row.Szene == 0) {
+            return
+          }
+
           // Check for new scene
           if (row.Szene !== currentScene) {
             const anchor = document.createElement('a')
@@ -409,9 +430,10 @@
           if (row.Charakter) {
             const nameSpan = document.createElement('div')
             nameSpan.className = 'actor-name'
-            nameSpan.textContent = row.Mikrofon
-              ? `${row.Charakter} (${row.Mikrofon})`
-              : row.Charakter
+            const actorName = window.actors.find(
+              ([roleName]) => roleName === row.Charakter
+            )[1]
+            nameSpan.textContent = `${row.Charakter} (${actorName})`
             div.appendChild(nameSpan)
           }
 
@@ -439,6 +461,7 @@
       // Initialize
       async function init() {
         scriptData = await loadScript() // Store in global variable
+        window.actors = getActors(scriptData)
         renderScript(scriptData)
 
         // Start clock
@@ -538,7 +561,7 @@
           const li = document.createElement('li')
           li.innerHTML = `
             <span>${actor}</span>
-            ${micro ? `<span class="actor-micro">Mikro ${micro}</span>` : ''}
+            ${micro ? `<span class="actor-micro">${micro}</span>` : ''}
           `
           list.appendChild(li)
         })
