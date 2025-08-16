@@ -197,18 +197,20 @@ function populateActors() {
 // ToC
 function createToC(data, selectedActor) {
   // Get all scenes & actors in each scene
-  const scenes = new Map()
+  const scenes = {}
   data.forEach((row) => {
-    if (!scenes.has(row.Szene)) {
-      scenes.set(row.Szene, new Set())
-    }
-    if (row.Charakter) {
-      const useActorNames = document.getElementById('show-actor-names')?.checked
-      const roleUpper = row.Charakter.trim().toUpperCase()
-      const display = useActorNames
-        ? window.roleToActor?.get(roleUpper) || row.Charakter
-        : row.Charakter
-      scenes.get(row.Szene).add(display)
+    if (row.Szene) {
+      if (!scenes[row.Szene]) {
+        scenes[row.Szene] = false
+      }
+      if (row.Charakter && row.Charakter == selectedActor) {
+        scenes[row.Szene] = true
+      } else if (
+        row.Kategorie === 'Anweisung' &&
+        row['Text/Anweisung'].includes(selectedActor)
+      ) {
+        scenes[row.Szene] = true
+      }
     }
   })
 
@@ -220,10 +222,10 @@ function createToC(data, selectedActor) {
     title.textContent = 'Inhaltsverzeichnis'
     toc.appendChild(title)
 
-    scenes.forEach((actors, scene) => {
+    Object.keys(scenes).forEach((scene) => {
       const a = document.createElement('a')
       a.href = `#scene-${scene}`
-      if (actors.has(selectedActor)) {
+      if (scenes[scene]) {
         a.style.fontWeight = 'bold'
         a.style.borderLeft = '4px solid #4299e1'
       }
@@ -262,10 +264,13 @@ function createSceneOverview(sceneData, selectedActor) {
   sceneData.forEach((row) => {
     if (row.Charakter) {
       const useActorNames = document.getElementById('show-actor-names')?.checked
-      const roleUpper = row.Charakter.trim().toUpperCase()
-      const display = useActorNames
-        ? window.roleToActor?.get(roleUpper) || row.Charakter.trim()
-        : row.Charakter.trim()
+      let display
+      if (useActorNames) {
+        const actor = window.actors?.find((a) => a[0] === row.Charakter)?.[1]
+        display = actor ? `${row.Charakter} (${actor})` : row.Charakter
+      } else {
+        display = row.Charakter
+      }
       actors.add(display)
       if (row.Mikrofon) {
         micros.set(display, row.Mikrofon)
@@ -534,10 +539,10 @@ function renderScript(data) {
     if (
       useActorNames &&
       row.Kategorie === 'Anweisung' &&
-      window.roleToActor &&
-      window.roleToActor.size > 0
+      window.actors &&
+      window.actors.size > 0
     ) {
-      for (const [roleUpper, actorName] of window.roleToActor.entries()) {
+      for (const [roleUpper, actorName] of window.actors) {
         try {
           const pattern = new RegExp(`\\b${escapeRegExp(roleUpper)}\\b`, 'gi')
           displayText = displayText.replace(
@@ -554,7 +559,7 @@ function renderScript(data) {
     // Bold name in instruction according to toggle
     if (row.Kategorie === 'Anweisung' && selectedActor) {
       const nameToBold = useActorNames
-        ? window.roleToActor?.get(selectedActor) || selectedActor
+        ? window.actors?.find((a) => a[0] === selectedActor) || selectedActor
         : selectedActor
       try {
         const boldPattern = new RegExp(
@@ -661,19 +666,6 @@ async function init() {
     row.Mikrofon = row.Mikrofon?.trim()
     row.Kategorie = row.Kategorie?.trim()
   })
-
-  // Build role -> actor mapping from Szene 0 rows where Kategorie == 'Rolle'
-  const roleToActor = new Map()
-  data.forEach((row) => {
-    if (row.Szene === '0' && row.Kategorie === 'Rolle') {
-      const role = row.Charakter?.trim().toUpperCase()
-      const actor = row['Text/Anweisung']?.trim()
-      if (role && actor) {
-        roleToActor.set(role, actor)
-      }
-    }
-  })
-  window.roleToActor = roleToActor
 
   populateActors(data)
   loadState()
