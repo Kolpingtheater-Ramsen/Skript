@@ -507,12 +507,14 @@ function renderScript(data) {
     if (row.Charakter) {
       const nameSpan = document.createElement('div')
       nameSpan.className = 'actor-name'
-      const displayName = (() => {
-        if (!useActorNames) return row.Charakter
-        // roleToActor keys are uppercased roles
-        const actor = window.roleToActor?.get(row.Charakter)
-        return actor ? `${row.Charakter} (${actor})` : row.Charakter
-      })()
+      const useActorNames = document.getElementById('show-actor-names')?.checked
+      let displayName
+      if (useActorNames) {
+        const actor = window.actors.find((a) => a[0] === row.Charakter)
+        displayName = actor ? `${row.Charakter} (${actor[1]})` : row.Charakter
+      } else {
+        displayName = row.Charakter
+      }
       nameSpan.textContent =
         row.Mikrofon && showMicro
           ? `${displayName} (${row.Mikrofon})`
