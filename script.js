@@ -374,7 +374,7 @@ function renderScript(data) {
       (showLighting && row.Kategorie === 'Licht') ||
       (showEinspieler && row.Kategorie === 'Einspieler') ||
       (showRequisiten && row.Kategorie === 'Requisiten') ||
-      (showActorText && row.Charakter)
+      (showActorText && row.Charakter && row.Kategorie === 'Schauspieler')
     ) {
       state.visible = true
 
