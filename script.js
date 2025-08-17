@@ -1,5 +1,5 @@
 // Socket.io initialization
-const socket = io({
+const socket = io('https://skript.logge.top', {
   transports: ['websocket'],
   reconnectionAttempts: Infinity,
   reconnectionDelay: 1000,
