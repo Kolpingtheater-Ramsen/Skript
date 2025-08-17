@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kolpingtheater Ramsen - Schauspieler-Viewer</title>
+
+    <style>
+      :root {
+        --primary-color: #4299e1;
+        --text-color: #ffffff;
+        --bg-color: #000000;
+        --highlight-color: #2c5282;
+        --marked-color: #e53e3e;
+        --ok-color: #48bb78;
+        --warn-color: #ed8936;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+        overflow: hidden; /* No page scrolling */
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: Arial, sans-serif;
+      }
+
+      .header {
+        height: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        border-bottom: 2px solid var(--primary-color);
+      }
+
+      .header h1 {
+        font-size: 36px;
+        color: var(--primary-color);
+      }
+
+      .status {
+        display: flex;
+        gap: 24px;
+        font-size: 22px;
+        color: var(--primary-color);
+      }
+
+      .content {
+        height: calc(100% - 80px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 16px;
+      }
+
+      .scene-panel {
+        border: 2px solid var(--primary-color);
+        border-radius: 8px;
+        padding: 16px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto auto;
+        gap: 12px;
+        min-height: 0; /* enable children to size within */
+      }
+
+      .scene-title {
+        font-size: 48px;
+        color: var(--primary-color);
+      }
+
+      .scene-summary {
+        font-size: 26px;
+        color: #cbd5e0;
+      }
+
+      .section-title {
+        font-size: 22px;
+        color: var(--primary-color);
+        margin-bottom: 6px;
+      }
+
+      .roles {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        min-height: 0;
+      }
+
+      .roles-list {
+        border: 1px solid var(--highlight-color);
+        border-radius: 6px;
+        padding: 12px;
+        overflow: hidden; /* no manual scroll; we will auto-scroll if needed */
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .roles-list ul {
+        list-style: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* two columns to fit on screen */
+        gap: 10px 18px;
+        font-size: 24px;
+      }
+
+      .roles-list li {
+        background: var(--highlight-color);
+        border-radius: 4px;
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .role-name {
+        font-weight: bold;
+        color: var(--text-color);
+      }
+
+      .role-meta {
+        color: var(--primary-color);
+        font-size: 20px;
+        margin-left: 12px;
+        white-space: nowrap;
+      }
+
+      /* Instructions are hidden in this view */
+
+      .progress {
+        height: 24px;
+        border: 1px solid var(--highlight-color);
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--ok-color),
+          var(--primary-color)
+        );
+        width: 0%;
+        transition: width 200ms ease-out;
+      }
+
+      .footer-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+        color: #a0aec0;
+      }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="papaparse.min.js"></script>
+    <script>
+      let socket = null
+      let scriptData = []
+      let roleToActor = new Map()
+      let scenesOrder = []
+      let currentMarkerIndex = null
+      let sceneToIndices = new Map()
+      let sceneBoundaries = [] // [{ scene, startIndex }] sorted by startIndex
+      async function ensurePapaLoaded() {
+        if (typeof window.Papa !== 'undefined') return
+        // Try to load dynamically as a fallback
+        await new Promise((resolve, reject) => {
+          const existing = document.querySelector(
+            'script[data-name="papaparse"]'
+          )
+          if (existing) {
+            existing.addEventListener('load', resolve, { once: true })
+            existing.addEventListener(
+              'error',
+              () => reject(new Error('Failed to load PapaParse')),
+              { once: true }
+            )
+            return
+          }
+          const s = document.createElement('script')
+          s.src = 'papaparse.min.js'
+          s.async = false
+          s.setAttribute('data-name', 'papaparse')
+          s.onload = resolve
+          s.onerror = () => reject(new Error('Failed to load PapaParse'))
+          document.head.appendChild(s)
+        })
+      }
+
+      // Auto-scroll helpers for inner boxes (no manual scrolling on page)
+      let autoScrollIntervals = []
+      function stopAutoScroll() {
+        autoScrollIntervals.forEach((i) => clearInterval(i))
+        autoScrollIntervals = []
+      }
+      function startAutoScrollIfNeeded(container) {
+        if (!container) return
+        const scrollable = container
+        if (scrollable.scrollHeight <= scrollable.clientHeight) return
+        const maxScroll = scrollable.scrollHeight - scrollable.clientHeight
+        let dir = 1
+        const speed = 0.75
+        const interval = setInterval(() => {
+          scrollable.scrollTop += dir * speed
+          if (scrollable.scrollTop >= maxScroll) dir = -1
+          if (scrollable.scrollTop <= 0) dir = 1
+        }, 16)
+        autoScrollIntervals.push(interval)
+      }
+
+      function updateConnectionStatus(text) {
+        const el = document.getElementById('connection')
+        if (el) el.textContent = text
+      }
+
+      function updateDirectorStatus(name) {
+        const el = document.getElementById('director')
+        if (el) el.textContent = `Director: ${name || 'Niemand'}`
+      }
+
+      async function loadScript() {
+        try {
+          const response = await fetch(
+            'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980'
+          )
+          if (!response.ok) throw new Error('Network response was not ok')
+          const csvText = await response.text()
+          const data = Papa.parse(csvText, { header: true }).data
+          return data
+        } catch (e) {
+          console.error('Error loading script:', e)
+          return []
+        }
+      }
+
+      function normalizeData(data) {
+        return data.map((row) => ({
+          Szene: (row.Szene || '').toString().trim(),
+          Kategorie: (row.Kategorie || '').toString().trim().toUpperCase(),
+          Charakter: (row.Charakter || '').toString().trim().toUpperCase(),
+          Mikrofon: (row.Mikrofon || '').toString().trim(),
+          Text: (row['Text/Anweisung'] || '').toString().trim(),
+          raw: row,
+        }))
+      }
+
+      function buildRoleMapping(data) {
+        const map = new Map()
+        data.forEach((r) => {
+          if (r.Szene === '0' && r.Charakter) {
+            map.set(r.Charakter, r.Text)
+          }
+        })
+        return map
+      }
+
+      function collectScenes(data) {
+        const unique = [
+          ...new Set(
+            data.filter((r) => r.Szene && r.Szene !== '0').map((r) => r.Szene)
+          ),
+        ]
+        return unique.sort((a, b) => (parseInt(a) || 0) - (parseInt(b) || 0))
+      }
+
+      function buildSceneIndexMap(data) {
+        const map = new Map()
+        data.forEach((r, i) => {
+          if (!r.Szene || r.Szene === '0') return
+          // if (r.Kategorie === 'SZENENBEGINN') return
+          const scene = r.Szene
+          if (!map.has(scene)) map.set(scene, [])
+          map.get(scene).push(i)
+        })
+        return map
+      }
+
+      function buildSceneBoundaries(data) {
+        const boundaries = []
+        scenesOrder.forEach((scene) => {
+          // Prefer explicit scene start; fallback to first row of the scene
+          let startIdx = data.findIndex(
+            (r) => r.Szene === scene && r.Kategorie === 'SZENENBEGINN'
+          )
+          if (startIdx === -1) {
+            startIdx = data.findIndex((r) => r.Szene === scene)
+          }
+          if (startIdx !== -1) {
+            boundaries.push({ scene, startIndex: startIdx })
+          }
+        })
+        boundaries.sort((a, b) => a.startIndex - b.startIndex)
+        sceneBoundaries = boundaries
+      }
+
+      function getSceneSummary(scene) {
+        const row = scriptData.find(
+          (r) => r.Szene === scene && r.Kategorie === 'SZENENBEGINN'
+        )
+        return row ? row.Text : ''
+      }
+
+      function escapeRegExp(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      }
+
+      function getSceneRoles(scene) {
+        const roles = new Map()
+        // Roles explicitly present in the scene
+        scriptData.forEach((r) => {
+          if (r.Szene !== scene) return
+
+          // Fields that can contain a role:
+          // Text
+          // Schauspieler
+
+          // Check if one of the fields includes a role (roleToActor)
+          for (const [role, actor] of roleToActor) {
+            if (r.Text.includes(role)) {
+              roles.set(role)
+            }
+            if (r.Charakter.includes(role)) {
+              roles.set(role)
+            }
+          }
+        })
+
+        // Add roles mentioned in instructions
+        const instructionTexts = scriptData
+          .filter(
+            (r) => r.Szene === scene && r.Kategorie === 'ANWEISUNG' && r.Text
+          )
+          .map((r) => r.Text)
+
+        if (instructionTexts.length && roleToActor.size) {
+          for (const role of roleToActor.keys()) {
+            try {
+              const pattern = new RegExp(`\\b${escapeRegExp(role)}\\b`, 'i')
+              if (instructionTexts.some((t) => pattern.test(t))) {
+                if (!roles.has(role)) roles.set(role, '')
+              }
+            } catch (e) {
+              // skip invalid patterns
+            }
+          }
+        }
+
+        // Sort by role name
+        return Array.from(roles.entries()).sort((a, b) => {
+          const ra = a[0]
+          const rb = b[0]
+          return ra.localeCompare(rb)
+        })
+      }
+
+      function getSceneInstructions(scene) {
+        return scriptData
+          .filter(
+            (r) => r.Szene === scene && r.Kategorie === 'ANWEISUNG' && r.Text
+          )
+          .map((r) => r.Text)
+      }
+
+      function getNextScene(scene) {
+        const idx = scenesOrder.indexOf(scene)
+        if (idx === -1) return null
+        return idx < scenesOrder.length - 1 ? scenesOrder[idx + 1] : null
+      }
+
+      function getSceneIndices(scene) {
+        return sceneToIndices.get(scene) || []
+      }
+
+      function computeProgress() {
+        let currentIdx = currentMarkerIndex
+        for (const [idx, items] of sceneToIndices) {
+          const count = items.length
+          if (count > currentIdx) {
+            return Math.floor((currentIdx / count) * 100)
+          } else {
+            currentIdx -= count
+          }
+        }
+        return 100
+      }
+
+      function getSceneFromMarker() {
+        let currentIdx = currentMarkerIndex
+        for (const [idx, items] of sceneToIndices) {
+          const count = items.length
+          if (count > currentIdx) {
+            return idx
+          } else {
+            currentIdx -= count
+          }
+        }
+        return null
+      }
+
+      function renderSceneBox(containerId, titleText, scene) {
+        const box = document.getElementById(containerId)
+        box.querySelector('.scene-title').textContent = `${titleText} ${
+          scene || '-'
+        }`
+        box.querySelector('.scene-summary').textContent = scene
+          ? getSceneSummary(scene) || '—'
+          : '—'
+
+        // Roles
+        const rolesContainer = box.querySelector('.roles-list')
+        rolesContainer.innerHTML = ''
+        if (scene) {
+          const roles = getSceneRoles(scene)
+          const ul = document.createElement('ul')
+          roles.forEach(([role]) => {
+            const li = document.createElement('li')
+            const actor = roleToActor.get(role) || '?'
+            const nameSpan = document.createElement('span')
+            nameSpan.className = 'role-name'
+            nameSpan.textContent = `${role} (${actor})`
+            li.appendChild(nameSpan)
+            ul.appendChild(li)
+          })
+          rolesContainer.appendChild(ul)
+        }
+
+        // Progress (only for current scene box)
+        if (box.id === 'current-scene-box') {
+          const p = computeProgress()
+          const bar = box.querySelector('.progress-bar')
+          if (bar) {
+            bar.style.width = `${p}%`
+          }
+          const footerPct = box.querySelector('.footer-info span:last-child')
+          if (footerPct) footerPct.textContent = `${p}%`
+        }
+
+        // Auto-scroll long sections
+        // Stop previous intervals and start new ones after DOM update
+        setTimeout(() => {
+          stopAutoScroll()
+          startAutoScrollIfNeeded(rolesContainer)
+        }, 50)
+      }
+
+      function updateBothPanels() {
+        const currentScene = getSceneFromMarker() || scenesOrder[0] || null
+        const nextScene = getNextScene(currentScene)
+        renderSceneBox('current-scene-box', 'Szene', currentScene)
+        renderSceneBox('next-scene-box', 'Nächste Szene', nextScene)
+      }
+
+      function initSocket() {
+        socket = io('https://skript.logge.top', {
+          transports: ['websocket'],
+          reconnectionAttempts: Infinity,
+          reconnectionDelay: 1000,
+          timeout: 20000,
+        })
+
+        socket.on('connect', () => {
+          updateConnectionStatus('Verbunden')
+        })
+        socket.on('connect_error', () => {
+          updateConnectionStatus('Verbindungsfehler')
+        })
+        socket.on('disconnect', () => {
+          updateConnectionStatus('Getrennt')
+        })
+
+        socket.on('set_director', (data) => {
+          updateDirectorStatus(data?.director)
+        })
+
+        socket.on('marker_update', (data) => {
+          if (!Array.isArray(scriptData) || !scriptData.length) return
+          currentMarkerIndex = data?.index ?? null
+          if (currentMarkerIndex === null) return
+          updateBothPanels()
+        })
+
+        socket.on('marker_clear', () => {
+          currentMarkerIndex = null
+        })
+      }
+
+      async function init() {
+        await ensurePapaLoaded()
+        updateConnectionStatus('Verbinde...')
+        scriptData = normalizeData(await loadScript())
+        roleToActor = buildRoleMapping(scriptData)
+        scenesOrder = collectScenes(scriptData)
+        sceneToIndices = buildSceneIndexMap(scriptData)
+        buildSceneBoundaries(scriptData)
+
+        initSocket()
+
+        updateBothPanels()
+
+        // Clock
+        const clockEl = document.getElementById('clock')
+        setInterval(() => {
+          const now = new Date()
+          if (clockEl) clockEl.textContent = now.toLocaleTimeString('de-DE')
+        }, 1000)
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init)
+      } else {
+        init()
+      }
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Schauspieler-Viewer</h1>
+      <div class="status">
+        <span id="connection">Status: —</span>
+        <span id="director">Director: Niemand</span>
+        <span id="clock">00:00:00</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div id="current-scene-box" class="scene-panel">
+        <div class="scene-title">Szene -</div>
+        <div class="scene-summary">—</div>
+        <div class="roles">
+          <div class="section-title">Rollen (mit Schauspieler)</div>
+          <div class="roles-list"></div>
+        </div>
+        <div class="footer-info">
+          <span>Fortschritt</span>
+          <span></span>
+        </div>
+        <div class="progress">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+
+      <div id="next-scene-box" class="scene-panel">
+        <div class="scene-title">Nächste Szene -</div>
+        <div class="scene-summary">—</div>
+        <div class="roles">
+          <div class="section-title">Rollen (mit Schauspieler)</div>
+          <div class="roles-list"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
