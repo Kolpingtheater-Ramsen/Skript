@@ -578,6 +578,24 @@ function renderScript(data) {
       }
     }
 
+    // Add actor name to Anweisung if useActorNames is true
+    if (
+      useActorNames &&
+      (row.Kategorie === 'Anweisung' || row.Kategorie === 'Technik')
+    ) {
+      for (const [roleUpper, actorName] of window.actors) {
+        try {
+          const pattern = new RegExp(`\\b${escapeRegExp(roleUpper)}\\b`, 'gi')
+          textDiv.innerHTML = textDiv.textContent.replace(
+            pattern,
+            `${roleUpper} (${actorName})`
+          )
+        } catch (e) {
+          // Fallback: skip problematic patterns
+        }
+      }
+    }
+
     div.appendChild(textDiv)
     container.appendChild(div)
   })
