@@ -61,12 +61,18 @@
         // Listen for messages from service worker
         navigator.serviceWorker.addEventListener('message', (event) => {
           if (event.data.type === 'CONTENT_UPDATED') {
-            if (
-              confirm(
-                'Eine neue Version ist verfügbar. Möchten Sie die Seite neu laden?'
-              )
-            ) {
-              window.location.reload()
+            // Show toast prompting user to reload
+            const toast = document.getElementById('update-toast')
+            if (toast) {
+              toast.classList.add('show')
+            } else {
+              if (
+                confirm(
+                  'Eine neue Version ist verfügbar. Möchten Sie die Seite neu laden?'
+                )
+              ) {
+                window.location.reload()
+              }
             }
           }
         })
@@ -282,6 +288,13 @@
 
     <div id="script-container" class="script-container">
       <!-- Script content will be inserted here -->
+    </div>
+
+    <!-- Update available toast -->
+    <div id="update-toast" class="toast" role="status" aria-live="polite">
+      <span>Neue Version verfügbar.</span>
+      <button type="button" class="toast-action" onclick="window.location.reload()">Neu laden</button>
+      <button type="button" class="toast-close" onclick="this.parentElement.classList.remove('show')" aria-label="Schließen">×</button>
     </div>
 
     <!-- Cloudflare Web Analytics -->

@@ -89,6 +89,68 @@ body.dark-mode .marked-line {
   border-left: 4px solid #68d391 !important;
 }
 
+/* Toast - dark inherits, ensure contrast */
+body.dark-mode .toast {
+  background: #2d3748;
+  color: #edf2f7;
+}
+
+/* Modal styles for dark mode */
+body.dark-mode .modal {
+  background: #2d3748;
+  color: #cbd5e0;
+}
+
+body.dark-mode .modal-header {
+  border-bottom: 1px solid #4a5568;
+}
+
+body.dark-mode .modal-footer {
+  border-top: 1px solid #4a5568;
+}
+
+body.dark-mode .modal-close {
+  color: #cbd5e0;
+}
+
+body.dark-mode .modal-close:hover {
+  background: #4a5568;
+}
+
+/* Form elements in dark mode */
+body.dark-mode select {
+  background: #2d3748;
+  border-color: #4a5568;
+  color: #cbd5e0;
+}
+
+body.dark-mode select:hover {
+  border-color: #63b3ed;
+}
+
+body.dark-mode select:focus {
+  border-color: #63b3ed;
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="range"] {
+  background: #2d3748;
+  border-color: #4a5568;
+  color: #cbd5e0;
+}
+
+body.dark-mode input[type="text"]:focus,
+body.dark-mode input[type="password"]:focus {
+  border-color: #63b3ed;
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+}
+
+body.dark-mode label {
+  color: #cbd5e0;
+}
+
 /* Pink Mode */
 body.pink-mode {
   background: #fff0f6;
@@ -148,6 +210,69 @@ body.pink-mode .fab:hover {
 
 body.pink-mode .marked-line {
   border-left: 4px solid #ed64a6 !important;
+}
+
+/* Toast - pink */
+body.pink-mode .toast {
+  background: #fff5f7;
+  color: #702459;
+  box-shadow: 0 6px 20px rgba(213, 63, 140, 0.15);
+}
+
+/* Modal styles for pink mode */
+body.pink-mode .modal {
+  background: #fff5f7;
+  color: #702459;
+}
+
+body.pink-mode .modal-header {
+  border-bottom: 1px solid #feb2d0;
+}
+
+body.pink-mode .modal-footer {
+  border-top: 1px solid #feb2d0;
+}
+
+body.pink-mode .modal-close {
+  color: #97266d;
+}
+
+body.pink-mode .modal-close:hover {
+  background: #fdf2f8;
+}
+
+/* Form elements in pink mode */
+body.pink-mode select {
+  background: white;
+  border-color: #feb2d0;
+  color: #702459;
+}
+
+body.pink-mode select:hover {
+  border-color: #d53f8c;
+}
+
+body.pink-mode select:focus {
+  border-color: #d53f8c;
+  box-shadow: 0 0 0 3px rgba(213, 63, 140, 0.2);
+}
+
+body.pink-mode input[type="text"],
+body.pink-mode input[type="password"],
+body.pink-mode input[type="range"] {
+  background: white;
+  border-color: #feb2d0;
+  color: #702459;
+}
+
+body.pink-mode input[type="text"]:focus,
+body.pink-mode input[type="password"]:focus {
+  border-color: #d53f8c;
+  box-shadow: 0 0 0 3px rgba(213, 63, 140, 0.2);
+}
+
+body.pink-mode label {
+  color: #702459;
 }
 
 /* Director Mode */
