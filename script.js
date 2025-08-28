@@ -791,6 +791,25 @@ function closeSidebar() {
   navToggle.textContent = '☰'
 }
 
+// Settings modal helpers
+function openSettingsModal() {
+  const overlay = document.getElementById('settings-modal-overlay')
+  const modal = document.getElementById('settings-modal')
+  if (overlay && modal) {
+    overlay.classList.add('active')
+    modal.classList.add('active')
+  }
+}
+
+function closeSettingsModal() {
+  const overlay = document.getElementById('settings-modal-overlay')
+  const modal = document.getElementById('settings-modal')
+  if (overlay && modal) {
+    overlay.classList.remove('active')
+    modal.classList.remove('active')
+  }
+}
+
 // Add this function before updateCurrentScene
 function getCurrentSceneFromScroll() {
   const scenes = document.querySelectorAll('[name^="scene-"]')

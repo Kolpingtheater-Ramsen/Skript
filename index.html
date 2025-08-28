@@ -101,11 +101,11 @@
         }
       })
 
-      // Add the install button to the nav bar
+      // Add the install button to the settings modal footer
       window.addEventListener('load', () => {
-        const navBar = document.querySelector('.nav-bar')
-        if (navBar) {
-          navBar.appendChild(installButton)
+        const container = document.getElementById('install-button-container')
+        if (container) {
+          container.appendChild(installButton)
         }
       })
     </script>
@@ -125,6 +125,7 @@
         <img src="logo.png" alt="Kolpingtheater Ramsen Logo" />
         <h1 id="current-scene">Kolpingtheater Ramsen - Drehbuch Viewer</h1>
       </div>
+      <button class="nav-settings" onclick="openSettingsModal()">⚙️</button>
       <button class="nav-toggle" onclick="toggleSidebar()">☰</button>
     </div>
 
@@ -132,181 +133,150 @@
     <div class="sidebar"></div>
     <div class="sidebar-overlay" onclick="closeSidebar()"></div>
 
-    <div class="controls no-print">
-      <h3>Einstellungen</h3>
-      <div>
-        <label for="actor-select">Schauspieler auswählen:</label>
-        <div class="select-container">
-          <select id="actor-select">
-            <option value="">Alle Schauspieler</option>
-          </select>
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settings-modal-overlay" onclick="closeSettingsModal()"></div>
+    <div class="modal" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="modal-header">
+        <h3 id="settings-title">Einstellungen</h3>
+        <button class="modal-close" onclick="closeSettingsModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="controls no-print">
+          <div>
+            <label for="actor-select">Schauspieler auswählen:</label>
+            <div class="select-container">
+              <select id="actor-select">
+                <option value="">Alle Schauspieler</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="show-actor-names" />
+            <label for="show-actor-names">Akteurnamen zu Rollennamen anzeigen</label>
+          </div>
+
+          <div id="checkboxes">
+            <div class="checkbox-group">
+              <input type="checkbox" id="blur-lines" />
+              <label for="blur-lines">Meine Text verstecken</label>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="show-directions" checked />
+              <label for="show-directions">Bühnenanweisungen anzeigen</label>
+              <div class="context-slider-group" id="directions-context-group">
+                <label for="directions-context">Kontext Zeilen:</label>
+                <input type="range" id="directions-context" min="0" max="5" value="0" />
+                <span id="directions-context-value">0</span>
+              </div>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="show-technical" checked />
+              <label for="show-technical">Technische Informationen anzeigen</label>
+              <div class="context-slider-group" id="technical-context-group">
+                <label for="technical-context">Kontext Zeilen:</label>
+                <input type="range" id="technical-context" min="0" max="5" value="0" />
+                <span id="technical-context-value">0</span>
+              </div>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="show-lighting" checked />
+              <label for="show-lighting">Beleuchtungshinweise anzeigen</label>
+              <div class="context-slider-group" id="lighting-context-group">
+                <label for="lighting-context">Kontext Zeilen:</label>
+                <input type="range" id="lighting-context" min="0" max="5" value="0" />
+                <span id="lighting-context-value">0</span>
+              </div>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="show-actor-text" checked />
+              <label for="show-actor-text">Schauspielertexte anzeigen</label>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="show-micro" checked />
+              <label for="show-micro">Mikrofon anzeigen</label>
+            </div>
+
+            <!-- Einspieler -->
+            <div class="checkbox-group">
+              <input type="checkbox" id="show-einspieler" checked />
+              <label for="show-einspieler">Einspieler anzeigen</label>
+              <div class="context-slider-group" id="einspieler-context-group">
+                <label for="einspieler-context">Kontext Zeilen:</label>
+                <input type="range" id="einspieler-context" min="0" max="5" value="0" />
+                <span id="einspieler-context-value">0</span>
+              </div>
+            </div>
+
+            <!-- Requisiten -->
+            <div class="checkbox-group">
+              <input type="checkbox" id="show-requisiten" checked />
+              <label for="show-requisiten">Requisiten anzeigen</label>
+              <div class="context-slider-group" id="requisiten-context-group">
+                <label for="requisiten-context">Kontext Zeilen:</label>
+                <input type="range" id="requisiten-context" min="0" max="5" value="0" />
+                <span id="requisiten-context-value">0</span>
+              </div>
+            </div>
+
+            <!-- Szenenübersicht -->
+            <div class="checkbox-group">
+              <input type="checkbox" id="show-scene-overview" checked />
+              <label for="show-scene-overview">Szenenübersicht anzeigen</label>
+            </div>
+
+            <!-- Dark Mode -->
+            <div class="checkbox-group">
+              <input type="checkbox" id="dark-mode" />
+              <label for="dark-mode">Dark Mode</label>
+            </div>
+
+            <!-- Pink Mode -->
+            <div class="checkbox-group">
+              <input type="checkbox" id="pink-mode" />
+              <label for="pink-mode">Pink Mode</label>
+            </div>
+
+            <!-- Autoscroll -->
+            <div class="checkbox-group">
+              <input type="checkbox" id="autoscroll" />
+              <label for="autoscroll">Automatisch scrollen (Director Mode)</label>
+            </div>
+
+            <div>
+              <button onclick="window.print()">Als PDF drucken</button>
+            </div>
+
+            <!-- Link to Suggestor -->
+            <div class="checkbox-group">
+              <a href="suggestor.html" class="button">Rollenvorschläge für die Probe</a>
+            </div>
+          </div>
+
+          <!-- Collapsible Director -->
+          <div class="director-section">
+            <button class="director-toggle" onclick="toggleDirectorPanel()">
+              <span>Director Mode</span>
+              <span id="director-status">Aktueller Director: Niemand</span>
+            </button>
+            <div class="director-content collapsed">
+              <div class="director-inputs">
+                <input type="text" id="name" placeholder="Name" class="director-input" />
+                <input type="password" id="password" placeholder="Passwort" class="director-input" />
+                <button onclick="toggleDirector()">Director werden</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="checkbox-group">
-        <input type="checkbox" id="show-actor-names" />
-        <label for="show-actor-names"
-          >Akteurnamen zu Rollennamen anzeigen</label
-        >
-      </div>
-
-      <div id="checkboxes">
-        <div class="checkbox-group">
-          <input type="checkbox" id="blur-lines" />
-          <label for="blur-lines">Meine Text verstecken</label>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-directions" checked />
-          <label for="show-directions">Bühnenanweisungen anzeigen</label>
-          <div class="context-slider-group" id="directions-context-group">
-            <label for="directions-context">Kontext Zeilen:</label>
-            <input
-              type="range"
-              id="directions-context"
-              min="0"
-              max="5"
-              value="0"
-            />
-            <span id="directions-context-value">0</span>
-          </div>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-technical" checked />
-          <label for="show-technical">Technische Informationen anzeigen</label>
-          <div class="context-slider-group" id="technical-context-group">
-            <label for="technical-context">Kontext Zeilen:</label>
-            <input
-              type="range"
-              id="technical-context"
-              min="0"
-              max="5"
-              value="0"
-            />
-            <span id="technical-context-value">0</span>
-          </div>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-lighting" checked />
-          <label for="show-lighting">Beleuchtungshinweise anzeigen</label>
-          <div class="context-slider-group" id="lighting-context-group">
-            <label for="lighting-context">Kontext Zeilen:</label>
-            <input
-              type="range"
-              id="lighting-context"
-              min="0"
-              max="5"
-              value="0"
-            />
-            <span id="lighting-context-value">0</span>
-          </div>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-actor-text" checked />
-          <label for="show-actor-text">Schauspielertexte anzeigen</label>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-micro" checked />
-          <label for="show-micro">Mikrofon anzeigen</label>
-        </div>
-
-        <!-- Einspieler -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-einspieler" checked />
-          <label for="show-einspieler">Einspieler anzeigen</label>
-          <div class="context-slider-group" id="einspieler-context-group">
-            <label for="einspieler-context">Kontext Zeilen:</label>
-            <input
-              type="range"
-              id="einspieler-context"
-              min="0"
-              max="5"
-              value="0"
-            />
-            <span id="einspieler-context-value">0</span>
-          </div>
-        </div>
-
-        <!-- Requisiten -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-requisiten" checked />
-          <label for="show-requisiten">Requisiten anzeigen</label>
-          <div class="context-slider-group" id="requisiten-context-group">
-            <label for="requisiten-context">Kontext Zeilen:</label>
-            <input
-              type="range"
-              id="requisiten-context"
-              min="0"
-              max="5"
-              value="0"
-            />
-            <span id="requisiten-context-value">0</span>
-          </div>
-        </div>
-
-        <!-- Szenenübersicht -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-scene-overview" checked />
-          <label for="show-scene-overview">Szenenübersicht anzeigen</label>
-        </div>
-
-        <!-- Dark Mode -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="dark-mode" />
-          <label for="dark-mode">Dark Mode</label>
-        </div>
-
-        <!-- Pink Mode -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="pink-mode" />
-          <label for="pink-mode">Pink Mode</label>
-        </div>
-
-        <!-- Autoscroll -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="autoscroll" />
-          <label for="autoscroll">Automatisch scrollen (Director Mode)</label>
-        </div>
-
-        <div>
-          <button onclick="window.print()">Als PDF drucken</button>
-        </div>
-
-        <!-- Link to Suggestor -->
-        <div class="checkbox-group">
-          <a href="suggestor.html" class="button"
-            >Rollenvorschläge für die Probe</a
-          >
-        </div>
-      </div>
-
-      <!-- Collapsible Director -->
-      <div class="director-section">
-        <button class="director-toggle" onclick="toggleDirectorPanel()">
-          <span>Director Mode</span>
-          <span id="director-status">Aktueller Director: Niemand</span>
-        </button>
-        <div class="director-content collapsed">
-          <div class="director-inputs">
-            <input
-              type="text"
-              id="name"
-              placeholder="Name"
-              class="director-input"
-            />
-            <input
-              type="password"
-              id="password"
-              placeholder="Passwort"
-              class="director-input"
-            />
-            <button onclick="toggleDirector()">Director werden</button>
-          </div>
-        </div>
+      <div class="modal-footer">
+        <div id="install-button-container"></div>
+        <button onclick="closeSettingsModal()">Schließen</button>
       </div>
     </div>
 
