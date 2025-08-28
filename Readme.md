@@ -1,126 +1,134 @@
-# Kolpingtheater Ramsen - Dynamisches Drehbuch
+## Kolpingtheater Ramsen – Drehbuch
 
-Ein interaktives Drehbuch-System für das Kolpingtheater Ramsen, optimiert für Proben und Aufführungen.
+Ein interaktives Drehbuch-System für Proben und Aufführungen. Optimiert für Schauspieler, Regie und Technik. Als installierbare PWA nutzbar – auch offline.
 
 ## Features
 
-### Hauptansicht (index.html)
+### Viewer (index.html)
 
-- 📱 Progressive Web App (PWA) - installierbar auf allen Geräten
-- 🎭 Rollenspezifische Texthervorhebung
-- 🎬 Director Mode für Probenleitung
-- 🔍 Filteroptionen für verschiedene Inhaltstypen
-- 🌙 Dark Mode und Pink Mode
-- 📊 Szenenübersicht mit Besetzungsliste
-- 🎤 Mikrofonzuweisungen
-- 📝 Kontextzeilen für technische Anweisungen
+- **Rollenauswahl**: Dropdown zur Auswahl der eigenen Rolle; relevante Zeilen werden hervorgehoben.
+- **Szenenübersicht**: Kompakte Übersicht pro Szene inkl. Mikrofon-Zuweisungen und Besetzung.
+- **Inhaltsfilter**: Ein-/Ausblenden von Anweisungen, Technik, Licht, Einspielern, Requisiten, Schauspielertexten – jeweils mit konfigurierbaren Kontextzeilen pro Kategorie.
+- **Akteurnamen zu Rollennamen**: Optionaler Zusatz der realen Namen in Anweisungen und Zeilen.
+- **Mikrofonanzeige**: Mikro-Nummern werden neben Namen dargestellt (optional).
+- **Dark Mode / Pink Mode**: Vollständig thematisierte Oberfläche (inkl. Modal, Inputs, Regie-Bereich).
+- **PDF-Export**: Schneller Druck als PDF über den Button in den Einstellungen.
+- **Status-Toast bei Updates**: Wenn der Service Worker neue Inhalte erkennt, erscheint ein Toast mit „Neu laden“.
 
-### Bühnenansicht (viewer.html)
+### Einstellungen
 
-- 🎪 Optimiert für große Displays hinter der Bühne
-- 👥 Aktuelle und nächste Szene mit Besetzungsliste
-- ⚡ Echtzeit-Synchronisation mit Director Mode
-- 🕒 Integrierte Uhr für Timing
-- 📺 Automatische Textgrößenanpassung bei vielen Darstellern
+- **Allgemein**: Szenenübersicht, Akteurnamen, Automatisch scrollen (Director Mode), PDF-Export, Link zu Rollenvorschlägen.
+- **Schauspieler**: Schauspielertexte, Mikrofon anzeigen, „Meine Texte verstecken“ (zum Üben/Prompten).
+- **Regie**: Bühnenanweisungen + Kontext-Zeilen-Regler.
+- **Technik**: Technische Infos + Kontext-Zeilen-Regler.
+- **Licht**: Licht-Hinweise + Kontext-Zeilen-Regler.
+- **Audio**: Einspieler + Kontext-Zeilen-Regler.
+- **Requisiten**: Requisiten + Kontext-Zeilen-Regler.
+- **Ansicht**: Dark Mode, Pink Mode.
 
-### Konvertierung (convert.html)
+### Director Mode (synchronisiert per Socket.IO)
 
-- 📄 Text-zu-CSV Konverter für Skripte
-- 📊 Automatische Szenenerkennung
-- 🎭 Erkennung von Rollen und Mikrofonzuweisungen
-- 💾 Export als CSV-Datei
+- **Übernahme mit Name/Passwort**: Regieführung übernimmt die Session.
+- **Marker setzen**: Klick auf eine Zeile markiert diese für alle; optionales Autoscrolling.
+- **Visuelle Indikatoren**: Roter Rahmen bei aktivem Director, deutliche Hervorhebungen.
+- **Takeover-Handling**: Sauberes Übergeben/Verlassen des Director-Status.
 
-## Installation
+### Navigation & UX
 
-1. Klonen Sie das Repository:
+- **ToC & Sidebar**: Inhaltsverzeichnis im Hauptbereich und in der Sidebar; mobil ein-/ausklappbar.
+- **Bottom-Navigation**: Bei ausgewählter Rolle schnelle Navigation durch die eigenen Zeilen.
+- **Keyboard Shortcuts**: Pfeiltasten zur Navigation; Fokus auf aktuelle Zeile wird beibehalten.
+- **FAB**: Schnell zum markierten Text springen, wenn er außerhalb des Sichtbereichs liegt.
+
+### Backstage-Ansichten
+
+- **viewer.html**: Backstage-Display mit aktueller und nächster Szene, Besetzung und deutlich markierten Hinweisen – synchron mit Director Mode.
+- **viewer2.html**: Alternative Backstage-Ansicht (Layout/Informationsdichte variieren je nach Bedarf).
+
+### Konvertierung & Tools
+
+- **convert.html**: Text-zu-CSV-Konverter mit automatischer Szenenerkennung, Rollen- und Mikrofon-Zuordnung; Export als CSV.
+- **suggestor.html**: Helfer für Rollenvorschläge bei Proben.
+
+### PWA & Offline
+
+- **Installierbar**: Über Browser-Prompt oder „App installieren“-Button (mobil und Desktop).
+- **Service Worker**: Caching für schnelle Ladezeiten; Update-Erkennung mit Reload-Toast.
+- **iOS-Unterstützung**: Apple-Touch-Icon, Statusbar-Styles etc.
+
+## Setup & Entwicklung
+
+Voraussetzungen: Aktueller Browser; Python 3.10+ empfohlen.
+
+### Projekt klonen
 
 ```bash
 git clone https://github.com/Kolpingtheater-Ramsen/Skript.git
+cd Skript
 ```
 
-2. Installieren Sie die Abhängigkeiten:
+### Start mit uv (empfohlen auf Windows)
 
 ```bash
+uv venv
+uv pip install -r requirements.txt
+uv run app.py
+```
+
+Alternative ohne uv:
+
+```bash
+python -m venv .venv
+.venv\\Scripts\\activate
 pip install -r requirements.txt
-```
-
-3. Starten Sie den Server:
-
-```bash
 python app.py
 ```
 
-4. Öffnen Sie die Anwendung im Browser:
+Standardmäßig läuft die App unter `http://localhost:5000`.
 
-```
-http://localhost:5000
-```
+## Datenquelle
 
-## Nutzung
+- Die Inhalte werden aus einer Google-Sheet-CSV geladen (siehe `script.js`).
+- Kurzes Caching per `localStorage` verbessert die Performance; bei Netzwerkfehlern wird – wenn vorhanden – der Cache genutzt.
 
-### Für Schauspieler
+## Tastaturkürzel
 
-1. Öffnen Sie `index.html` im Browser
-2. Wählen Sie Ihre Rolle aus dem Dropdown-Menü
-3. Ihre Texte werden automatisch hervorgehoben
-4. Optional: Aktivieren Sie "Meine Texte verstecken" zum Üben
+- **Pfeil rechts/Runter**: Nächste Zeile/Markierung
+- **Pfeil links/Hoch**: Vorherige Zeile/Markierung
 
-### Für den Regisseur
+## Technologien
 
-1. Öffnen Sie `index.html` und aktivieren Sie den Director Mode
-2. Geben Sie Name und Passwort ein
-3. Markieren Sie die aktuelle Textzeile durch Klicken
-4. Alle verbundenen Geräte synchronisieren sich automatisch
+- Frontend: HTML5, CSS3, JavaScript (PapaParse)
+- Backend: Python (Flask), Socket.IO
+- PWA: Manifest, Service Worker (Update-Toast bei neuen Inhalten)
 
-### Für die Bühnentechnik
-
-1. Öffnen Sie `viewer.html` auf dem Backstage-Display
-2. Die Ansicht synchronisiert sich automatisch mit dem Director Mode
-3. Zeigt aktuelle und nächste Szene mit allen benötigten Darstellern
-4. Technische Anweisungen werden farblich hervorgehoben
-
-### Für neue Skripte
-
-1. Öffnen Sie `convert.html`
-2. Fügen Sie das Skript im Textformat ein
-3. Klicken Sie auf "Skript analysieren"
-4. Überprüfen Sie die Konvertierung
-5. Laden Sie die CSV-Datei herunter
-
-## Technische Details
-
-### Systemanforderungen
-
-- Moderner Webbrowser (Chrome, Firefox, Safari, Edge)
-- Python 3.7+ für den Server
-- Internetverbindung für Echtzeit-Synchronisation
-
-### Verwendete Technologien
-
-- Frontend: HTML5, CSS3, JavaScript
-- Backend: Python, Flask, Socket.IO
-- Datenformat: CSV
-- PWA-Support mit Service Worker
-- WebSocket für Echtzeit-Kommunikation
-
-### Dateistruktur
+## Dateistruktur (Auszug)
 
 ```
 Skript/
-├── app.py              # Server
-├── index.html         # Hauptansicht
-├── viewer.html        # Bühnenansicht
-├── convert.html       # Konverter
-├── script.js          # Hauptlogik
-├── styles.css         # Styling
-├── manifest.json      # PWA Manifest
-└── sw.js             # Service Worker
+├── app.py
+├── index.html
+├── viewer.html
+├── viewer2.html
+├── convert.html
+├── suggestor.html
+├── script.js
+├── styles/
+│   ├── base.css
+│   ├── components.css
+│   ├── script.css
+│   └── themes.css
+├── styles.css
+├── manifest.json
+├── sw.js
+├── papaparse.min.js
+└── uv.lock
 ```
 
 ## Lizenz
 
-Dieses Projekt ist unter der MIT-Lizenz lizenziert. Siehe [LICENSE](LICENSE) für Details.
+MIT-Lizenz. Siehe `LICENSE`.
 
 ## Support
 
-Bei Fragen oder Problemen erstellen Sie bitte ein Issue im GitHub Repository oder kontaktieren Sie uns direkt.
+Probleme oder Fragen? Bitte ein Issue im Repository erstellen.
