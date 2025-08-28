@@ -56,6 +56,7 @@
         margin-top: 100px;
         padding: 2rem;
         margin-right: 300px;
+        padding-bottom: 96px;
       }
 
       .script-line {
@@ -243,6 +244,41 @@
         scrollbar-width: thin;
         scrollbar-color: rgba(66, 153, 225, 0.6) rgba(255, 255, 255, 0.1);
       }
+
+      /* Bottom progress bar */
+      .footer-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+        color: #a0aec0;
+        margin-bottom: 6px;
+      }
+
+      .progress {
+        height: 24px;
+        border: 1px solid var(--highlight-color);
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #48bb78, var(--primary-color));
+        width: 0%;
+        transition: width 200ms ease-out;
+      }
+
+      .bottom-progress {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 8px 16px;
+        background: var(--bg-color);
+        border-top: 2px solid var(--primary-color);
+        z-index: 120;
+      }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
@@ -258,6 +294,7 @@
 
       let markedLine = null
       let scriptData = null // Add global scriptData variable
+      let currentMarkerIndex = null
 
       // Socket.IO event handlers
       socket.on('connect', () => {
@@ -282,6 +319,7 @@
         // Find and mark the line
         const allLines = document.querySelectorAll('.script-line')
         if (allLines[data.index]) {
+          currentMarkerIndex = data.index
           markLine(allLines[data.index])
 
           // Update scene info based on the marked line
@@ -289,11 +327,14 @@
             const currentScene = scriptData[data.index].Szene
             updateSceneInfo(scriptData, currentScene)
           }
+          updateBottomProgress()
         }
       })
 
       socket.on('marker_clear', () => {
         clearMarkedLine()
+        currentMarkerIndex = null
+        updateBottomProgress()
       })
 
       socket.on('set_director', (data) => {
@@ -332,6 +373,34 @@
           markedLine.classList.remove('marked-line')
           markedLine = null
         }
+      }
+
+      function computeSceneProgressCounts() {
+        if (!scriptData || currentMarkerIndex === null) {
+          return { percent: 0, current: 0, total: 0 }
+        }
+        const row = scriptData[currentMarkerIndex]
+        if (!row || !row.Szene || row.Szene == 0) {
+          return { percent: 0, current: 0, total: 0 }
+        }
+        const sceneId = row.Szene
+        const sceneRows = scriptData
+          .map((r, idx) => ({ r, idx }))
+          .filter(({ r }) => r.Szene === sceneId && r.Szene != 0)
+        const total = sceneRows.length
+        if (total === 0) return { percent: 0, current: 0, total: 0 }
+        const pos = sceneRows.findIndex(({ idx }) => idx === currentMarkerIndex)
+        const current = Math.max(0, pos)
+        const percent = Math.floor((current / total) * 100)
+        return { percent, current, total }
+      }
+
+      function updateBottomProgress() {
+        const { percent, current, total } = computeSceneProgressCounts()
+        const bar = document.getElementById('global-progress-bar')
+        const text = document.getElementById('global-progress-text')
+        if (bar) bar.style.width = `${percent}%`
+        if (text) text.textContent = `${percent}% (${current}/${total})`
       }
 
       // Load and parse CSV
@@ -468,6 +537,9 @@
         // Start clock
         setInterval(updateClock, 1000)
         updateClock()
+
+        // Initialize progress
+        updateBottomProgress()
       }
 
       // Initialize when DOM is ready
@@ -695,6 +767,16 @@
 
     <div class="scene-info-sidebar">
       <!-- Scene information will be inserted here -->
+    </div>
+
+    <div class="bottom-progress">
+      <div class="footer-info">
+        <span>Fortschritt</span>
+        <span id="global-progress-text">0% (0/0)</span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="global-progress-bar"></div>
+      </div>
     </div>
   </body>
 </html>
