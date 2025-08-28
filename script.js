@@ -52,6 +52,13 @@ socket.on('disconnect', (reason) => {
   clearMarkedLine()
 })
 
+// Smoothly scroll an element so that it appears around 25% from the top
+function smoothScrollToElement(element, offsetVh = 25) {
+  if (!element) return
+  element.style.scrollMarginTop = `${offsetVh}vh`
+  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 socket.on('marker_update', (data) => {
   // Clear any existing marker
   clearMarkedLine()
@@ -63,10 +70,7 @@ socket.on('marker_update', (data) => {
     // Autoscroll if enabled (for non-directors) or if director has autoscroll enabled
     const shouldAutoscroll = document.getElementById('autoscroll').checked
     if (shouldAutoscroll) {
-      allLines[data.index].scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
+      smoothScrollToElement(allLines[data.index], 25)
     }
   }
 })
@@ -894,8 +898,8 @@ function jumpToLine(lineIndex) {
       { once: true }
     )
 
-    // Scroll to the line
-    lines[lineIndex].scrollIntoView({ behavior: 'smooth', block: 'center' })
+    // Scroll to the line with ~25% viewport offset
+    smoothScrollToElement(lines[lineIndex], 25)
     updateCurrentLineInfo(lineIndex, lines.length)
   }
 }
@@ -903,10 +907,8 @@ function jumpToLine(lineIndex) {
 function jumpToNextLine() {
   const lines = document.querySelectorAll('.script-line.highlighted')
   const currentIndex = getCurrentLineIndex(lines)
-  // If at the end, jump to the top
-  if (currentIndex >= lines.length - 1) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  } else {
+  // Stop at the last item; do not jump to top
+  if (currentIndex < lines.length - 1) {
     jumpToLine(currentIndex + 1)
   }
 }
@@ -914,9 +916,11 @@ function jumpToNextLine() {
 function jumpToPreviousLine() {
   const lines = document.querySelectorAll('.script-line.highlighted')
   const currentIndex = getCurrentLineIndex(lines)
-  // If at the beginning, jump to the end, otherwise go to previous line
-  const prevIndex = currentIndex <= 0 ? lines.length - 1 : currentIndex - 1
-  jumpToLine(prevIndex)
+  // Stop at the first item; do not wrap to end
+  if (currentIndex > 0) {
+    const prevIndex = currentIndex - 1
+    jumpToLine(prevIndex)
+  }
 }
 
 function updateCurrentLineInfo(currentIndex, totalLines) {
@@ -992,12 +996,7 @@ function getCurrentLineIndex(lines) {
 
   // Get the viewport height and scroll position
   const viewportHeight = window.innerHeight
-  const viewportCenter = window.scrollY + viewportHeight / 2
-
-  // If we're near the top of the page (within first 100px), return 0
-  if (window.scrollY < 1000) {
-    return -1
-  }
+  const viewportFocal = window.scrollY + viewportHeight * 0.25
 
   // Find the line closest to the center of the viewport
   let closestLine = 0
@@ -1006,7 +1005,7 @@ function getCurrentLineIndex(lines) {
   lines.forEach((line, index) => {
     const rect = line.getBoundingClientRect()
     const lineCenter = window.scrollY + rect.top + rect.height / 2
-    const distance = Math.abs(viewportCenter - lineCenter)
+    const distance = Math.abs(viewportFocal - lineCenter)
 
     if (distance < closestDistance) {
       closestDistance = distance
@@ -1057,7 +1056,7 @@ function markLine(element) {
   }
 
   if (document.getElementById('autoscroll').checked) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    smoothScrollToElement(element, 25)
   }
 
   // Show/hide FAB based on scroll position
@@ -1127,7 +1126,7 @@ function handleDirectorChange(newDirector, newIsDirector) {
 
 function jumpToMarkedLine() {
   if (markedLine) {
-    markedLine.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    smoothScrollToElement(markedLine, 25)
   }
 }
 
