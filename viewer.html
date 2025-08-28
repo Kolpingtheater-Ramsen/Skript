@@ -295,6 +295,7 @@
       let markedLine = null
       let scriptData = null // Add global scriptData variable
       let currentMarkerIndex = null
+      let sceneToIndices = new Map()
 
       // Socket.IO event handlers
       socket.on('connect', () => {
@@ -321,12 +322,6 @@
         if (allLines[data.index]) {
           currentMarkerIndex = data.index
           markLine(allLines[data.index])
-
-          // Update scene info based on the marked line
-          if (scriptData) {
-            const currentScene = scriptData[data.index].Szene
-            updateSceneInfo(scriptData, currentScene)
-          }
           updateBottomProgress()
         }
       })
@@ -379,20 +374,20 @@
         if (!scriptData || currentMarkerIndex === null) {
           return { percent: 0, current: 0, total: 0 }
         }
-        const row = scriptData[currentMarkerIndex]
-        if (!row || !row.Szene || row.Szene == 0) {
-          return { percent: 0, current: 0, total: 0 }
+        // Treat currentMarkerIndex as index among rendered script lines
+        // Walk scenes in insertion order and locate the scene bucket
+        let remainingIndex = currentMarkerIndex
+        for (const [, indices] of sceneToIndices) {
+          const count = indices.length
+          if (count > remainingIndex) {
+            const current = Math.max(0, Math.min(remainingIndex, count))
+            const percent = count > 0 ? Math.floor((current / count) * 100) : 0
+            return { percent, current, total: count }
+          } else {
+            remainingIndex -= count
+          }
         }
-        const sceneId = row.Szene
-        const sceneRows = scriptData
-          .map((r, idx) => ({ r, idx }))
-          .filter(({ r }) => r.Szene === sceneId && r.Szene != 0)
-        const total = sceneRows.length
-        if (total === 0) return { percent: 0, current: 0, total: 0 }
-        const pos = sceneRows.findIndex(({ idx }) => idx === currentMarkerIndex)
-        const current = Math.max(0, pos)
-        const percent = Math.floor((current / total) * 100)
-        return { percent, current, total }
+        return { percent: 100, current: 0, total: 0 }
       }
 
       function updateBottomProgress() {
@@ -515,8 +510,9 @@
         })
 
         // After rendering all scenes, update scene info for initial scene
-        const initialScene = data[0].Szene
-        updateSceneInfo(data, initialScene)
+        const firstSceneRow = data.find((r) => r.Szene && r.Szene != 0)
+        const initialScene = firstSceneRow ? firstSceneRow.Szene : null
+        if (initialScene) updateSceneInfo(data, initialScene)
       }
 
       // Update clock
@@ -533,6 +529,7 @@
         scriptData = await loadScript() // Store in global variable
         window.actors = getActors(scriptData)
         renderScript(scriptData)
+        sceneToIndices = buildSceneIndexMap(scriptData)
 
         // Start clock
         setInterval(updateClock, 1000)
@@ -561,6 +558,19 @@
 
         return actors
       }
+
+      // Build a map from scene -> list of indices (of rendered lines) for progress computation
+      function buildSceneIndexMap(data) {
+        const map = new Map()
+        data.forEach((r, i) => {
+          if (!r.Szene || r.Szene == 0) return
+          const scene = r.Szene
+          if (!map.has(scene)) map.set(scene, [])
+          map.get(scene).push(i)
+        })
+        return map
+      }
+
 
       // New function to update scene info sidebar
       function updateSceneInfo(data, currentScene) {
