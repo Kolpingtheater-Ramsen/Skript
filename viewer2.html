@@ -55,7 +55,7 @@
       }
 
       .content {
-        height: calc(100% - 80px);
+        height: calc(100% - 80px - 64px);
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 16px;
@@ -157,6 +157,16 @@
         justify-content: space-between;
         font-size: 18px;
         color: #a0aec0;
+      }
+
+      .bottom-progress {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 8px 16px;
+        background: var(--bg-color);
+        border-top: 2px solid var(--primary-color);
       }
     </style>
 
@@ -393,6 +403,31 @@
         return 100
       }
 
+      function computeSceneProgressCounts() {
+        if (currentMarkerIndex === null || currentMarkerIndex === undefined)
+          return { percent: 0, current: 0, total: 0 }
+        let remainingIndex = currentMarkerIndex
+        for (const [, indices] of sceneToIndices) {
+          const count = indices.length
+          if (count > remainingIndex) {
+            const current = Math.max(0, Math.min(remainingIndex, count))
+            const percent = count > 0 ? Math.floor((current / count) * 100) : 0
+            return { percent, current, total: count }
+          } else {
+            remainingIndex -= count
+          }
+        }
+        return { percent: 100, current: 0, total: 0 }
+      }
+
+      function updateBottomProgress() {
+        const { percent, current, total } = computeSceneProgressCounts()
+        const bar = document.getElementById('global-progress-bar')
+        const text = document.getElementById('global-progress-text')
+        if (bar) bar.style.width = `${percent}%`
+        if (text) text.textContent = `${percent}% (${current}/${total})`
+      }
+
       function getSceneFromMarker() {
         let currentIdx = currentMarkerIndex
         for (const [idx, items] of sceneToIndices) {
@@ -433,16 +468,7 @@
           rolesContainer.appendChild(ul)
         }
 
-        // Progress (only for current scene box)
-        if (box.id === 'current-scene-box') {
-          const p = computeProgress()
-          const bar = box.querySelector('.progress-bar')
-          if (bar) {
-            bar.style.width = `${p}%`
-          }
-          const footerPct = box.querySelector('.footer-info span:last-child')
-          if (footerPct) footerPct.textContent = `${p}%`
-        }
+        // Progress handled globally at bottom bar
 
         // Auto-scroll long sections
         // Stop previous intervals and start new ones after DOM update
@@ -457,6 +483,7 @@
         const nextScene = getNextScene(currentScene)
         renderSceneBox('current-scene-box', 'Szene', currentScene)
         renderSceneBox('next-scene-box', 'Nächste Szene', nextScene)
+        updateBottomProgress()
       }
 
       function initSocket() {
@@ -490,6 +517,7 @@
 
         socket.on('marker_clear', () => {
           currentMarkerIndex = null
+          updateBottomProgress()
         })
       }
 
@@ -539,13 +567,6 @@
           <div class="section-title">Rollen (mit Schauspieler)</div>
           <div class="roles-list"></div>
         </div>
-        <div class="footer-info">
-          <span>Fortschritt</span>
-          <span></span>
-        </div>
-        <div class="progress">
-          <div class="progress-bar"></div>
-        </div>
       </div>
 
       <div id="next-scene-box" class="scene-panel">
@@ -555,6 +576,16 @@
           <div class="section-title">Rollen (mit Schauspieler)</div>
           <div class="roles-list"></div>
         </div>
+      </div>
+    </div>
+
+    <div class="bottom-progress">
+      <div class="footer-info">
+        <span>Fortschritt</span>
+        <span id="global-progress-text">0% (0/0)</span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="global-progress-bar"></div>
       </div>
     </div>
   </body>
