@@ -1,5 +1,5 @@
 from flask import Flask, request, send_from_directory
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room
 import os
 import subprocess
 import threading
@@ -20,9 +20,10 @@ socketio = SocketIO(
     async_mode="threading",
 )
 
-# Global state for director
-current_director = None
-current_director_sid = None
+# Global state for director, per play (room)
+current_director_by_play = {}
+current_director_sid_by_play = {}
+sid_to_play = {}
 DIRECTOR_PASSWORD = os.getenv("DIRECTOR_PASSWORD", "your-password-here")
 
 
@@ -110,20 +111,36 @@ def serve_file(path):
 
 @socketio.on("connect")
 def handle_connect():
-    # Send current director state to new clients
+    # Client must call join_play with a playId; nothing to emit yet
+    pass
+
+
+@socketio.on("join_play")
+def handle_join_play(data):
+    play_id = data.get("playId") or "default"
+    previous = sid_to_play.get(request.sid)
+    if previous and previous != play_id:
+        try:
+            leave_room(previous)
+        except Exception:
+            pass
+    sid_to_play[request.sid] = play_id
+    join_room(play_id)
     emit(
         "set_director",
         {
             "success": True,
-            "director": current_director or "Niemand",
-            "isDirector": current_director_sid == request.sid,
+            "director": current_director_by_play.get(play_id) or "Niemand",
+            "isDirector": current_director_sid_by_play.get(play_id) == request.sid,
         },
+        to=request.sid,
     )
 
 
 @socketio.on("set_director")
 def handle_set_director(data):
-    global current_director, current_director_sid
+    # Determine play (room) for this SID
+    play_id = sid_to_play.get(request.sid) or "default"
 
     # Extract data
     name = data.get("name")
@@ -142,13 +159,13 @@ def handle_set_director(data):
         emit("set_director", {"success": False, "message": "Falsches Passwort"})
         return
 
-    # Store the previous director
-    previous_director = current_director
-    previous_director_sid = current_director_sid
+    # Store the previous director for this play
+    previous_director = current_director_by_play.get(play_id)
+    previous_director_sid = current_director_sid_by_play.get(play_id)
 
-    # Set new director immediately
-    current_director = name
-    current_director_sid = request.sid
+    # Set new director immediately for this play
+    current_director_by_play[play_id] = name
+    current_director_sid_by_play[play_id] = request.sid
 
     # If there was a previous director, notify about the takeover
     if previous_director:
@@ -156,7 +173,7 @@ def handle_set_director(data):
             "director_takeover",
             {
                 "previousDirector": previous_director,
-                "newDirector": current_director,
+                "newDirector": current_director_by_play.get(play_id),
                 "isDirector": False,
             },
             to=previous_director_sid,
@@ -165,46 +182,53 @@ def handle_set_director(data):
             "director_takeover",
             {
                 "previousDirector": previous_director,
-                "newDirector": current_director,
+                "newDirector": current_director_by_play.get(play_id),
                 "isDirector": True,
             },
-            to=current_director_sid,
+            to=current_director_sid_by_play.get(play_id),
         )
         emit(
             "director_takeover",
             {
                 "previousDirector": previous_director,
-                "newDirector": current_director,
+                "newDirector": current_director_by_play.get(play_id),
                 "isDirector": False,
             },
-            broadcast=True,
-            include_self=False,
-            skip_sid=[previous_director_sid, current_director_sid],
+            room=play_id,
+            skip_sid=[previous_director_sid, current_director_sid_by_play.get(play_id)],
         )
     else:
         # If there was no previous director, just notify about the new director
         emit(
             "set_director",
-            {"success": True, "director": current_director, "isDirector": True},
-            to=current_director_sid,
+            {
+                "success": True,
+                "director": current_director_by_play.get(play_id),
+                "isDirector": True,
+            },
+            to=current_director_sid_by_play.get(play_id),
         )
         emit(
             "set_director",
-            {"success": True, "director": current_director, "isDirector": False},
-            broadcast=True,
-            include_self=False,
+            {
+                "success": True,
+                "director": current_director_by_play.get(play_id),
+                "isDirector": False,
+            },
+            room=play_id,
+            skip_sid=current_director_sid_by_play.get(play_id),
         )
 
 
 @socketio.on("unset_director")
 def handle_unset_director(data):
-    global current_director, current_director_sid
+    play_id = sid_to_play.get(request.sid) or "default"
 
-    # Only the current director can unset themselves
-    if request.sid == current_director_sid:
-        previous_director = current_director
-        current_director = None
-        current_director_sid = None
+    # Only the current director can unset themselves for this play
+    if request.sid == current_director_sid_by_play.get(play_id):
+        previous_director = current_director_by_play.get(play_id)
+        current_director_by_play[play_id] = None
+        current_director_sid_by_play[play_id] = None
         emit(
             "unset_director",
             {
@@ -212,19 +236,21 @@ def handle_unset_director(data):
                 "previousDirector": previous_director,
                 "isDirector": False,
             },
-            broadcast=True,
+            room=play_id,
         )
 
 
 @socketio.on("disconnect")
 def handle_disconnect():
-    global current_director, current_director_sid
+    play_id = sid_to_play.pop(request.sid, None)
+    if play_id is None:
+        return
 
-    # If a client disconnects and they were the director, clear the director state
-    if request.sid == current_director_sid:
-        previous_director = current_director
-        current_director = None
-        current_director_sid = None
+    # If a client disconnects and they were the director for this play, clear the director state
+    if request.sid == current_director_sid_by_play.get(play_id):
+        previous_director = current_director_by_play.get(play_id)
+        current_director_by_play[play_id] = None
+        current_director_sid_by_play[play_id] = None
         emit(
             "unset_director",
             {
@@ -232,17 +258,17 @@ def handle_disconnect():
                 "previousDirector": previous_director,
                 "isDirector": False,
             },
-            broadcast=True,
+            room=play_id,
         )
 
 
 @socketio.on("set_marker")
 def handle_set_marker(data):
-    global current_director_sid
-    # Only allow the director to set markers
-    if request.sid == current_director_sid:
-        # Broadcast the marker to all clients except the sender
-        emit("marker_update", data, broadcast=True, include_self=False)
+    play_id = sid_to_play.get(request.sid) or "default"
+    # Only allow the director to set markers for this play
+    if request.sid == current_director_sid_by_play.get(play_id):
+        # Broadcast the marker to all clients in the same play except the sender
+        emit("marker_update", data, room=play_id, skip_sid=request.sid)
 
 
 if __name__ == "__main__":
