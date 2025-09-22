@@ -336,6 +336,30 @@
         updateDirectorStatus(data.director)
       })
 
+      // Multi-play support
+      const urlParams = new URLSearchParams(window.location.search)
+      const storedPlayId = localStorage.getItem('playId') || 'default'
+      const playId = urlParams.get('play') || storedPlayId
+      if (urlParams.get('play')) localStorage.setItem('playId', playId)
+      let playsConfig = null
+      let sheetUrl = null
+
+      async function loadPlaysConfig() {
+        try {
+          const res = await fetch('plays.json')
+          if (res.ok) playsConfig = await res.json()
+        } catch (e) {}
+        if (!playsConfig) {
+          playsConfig = {
+            default: {
+              name: 'Standardstück',
+              sheet:
+                'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980',
+            },
+          }
+        }
+      }
+
       // Helper functions
       function updateConnectionStatus(status) {
         const statusEl = document.getElementById('connection-status')
@@ -401,9 +425,7 @@
       // Load and parse CSV
       async function loadScript() {
         try {
-          const response = await fetch(
-            'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980'
-          )
+          const response = await fetch(sheetUrl)
 
           if (!response.ok) {
             throw new Error('Network response was not ok')
@@ -526,6 +548,11 @@
 
       // Initialize
       async function init() {
+        await loadPlaysConfig()
+        sheetUrl =
+          (playsConfig && playsConfig[playId] && playsConfig[playId].sheet) ||
+          (playsConfig && playsConfig.default && playsConfig.default.sheet)
+
         scriptData = await loadScript() // Store in global variable
         window.actors = getActors(scriptData)
         renderScript(scriptData)
@@ -537,6 +564,11 @@
 
         // Initialize progress
         updateBottomProgress()
+
+        // Join per-play room after socket connects
+        socket.on('connect', () => {
+          try { socket.emit('join_play', { playId }) } catch (e) {}
+        })
       }
 
       // Initialize when DOM is ready

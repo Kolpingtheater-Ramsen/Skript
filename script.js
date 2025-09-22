@@ -6,6 +6,36 @@ const socket = io('https://skript.logge.top', {
   timeout: 20000,
 })
 
+// Multi-play support
+const urlParams = new URLSearchParams(window.location.search)
+const storedPlayId = localStorage.getItem('playId') || 'default'
+const playId = urlParams.get('play') || storedPlayId
+if (urlParams.get('play')) {
+  localStorage.setItem('playId', playId)
+}
+let playsConfig = null
+let sheetUrl = null
+
+async function loadPlaysConfig() {
+  try {
+    const res = await fetch('plays.json')
+    if (res.ok) {
+      playsConfig = await res.json()
+    }
+  } catch (e) {
+    // ignore
+  }
+  if (!playsConfig) {
+    playsConfig = {
+      default: {
+        name: 'Standardstück',
+        sheet:
+          'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980',
+      },
+    }
+  }
+}
+
 // Director mode state
 let isDirector = false
 let directorName = ''
@@ -19,6 +49,10 @@ socket.on('connect', () => {
   console.log('Connected to server')
   isConnected = true
   reconnectAttempts = 0
+  // Join the room for the selected play
+  try {
+    socket.emit('join_play', { playId })
+  } catch (e) {}
   document.getElementById('director-status').textContent = directorName
     ? `Aktueller Director: ${directorName}`
     : 'Aktueller Director: Niemand'
@@ -134,9 +168,11 @@ socket.on('director_takeover', (data) => {
 // Load and parse CSV
 async function loadScript() {
   try {
-    // Check cache first
-    const cachedData = localStorage.getItem('scriptData')
-    const lastFetch = localStorage.getItem('scriptLastFetch')
+    // Check cache first (per play)
+    const cacheKeyData = `scriptData:${playId}`
+    const cacheKeyTime = `scriptLastFetch:${playId}`
+    const cachedData = localStorage.getItem(cacheKeyData)
+    const lastFetch = localStorage.getItem(cacheKeyTime)
     const cacheAge = lastFetch ? Date.now() - parseInt(lastFetch) : Infinity
 
     // Use cache if it exists and is less than 5 minutes old
@@ -144,9 +180,7 @@ async function loadScript() {
       return JSON.parse(cachedData)
     }
 
-    const response = await fetch(
-      'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980'
-    )
+    const response = await fetch(sheetUrl)
 
     if (!response.ok) {
       // If fetch fails and we have cached data, use it regardless of age
@@ -162,15 +196,15 @@ async function loadScript() {
 
     // Only update cache if we got valid data
     if (data && data.length > 0) {
-      localStorage.setItem('scriptData', JSON.stringify(data))
-      localStorage.setItem('scriptLastFetch', Date.now().toString())
+      localStorage.setItem(cacheKeyData, JSON.stringify(data))
+      localStorage.setItem(cacheKeyTime, Date.now().toString())
     }
 
     return data
   } catch (error) {
     console.error('Error loading script:', error)
     // Try to return cached data if available
-    const cachedData = localStorage.getItem('scriptData')
+    const cachedData = localStorage.getItem(`scriptData:${playId}`)
     if (cachedData) {
       console.log('Error fetching new data, using cached data')
       return JSON.parse(cachedData)
@@ -673,6 +707,40 @@ function loadState() {
 
 // Initialize
 async function init() {
+  await loadPlaysConfig()
+  sheetUrl =
+    (playsConfig && playsConfig[playId] && playsConfig[playId].sheet) ||
+    (playsConfig && playsConfig.default && playsConfig.default.sheet) ||
+    'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980'
+
+  // Populate play selector in settings if present
+  const playSelect = document.getElementById('play-select')
+  if (playSelect && playsConfig) {
+    playSelect.innerHTML = ''
+    Object.entries(playsConfig).forEach(([id, info]) => {
+      const opt = document.createElement('option')
+      opt.value = id
+      opt.textContent = info?.name || id
+      playSelect.appendChild(opt)
+    })
+    playSelect.value = playId
+    playSelect.addEventListener('change', (e) => {
+      const newPlay = e.target.value
+      localStorage.setItem('playId', newPlay)
+      const url = new URL(window.location.href)
+      url.searchParams.set('play', newPlay)
+      window.location.href = url.toString()
+    })
+  }
+
+  // Update suggestor link to carry play param
+  const sugg = document.getElementById('suggestor-link')
+  if (sugg) {
+    const u = new URL(sugg.getAttribute('href'), window.location.href)
+    u.searchParams.set('play', playId)
+    sugg.setAttribute('href', u.pathname + u.search)
+  }
+
   let data = await loadScript()
   window.scriptData = data
   window.actors = getActors(data)
