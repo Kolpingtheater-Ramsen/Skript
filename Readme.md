@@ -4,99 +4,79 @@ Ein interaktives Drehbuch-System für Proben und Aufführungen. Optimiert für S
 
 ## Features
 
-### Viewer (index.html)
+### Drehbuch-Viewer
 
-- **Rollenauswahl**: Dropdown zur Auswahl der eigenen Rolle; relevante Zeilen werden hervorgehoben.
-- **Szenenübersicht**: Kompakte Übersicht pro Szene inkl. Mikrofon-Zuweisungen und Besetzung.
-- **Inhaltsfilter**: Ein-/Ausblenden von Anweisungen, Technik, Licht, Einspielern, Requisiten, Schauspielertexten – jeweils mit konfigurierbaren Kontextzeilen pro Kategorie.
-- **Akteurnamen zu Rollennamen**: Optionaler Zusatz der realen Namen in Anweisungen und Zeilen.
-- **Mikrofonanzeige**: Mikro-Nummern werden neben Namen dargestellt (optional).
-- **Dark Mode / Pink Mode**: Vollständig thematisierte Oberfläche (inkl. Modal, Inputs, Regie-Bereich).
-- **PDF-Export**: Schneller Druck als PDF über den Button in den Einstellungen.
-- **Status-Toast bei Updates**: Wenn der Service Worker neue Inhalte erkennt, erscheint ein Toast mit „Neu laden“.
+- **Rolle wählen**: Eigene Zeilen werden klar hervorgehoben.
+- **Überblick je Szene**: Wer spielt mit? Auf Wunsch mit Mikrofonnummern.
+- **Inhalte nach Bedarf**: Anweisungen, Technik, Licht, Einspieler, Requisiten und Texte ein‑/ausblenden. Anzahl der Kontextzeilen frei wählbar.
+- **Echte Namen anzeigen**: Neben den Rollennamen können die Schauspielernamen eingeblendet werden.
+- **Angenehme Darstellung**: Dunkler Modus und Pink Mode für bessere Lesbarkeit.
+- **Als PDF drucken**: Direkt aus der App.
+- **Hinweis bei neuen Inhalten**: „Neu laden“, wenn eine Aktualisierung bereitsteht.
 
 ### Einstellungen
 
-- **Allgemein**: Szenenübersicht, Akteurnamen, Automatisch scrollen (Director Mode), PDF-Export, Link zu Rollenvorschlägen.
-- **Schauspieler**: Schauspielertexte, Mikrofon anzeigen, „Meine Texte verstecken“ (zum Üben/Prompten).
-- **Regie**: Bühnenanweisungen + Kontext-Zeilen-Regler.
-- **Technik**: Technische Infos + Kontext-Zeilen-Regler.
-- **Licht**: Licht-Hinweise + Kontext-Zeilen-Regler.
-- **Audio**: Einspieler + Kontext-Zeilen-Regler.
-- **Requisiten**: Requisiten + Kontext-Zeilen-Regler.
-- **Ansicht**: Dark Mode, Pink Mode.
+- **Produktion & Rolle**: Stück auswählen, Rolle wählen und Anzeige personalisieren.
+- **Texte & Hinweise**: Schauspielertexte, Mikrofonnummern, Requisiten ein‑/ausblenden.
+- **Kontext anpassen**: Anweisungen, Technik, Licht und Einspieler mit einstellbaren Kontextzeilen.
+- **Darstellung**: Dark Mode, Pink Mode und automatisches Scrollen.
+- **Probenhilfe**: Link zu Rollenvorschlägen für die Probe.
 
-### Director Mode (synchronisiert per Socket.IO)
+### Director Mode (Leitung)
 
-- **Übernahme mit Name/Passwort**: Regieführung übernimmt die Session.
-- **Marker setzen**: Klick auf eine Zeile markiert diese für alle; optionales Autoscrolling.
-- **Visuelle Indikatoren**: Roter Rahmen bei aktivem Director, deutliche Hervorhebungen.
-- **Takeover-Handling**: Sauberes Übergeben/Verlassen des Director-Status.
+- **Leitung übernehmen**: Mit Name und Passwort.
+- **Gemeinsamer Fokus**: Zeilen für alle markieren; auf Wunsch scrollt es automatisch mit.
+- **Klar erkennbar**: Deutliche Anzeigen, wenn die Leitung aktiv ist.
+- **Reibungslose Übergabe**: Leitung kann problemlos übergeben oder beendet werden.
 
-### Navigation & UX
+### Navigation & Bedienung
 
-- **ToC & Sidebar**: Inhaltsverzeichnis im Hauptbereich und in der Sidebar; mobil ein-/ausklappbar.
-- **Bottom-Navigation**: Bei ausgewählter Rolle schnelle Navigation durch die eigenen Zeilen.
-- **Keyboard Shortcuts**: Pfeiltasten zur Navigation; Fokus auf aktuelle Zeile wird beibehalten.
-- **FAB**: Schnell zum markierten Text springen, wenn er außerhalb des Sichtbereichs liegt.
+- **Inhaltsverzeichnis & Seitenleiste**: Schnell zur gewünschten Szene; mobil ein‑/ausklappbar.
+- **Schnell-Navigation**: Bei gewählter Rolle komfortabel durch die eigenen Zeilen springen.
+- **Tastaturbedienung**: Pfeiltasten zur Steuerung.
+- **Sprung zum Marker**: Mit einem Tippen direkt zur markierten Stelle.
 
-### Backstage-Ansichten
+### Backstage-Displays
 
-- **viewer.html**: Backstage-Display mit aktueller und nächster Szene, Besetzung und deutlich markierten Hinweisen – synchron mit Director Mode.
-- **viewer2.html**: Alternative Backstage-Ansicht (Layout/Informationsdichte variieren je nach Bedarf).
+- **Bühnenansicht**: Aktuelle und nächste Szene mit Besetzung; Hinweise sind groß und deutlich – stets synchron mit der Leitung.
+- **Schauspieleransicht**: Alternative Darstellung mit Fokus auf Rollen und Fortschritt.
 
-### Konvertierung & Tools
+### App & Offline
 
-- **convert.html**: Text-zu-CSV-Konverter mit automatischer Szenenerkennung, Rollen- und Mikrofon-Zuordnung; Export als CSV.
-- **suggestor.html**: Helfer für Rollenvorschläge bei Proben.
+- **Installierbar**: Als App auf Handy, Tablet und Desktop nutzen.
+- **Offline nutzbar**: Inhalte sind auch ohne Internet verfügbar und werden automatisch aktualisiert.
+- **iPhone/iPad**: Startbildschirm‑Icon und Vollbild.
 
-### PWA & Offline
+### Mehrere Produktionen
 
-- **Installierbar**: Über Browser-Prompt oder „App installieren“-Button (mobil und Desktop).
-- **Service Worker**: Caching für schnelle Ladezeiten; Update-Erkennung mit Reload-Toast.
-- **iOS-Unterstützung**: Apple-Touch-Icon, Statusbar-Styles etc.
+- **Mehrere Stücke**: Produktionen verwalten und schnell umschalten.
+- **Bleibt gespeichert**: Die Auswahl wird gemerkt.
+- **Getrennte Leitung**: Markierungen und Leitung sind je Produktion unabhängig.
+- **Praktische Links**: Verweise auf Bühnen‑ und Schauspieleransicht öffnen die richtige Produktion.
 
-### Multi-Stücke & Räume
+### Inhalte & Speicher
 
-- **Mehrere Produktionen**: Verwaltung über `plays.json` (Name + CSV-Quelle je Stück); Auswahl im Einstellungsdialog.
-- **Play-Parameter**: Stück per URL (`?play=...`) wählbar; Auswahl wird in `localStorage` persistiert.
-- **Getrennte Räume**: Pro Stück eigener Socket.IO-Raum; Director-Status und Marker sind je Stück unabhängig.
-- **Per-Stück-Cache**: CSV-Cache-Keys sind stückbezogen (schneller Wechsel zwischen Produktionen).
-- **Deep-Links**: Links zu `viewer.html`/`viewer2.html` übernehmen automatisch den gewählten `play`-Parameter.
+- **Direkt aus der Quelle**: Inhalte kommen aus einer gepflegten Google‑Tabelle.
+- **Schnell geladen**: Kurzzeit‑Zwischenspeicher für zügige Ladezeiten – auch bei wackeligem Netz.
+- **Szenen‑Zusammenfassung**: Zu Beginn jeder Szene steht eine kurze Beschreibung.
+- **Persönliche Einstellungen**: Filter, Modus und Rollenauswahl bleiben erhalten.
 
-### Daten & Caching
+### Schnell & Stabil
 
-- **Google-Sheets-CSV**: Inhalte werden live per CSV geladen und mit PapaParse geparst.
-- **Lokaler Cache**: Per `localStorage` mit 5‑Minuten‑TTL; Fallback auf Cache bei Netzwerkfehlern.
-- **Normalisierung**: Trimmen/Fallkonvertierung (z. B. `Charakter` in Großschrift), Entfernung von Szene 0.
-- **Szenen-Intro**: Zeilen mit Kategorie „Szenenbeginn“ werden als Szenen‑Zusammenfassung angezeigt.
-- **Einstellungsspeicher**: Alle Schalter/Regler, Theme und Rollenauswahl werden dauerhaft gespeichert.
+- **Zügig und flüssig**: Kurze Ladezeiten und sanftes Scrollen.
+- **Immer aktuell**: Hinweis bei neuen Versionen; mit einem Klick neu laden.
+- **Alles im Blick**: Verbindungsstatus ist sichtbar.
+- **Überall nutzbar**: Optimiert für Handy, Tablet, Laptop und Bühnenbildschirme.
 
-### Backend & Betrieb
+### Druck & Werkzeuge
 
-- **Flask‑App**: Liefert statische Dateien aus (`/` und `/<path>`).
-- **Echtzeit via Socket.IO**: Ereignisse `join_play`, `set_director`, `unset_director`, `set_marker` (Marker-Broadcast an alle Clients des Stücks).
-- **Director‑Verwaltung**: Pro Stück genau ein aktiver Director; sauberes Takeover inkl. Benachrichtigungen.
-- **Konfiguration**: `DIRECTOR_PASSWORD`, `SECRET_KEY`, `PORT` per Umgebungsvariablen.
-- **Automatisches Update**: Täglicher `git pull` via Scheduler (steuerbar mit `ENABLE_DAILY_GIT_PULL`, `GIT_PULL_DAILY_HOUR`, `GIT_PULL_DAILY_MINUTE`).
-- **Logging**: Server‑ und EngineIO‑Logging aktiv für Diagnosezwecke.
+- **PDF‑Druck**: Das Skript mit einem Klick als PDF ausgeben.
+- **Konverter**: Rohtext schnell in ein strukturiertes Skript verwandeln.
+- **Rollenvorschläge**: Praktische Hilfe zur Besetzung bei Proben.
 
-### Performance & Stabilität
+### Datenschutz
 
-- **Cache‑First**: Service Worker bedient Assets aus dem Cache und aktualisiert im Hintergrund.
-- **Update‑Hinweis**: Bei neuen Assets erscheint ein Toast mit „Neu laden“.
-- **Robuste Verbindungen**: Unbegrenzte Reconnect‑Versuche mit kurzem Delay; sichtbarer Verbindungsstatus in den Viewern.
-- **Autoscroll‑Hilfen**: Sanftes Scrollen zu markierten/aktuellen Zeilen; Auto‑Scroll in Backstage‑Listen bei Überlänge.
-- **Responsives UI**: Mobile Sidebar/Overlay, Sticky‑Header, große Schriften für Bühnen‑Displays.
-
-### Druck & Export
-
-- **PDF‑Druck**: Optimiertes Drucklayout per Browser‑Drucken (Button in den Einstellungen).
-- **Konverter**: `convert.html` wandelt Text in CSV mit Szenenerkennung, Rollen‑ und Mikro‑Zuordnung.
-
-### Analytics
-
-- **Cloudflare Web Analytics**: Leichtgewichtiges Tracking zur Nutzungsanalyse (ohne Cookies).
+- **Einfache Besucherstatistik**: Ohne Cookies.
 
 ## Setup & Entwicklung
 
