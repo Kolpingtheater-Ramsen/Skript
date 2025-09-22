@@ -741,6 +741,20 @@ async function init() {
     sugg.setAttribute('href', u.pathname + u.search)
   }
 
+  // Update viewer links to carry play param
+  const viewer = document.getElementById('viewer-link')
+  if (viewer) {
+    const u = new URL(viewer.getAttribute('href'), window.location.href)
+    u.searchParams.set('play', playId)
+    viewer.setAttribute('href', u.pathname + u.search)
+  }
+  const viewer2 = document.getElementById('viewer2-link')
+  if (viewer2) {
+    const u2 = new URL(viewer2.getAttribute('href'), window.location.href)
+    u2.searchParams.set('play', playId)
+    viewer2.setAttribute('href', u2.pathname + u2.search)
+  }
+
   let data = await loadScript()
   window.scriptData = data
   window.actors = getActors(data)
