@@ -56,6 +56,48 @@ Ein interaktives Drehbuch-System für Proben und Aufführungen. Optimiert für S
 - **Service Worker**: Caching für schnelle Ladezeiten; Update-Erkennung mit Reload-Toast.
 - **iOS-Unterstützung**: Apple-Touch-Icon, Statusbar-Styles etc.
 
+### Multi-Stücke & Räume
+
+- **Mehrere Produktionen**: Verwaltung über `plays.json` (Name + CSV-Quelle je Stück); Auswahl im Einstellungsdialog.
+- **Play-Parameter**: Stück per URL (`?play=...`) wählbar; Auswahl wird in `localStorage` persistiert.
+- **Getrennte Räume**: Pro Stück eigener Socket.IO-Raum; Director-Status und Marker sind je Stück unabhängig.
+- **Per-Stück-Cache**: CSV-Cache-Keys sind stückbezogen (schneller Wechsel zwischen Produktionen).
+- **Deep-Links**: Links zu `viewer.html`/`viewer2.html` übernehmen automatisch den gewählten `play`-Parameter.
+
+### Daten & Caching
+
+- **Google-Sheets-CSV**: Inhalte werden live per CSV geladen und mit PapaParse geparst.
+- **Lokaler Cache**: Per `localStorage` mit 5‑Minuten‑TTL; Fallback auf Cache bei Netzwerkfehlern.
+- **Normalisierung**: Trimmen/Fallkonvertierung (z. B. `Charakter` in Großschrift), Entfernung von Szene 0.
+- **Szenen-Intro**: Zeilen mit Kategorie „Szenenbeginn“ werden als Szenen‑Zusammenfassung angezeigt.
+- **Einstellungsspeicher**: Alle Schalter/Regler, Theme und Rollenauswahl werden dauerhaft gespeichert.
+
+### Backend & Betrieb
+
+- **Flask‑App**: Liefert statische Dateien aus (`/` und `/<path>`).
+- **Echtzeit via Socket.IO**: Ereignisse `join_play`, `set_director`, `unset_director`, `set_marker` (Marker-Broadcast an alle Clients des Stücks).
+- **Director‑Verwaltung**: Pro Stück genau ein aktiver Director; sauberes Takeover inkl. Benachrichtigungen.
+- **Konfiguration**: `DIRECTOR_PASSWORD`, `SECRET_KEY`, `PORT` per Umgebungsvariablen.
+- **Automatisches Update**: Täglicher `git pull` via Scheduler (steuerbar mit `ENABLE_DAILY_GIT_PULL`, `GIT_PULL_DAILY_HOUR`, `GIT_PULL_DAILY_MINUTE`).
+- **Logging**: Server‑ und EngineIO‑Logging aktiv für Diagnosezwecke.
+
+### Performance & Stabilität
+
+- **Cache‑First**: Service Worker bedient Assets aus dem Cache und aktualisiert im Hintergrund.
+- **Update‑Hinweis**: Bei neuen Assets erscheint ein Toast mit „Neu laden“.
+- **Robuste Verbindungen**: Unbegrenzte Reconnect‑Versuche mit kurzem Delay; sichtbarer Verbindungsstatus in den Viewern.
+- **Autoscroll‑Hilfen**: Sanftes Scrollen zu markierten/aktuellen Zeilen; Auto‑Scroll in Backstage‑Listen bei Überlänge.
+- **Responsives UI**: Mobile Sidebar/Overlay, Sticky‑Header, große Schriften für Bühnen‑Displays.
+
+### Druck & Export
+
+- **PDF‑Druck**: Optimiertes Drucklayout per Browser‑Drucken (Button in den Einstellungen).
+- **Konverter**: `convert.html` wandelt Text in CSV mit Szenenerkennung, Rollen‑ und Mikro‑Zuordnung.
+
+### Analytics
+
+- **Cloudflare Web Analytics**: Leichtgewichtiges Tracking zur Nutzungsanalyse (ohne Cookies).
+
 ## Setup & Entwicklung
 
 Voraussetzungen: Aktueller Browser; Python 3.10+ empfohlen.
