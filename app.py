@@ -1,17 +1,166 @@
-from flask import Flask, request, send_from_directory
-from flask_socketio import SocketIO, emit, join_room, leave_room
+"""
+Flask application with Socket.IO for theater script coordination.
+Refactored for better organization and error handling.
+"""
+
 import os
 import subprocess
 import threading
 import time
 import datetime
+from typing import Optional, Dict, Any
+from flask import Flask, request, send_from_directory
+from flask_socketio import SocketIO, emit, join_room, leave_room
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
+
+class Config:
+    """Application configuration."""
+
+    SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-here")
+    PORT = int(os.getenv("PORT", 5000))
+    DIRECTOR_PASSWORD = os.getenv("DIRECTOR_PASSWORD", "your-password-here")
+    ENABLE_GIT_PULL = os.getenv("ENABLE_DAILY_GIT_PULL", "1") in {"1", "true", "True"}
+    GIT_PULL_HOUR = int(os.getenv("GIT_PULL_DAILY_HOUR", "3"))
+    GIT_PULL_MINUTE = int(os.getenv("GIT_PULL_DAILY_MINUTE", "0"))
+    DEBUG = os.getenv("FLASK_DEBUG", "").lower() in {"1", "true"}
+
+
+class DirectorManager:
+    """Manages director state for multiple plays."""
+
+    def __init__(self):
+        self.current_director: Dict[str, Optional[str]] = {}
+        self.current_director_sid: Dict[str, Optional[str]] = {}
+        self.sid_to_play: Dict[str, str] = {}
+
+    def get_director(self, play_id: str) -> Optional[str]:
+        """Get current director name for a play."""
+        return self.current_director.get(play_id)
+
+    def get_director_sid(self, play_id: str) -> Optional[str]:
+        """Get current director SID for a play."""
+        return self.current_director_sid.get(play_id)
+
+    def set_director(self, play_id: str, name: str, sid: str) -> Optional[str]:
+        """Set director for a play. Returns previous director name."""
+        previous = self.current_director.get(play_id)
+        self.current_director[play_id] = name
+        self.current_director_sid[play_id] = sid
+        return previous
+
+    def unset_director(self, play_id: str) -> Optional[str]:
+        """Unset director for a play. Returns previous director name."""
+        previous = self.current_director.get(play_id)
+        self.current_director[play_id] = None
+        self.current_director_sid[play_id] = None
+        return previous
+
+    def is_director(self, play_id: str, sid: str) -> bool:
+        """Check if SID is the director for a play."""
+        return self.current_director_sid.get(play_id) == sid
+
+    def set_play_for_sid(self, sid: str, play_id: str):
+        """Associate a SID with a play."""
+        self.sid_to_play[sid] = play_id
+
+    def get_play_for_sid(self, sid: str) -> str:
+        """Get play ID for a SID."""
+        return self.sid_to_play.get(sid, "default")
+
+    def remove_sid(self, sid: str):
+        """Remove SID tracking."""
+        self.sid_to_play.pop(sid, None)
+
+
+class GitPullScheduler:
+    """Manages daily git pull operations."""
+
+    def __init__(self, config: Config):
+        self.config = config
+        self.running = False
+
+    def _run_git_pull_once(self) -> None:
+        """Execute a single git pull operation."""
+        if not self.config.ENABLE_GIT_PULL:
+            return
+
+        repo_root = os.path.dirname(os.path.abspath(__file__))
+        try:
+            result = subprocess.run(
+                ["git", "pull", "--no-edit"],
+                cwd=repo_root,
+                capture_output=True,
+                text=True,
+                timeout=300,
+                check=False,
+            )
+            stdout = (result.stdout or "").strip()
+            stderr = (result.stderr or "").strip()
+            status = f"(code={result.returncode})"
+
+            if stdout:
+                print(f"[git-pull] stdout {status}:\n{stdout}")
+            if stderr:
+                print(f"[git-pull] stderr {status}:\n{stderr}")
+            if not stdout and not stderr:
+                print(f"[git-pull] completed {status} with no output")
+
+        except FileNotFoundError:
+            print("[git-pull] 'git' executable not found")
+        except subprocess.TimeoutExpired:
+            print("[git-pull] operation timed out")
+        except Exception as exc:
+            print(f"[git-pull] error: {exc}")
+
+    def _seconds_until_next_run(self) -> float:
+        """Calculate seconds until next scheduled run."""
+        now = datetime.datetime.now()
+        next_run = now.replace(
+            hour=self.config.GIT_PULL_HOUR,
+            minute=self.config.GIT_PULL_MINUTE,
+            second=0,
+            microsecond=0,
+        )
+        if next_run <= now:
+            next_run += datetime.timedelta(days=1)
+        return (next_run - now).total_seconds()
+
+    def _scheduler_loop(self) -> None:
+        """Main scheduler loop."""
+        while self.running:
+            sleep_seconds = self._seconds_until_next_run()
+            print(
+                f"[git-pull] next run in ~{int(sleep_seconds)}s at "
+                f"{self.config.GIT_PULL_HOUR:02d}:{self.config.GIT_PULL_MINUTE:02d}"
+            )
+            time.sleep(max(1, sleep_seconds))
+            self._run_git_pull_once()
+            time.sleep(24 * 60 * 60)  # Wait 24 hours before next run
+
+    def start(self) -> None:
+        """Start the scheduler in a background thread."""
+        if not self.config.ENABLE_GIT_PULL:
+            print("[git-pull] disabled via ENABLE_DAILY_GIT_PULL")
+            return
+
+        self.running = True
+        thread = threading.Thread(target=self._scheduler_loop, daemon=True)
+        thread.start()
+        print("[git-pull] scheduler started")
+
+    def stop(self) -> None:
+        """Stop the scheduler."""
+        self.running = False
+
+
+# Initialize Flask app
 app = Flask(__name__, static_folder=".")
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "your-secret-key-here")
+app.config["SECRET_KEY"] = Config.SECRET_KEY
+
 socketio = SocketIO(
     app,
     cors_allowed_origins="*",
@@ -20,129 +169,64 @@ socketio = SocketIO(
     async_mode="threading",
 )
 
-# Global state for director, per play (room)
-current_director_by_play = {}
-current_director_sid_by_play = {}
-sid_to_play = {}
-DIRECTOR_PASSWORD = os.getenv("DIRECTOR_PASSWORD", "your-password-here")
+# Initialize managers
+config = Config()
+director_manager = DirectorManager()
+git_scheduler = GitPullScheduler(config)
 
 
-def _run_git_pull_once() -> None:
-    """Run a single `git pull` in the repository root and log output."""
-    if os.getenv("ENABLE_DAILY_GIT_PULL", "1") not in {"1", "true", "True"}:
-        return
-
-    repo_root = os.path.dirname(os.path.abspath(__file__))
-    try:
-        result = subprocess.run(
-            ["git", "pull", "--no-edit"],
-            cwd=repo_root,
-            capture_output=True,
-            text=True,
-            timeout=300,
-            check=False,
-        )
-        stdout = (result.stdout or "").strip()
-        stderr = (result.stderr or "").strip()
-        status = f"(code={result.returncode})"
-        if stdout:
-            print(f"[daily-git-pull] stdout {status}:\n{stdout}")
-        if stderr:
-            print(f"[daily-git-pull] stderr {status}:\n{stderr}")
-        if not stdout and not stderr:
-            print(f"[daily-git-pull] completed {status} with no output")
-    except FileNotFoundError:
-        # git not installed / not in PATH
-        print("[daily-git-pull] 'git' executable not found. Skipping.")
-    except Exception as exc:
-        print(f"[daily-git-pull] error: {exc}")
-
-
-def _seconds_until_next_run(target_hour: int, target_minute: int) -> float:
-    now = datetime.datetime.now()
-    next_run = now.replace(
-        hour=target_hour, minute=target_minute, second=0, microsecond=0
-    )
-    if next_run <= now:
-        next_run += datetime.timedelta(days=1)
-    return (next_run - now).total_seconds()
-
-
-def start_daily_git_pull_scheduler() -> None:
-    """Start a background thread that performs a `git pull` once per day.
-
-    Time can be configured with env vars `GIT_PULL_DAILY_HOUR` and
-    `GIT_PULL_DAILY_MINUTE` (defaults 3:00). Enable/disable via
-    `ENABLE_DAILY_GIT_PULL` (default enabled).
-    """
-    if os.getenv("ENABLE_DAILY_GIT_PULL", "1") not in {"1", "true", "True"}:
-        print("[daily-git-pull] disabled via ENABLE_DAILY_GIT_PULL")
-        return
-
-    try:
-        target_hour = int(os.getenv("GIT_PULL_DAILY_HOUR", "3"))
-        target_minute = int(os.getenv("GIT_PULL_DAILY_MINUTE", "0"))
-    except ValueError:
-        target_hour, target_minute = 3, 0
-
-    def scheduler_loop() -> None:
-        while True:
-            sleep_seconds = _seconds_until_next_run(target_hour, target_minute)
-            print(
-                f"[daily-git-pull] next run in ~{int(sleep_seconds)}s at {target_hour:02d}:{target_minute:02d}"
-            )
-            time.sleep(max(1, sleep_seconds))
-            _run_git_pull_once()
-            # Subsequent runs every 24h
-            time.sleep(24 * 60 * 60)
-
-    threading.Thread(target=scheduler_loop, daemon=True).start()
-
-
+# Flask routes
 @app.route("/")
 def index():
+    """Serve index page."""
     return send_from_directory(".", "index.html")
 
 
 @app.route("/<path:path>")
 def serve_file(path):
+    """Serve static files."""
     return send_from_directory(".", path)
 
 
+# Socket.IO handlers
 @socketio.on("connect")
 def handle_connect():
-    # Client must call join_play with a playId; nothing to emit yet
-    pass
+    """Handle client connection."""
+    print(f"Client connected: {request.sid}")
 
 
 @socketio.on("join_play")
-def handle_join_play(data):
-    play_id = data.get("playId") or "default"
-    previous = sid_to_play.get(request.sid)
+def handle_join_play(data: Dict[str, Any]):
+    """Handle client joining a play room."""
+    play_id = data.get("playId", "default")
+    previous = director_manager.get_play_for_sid(request.sid)
+
+    # Leave previous room if different
     if previous and previous != play_id:
         try:
             leave_room(previous)
-        except Exception:
-            pass
-    sid_to_play[request.sid] = play_id
+        except Exception as e:
+            print(f"Error leaving room {previous}: {e}")
+
+    director_manager.set_play_for_sid(request.sid, play_id)
     join_room(play_id)
+
+    # Send current director info
     emit(
         "set_director",
         {
             "success": True,
-            "director": current_director_by_play.get(play_id) or "Niemand",
-            "isDirector": current_director_sid_by_play.get(play_id) == request.sid,
+            "director": director_manager.get_director(play_id) or "Niemand",
+            "isDirector": director_manager.is_director(play_id, request.sid),
         },
         to=request.sid,
     )
 
 
 @socketio.on("set_director")
-def handle_set_director(data):
-    # Determine play (room) for this SID
-    play_id = sid_to_play.get(request.sid) or "default"
-
-    # Extract data
+def handle_set_director(data: Dict[str, Any]):
+    """Handle director set request."""
+    play_id = director_manager.get_play_for_sid(request.sid)
     name = data.get("name")
     password = data.get("password")
 
@@ -155,25 +239,22 @@ def handle_set_director(data):
         return
 
     # Validate password
-    if password != DIRECTOR_PASSWORD:
+    if password != config.DIRECTOR_PASSWORD:
         emit("set_director", {"success": False, "message": "Falsches Passwort"})
         return
 
-    # Store the previous director for this play
-    previous_director = current_director_by_play.get(play_id)
-    previous_director_sid = current_director_sid_by_play.get(play_id)
+    # Set new director
+    previous_director = director_manager.get_director(play_id)
+    previous_director_sid = director_manager.get_director_sid(play_id)
+    director_manager.set_director(play_id, name, request.sid)
 
-    # Set new director immediately for this play
-    current_director_by_play[play_id] = name
-    current_director_sid_by_play[play_id] = request.sid
-
-    # If there was a previous director, notify about the takeover
+    # Notify about takeover if there was a previous director
     if previous_director:
         emit(
             "director_takeover",
             {
                 "previousDirector": previous_director,
-                "newDirector": current_director_by_play.get(play_id),
+                "newDirector": name,
                 "isDirector": False,
             },
             to=previous_director_sid,
@@ -182,75 +263,67 @@ def handle_set_director(data):
             "director_takeover",
             {
                 "previousDirector": previous_director,
-                "newDirector": current_director_by_play.get(play_id),
+                "newDirector": name,
                 "isDirector": True,
             },
-            to=current_director_sid_by_play.get(play_id),
+            to=request.sid,
         )
         emit(
             "director_takeover",
             {
                 "previousDirector": previous_director,
-                "newDirector": current_director_by_play.get(play_id),
+                "newDirector": name,
                 "isDirector": False,
             },
             room=play_id,
-            skip_sid=[previous_director_sid, current_director_sid_by_play.get(play_id)],
+            skip_sid=[previous_director_sid, request.sid],
         )
     else:
-        # If there was no previous director, just notify about the new director
+        # No previous director, just notify all
         emit(
             "set_director",
-            {
-                "success": True,
-                "director": current_director_by_play.get(play_id),
-                "isDirector": True,
-            },
-            to=current_director_sid_by_play.get(play_id),
+            {"success": True, "director": name, "isDirector": True},
+            to=request.sid,
         )
         emit(
             "set_director",
-            {
-                "success": True,
-                "director": current_director_by_play.get(play_id),
-                "isDirector": False,
-            },
+            {"success": True, "director": name, "isDirector": False},
             room=play_id,
-            skip_sid=current_director_sid_by_play.get(play_id),
+            skip_sid=request.sid,
         )
 
 
 @socketio.on("unset_director")
-def handle_unset_director(data):
-    play_id = sid_to_play.get(request.sid) or "default"
+def handle_unset_director(data: Dict[str, Any]):
+    """Handle director unset request."""
+    play_id = director_manager.get_play_for_sid(request.sid)
 
-    # Only the current director can unset themselves for this play
-    if request.sid == current_director_sid_by_play.get(play_id):
-        previous_director = current_director_by_play.get(play_id)
-        current_director_by_play[play_id] = None
-        current_director_sid_by_play[play_id] = None
-        emit(
-            "unset_director",
-            {
-                "director": "Niemand",
-                "previousDirector": previous_director,
-                "isDirector": False,
-            },
-            room=play_id,
-        )
+    # Only current director can unset themselves
+    if not director_manager.is_director(play_id, request.sid):
+        return
+
+    previous_director = director_manager.unset_director(play_id)
+
+    emit(
+        "unset_director",
+        {
+            "director": "Niemand",
+            "previousDirector": previous_director,
+            "isDirector": False,
+        },
+        room=play_id,
+    )
 
 
 @socketio.on("disconnect")
 def handle_disconnect():
-    play_id = sid_to_play.pop(request.sid, None)
-    if play_id is None:
-        return
+    """Handle client disconnection."""
+    print(f"Client disconnected: {request.sid}")
+    play_id = director_manager.get_play_for_sid(request.sid)
 
-    # If a client disconnects and they were the director for this play, clear the director state
-    if request.sid == current_director_sid_by_play.get(play_id):
-        previous_director = current_director_by_play.get(play_id)
-        current_director_by_play[play_id] = None
-        current_director_sid_by_play[play_id] = None
+    # If disconnecting client was director, clear director state
+    if director_manager.is_director(play_id, request.sid):
+        previous_director = director_manager.unset_director(play_id)
         emit(
             "unset_director",
             {
@@ -261,26 +334,33 @@ def handle_disconnect():
             room=play_id,
         )
 
+    director_manager.remove_sid(request.sid)
+
 
 @socketio.on("set_marker")
-def handle_set_marker(data):
-    play_id = sid_to_play.get(request.sid) or "default"
-    # Only allow the director to set markers for this play
-    if request.sid == current_director_sid_by_play.get(play_id):
-        # Broadcast the marker to all clients in the same play except the sender
-        emit("marker_update", data, room=play_id, skip_sid=request.sid)
+def handle_set_marker(data: Dict[str, Any]):
+    """Handle marker set request (director only)."""
+    play_id = director_manager.get_play_for_sid(request.sid)
+
+    # Only director can set markers
+    if not director_manager.is_director(play_id, request.sid):
+        return
+
+    # Broadcast marker to all clients in play except sender
+    emit("marker_update", data, room=play_id, skip_sid=request.sid)
 
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))
-    # Avoid double-scheduling under the development reloader
-    if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not os.getenv("FLASK_DEBUG"):
-        start_daily_git_pull_scheduler()
+    # Start git pull scheduler (only in production or main process)
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not config.DEBUG:
+        git_scheduler.start()
+
+    # Run the app
     socketio.run(
         app,
         host="0.0.0.0",
-        port=port,
-        debug=True,
-        use_reloader=True,
+        port=config.PORT,
+        debug=config.DEBUG,
+        use_reloader=config.DEBUG,
         allow_unsafe_werkzeug=True,
     )

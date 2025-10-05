@@ -1,824 +1,119 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kolpingtheater Ramsen - Bühnen-Viewer</title>
-
+    
+    <link rel="stylesheet" href="styles/viewer.css" />
     <style>
-      :root {
-        --primary-color: #4299e1;
-        --text-color: #ffffff;
-        --bg-color: #000000;
-        --highlight-color: #2c5282;
-        --marked-color: #e53e3e;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: Arial, sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        line-height: 1.6;
-        font-size: 24px;
-      }
-
-      .header {
-        background-color: var(--bg-color);
-        padding: 1rem;
-        border-bottom: 2px solid var(--primary-color);
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .header h1 {
-        font-size: 2rem;
-        color: var(--primary-color);
-      }
-
-      .director-status {
-        font-size: 1.5rem;
-        color: var(--primary-color);
-      }
-
-      .content {
-        margin-top: 100px;
-        padding: 2rem;
-        margin-right: 300px;
-        padding-bottom: 96px;
-      }
-
-      .script-line {
-        padding: 1rem;
-        margin: 0.5rem 0;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-      }
-
-      .script-line.marked-line {
-        border: 2px solid var(--marked-color);
-        font-weight: bold;
-      }
-
-      .actor-name {
-        color: var(--primary-color);
-        font-weight: bold;
-        font-size: 1.2em;
-      }
-
-      .instruction {
-        color: #48bb78;
-        font-style: italic;
-      }
-
-      .technical {
-        color: #ecc94b;
-      }
-
-      .lighting {
-        color: #ed8936;
-      }
-
-      .audio {
-        color: #9f7aea;
-      }
-
-      .props {
-        color: #63b3ed;
-      }
-
-      .tag {
-        display: inline-block;
-        padding: 0.25rem 0.5rem;
-        border-radius: 3px;
-        margin-right: 0.5rem;
-        font-size: 0.9em;
-        background-color: var(--highlight-color);
-      }
-
-      .scene-title {
-        color: var(--primary-color);
-        font-size: 2rem;
-        margin: 2rem 0;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid var(--primary-color);
-        position: sticky;
-        top: 100px;
-        background-color: var(--bg-color);
-        z-index: 50;
-        padding: 1rem 0;
-      }
-
-      /* Animation for marked line */
-      @keyframes flash {
-        0% {
-          background-color: var(--marked-color);
+        /* Scene info sidebar specific styles */
+        .content {
+            margin-right: 300px;
         }
-        50% {
-          background-color: var(--highlight-color);
+
+        .scene-info-sidebar {
+            position: fixed;
+            right: 0;
+            top: 100px;
+            width: 300px;
+            height: calc(100vh - 100px);
+            background-color: rgba(0, 0, 0, 0.9);
+            border-left: 2px solid var(--primary-color);
+            padding: 1rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
-        100% {
-          background-color: var(--marked-color);
+
+        .scene-info-box {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(50vh - 60px);
         }
-      }
 
-      .flash-highlight {
-        animation: flash 1s ease;
-      }
+        .scene-info-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
 
-      /* Clock */
-      .clock {
-        font-size: 1.5rem;
-        color: var(--primary-color);
-        margin-left: 2rem;
-      }
+        .actor-list {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+        }
 
-      /* Scene Info Sidebar */
-      .scene-info-sidebar {
-        position: fixed;
-        right: 0;
-        top: 100px; /* Below header */
-        width: 300px;
-        height: calc(100vh - 100px);
-        background-color: rgba(0, 0, 0, 0.9);
-        border-left: 2px solid var(--primary-color);
-        padding: 1rem;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
+        .actor-list.small {
+            font-size: 0.8em;
+        }
 
-      .scene-info-box {
-        margin-bottom: 1rem;
-        padding: 1rem;
-        border: 1px solid var(--primary-color);
-        border-radius: 5px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        max-height: calc(50vh - 60px);
-      }
+        .actor-list.very-small {
+            font-size: 0.7em;
+        }
 
-      .scene-info-box h3 {
-        color: var(--primary-color);
-        margin-bottom: 0.5rem;
-        font-size: 1.5rem;
-        flex-shrink: 0;
-      }
+        .actor-list li {
+            margin: 0.25rem 0;
+            padding: 0.5rem;
+            background-color: var(--highlight-color);
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-      .actor-list {
-        list-style: none;
-        overflow-y: auto;
-        flex: 1;
-      }
+        .actor-micro {
+            color: var(--primary-color);
+            font-size: 0.9em;
+        }
 
-      .actor-list.small {
-        font-size: 0.8em;
-      }
+        .scene-info-box.active {
+            border-color: #48bb78;
+            box-shadow: 0 0 10px rgba(72, 187, 120, 0.3);
+        }
 
-      .actor-list.very-small {
-        font-size: 0.7em;
-      }
-
-      .actor-list li {
-        margin: 0.25rem 0;
-        padding: 0.5rem;
-        background-color: var(--highlight-color);
-        border-radius: 3px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .actor-micro {
-        color: var(--primary-color);
-        font-size: 0.9em;
-      }
-
-      /* Active scene highlight */
-      .scene-info-box.active {
-        border-color: #48bb78;
-        box-shadow: 0 0 10px rgba(72, 187, 120, 0.3);
-      }
-
-      .scene-info-box.next {
-        border-color: #ed8936;
-      }
-
-      /* Custom scrollbar styling for dark theme */
-      .actor-list::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .actor-list::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-      }
-
-      .actor-list::-webkit-scrollbar-thumb {
-        background: rgba(66, 153, 225, 0.6);
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
-      }
-
-      .actor-list::-webkit-scrollbar-thumb:hover {
-        background: rgba(66, 153, 225, 0.8);
-      }
-
-      /* Firefox scrollbar styling */
-      .actor-list {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(66, 153, 225, 0.6) rgba(255, 255, 255, 0.1);
-      }
-
-      /* Bottom progress bar */
-      .footer-info {
-        display: flex;
-        justify-content: space-between;
-        font-size: 18px;
-        color: #a0aec0;
-        margin-bottom: 6px;
-      }
-
-      .progress {
-        height: 24px;
-        border: 1px solid var(--highlight-color);
-        border-radius: 12px;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .progress-bar {
-        height: 100%;
-        background: linear-gradient(90deg, #48bb78, var(--primary-color));
-        width: 0%;
-        transition: width 200ms ease-out;
-      }
-
-      .bottom-progress {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: 8px 16px;
-        background: var(--bg-color);
-        border-top: 2px solid var(--primary-color);
-        z-index: 120;
-      }
+        .scene-info-box.next {
+            border-color: #ed8936;
+        }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-    <script src="papaparse.min.js" defer></script>
-    <script>
-      // Socket.io initialization
-      const socket = io('https://skript.logge.top', {
-        transports: ['websocket'],
-        reconnectionAttempts: Infinity,
-        reconnectionDelay: 1000,
-        timeout: 20000,
-      })
-
-      let markedLine = null
-      let scriptData = null // Add global scriptData variable
-      let currentMarkerIndex = null
-      let sceneToIndices = new Map()
-
-      // Socket.IO event handlers
-      socket.on('connect', () => {
-        console.log('Connected to server')
-        updateConnectionStatus('Verbunden')
-      })
-
-      socket.on('connect_error', (error) => {
-        console.error('Connection error:', error)
-        updateConnectionStatus('Verbindungsfehler')
-      })
-
-      socket.on('disconnect', (reason) => {
-        console.log('Disconnected from server:', reason)
-        updateConnectionStatus('Getrennt')
-      })
-
-      socket.on('marker_update', (data) => {
-        // Clear any existing marker
-        clearMarkedLine()
-
-        // Find and mark the line
-        const allLines = document.querySelectorAll('.script-line')
-        if (allLines[data.index]) {
-          currentMarkerIndex = data.index
-          markLine(allLines[data.index])
-          updateBottomProgress()
-        }
-      })
-
-      socket.on('marker_clear', () => {
-        clearMarkedLine()
-        currentMarkerIndex = null
-        updateBottomProgress()
-      })
-
-      socket.on('set_director', (data) => {
-        updateDirectorStatus(data.director)
-      })
-
-      // Multi-play support
-      const urlParams = new URLSearchParams(window.location.search)
-      const storedPlayId = localStorage.getItem('playId') || 'default'
-      const playId = urlParams.get('play') || storedPlayId
-      if (urlParams.get('play')) localStorage.setItem('playId', playId)
-      let playsConfig = null
-      let sheetUrl = null
-
-      async function loadPlaysConfig() {
-        try {
-          const res = await fetch('plays.json')
-          if (res.ok) playsConfig = await res.json()
-        } catch (e) {}
-        if (!playsConfig) {
-          playsConfig = {
-            default: {
-              name: 'Standardstück',
-              sheet:
-                'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980',
-            },
-          }
-        }
-      }
-
-      // Helper functions
-      function updateConnectionStatus(status) {
-        const statusEl = document.getElementById('connection-status')
-        if (statusEl) {
-          statusEl.textContent = `Status: ${status}`
-        }
-      }
-
-      function updateDirectorStatus(director) {
-        const directorEl = document.getElementById('director-status')
-        if (directorEl) {
-          directorEl.textContent = `Director: ${director || 'Niemand'}`
-        }
-      }
-
-      function markLine(element) {
-        clearMarkedLine()
-        element.classList.add('marked-line')
-        markedLine = element
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-
-        // Update scene info based on the marked line's scene
-        if (scriptData && element.dataset.scene) {
-          updateSceneInfo(scriptData, element.dataset.scene)
-        }
-      }
-
-      function clearMarkedLine() {
-        if (markedLine) {
-          markedLine.classList.remove('marked-line')
-          markedLine = null
-        }
-      }
-
-      function computeSceneProgressCounts() {
-        if (!scriptData || currentMarkerIndex === null) {
-          return { percent: 0, current: 0, total: 0 }
-        }
-        // Treat currentMarkerIndex as index among rendered script lines
-        // Walk scenes in insertion order and locate the scene bucket
-        let remainingIndex = currentMarkerIndex
-        for (const [, indices] of sceneToIndices) {
-          const count = indices.length
-          if (count > remainingIndex) {
-            const current = Math.max(0, Math.min(remainingIndex, count))
-            const percent = count > 0 ? Math.floor((current / count) * 100) : 0
-            return { percent, current, total: count }
-          } else {
-            remainingIndex -= count
-          }
-        }
-        return { percent: 100, current: 0, total: 0 }
-      }
-
-      function updateBottomProgress() {
-        const { percent, current, total } = computeSceneProgressCounts()
-        const bar = document.getElementById('global-progress-bar')
-        const text = document.getElementById('global-progress-text')
-        if (bar) bar.style.width = `${percent}%`
-        if (text) text.textContent = `${percent}% (${current}/${total})`
-      }
-
-      // Load and parse CSV
-      async function loadScript() {
-        try {
-          const response = await fetch(sheetUrl)
-
-          if (!response.ok) {
-            throw new Error('Network response was not ok')
-          }
-
-          const csvText = await response.text()
-          return Papa.parse(csvText, { header: true }).data
-        } catch (error) {
-          console.error('Error loading script:', error)
-          return []
-        }
-      }
-
-      function getActors(data) {
-        const actors = data.filter(
-          (row) => row.Charakter && row.Szene && row.Szene == 0
-        )
-        const roleName = actors.map((row) => row.Charakter.trim())
-        const actorName = actors.map((row) => row['Text/Anweisung'].trim())
-        // [[roleName, actorName], [roleName, actorName], ...]
-        return [
-          ...new Map(
-            actors.map((actor) => [actor.Charakter, actor['Text/Anweisung']])
-          ).entries(),
-        ]
-      }
-
-      // Render script
-      function renderScript(data) {
-        const container = document.getElementById('script-container')
-        container.innerHTML = ''
-
-        let currentScene = ''
-
-        data.forEach((row, index) => {
-          if (row.Szene == 0) {
-            return
-          }
-
-          // Check for new scene
-          if (row.Szene !== currentScene) {
-            const anchor = document.createElement('a')
-            anchor.name = `scene-${row.Szene}`
-            container.appendChild(anchor)
-
-            const sceneTitle = document.createElement('h2')
-            sceneTitle.className = 'scene-title'
-            sceneTitle.textContent = `Szene ${row.Szene}`
-            container.appendChild(sceneTitle)
-            currentScene = row.Szene
-          }
-
-          const div = document.createElement('div')
-          div.className = 'script-line'
-          div.dataset.scene = row.Szene // Add scene number to dataset
-          div.dataset.index = index // Add index to dataset
-
-          // Apply styling based on type
-          if (row.Kategorie === 'Anweisung') {
-            div.classList.add('instruction')
-          } else if (row.Kategorie === 'Einspieler') {
-            div.classList.add('audio')
-            const audioSpan = document.createElement('div')
-            audioSpan.className = 'tag'
-            audioSpan.textContent = 'Einspieler'
-            div.appendChild(audioSpan)
-          } else if (row.Kategorie === 'Technik') {
-            const techSpan = document.createElement('div')
-            techSpan.className = 'tag'
-            techSpan.textContent = 'Technik'
-            div.appendChild(techSpan)
-            div.classList.add('technical')
-          } else if (row.Kategorie === 'Licht') {
-            const lightSpan = document.createElement('div')
-            lightSpan.className = 'tag'
-            lightSpan.textContent = 'Licht'
-            div.appendChild(lightSpan)
-            div.classList.add('lighting')
-          } else if (row.Kategorie === 'Requisiten') {
-            const propsSpan = document.createElement('div')
-            propsSpan.className = 'tag'
-            propsSpan.textContent = 'Requisiten'
-            div.appendChild(propsSpan)
-            div.classList.add('props')
-          }
-
-          // Create content
-          if (row.Charakter) {
-            const nameSpan = document.createElement('div')
-            nameSpan.className = 'actor-name'
-            const actorName =
-              window.actors.find(
-                ([roleName]) => roleName === row.Charakter
-              )?.[1] || '?'
-            nameSpan.textContent = `${row.Charakter} (${actorName})`
-            div.appendChild(nameSpan)
-          }
-
-          const textDiv = document.createElement('div')
-          textDiv.textContent = row['Text/Anweisung']
-          div.appendChild(textDiv)
-
-          container.appendChild(div)
-        })
-
-        // After rendering all scenes, update scene info for initial scene
-        const firstSceneRow = data.find((r) => r.Szene && r.Szene != 0)
-        const initialScene = firstSceneRow ? firstSceneRow.Szene : null
-        if (initialScene) updateSceneInfo(data, initialScene)
-      }
-
-      // Update clock
-      function updateClock() {
-        const clockEl = document.getElementById('clock')
-        if (clockEl) {
-          const now = new Date()
-          clockEl.textContent = now.toLocaleTimeString('de-DE')
-        }
-      }
-
-      // Initialize
-      async function init() {
-        await loadPlaysConfig()
-        sheetUrl =
-          (playsConfig && playsConfig[playId] && playsConfig[playId].sheet) ||
-          (playsConfig && playsConfig.default && playsConfig.default.sheet)
-
-        scriptData = await loadScript() // Store in global variable
-        window.actors = getActors(scriptData)
-        renderScript(scriptData)
-        sceneToIndices = buildSceneIndexMap(scriptData)
-
-        // Start clock
-        setInterval(updateClock, 1000)
-        updateClock()
-
-        // Initialize progress
-        updateBottomProgress()
-
-        // Join per-play room after socket connects
-        socket.on('connect', () => {
-          try { socket.emit('join_play', { playId }) } catch (e) {}
-        })
-      }
-
-      // Initialize when DOM is ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init)
-      } else {
-        init()
-      }
-
-      // New function to get actors in a scene
-      function getSceneActors(data, sceneNumber) {
-        const actors = new Map() // Use Map to store actor and their microphone number
-
-        data.forEach((row) => {
-          if (row.Szene === sceneNumber && row.Charakter) {
-            actors.set(row.Charakter, row.Mikrofon || '')
-          }
-        })
-
-        return actors
-      }
-
-      // Build a map from scene -> list of indices (of rendered lines) for progress computation
-      function buildSceneIndexMap(data) {
-        const map = new Map()
-        data.forEach((r, i) => {
-          if (!r.Szene || r.Szene == 0) return
-          const scene = r.Szene
-          if (!map.has(scene)) map.set(scene, [])
-          map.get(scene).push(i)
-        })
-        return map
-      }
-
-
-      // New function to update scene info sidebar
-      function updateSceneInfo(data, currentScene) {
-        // Stop any existing auto-scroll intervals
-        stopAllAutoScroll()
-
-        const sidebar = document.querySelector('.scene-info-sidebar')
-        sidebar.innerHTML = ''
-
-        // Current Scene Info
-        const currentActors = getSceneActors(data, currentScene)
-        const currentSceneBox = createSceneInfoBox(
-          'Aktuelle Szene',
-          currentScene,
-          currentActors
-        )
-        currentSceneBox.classList.add('active')
-        sidebar.appendChild(currentSceneBox)
-
-        // Next Scene Info
-        const nextScene = getNextScene(data, currentScene)
-        if (nextScene) {
-          const nextActors = getSceneActors(data, nextScene)
-          const nextSceneBox = createSceneInfoBox(
-            'Nächste Szene',
-            nextScene,
-            nextActors
-          )
-          nextSceneBox.classList.add('next')
-          sidebar.appendChild(nextSceneBox)
-        }
-
-        // Start auto-scroll for scene boxes with scrollable content
-        // Use setTimeout to ensure DOM is fully updated
-        setTimeout(() => {
-          startAutoScroll(currentSceneBox)
-          if (nextScene) {
-            const nextSceneBox = sidebar.querySelector('.scene-info-box.next')
-            startAutoScroll(nextSceneBox)
-          }
-        }, 100)
-      }
-
-      // Helper function to create scene info box
-      function createSceneInfoBox(title, sceneNumber, actors) {
-        const box = document.createElement('div')
-        box.className = 'scene-info-box'
-
-        const heading = document.createElement('h3')
-        heading.textContent = `${title} ${sceneNumber}`
-        box.appendChild(heading)
-
-        const list = document.createElement('ul')
-        list.className = 'actor-list'
-
-        // Convert Map to array and sort by microphone number
-        const sortedActors = Array.from(actors.entries()).sort((a, b) => {
-          const microA = parseInt(a[1]) || 0
-          const microB = parseInt(b[1]) || 0
-          return microA - microB
-        })
-
-        // Add size classes based on number of actors
-        if (sortedActors.length > 8) {
-          list.classList.add('very-small')
-        } else if (sortedActors.length > 6) {
-          list.classList.add('small')
-        }
-
-        sortedActors.forEach(([actor, micro]) => {
-          const li = document.createElement('li')
-          li.innerHTML = `
-            <span>${actor}</span>
-            ${micro ? `<span class="actor-micro">${micro}</span>` : ''}
-          `
-          list.appendChild(li)
-        })
-
-        box.appendChild(list)
-        return box
-      }
-
-      // Helper function to get next scene number
-      function getNextScene(data, currentScene) {
-        const scenes = [...new Set(data.map((row) => row.Szene))]
-        const currentIndex = scenes.indexOf(currentScene)
-        return currentIndex < scenes.length - 1
-          ? scenes[currentIndex + 1]
-          : null
-      }
-
-      // Update getCurrentSceneFromScroll
-      function getCurrentSceneFromScroll() {
-        const viewportMiddle = window.scrollY + window.innerHeight / 2
-        const lines = document.querySelectorAll('.script-line')
-        let currentScene = null
-        let closestDistance = Infinity
-
-        lines.forEach((line) => {
-          const rect = line.getBoundingClientRect()
-          const lineMiddle = window.scrollY + rect.top + rect.height / 2
-          const distance = Math.abs(viewportMiddle - lineMiddle)
-
-          if (distance < closestDistance) {
-            closestDistance = distance
-            currentScene = line.dataset.scene
-          }
-        })
-
-        if (currentScene && scriptData) {
-          updateSceneInfo(scriptData, currentScene)
-        }
-
-        return currentScene || 'Kolpingtheater Ramsen - Bühnen-Viewer'
-      }
-
-      // Add scroll event listener for updating scene info
-      window.addEventListener('scroll', () => {
-        getCurrentSceneFromScroll()
-      })
-
-      // Auto-scroll functionality for scene info boxes
-      let autoScrollIntervals = []
-
-      function startAutoScroll(element) {
-        if (!element) return
-
-        const scrollContainer = element.querySelector('.actor-list')
-        if (!scrollContainer) return
-
-        // Check if scrolling is needed
-        if (scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
-          return // No scrollbar needed, no auto-scroll
-        }
-
-        const maxScroll =
-          scrollContainer.scrollHeight - scrollContainer.clientHeight
-
-        // Calculate scroll speed based on total height
-        // Base speed: 1 pixel per step for small heights
-        // Increases proportionally with height
-        const baseSpeed = 0.75
-        const heightFactor = Math.max(1, maxScroll / 100) // 1 pixel per 100px of scrollable height
-        const scrollSpeed = Math.max(1, Math.round(baseSpeed * heightFactor))
-
-        // Calculate pause duration based on content height (longer content = shorter pause)
-        const basePauseDuration = 45 // 3 seconds at 50ms intervals
-        const pauseDuration = Math.max(
-          15,
-          Math.round(basePauseDuration / heightFactor)
-        )
-
-        let scrollDirection = scrollSpeed // Positive for down, negative for up
-        let pauseCounter = 0
-
-        const interval = setInterval(() => {
-          // Pause at top and bottom
-          if (pauseCounter > 0) {
-            pauseCounter--
-            return
-          }
-
-          const currentScroll = scrollContainer.scrollTop
-
-          // Scroll by the calculated speed
-          scrollContainer.scrollTop += scrollDirection
-
-          // Check if we've reached the bottom
-          if (scrollContainer.scrollTop >= maxScroll && scrollDirection > 0) {
-            scrollDirection = -scrollSpeed // Start scrolling up
-            pauseCounter = pauseDuration // Pause at bottom
-            scrollContainer.scrollTop = maxScroll // Ensure we're exactly at bottom
-          }
-          // Check if we've reached the top
-          else if (scrollContainer.scrollTop <= 0 && scrollDirection < 0) {
-            scrollDirection = scrollSpeed // Start scrolling down
-            pauseCounter = pauseDuration // Pause at top
-            scrollContainer.scrollTop = 0 // Ensure we're exactly at top
-          }
-        }, 100) // Scroll every 50ms for smooth movement
-
-        autoScrollIntervals.push(interval)
-      }
-
-      function stopAllAutoScroll() {
-        autoScrollIntervals.forEach((interval) => clearInterval(interval))
-        autoScrollIntervals = []
-      }
-    </script>
-  </head>
-  <body>
+    <script src="papaparse.min.js"></script>
+</head>
+<body>
     <div class="header">
-      <h1>Kolpingtheater Ramsen - Bühnen-Viewer</h1>
-      <div class="status-group">
-        <span id="connection-status">Status: Verbinde...</span>
-        <span id="director-status">Director: Niemand</span>
-        <span id="clock" class="clock">00:00:00</span>
-      </div>
+        <h1>Kolpingtheater Ramsen - Bühnen-Viewer</h1>
+        <div class="status-group">
+            <span id="connection-status">Status: Verbinde...</span>
+            <span id="director-status">Director: Niemand</span>
+            <span id="clock" class="clock">00:00:00</span>
+        </div>
     </div>
 
     <div id="script-container" class="content">
-      <!-- Script content will be inserted here -->
+        <!-- Script content will be inserted here -->
     </div>
 
     <div class="scene-info-sidebar">
-      <!-- Scene information will be inserted here -->
+        <!-- Scene information will be inserted here -->
     </div>
 
     <div class="bottom-progress">
-      <div class="footer-info">
-        <span>Fortschritt</span>
-        <span id="global-progress-text">0% (0/0)</span>
-      </div>
-      <div class="progress">
-        <div class="progress-bar" id="global-progress-bar"></div>
-      </div>
+        <div class="footer-info">
+            <span>Fortschritt</span>
+            <span id="global-progress-text">0% (0/0)</span>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" id="global-progress-bar"></div>
+        </div>
     </div>
-  </body>
+
+    <script type="module" src="js/viewer-stage.js"></script>
+</body>
 </html>
