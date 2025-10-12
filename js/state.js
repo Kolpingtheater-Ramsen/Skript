@@ -21,6 +21,7 @@ export class StateManager extends EventEmitter {
       directorName: '',
       isConnected: false,
       currentScene: null,
+      reconnectAttempts: 0,
     }
   }
 

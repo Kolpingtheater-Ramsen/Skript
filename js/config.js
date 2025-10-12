@@ -12,7 +12,8 @@ const CONFIG = {
   },
   CACHE_DURATION: 5 * 60 * 1000, // 5 minutes
   DEFAULT_PLAY_ID: 'default',
-  DEFAULT_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980',
+  DEFAULT_SHEET_URL:
+    'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980',
 }
 
 const STORAGE_KEYS = {
@@ -34,6 +35,7 @@ const CATEGORIES = {
   PROPS: 'Requisiten',
   ACTOR: 'Schauspieler',
   SCENE_START: 'Szenenbeginn',
+  ROLE: 'Rolle',
 }
 
 export { CONFIG, STORAGE_KEYS, CATEGORIES }
