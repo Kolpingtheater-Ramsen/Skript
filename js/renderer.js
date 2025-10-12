@@ -27,11 +27,12 @@ export class Renderer {
         if (!scenes[row.Szene]) {
           scenes[row.Szene] = false
         }
-        if (row.Charakter && row.Charakter == selectedActor) {
+        if (row.Charakter && row.Charakter === selectedActor) {
           scenes[row.Szene] = true
         } else if (
           row.Kategorie === CATEGORIES.INSTRUCTION &&
-          row['Text/Anweisung'].includes(selectedActor)
+          selectedActor &&
+          row['Text/Anweisung'].toUpperCase().includes(selectedActor)
         ) {
           scenes[row.Szene] = true
         }
@@ -142,7 +143,10 @@ export class Renderer {
       td1.textContent = micros.get(actor) || ''
       tr.appendChild(td1)
       const td2 = document.createElement('td')
-      td2.innerHTML = selectedActor === actor ? `<b>${actor}</b>` : actor
+      // Extract role name from display string (e.g., "ROLE (ActorName)" -> "ROLE")
+      const roleName = actor.split('(')[0].trim().toUpperCase()
+      const isSelected = selectedActor && roleName === selectedActor
+      td2.innerHTML = isSelected ? `<b>${actor}</b>` : actor
       tr.appendChild(td2)
       table.appendChild(tr)
     })
@@ -265,8 +269,9 @@ export class Renderer {
       div.appendChild(lightSpan)
       div.classList.add('lighting')
     } else if (
-      row.Charakter.includes(settings.selectedActor) &&
-      settings.selectedActor
+      settings.selectedActor &&
+      row.Charakter &&
+      row.Charakter.toUpperCase() === settings.selectedActor
     ) {
       div.classList.add('highlighted')
       if (settings.blurLines) {
@@ -302,10 +307,13 @@ export class Renderer {
     const textDiv = document.createElement('div')
     let displayText = row['Text/Anweisung'] || ''
 
-    // Highlight selected actor in text
+    // Highlight selected actor in text (case-insensitive)
     if (
       settings.selectedActor &&
-      row['Text/Anweisung'].includes(settings.selectedActor)
+      row['Text/Anweisung'] &&
+      row['Text/Anweisung'].toUpperCase().includes(settings.selectedActor) &&
+      // not in actors lines
+      row.Kategorie !== CATEGORIES.ACTOR
     ) {
       div.classList.add('highlighted')
     }

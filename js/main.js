@@ -167,8 +167,13 @@ class App {
     const lineIndex = Array.from(allLines).indexOf(element)
     this.directorManager.markLine(element, lineIndex)
 
-    // Toggle blur if blur lines is enabled and this is the selected actor
-    if (settings.blurLines && row.Charakter.includes(settings.selectedActor)) {
+    // Toggle blur if blur lines is enabled and this is the selected actor (case-insensitive)
+    if (
+      settings.blurLines &&
+      settings.selectedActor &&
+      row.Charakter &&
+      row.Charakter.toUpperCase() === settings.selectedActor
+    ) {
       element.style.filter =
         element.style.filter === 'none' ? 'blur(4px)' : 'none'
     }
