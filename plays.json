@@ -1,6 +1,10 @@
 {
   "default": {
-    "name": "Standardstück",
+    "name": "Winterstück 2025",
+    "sheet": "https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=365693106"
+  },
+  "sommerstueck2025": {
+    "name": "Sommerstück 2025",
     "sheet": "https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=967194980"
   }
 }

@@ -215,7 +215,7 @@ async function loadScript() {
 
 function getActors(data) {
   const actors = data.filter(
-    (row) => row.Charakter && row.Szene && row.Szene == 0
+    (row) => row.Charakter && row.Kategorie === 'Rolle' && row['Text/Anweisung']
   )
   return actors.map((actor) => [actor.Charakter, actor['Text/Anweisung']])
 }
@@ -362,7 +362,9 @@ function createSceneOverview(sceneData, selectedActor) {
 // Render script
 function renderScript(data) {
   const container = document.getElementById('script-container')
-  const selectedActor = document.getElementById('actor-select').value
+  const selectedActor = document
+    .getElementById('actor-select')
+    .value.toUpperCase()
   const useActorNames = document.getElementById('show-actor-names')?.checked
   const showDirections = document.getElementById('show-directions').checked
   const showTechnical = document.getElementById('show-technical').checked
