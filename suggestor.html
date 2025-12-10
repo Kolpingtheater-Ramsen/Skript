@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rollenvorschläge - Kolpingtheater Ramsen</title>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="styles/suggestor.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -11,33 +17,31 @@
 <body>
     <nav>
         <a href="index.html">← Zurück zum Drehbuch</a>
-        <span id="current-scene">Rollenvorschläge</span>
+        <span id="current-scene">🎲 Rollenvorschläge</span>
         <div></div>
     </nav>
 
-    <div class="container">
-        <h1>Rollenvorschläge</h1>
+    <div class="container" style="margin-top: 80px;">
+        <h1>🎲 Rollenvorschläge für die Probe</h1>
 
         <div class="summary">
-            <h2>Übersicht</h2>
+            <h2>📊 Übersicht</h2>
             <p>Anwesende Schauspieler: <span id="present-count">0</span></p>
-            <p>
-                Spielbare Szenen: <span id="playable-scenes">0</span> von
-                <span id="total-scenes">0</span>
-            </p>
+            <p>Spielbare Szenen: <span id="playable-scenes">0</span> von <span id="total-scenes">0</span></p>
         </div>
 
         <div class="filter-options">
-            <button class="button select-all-btn" id="toggle-all-btn">
-                Alle Abwählen
+            <button class="select-all-btn" id="toggle-all-btn">
+                ☐ Alle abwählen
             </button>
         </div>
 
-        <h2>Anwesende Schauspieler</h2>
+        <h2>👥 Anwesende Schauspieler</h2>
         <div id="actor-list" class="actor-list">
             <!-- Actors will be populated here -->
         </div>
 
+        <h2>🎬 Szenen-Vorschläge</h2>
         <div id="suggestions" class="suggestions">
             <!-- Scene suggestions will be populated here -->
         </div>

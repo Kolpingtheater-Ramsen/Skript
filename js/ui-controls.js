@@ -42,6 +42,30 @@ export class UIControlsManager {
       STORAGE_KEYS.PINK_MODE,
       document.body.classList.contains('pink-mode')
     )
+
+    // Save notes enabled state
+    const enableNotes = document.getElementById('enable-notes')
+    if (enableNotes) {
+      localStorage.setItem(STORAGE_KEYS.ENABLE_NOTES, enableNotes.checked)
+    }
+
+    // Save scene overview state
+    const sceneOverview = document.getElementById('show-scene-overview')
+    if (sceneOverview) {
+      localStorage.setItem('show-scene-overview', sceneOverview.checked)
+    }
+
+    // Save blur lines state
+    const blurLines = document.getElementById('blur-lines')
+    if (blurLines) {
+      localStorage.setItem('blur-lines', blurLines.checked)
+    }
+
+    // Save autoscroll state
+    const autoscroll = document.getElementById('autoscroll')
+    if (autoscroll) {
+      localStorage.setItem('autoscroll', autoscroll.checked)
+    }
   }
 
   /**
@@ -79,6 +103,7 @@ export class UIControlsManager {
     // Update context slider visibility
     this.updateContextSliderVisibility()
 
+    // Load theme
     const darkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE) === 'true'
     const pinkMode = localStorage.getItem(STORAGE_KEYS.PINK_MODE) === 'true'
     document.body.classList.toggle('dark-mode', darkMode)
@@ -89,6 +114,9 @@ export class UIControlsManager {
     if (darkModeCheckbox) darkModeCheckbox.checked = darkMode
     if (pinkModeCheckbox) pinkModeCheckbox.checked = pinkMode
 
+    // Update theme option visual state
+    this.updateThemeOptionVisuals()
+
     // Load actor names toggle
     const showActorNames = document.getElementById('show-actor-names')
     if (showActorNames) {
@@ -97,6 +125,62 @@ export class UIControlsManager {
         showActorNames.checked = stored === 'true'
       }
     }
+
+    // Load notes enabled state
+    const enableNotes = document.getElementById('enable-notes')
+    if (enableNotes) {
+      const stored = localStorage.getItem(STORAGE_KEYS.ENABLE_NOTES)
+      enableNotes.checked = stored === 'true'
+    }
+
+    // Load scene overview state
+    const sceneOverview = document.getElementById('show-scene-overview')
+    if (sceneOverview) {
+      const stored = localStorage.getItem('show-scene-overview')
+      if (stored !== null) {
+        sceneOverview.checked = stored === 'true'
+      }
+    }
+
+    // Load blur lines state
+    const blurLines = document.getElementById('blur-lines')
+    if (blurLines) {
+      const stored = localStorage.getItem('blur-lines')
+      if (stored !== null) {
+        blurLines.checked = stored === 'true'
+      }
+    }
+
+    // Load autoscroll state
+    const autoscroll = document.getElementById('autoscroll')
+    if (autoscroll) {
+      const stored = localStorage.getItem('autoscroll')
+      if (stored !== null) {
+        autoscroll.checked = stored === 'true'
+      }
+    }
+  }
+
+  /**
+   * Update theme option visual state
+   */
+  updateThemeOptionVisuals() {
+    const isDark = document.body.classList.contains('dark-mode')
+    const isPink = document.body.classList.contains('pink-mode')
+
+    const lightOption = document.getElementById('theme-light')
+    const darkOption = document.getElementById('theme-dark')
+    const pinkOption = document.getElementById('theme-pink')
+
+    if (lightOption) {
+      lightOption.classList.toggle('active', !isDark && !isPink)
+    }
+    if (darkOption) {
+      darkOption.classList.toggle('active', isDark)
+    }
+    if (pinkOption) {
+      pinkOption.classList.toggle('active', isPink)
+    }
   }
 
   /**
@@ -104,7 +188,7 @@ export class UIControlsManager {
    */
   updateContextSliderVisibility() {
     const showActorText = document.getElementById('show-actor-text')
-    const contextSliders = document.querySelectorAll('.context-slider-group')
+    const contextSliders = document.querySelectorAll('.range-group')
 
     if (showActorText) {
       contextSliders.forEach((slider) => {
@@ -139,14 +223,16 @@ export class UIControlsManager {
   toggleSidebar() {
     const sidebar = document.querySelector('.sidebar')
     const overlay = document.querySelector('.sidebar-overlay')
-    const navToggle = document.querySelector('.nav-toggle')
+    const navToggle = document.querySelector('.nav-btn[onclick*="toggleSidebar"]')
 
-    if (sidebar && overlay && navToggle) {
+    if (sidebar && overlay) {
       sidebar.classList.toggle('active')
       overlay.classList.toggle('active')
 
-      // Update button text
-      navToggle.textContent = sidebar.classList.contains('active') ? '×' : '☰'
+      // Update button text if exists
+      if (navToggle) {
+        navToggle.textContent = sidebar.classList.contains('active') ? '×' : '☰'
+      }
     }
   }
 
@@ -156,12 +242,14 @@ export class UIControlsManager {
   closeSidebar() {
     const sidebar = document.querySelector('.sidebar')
     const overlay = document.querySelector('.sidebar-overlay')
-    const navToggle = document.querySelector('.nav-toggle')
+    const navToggle = document.querySelector('.nav-btn[onclick*="toggleSidebar"]')
 
-    if (sidebar && overlay && navToggle) {
+    if (sidebar && overlay) {
       sidebar.classList.remove('active')
       overlay.classList.remove('active')
-      navToggle.textContent = '☰'
+      if (navToggle) {
+        navToggle.textContent = '☰'
+      }
     }
   }
 
@@ -174,6 +262,7 @@ export class UIControlsManager {
     if (overlay && modal) {
       overlay.classList.add('active')
       modal.classList.add('active')
+      document.body.style.overflow = 'hidden'
     }
   }
 
@@ -186,6 +275,7 @@ export class UIControlsManager {
     if (overlay && modal) {
       overlay.classList.remove('active')
       modal.classList.remove('active')
+      document.body.style.overflow = ''
     }
   }
 
@@ -195,7 +285,44 @@ export class UIControlsManager {
   setupThemeSwitching() {
     const pinkMode = document.getElementById('pink-mode')
     const darkMode = document.getElementById('dark-mode')
+    const lightOption = document.getElementById('theme-light')
+    const darkOption = document.getElementById('theme-dark')
+    const pinkOption = document.getElementById('theme-pink')
 
+    // Theme option click handlers
+    if (lightOption) {
+      lightOption.addEventListener('click', () => {
+        document.body.classList.remove('dark-mode', 'pink-mode')
+        if (darkMode) darkMode.checked = false
+        if (pinkMode) pinkMode.checked = false
+        this.updateThemeOptionVisuals()
+        this.saveState()
+      })
+    }
+
+    if (darkOption) {
+      darkOption.addEventListener('click', () => {
+        document.body.classList.remove('pink-mode')
+        document.body.classList.add('dark-mode')
+        if (darkMode) darkMode.checked = true
+        if (pinkMode) pinkMode.checked = false
+        this.updateThemeOptionVisuals()
+        this.saveState()
+      })
+    }
+
+    if (pinkOption) {
+      pinkOption.addEventListener('click', () => {
+        document.body.classList.remove('dark-mode')
+        document.body.classList.add('pink-mode')
+        if (pinkMode) pinkMode.checked = true
+        if (darkMode) darkMode.checked = false
+        this.updateThemeOptionVisuals()
+        this.saveState()
+      })
+    }
+
+    // Legacy checkbox handlers (for backward compatibility)
     if (pinkMode) {
       pinkMode.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -205,6 +332,7 @@ export class UIControlsManager {
         } else {
           document.body.classList.remove('pink-mode')
         }
+        this.updateThemeOptionVisuals()
         this.saveState()
       })
     }
@@ -218,6 +346,7 @@ export class UIControlsManager {
         } else {
           document.body.classList.remove('dark-mode')
         }
+        this.updateThemeOptionVisuals()
         this.saveState()
       })
     }
@@ -231,7 +360,7 @@ export class UIControlsManager {
     const select = document.getElementById('actor-select')
     if (!select) return
 
-    select.innerHTML = '<option value="">Alle Charaktere</option>'
+    select.innerHTML = '<option value="">Alle Charaktere anzeigen</option>'
     actors.forEach(([roleName, actorName]) => {
       const option = document.createElement('option')
       option.value = roleName
@@ -320,6 +449,7 @@ export class UIControlsManager {
       showSceneOverview:
         document.getElementById('show-scene-overview')?.checked || false,
       blurLines: document.getElementById('blur-lines')?.checked || false,
+      enableNotes: document.getElementById('enable-notes')?.checked || false,
       directionsContext: parseInt(
         document.getElementById('directions-context')?.value || '0'
       ),
@@ -335,6 +465,22 @@ export class UIControlsManager {
       requisitenContext: parseInt(
         document.getElementById('requisiten-context')?.value || '0'
       ),
+    }
+  }
+
+  /**
+   * Setup notes feature listeners
+   * @param {Function} onNotesToggle - Callback when notes are toggled
+   */
+  setupNotesListeners(onNotesToggle) {
+    const enableNotes = document.getElementById('enable-notes')
+    if (enableNotes) {
+      enableNotes.addEventListener('change', () => {
+        this.saveState()
+        if (onNotesToggle) {
+          onNotesToggle(enableNotes.checked)
+        }
+      })
     }
   }
 }

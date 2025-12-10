@@ -1,184 +1,160 @@
-/* Actor Viewer Styles (viewer2.html) */
+/* ============================================
+   VIEWER-ACTOR STYLES - Actor/Backstage View
+   ============================================ */
 
-:root {
-  --primary-color: #4299e1;
-  --text-color: #ffffff;
-  --bg-color: #000000;
-  --highlight-color: #2c5282;
-  --ok-color: #48bb78;
-}
+@import 'viewer.css';
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  height: 100%;
-  overflow: hidden;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: Arial, sans-serif;
-}
-
-.header {
-  height: 80px;
-  min-height: 80px;
-  max-height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  border-bottom: 2px solid var(--primary-color);
-}
-
-.header h1 {
-  font-size: 36px;
-  color: var(--primary-color);
-}
-
-.status {
-  display: flex;
-  gap: 24px;
-  font-size: 22px;
-  color: var(--primary-color);
-}
+/* ============================================
+   SCENE PANELS
+   ============================================ */
 
 .content {
-  height: calc(100% - 80px - 64px);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding: 16px;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  margin-top: 100px;
+  padding-bottom: 120px;
 }
 
 .scene-panel {
-  border: 2px solid var(--primary-color);
-  border-radius: 8px;
-  padding: 16px;
-  display: grid;
-  grid-template-rows: auto auto 1fr;
-  gap: 12px;
-  min-height: 0;
-}
-
-.scene-title {
-  font-size: 48px;
-  color: var(--primary-color);
-}
-
-.scene-summary {
-  font-size: 26px;
-  color: #cbd5e0;
-}
-
-.section-title {
-  font-size: 22px;
-  color: var(--primary-color);
-  margin-bottom: 6px;
-}
-
-.roles {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  min-height: 0;
-}
-
-.roles-list {
-  border: 1px solid var(--highlight-color);
-  border-radius: 6px;
-  padding: 12px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.roles-list ul {
-  list-style: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 18px;
-  font-size: 24px;
-}
-
-.roles-list li {
-  background: var(--highlight-color);
-  border-radius: 4px;
-  padding: 8px 10px;
+  background-color: var(--viewer-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 2px solid var(--viewer-highlight);
   display: flex;
+  flex-direction: column;
+  min-height: 400px;
+}
+
+.scene-panel:first-child {
+  border-color: var(--viewer-success);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+.scene-panel:first-child .scene-title {
+  color: var(--viewer-success);
+}
+
+.scene-panel:last-child {
+  border-color: var(--viewer-warning);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+}
+
+.scene-panel:last-child .scene-title {
+  color: var(--viewer-warning);
+}
+
+/* ============================================
+   SCENE PANEL CONTENT
+   ============================================ */
+
+.scene-panel .scene-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-3) 0;
+  padding: 0;
+  border: none;
+  position: static;
+  background: transparent;
+}
+
+.scene-panel .scene-summary {
+  color: var(--viewer-muted);
+  font-size: 1rem;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--viewer-highlight);
+  font-style: italic;
+}
+
+.scene-panel .roles {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.scene-panel .section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--viewer-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
+}
+
+.scene-panel .roles-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.scene-panel .role-item {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--viewer-highlight);
+  border-radius: var(--radius-md);
+  font-size: 1.1rem;
 }
 
-.role-name {
-  font-weight: bold;
-  color: var(--text-color);
+.scene-panel .role-name {
+  font-weight: 500;
 }
 
-.role-meta {
-  color: var(--primary-color);
-  font-size: 20px;
-  margin-left: 12px;
-  white-space: nowrap;
+.scene-panel .role-actor {
+  color: var(--viewer-muted);
+  font-size: 0.9em;
 }
 
-/* Progress Bar */
-.progress {
-  height: 24px;
-  border: 1px solid var(--highlight-color);
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
+.scene-panel .role-micro {
+  color: var(--viewer-primary);
+  font-weight: 600;
+  font-size: 0.85em;
+  padding: var(--space-1) var(--space-2);
+  background-color: rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-md);
 }
 
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--ok-color), var(--primary-color));
-  width: 0%;
-  transition: width 200ms ease-out;
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1200px) {
+  .scene-panel .scene-title {
+    font-size: 1.5rem;
+  }
+  
+  .scene-panel .role-item {
+    font-size: 1rem;
+  }
 }
 
-.footer-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  color: #a0aec0;
+@media (max-width: 992px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .scene-panel {
+    min-height: 300px;
+  }
 }
 
-.bottom-progress {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 8px 16px;
-  background: var(--bg-color);
-  border-top: 2px solid var(--primary-color);
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(66, 153, 225, 0.6);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(66, 153, 225, 0.8);
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(66, 153, 225, 0.6) rgba(255, 255, 255, 0.1);
+@media (max-width: 768px) {
+  .content {
+    padding: var(--space-4);
+    margin-top: 80px;
+  }
+  
+  .scene-panel {
+    padding: var(--space-4);
+  }
+  
+  .scene-panel .scene-title {
+    font-size: 1.25rem;
+  }
 }

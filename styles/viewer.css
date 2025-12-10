@@ -1,13 +1,34 @@
-/* Viewer Styles - Shared between viewer.html and viewer2.html */
+/* ============================================
+   VIEWER STYLES - Stage and Actor Viewers
+   ============================================ */
 
 :root {
-  --primary-color: #4299e1;
-  --text-color: #ffffff;
-  --bg-color: #000000;
-  --highlight-color: #2c5282;
-  --marked-color: #e53e3e;
-  --ok-color: #48bb78;
-  --warn-color: #ed8936;
+  /* Viewer-specific colors */
+  --viewer-primary: #3b82f6;
+  --viewer-text: #ffffff;
+  --viewer-bg: #0f172a;
+  --viewer-surface: #1e293b;
+  --viewer-highlight: #334155;
+  --viewer-marked: #ef4444;
+  --viewer-success: #10b981;
+  --viewer-warning: #f59e0b;
+  --viewer-muted: #94a3b8;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Border Radius */
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
 }
 
 * {
@@ -17,18 +38,19 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  font-family: var(--font-family);
+  background-color: var(--viewer-bg);
+  color: var(--viewer-text);
   line-height: 1.6;
   font-size: 24px;
+  min-height: 100vh;
 }
 
-/* Header */
+/* ============================================
+   HEADER
+   ============================================ */
+
 .header {
-  background-color: var(--bg-color);
-  padding: 1rem;
-  border-bottom: 2px solid var(--primary-color);
   position: fixed;
   top: 0;
   left: 0;
@@ -37,172 +59,362 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--viewer-surface);
+  border-bottom: 2px solid var(--viewer-primary);
 }
 
 .header h1 {
-  font-size: 2rem;
-  color: var(--primary-color);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--viewer-primary);
+  margin: 0;
 }
 
-.director-status,
-.status {
-  font-size: 1.5rem;
-  color: var(--primary-color);
-}
-
-.status {
+.status-group {
   display: flex;
-  gap: 24px;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+#connection-status,
+#director-status {
+  font-size: 1.25rem;
+  color: var(--viewer-muted);
+}
+
+#director-status.active {
+  color: var(--viewer-marked);
+  font-weight: 600;
 }
 
 .clock {
   font-size: 1.5rem;
-  color: var(--primary-color);
-  margin-left: 2rem;
+  font-weight: 600;
+  color: var(--viewer-primary);
+  font-variant-numeric: tabular-nums;
 }
 
-/* Script Content */
+/* ============================================
+   CONTENT AREA
+   ============================================ */
+
 .content {
   margin-top: 100px;
-  padding: 2rem;
-  padding-bottom: 96px;
+  padding: var(--space-6);
+  padding-bottom: 120px;
 }
 
+/* ============================================
+   SCRIPT LINES
+   ============================================ */
+
 .script-line {
-  padding: 1rem;
-  margin: 0.5rem 0;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  padding: var(--space-4);
+  margin: var(--space-2) 0;
+  border-radius: var(--radius-lg);
+  background-color: var(--viewer-surface);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
 }
 
 .script-line.marked-line {
-  border: 2px solid var(--marked-color);
-  font-weight: bold;
+  border: 2px solid var(--viewer-marked);
+  background-color: rgba(239, 68, 68, 0.1);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
 }
 
 .actor-name {
-  color: var(--primary-color);
-  font-weight: bold;
-  font-size: 1.2em;
+  color: var(--viewer-primary);
+  font-weight: 600;
+  font-size: 1.1em;
+  margin-bottom: var(--space-2);
 }
 
+/* Line Types */
 .instruction {
-  color: #48bb78;
+  color: var(--viewer-success);
   font-style: italic;
+  background-color: rgba(16, 185, 129, 0.1);
 }
 
 .technical {
-  color: #ecc94b;
+  color: #fbbf24;
+  background-color: rgba(251, 191, 36, 0.1);
 }
 
 .lighting {
-  color: #ed8936;
+  color: var(--viewer-warning);
+  background-color: rgba(245, 158, 11, 0.1);
 }
 
 .audio {
-  color: #9f7aea;
+  color: #a78bfa;
+  background-color: rgba(167, 139, 250, 0.1);
 }
 
 .props {
-  color: #63b3ed;
+  color: #22d3ee;
+  background-color: rgba(34, 211, 238, 0.1);
 }
 
+/* Tags */
 .tag {
   display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 3px;
-  margin-right: 0.5rem;
-  font-size: 0.9em;
-  background-color: var(--highlight-color);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  margin-right: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--viewer-highlight);
 }
+
+/* ============================================
+   SCENE ELEMENTS
+   ============================================ */
 
 .scene-title {
-  color: var(--primary-color);
+  color: var(--viewer-primary);
   font-size: 2rem;
-  margin: 2rem 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--primary-color);
+  font-weight: 600;
+  margin: var(--space-8) 0 var(--space-4) 0;
+  padding: var(--space-4) 0;
+  border-bottom: 2px solid var(--viewer-primary);
   position: sticky;
   top: 100px;
-  background-color: var(--bg-color);
+  background-color: var(--viewer-bg);
   z-index: 50;
-  padding: 1rem 0;
 }
 
-/* Animation for marked line */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
 @keyframes flash {
-  0% {
-    background-color: var(--marked-color);
-  }
-  50% {
-    background-color: var(--highlight-color);
-  }
-  100% {
-    background-color: var(--marked-color);
-  }
+  0% { background-color: var(--viewer-marked); }
+  50% { background-color: var(--viewer-highlight); }
+  100% { background-color: var(--viewer-marked); }
 }
 
 .flash-highlight {
   animation: flash 1s ease;
 }
 
-/* Bottom Progress Bar */
-.footer-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  color: #a0aec0;
-  margin-bottom: 6px;
-}
-
-.progress {
-  height: 24px;
-  border: 1px solid var(--highlight-color);
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--ok-color), var(--primary-color));
-  width: 0%;
-  transition: width 200ms ease-out;
-}
+/* ============================================
+   BOTTOM PROGRESS BAR
+   ============================================ */
 
 .bottom-progress {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 8px 16px;
-  background: var(--bg-color);
-  border-top: 2px solid var(--primary-color);
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--viewer-surface);
+  border-top: 2px solid var(--viewer-primary);
   z-index: 120;
 }
 
-/* Custom scrollbar */
+.footer-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: var(--viewer-muted);
+  margin-bottom: var(--space-2);
+}
+
+.progress {
+  height: 20px;
+  border: 1px solid var(--viewer-highlight);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--viewer-success), var(--viewer-primary));
+  width: 0%;
+  transition: width 300ms ease-out;
+  border-radius: 10px;
+}
+
+/* ============================================
+   SCENE INFO SIDEBAR (Stage Viewer)
+   ============================================ */
+
+.scene-info-sidebar {
+  position: fixed;
+  right: 0;
+  top: 100px;
+  width: 320px;
+  height: calc(100vh - 100px);
+  background-color: var(--viewer-surface);
+  border-left: 2px solid var(--viewer-primary);
+  padding: var(--space-4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.scene-info-box {
+  padding: var(--space-4);
+  border: 1px solid var(--viewer-highlight);
+  border-radius: var(--radius-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(50vh - 80px);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.scene-info-box h3 {
+  color: var(--viewer-primary);
+  margin-bottom: var(--space-3);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--viewer-highlight);
+}
+
+.scene-info-box.active {
+  border-color: var(--viewer-success);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.scene-info-box.active h3 {
+  color: var(--viewer-success);
+}
+
+.scene-info-box.next {
+  border-color: var(--viewer-warning);
+}
+
+.scene-info-box.next h3 {
+  color: var(--viewer-warning);
+}
+
+.actor-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.actor-list.small {
+  font-size: 0.85em;
+}
+
+.actor-list.very-small {
+  font-size: 0.75em;
+}
+
+.actor-list li {
+  margin: var(--space-2) 0;
+  padding: var(--space-3);
+  background-color: var(--viewer-highlight);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actor-micro {
+  color: var(--viewer-primary);
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+/* ============================================
+   CONTENT WITH SIDEBAR
+   ============================================ */
+
+.content.with-sidebar {
+  margin-right: 340px;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(66, 153, 225, 0.6);
+  background: rgba(59, 130, 246, 0.5);
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(66, 153, 225, 0.8);
+  background: rgba(59, 130, 246, 0.7);
 }
 
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(66, 153, 225, 0.6) rgba(255, 255, 255, 0.1);
+  scrollbar-color: rgba(59, 130, 246, 0.5) rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1200px) {
+  .scene-info-sidebar {
+    width: 280px;
+  }
+  
+  .content.with-sidebar {
+    margin-right: 300px;
+  }
+}
+
+@media (max-width: 992px) {
+  body {
+    font-size: 20px;
+  }
+  
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .status-group {
+    gap: var(--space-4);
+  }
+  
+  #connection-status,
+  #director-status {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .scene-info-sidebar {
+    display: none;
+  }
+  
+  .content.with-sidebar {
+    margin-right: 0;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+  
+  .status-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

@@ -1,46 +1,67 @@
+/* ============================================
+   MAIN STYLESHEET
+   Import all component stylesheets
+   ============================================ */
+
 @import 'styles/base.css';
-@import 'styles/script.css';
 @import 'styles/components.css';
+@import 'styles/script.css';
 @import 'styles/themes.css';
 
+/* ============================================
+   ADDITIONAL GLOBAL STYLES
+   ============================================ */
+
+/* Legacy button support for links */
 .button {
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 0;
+  background-color: var(--color-gray-100);
+  color: var(--color-text);
+  border: none;
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  transition: all var(--transition-fast);
 }
 
 .button:hover {
-  background-color: #45a049;
+  background-color: var(--color-gray-200);
   text-decoration: none;
+  color: var(--color-text);
+}
+
+.button-primary {
+  background-color: var(--color-primary);
   color: white;
 }
 
-.install-button {
-  background-color: #4caf50;
-  border: none;
+.button-primary:hover {
+  background-color: var(--color-primary-hover);
   color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
+}
+
+/* Install button styling */
+.install-button {
   display: none;
-  font-size: 14px;
-  margin: 4px 8px;
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-success);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  transition: all var(--transition-fast);
 }
 
 .install-button:hover {
-  background-color: #45a049;
+  background-color: #059669;
 }
 
 @media (display-mode: standalone) {
@@ -49,6 +70,121 @@
   }
 }
 
+/* Table styling */
 th {
   text-align: left;
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Settings-specific styles */
+.settings-divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--space-4) 0;
+}
+
+/* Quick links section */
+.quick-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.quick-links .button {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+/* Content filter grid */
+.content-filters {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.filter-item {
+  padding: var(--space-3);
+  background-color: var(--color-gray-50);
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.filter-item:hover {
+  border-color: var(--color-border);
+}
+
+.filter-item .checkbox-group {
+  margin-bottom: 0;
+}
+
+/* Theme selector */
+.theme-options {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-gray-50);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-option:hover {
+  border-color: var(--color-primary);
+}
+
+.theme-option.active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.theme-option input[type="checkbox"] {
+  display: none;
+}
+
+.theme-preview {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.theme-preview-light {
+  background: linear-gradient(135deg, #f9fafb 50%, #e5e7eb 50%);
+}
+
+.theme-preview-dark {
+  background: linear-gradient(135deg, #1e293b 50%, #0f172a 50%);
+}
+
+.theme-preview-pink {
+  background: linear-gradient(135deg, #fdf2f8 50%, #fbcfe8 50%);
+}
+
+/* Notes settings */
+.notes-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  background-color: var(--color-warning-light);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.notes-toggle .checkbox-group {
+  margin: 0;
+}
+
+.notes-info {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
 }

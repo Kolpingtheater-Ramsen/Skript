@@ -1,194 +1,355 @@
-/* Suggestor Styles */
+/* ============================================
+   SUGGESTOR STYLES - Role Suggestion Page
+   ============================================ */
+
+/* ============================================
+   LAYOUT
+   ============================================ */
 
 .container {
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--space-6);
 }
 
-.actor-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+/* ============================================
+   NAVIGATION
+   ============================================ */
 
-.actor-checkbox {
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  padding: 8px 16px;
-  background: #f0f0f0;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  user-select: none;
-}
-
-.actor-checkbox:hover {
-  background: #e0e0e0;
-}
-
-.actor-checkbox input {
-  margin-right: 8px;
-  cursor: pointer;
-}
-
-.suggestions {
-  margin-top: 20px;
-}
-
-.scene-suggestion {
-  background: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
-
-.scene-suggestion:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.scene-suggestion h3 {
-  margin: 0 0 10px 0;
-  color: #333;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: var(--z-fixed);
 }
 
-.scene-suggestion h3 .percentage {
-  font-size: 0.8em;
-  padding: 4px 8px;
-  border-radius: 12px;
-  background: #f0f0f0;
-  font-weight: normal;
-}
-
-.scene-actors {
+nav a {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
 }
 
-.actor-tag {
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 0.9em;
-  transition: transform 0.1s;
+nav a:hover {
+  color: var(--color-primary-hover);
 }
 
-.actor-tag:hover {
-  transform: scale(1.05);
+#current-scene {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
 }
 
-.actor-present {
-  background: #4caf50;
-  color: white;
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+
+h1 {
+  margin-bottom: var(--space-6);
+  color: var(--color-text);
 }
 
-.actor-missing {
-  background: #ff5252;
-  color: white;
+h2 {
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  margin: var(--space-6) 0 var(--space-4) 0;
 }
 
-.playable-scene {
-  border-left: 4px solid #4caf50;
-}
-
-.unplayable-scene {
-  border-left: 4px solid #ff5252;
-}
+/* ============================================
+   SUMMARY CARD
+   ============================================ */
 
 .summary {
-  background: #f8f9fa;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-primary-light);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
 }
 
 .summary h2 {
-  margin-top: 0;
-  color: #333;
-  font-size: 1.3em;
+  margin: 0 0 var(--space-4) 0;
+  color: var(--color-primary-dark);
 }
 
 .summary p {
-  margin: 8px 0;
-  color: #555;
+  margin: var(--space-2) 0;
+  color: var(--color-text);
 }
 
+.summary span {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+/* ============================================
+   FILTER OPTIONS
+   ============================================ */
+
 .filter-options {
-  margin-bottom: 20px;
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .select-all-btn {
-  margin-bottom: 10px;
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-gray-100);
+  color: var(--color-text);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-/* Dark mode support */
-body.dark-mode .scene-suggestion {
-  background: #2d3748;
-  color: #e2e8f0;
+.select-all-btn:hover {
+  background-color: var(--color-gray-200);
 }
 
-body.dark-mode .scene-suggestion h3 {
-  color: #e2e8f0;
+/* ============================================
+   ACTOR LIST
+   ============================================ */
+
+.actor-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
 }
 
-body.dark-mode .scene-suggestion h3 .percentage {
-  background: #4a5568;
-  color: #e2e8f0;
+.actor-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
+
+.actor-item:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-gray-50);
+}
+
+.actor-item.selected {
+  border-color: var(--color-success);
+  background-color: var(--color-success-light);
+}
+
+.actor-item input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.actor-item input[type="checkbox"]:checked {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.actor-item input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.actor-item label {
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================
+   SUGGESTIONS
+   ============================================ */
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.scene-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.scene-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.scene-card.playable {
+  border-color: var(--color-success);
+}
+
+.scene-card.not-playable {
+  opacity: 0.7;
+}
+
+.scene-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  background-color: var(--color-gray-50);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.scene-card.playable .scene-card-header {
+  background-color: var(--color-success-light);
+}
+
+.scene-card-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+}
+
+.scene-card-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+}
+
+.scene-card.playable .scene-card-status {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.scene-card.not-playable .scene-card-status {
+  background-color: var(--color-gray-200);
+  color: var(--color-text-secondary);
+}
+
+.scene-card-body {
+  padding: var(--space-4);
+}
+
+.scene-card-summary {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+  font-style: italic;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-2);
+}
+
+.role-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-gray-50);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.role-tag.available {
+  background-color: var(--color-success-light);
+  color: #047857;
+}
+
+.role-tag.missing {
+  background-color: var(--color-error-light);
+  color: var(--color-error);
+}
+
+.role-name {
+  font-weight: var(--font-weight-medium);
+}
+
+.role-actor {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  nav {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  #current-scene {
+    font-size: var(--font-size-base);
+  }
+
+  .container {
+    padding: var(--space-4);
+    margin-top: 60px;
+  }
+
+  .actor-list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-2);
+  }
+
+  .actor-item {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .roles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   DARK MODE SUPPORT
+   ============================================ */
 
 body.dark-mode .summary {
-  background: #2d3748;
-  color: #e2e8f0;
+  background-color: var(--color-primary-light);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
-body.dark-mode .summary h2 {
-  color: #e2e8f0;
+body.dark-mode .scene-card-header {
+  background-color: var(--color-gray-50);
 }
 
-body.dark-mode .summary p {
-  color: #cbd5e0;
-}
-
-body.dark-mode .actor-checkbox {
-  background: #4a5568;
-  color: #e2e8f0;
-}
-
-body.dark-mode .actor-checkbox:hover {
-  background: #718096;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .actor-list {
-    gap: 8px;
-  }
-
-  .actor-checkbox {
-    padding: 6px 12px;
-    font-size: 0.9em;
-  }
-
-  .scene-suggestion {
-    padding: 12px;
-  }
-
-  .scene-suggestion h3 {
-    font-size: 1.1em;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .actor-tag {
-    font-size: 0.85em;
-  }
+body.dark-mode .scene-card.playable .scene-card-header {
+  background-color: var(--color-success-light);
 }

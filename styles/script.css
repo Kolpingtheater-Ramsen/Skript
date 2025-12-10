@@ -1,152 +1,367 @@
-/* Script Container */
+/* ============================================
+   SCRIPT STYLES - Script display components
+   ============================================ */
+
+/* ============================================
+   SCRIPT CONTAINER
+   ============================================ */
+
 .script-container {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s, color 0.3s;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  transition: background-color var(--transition-normal);
 }
 
-/* Script Lines */
-.script-line {
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 4px;
-  transition: background 0.3s, color 0.3s;
+@media (max-width: 768px) {
+  .script-container {
+    border-radius: 0;
+    margin: 0;
+    padding: var(--space-4);
+  }
 }
 
-.actor-name {
-  font-weight: bold;
-  color: #2c5282;
-}
+/* ============================================
+   TABLE OF CONTENTS
+   ============================================ */
 
-/* Line Types */
-.instruction {
-  background: #f7fafc;
-  font-style: italic;
-  color: #4a5568;
-}
-
-.technical {
-  background: #f3e8ff;
-  color: #6b21a8;
-}
-
-.lighting {
-  background: #fffbeb;
-  color: #92400e;
-}
-
-.audio {
-  background: rgba(128, 255, 136, 0.39);
-  color: #1a202c;
-}
-
-.props {
-  background: #e6fffa;
-  color: #285e61;
-}
-
-.highlighted {
-  background: #ebf8ff;
-  border-left: 4px solid #3182ce;
-  padding-left: 15px;
-}
-
-.highlighted.instruction {
-  background: inherit !important;
-}
-
-/* Scene Elements */
-.scene-separator {
-  border-top: 2px solid #4299e1;
-  margin: 0 30px 0 0;
-  padding-bottom: 20px;
-}
-
-.scene-overview {
-  background: #ebf8ff;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-}
-
-.scene-overview h3 {
-  margin-top: 0;
-  color: #2c5282;
-}
-
-/* Scene summary (from Kategorie "Szenenbeginn") */
-.scene-summary {
-  font-size: 0.875rem;
-  color: #718096;
-  margin: 4px 0 8px 0;
-}
-
-/* Table of Contents */
 .toc {
-  background: #f7fafc;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  background-color: var(--color-gray-50);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+}
+
+.toc h2 {
+  font-size: var(--font-size-lg);
+  margin: 0 0 var(--space-3) 0;
+  color: var(--color-text);
 }
 
 .toc a {
   display: block;
-  margin-bottom: 10px;
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-1);
+  color: var(--color-text);
   text-decoration: none;
-  color: #2c5282;
-  width: fit-content;
-  padding-left: 10px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  border-left: 3px solid transparent;
 }
 
-/* Utility Classes */
-.micro {
-  font-size: 0.875rem;
-  color: #718096;
-  margin-top: 4px;
+.toc a:hover {
+  background-color: var(--color-gray-100);
+  text-decoration: none;
 }
 
-.tag {
-  border-radius: 4px;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  font-weight: bold;
-  width: fit-content;
+.toc a[style*="font-weight: bold"] {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border-left-color: var(--color-primary);
+  font-weight: var(--font-weight-semibold) !important;
 }
 
-/* Context Lines */
-.context-line {
-  opacity: 0.5;
+/* ============================================
+   SCENE ELEMENTS
+   ============================================ */
+
+.scene-separator {
+  border-top: 2px solid var(--color-primary);
+  margin: 0 0 var(--space-4) 0;
 }
 
-.context-slider-group {
-  margin-left: 20px;
-  margin-top: 5px;
+.scene-summary {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: var(--space-2) 0 var(--space-4) 0;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-gray-50);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-gray-300);
+}
+
+.scene-overview {
+  background-color: var(--color-primary-light);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.scene-overview h3 {
+  margin: 0 0 var(--space-3) 0;
+  color: var(--color-primary-dark);
+  font-size: var(--font-size-base);
+}
+
+.scene-overview table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scene-overview th,
+.scene-overview td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.scene-overview th {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-dark);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.scene-overview td {
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.scene-overview tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================
+   SCRIPT LINES
+   ============================================ */
+
+.script-line {
+  position: relative;
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-2) 0;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.script-line:hover {
+  background-color: var(--color-gray-50);
+}
+
+.actor-name {
+  display: inline-block;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-1);
+  font-size: var(--font-size-sm);
+}
+
+/* Line Types */
+.script-line.instruction {
+  background-color: var(--color-instruction-bg);
+  border-color: rgba(139, 92, 246, 0.2);
+  font-style: italic;
+  color: var(--color-gray-700);
+}
+
+.script-line.technical {
+  background-color: var(--color-technical-bg);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.script-line.lighting {
+  background-color: var(--color-lighting-bg);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.script-line.audio {
+  background-color: var(--color-audio-bg);
+  border-color: rgba(236, 72, 153, 0.2);
+}
+
+.script-line.props {
+  background-color: var(--color-props-bg);
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+/* Highlighted line (selected actor) */
+.script-line.highlighted {
+  background-color: var(--color-primary-light);
+  border-left: 4px solid var(--color-primary);
+  padding-left: calc(var(--space-4) - 4px);
+}
+
+.script-line.highlighted.instruction {
+  background-color: var(--color-instruction-bg);
+}
+
+/* Marked line (director mode) */
+.script-line.marked-line {
+  border-left: 4px solid var(--color-success) !important;
+  padding-left: calc(var(--space-4) - 4px);
+  background-color: var(--color-success-light);
+}
+
+/* Context lines */
+.script-line.context-line {
+  opacity: 0.6;
+}
+
+/* ============================================
+   NOTES
+   ============================================ */
+
+.script-line .line-note {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  background-color: rgba(251, 191, 36, 0.15);
+  border-left: 3px solid var(--color-warning);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.script-line .line-note-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
 }
 
-input[type='range'] {
-  width: 100px;
+.script-line .line-note-label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-warning);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* Animations */
-@keyframes flash-highlight {
-  0% {
-    background-color: rgba(66, 153, 225, 0.8);
+.script-line .line-note-actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.script-line .line-note-btn {
+  padding: var(--space-1);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.script-line .line-note-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
+}
+
+.script-line .line-note-text {
+  color: var(--color-text);
+  white-space: pre-wrap;
+}
+
+/* Note edit mode */
+.script-line .line-note-edit {
+  margin-top: var(--space-3);
+}
+
+.script-line .line-note-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  resize: vertical;
+}
+
+.script-line .line-note-edit-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+/* Add note button (shown on hover) */
+.script-line .add-note-btn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--color-warning);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.script-line:hover .add-note-btn {
+  opacity: 1;
+}
+
+.script-line:hover .add-note-btn:hover {
+  background-color: #d97706;
+}
+
+/* ============================================
+   TAGS
+   ============================================ */
+
+.script-line .tag {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border-radius: var(--radius-md);
+}
+
+.script-line.technical .tag {
+  background-color: var(--color-technical);
+  color: white;
+}
+
+.script-line.lighting .tag {
+  background-color: var(--color-lighting);
+  color: white;
+}
+
+.script-line.audio .tag {
+  background-color: var(--color-audio);
+  color: white;
+}
+
+.script-line.props .tag {
+  background-color: var(--color-props);
+  color: white;
+}
+
+/* ============================================
+   MICRO INFO
+   ============================================ */
+
+.micro {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .script-line {
+    padding: var(--space-3);
   }
-  100% {
-    background-color: transparent;
+
+  .scene-overview {
+    padding: var(--space-3);
   }
-}
 
-.flash-highlight {
-  animation: flash-highlight 1s ease-out forwards;
-}
-
-/* Marked Lines */
-.marked-line {
-  border-left: 4px solid #48bb78 !important;
+  .script-line .add-note-btn {
+    opacity: 0.7;
+  }
 }
