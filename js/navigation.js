@@ -10,6 +10,22 @@ import { smoothScrollToElement } from './utils.js'
 export class NavigationManager {
   constructor(stateManager) {
     this.state = stateManager
+    this.isNavigating = false
+    this.navigationTimeout = null
+  }
+
+  /**
+   * Start navigation lock to prevent hash updates during scroll
+   * @param {number} duration - Lock duration in ms
+   */
+  startNavigationLock(duration = 1000) {
+    this.isNavigating = true
+    if (this.navigationTimeout) {
+      clearTimeout(this.navigationTimeout)
+    }
+    this.navigationTimeout = setTimeout(() => {
+      this.isNavigating = false
+    }, duration)
   }
 
   /**
@@ -51,14 +67,19 @@ export class NavigationManager {
       }
       if (currentScene === 'Kolpingtheater Ramsen - Drehbuch Viewer') {
         currentSceneEl.textContent = 'Kolpingtheater Ramsen - Drehbuch Viewer'
-        history.replaceState(null, null, '')
-        window.location.hash = ''
+        if (!this.isNavigating) {
+          history.replaceState(null, null, '')
+          window.location.hash = ''
+        }
         return
       }
       // Only update hash if it's different to avoid unnecessary history entries
-      const currentHash = window.location.hash.replace('#scene-', '')
-      if (currentHash !== currentScene) {
-        history.replaceState(null, null, `#scene-${currentScene}`)
+      // Skip hash updates during active navigation to prevent scroll bounce
+      if (!this.isNavigating) {
+        const currentHash = window.location.hash.replace('#scene-', '')
+        if (currentHash !== currentScene) {
+          history.replaceState(null, null, `#scene-${currentScene}`)
+        }
       }
     }
   }
@@ -71,26 +92,25 @@ export class NavigationManager {
   getCurrentLineIndex(lines) {
     if (!lines.length) return -1
 
-    // Get the viewport height and scroll position
+    // Get the viewport height
     const viewportHeight = window.innerHeight
-    const viewportFocal = window.scrollY + viewportHeight * 0.25
-
-    // Find the line closest to the center of the viewport
-    let closestLine = 0
-    let closestDistance = Infinity
+    
+    // Focal point at 50% from top of viewport
+    const focalPoint = viewportHeight * 0.5
+    
+    // Find the last line whose top is at or above the 50% mark
+    let bestIndex = 0
 
     lines.forEach((line, index) => {
       const rect = line.getBoundingClientRect()
-      const lineCenter = window.scrollY + rect.top + rect.height / 2
-      const distance = Math.abs(viewportFocal - lineCenter)
-
-      if (distance < closestDistance) {
-        closestDistance = distance
-        closestLine = index
+      
+      // If line's top is at or above the focal point, it's a candidate
+      if (rect.top <= focalPoint) {
+        bestIndex = index
       }
     })
 
-    return closestLine
+    return bestIndex
   }
 
   /**

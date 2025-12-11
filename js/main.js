@@ -169,6 +169,11 @@ class App {
       this.uiControls.closeSidebar()
       this.navigation.updateCurrentScene()
     })
+
+    // Custom event for ToC navigation to prevent scroll bounce
+    document.addEventListener('tocNavigation', () => {
+      this.navigation.startNavigationLock()
+    })
   }
 
   /**
