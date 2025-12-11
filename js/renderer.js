@@ -336,6 +336,11 @@ export class Renderer {
       if (confirm('Notiz wirklich löschen?')) {
         this.deleteNote(lineId)
         noteDiv.remove()
+        // Restore add-note button visibility
+        const addNoteBtn = lineElement.querySelector('.add-note-btn')
+        if (addNoteBtn) {
+          addNoteBtn.style.display = ''
+        }
       }
     }
     noteActions.appendChild(deleteBtn)
@@ -412,8 +417,10 @@ export class Renderer {
       e.stopPropagation()
       editorDiv.remove()
       
-      // Restore add-note button if no note exists
-      if (!existingNoteDiv) {
+      // Restore visibility depending on whether note exists
+      if (existingNoteDiv) {
+        existingNoteDiv.style.display = ''
+      } else {
         const addNoteBtn = lineElement.querySelector('.add-note-btn')
         if (addNoteBtn) {
           addNoteBtn.style.display = ''

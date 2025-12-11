@@ -291,7 +291,8 @@ export class UIControlsManager {
 
     // Theme option click handlers
     if (lightOption) {
-      lightOption.addEventListener('click', () => {
+      lightOption.addEventListener('click', (e) => {
+        e.preventDefault()
         document.body.classList.remove('dark-mode', 'pink-mode')
         if (darkMode) darkMode.checked = false
         if (pinkMode) pinkMode.checked = false
@@ -301,7 +302,8 @@ export class UIControlsManager {
     }
 
     if (darkOption) {
-      darkOption.addEventListener('click', () => {
+      darkOption.addEventListener('click', (e) => {
+        e.preventDefault()
         document.body.classList.remove('pink-mode')
         document.body.classList.add('dark-mode')
         if (darkMode) darkMode.checked = true
@@ -312,7 +314,8 @@ export class UIControlsManager {
     }
 
     if (pinkOption) {
-      pinkOption.addEventListener('click', () => {
+      pinkOption.addEventListener('click', (e) => {
+        e.preventDefault()
         document.body.classList.remove('dark-mode')
         document.body.classList.add('pink-mode')
         if (pinkMode) pinkMode.checked = true
