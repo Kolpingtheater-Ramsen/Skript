@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kolpingtheater Ramsen - Schauspieler-Viewer</title>
     
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
     <link rel="stylesheet" href="styles/viewer-actor.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
@@ -12,37 +17,37 @@
 </head>
 <body>
     <div class="header">
-        <h1>Schauspieler-Viewer</h1>
-        <div class="status">
-            <span id="connection-status">Status: —</span>
-            <span id="director-status">Director: Niemand</span>
-            <span id="clock">00:00:00</span>
+        <h1>🎭 Schauspieler-Viewer</h1>
+        <div class="status-group">
+            <span id="connection-status">🔄 Verbinde...</span>
+            <span id="director-status">👤 Director: Niemand</span>
+            <span id="clock" class="clock">00:00:00</span>
         </div>
     </div>
 
     <div class="content">
         <div id="current-scene-box" class="scene-panel">
-            <div class="scene-title">Szene -</div>
+            <div class="scene-title">🎬 Aktuelle Szene</div>
             <div class="scene-summary">—</div>
             <div class="roles">
-                <div class="section-title">Rollen (mit Schauspieler)</div>
-                <div class="roles-list"></div>
+                <div class="section-title">Rollen & Besetzung</div>
+                <div class="roles-list" id="current-roles"></div>
             </div>
         </div>
 
         <div id="next-scene-box" class="scene-panel">
-            <div class="scene-title">Nächste Szene -</div>
+            <div class="scene-title">⏭️ Nächste Szene</div>
             <div class="scene-summary">—</div>
             <div class="roles">
-                <div class="section-title">Rollen (mit Schauspieler)</div>
-                <div class="roles-list"></div>
+                <div class="section-title">Rollen & Besetzung</div>
+                <div class="roles-list" id="next-roles"></div>
             </div>
         </div>
     </div>
 
     <div class="bottom-progress">
         <div class="footer-info">
-            <span>Fortschritt</span>
+            <span>📊 Fortschritt</span>
             <span id="global-progress-text">0% (0/0)</span>
         </div>
         <div class="progress">

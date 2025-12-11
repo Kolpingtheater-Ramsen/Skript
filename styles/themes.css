@@ -1,7 +1,42 @@
-/* Dark Mode */
+/* ============================================
+   THEMES - Dark Mode & Pink Mode
+   ============================================ */
+
+/* ============================================
+   DARK MODE
+   ============================================ */
+
 body.dark-mode {
-  background: #1a202c;
-  color: #cbd5e0;
+  --color-background: #0a0a0a;
+  --color-surface: #1a1a1a;
+  --color-text: #ffffff;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #737373;
+  --color-border: #262626;
+  --color-border-hover: #404040;
+  
+  /* Adjusted grays for dark mode */
+  --color-gray-50: #1a1a1a;
+  --color-gray-100: #262626;
+  --color-gray-200: #404040;
+  --color-gray-300: #525252;
+  --color-gray-400: #737373;
+  --color-gray-500: #a3a3a3;
+  --color-gray-600: #d4d4d4;
+  --color-gray-700: #e5e5e5;
+  --color-gray-800: #f5f5f5;
+  --color-gray-900: #ffffff;
+  
+  /* Adjusted category colors for dark mode */
+  --color-instruction-bg: rgba(139, 92, 246, 0.15);
+  --color-technical-bg: rgba(16, 185, 129, 0.15);
+  --color-lighting-bg: rgba(245, 158, 11, 0.15);
+  --color-audio-bg: rgba(236, 72, 153, 0.15);
+  --color-props-bg: rgba(6, 182, 212, 0.15);
+  
+  --color-primary-light: rgba(249, 115, 22, 0.2);
+  --color-success-light: rgba(16, 185, 129, 0.2);
+  --color-error-light: rgba(239, 68, 68, 0.2);
 }
 
 body.dark-mode h1,
@@ -10,331 +45,509 @@ body.dark-mode h3,
 body.dark-mode h4,
 body.dark-mode h5,
 body.dark-mode h6 {
-  color: #cbd5e0;
+  color: var(--color-text);
 }
 
-body.dark-mode .controls,
-body.dark-mode .script-container,
-body.dark-mode .nav-bar,
-body.dark-mode .sidebar,
+body.dark-mode .nav-bar {
+  background-color: var(--color-surface);
+  border-bottom-color: var(--color-border);
+}
+
+body.dark-mode .nav-btn:hover {
+  background-color: var(--color-gray-100);
+}
+
+body.dark-mode .sidebar {
+  background-color: var(--color-surface);
+  border-left-color: var(--color-border);
+}
+
 body.dark-mode .bottom-nav {
-  background: #2d3748;
-  color: #cbd5e0;
+  background-color: var(--color-surface);
+  border-top-color: var(--color-border);
 }
 
-body.dark-mode .script-line {
-  background: #4a5568;
-}
-
-body.dark-mode .actor-name {
-  color: #63b3ed;
-}
-
-body.dark-mode .instruction {
-  background: #2d3748;
-  color: #a0aec0;
-}
-
-body.dark-mode .technical {
-  background: #553c9a;
-  color: #d6bcfa;
-}
-
-body.dark-mode .lighting {
-  background: #744210;
-  color: #fbd38d;
-}
-
-body.dark-mode .audio {
-  background: #1a202c;
-  color: rgb(128, 255, 136, 0.7);
-}
-
-body.dark-mode .props {
-  background: #401b07;
-  color: #fbd38d;
-}
-
-body.dark-mode .highlighted {
-  background: #2b6cb0;
-  border-left: 4px solid #63b3ed;
-}
-
-body.dark-mode .scene-separator {
-  border-top: 2px solid #63b3ed;
-}
-
-body.dark-mode .scene-overview {
-  background: #2b6cb0;
-}
-
-body.dark-mode .scene-overview h3,
-body.dark-mode .toc a {
-  color: #63b3ed;
-}
-
-body.dark-mode .toc {
-  background: #2d3748;
-}
-
-body.dark-mode .fab {
-  background: #68d391;
-}
-
-body.dark-mode .fab:hover {
-  background: #48bb78;
-}
-
-body.dark-mode .marked-line {
-  border-left: 4px solid #68d391 !important;
-}
-
-/* Toast - dark inherits, ensure contrast */
-body.dark-mode .toast {
-  background: #2d3748;
-  color: #edf2f7;
-}
-
-/* Modal styles for dark mode */
 body.dark-mode .modal {
-  background: #2d3748;
-  color: #cbd5e0;
+  background-color: var(--color-surface);
 }
 
 body.dark-mode .modal-header {
-  border-bottom: 1px solid #4a5568;
+  border-bottom-color: var(--color-border);
 }
 
 body.dark-mode .modal-footer {
-  border-top: 1px solid #4a5568;
+  border-top-color: var(--color-border);
 }
 
 body.dark-mode .modal-close {
-  color: #cbd5e0;
+  color: var(--color-text-secondary);
 }
 
 body.dark-mode .modal-close:hover {
-  background: #4a5568;
+  background-color: var(--color-gray-100);
+  color: var(--color-text);
 }
 
-/* Form elements in dark mode */
-body.dark-mode select {
-  background: #2d3748;
-  border-color: #4a5568;
-  color: #cbd5e0;
+body.dark-mode .notes-toggle {
+  background-color: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.3);
 }
 
-body.dark-mode select:hover {
-  border-color: #63b3ed;
+body.dark-mode .notes-info {
+  color: var(--color-text-secondary);
 }
 
-body.dark-mode select:focus {
-  border-color: #63b3ed;
-  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+body.dark-mode .script-container {
+  background-color: var(--color-surface);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
+body.dark-mode .script-line {
+  background-color: var(--color-surface);
+}
+
+body.dark-mode .script-line:hover {
+  background-color: var(--color-gray-100);
+}
+
+body.dark-mode .script-line.instruction {
+  color: var(--color-text-secondary);
+}
+
+body.dark-mode .script-line.highlighted {
+  background-color: var(--color-primary-light);
+}
+
+body.dark-mode .script-line.marked-line {
+  background-color: var(--color-success-light);
+}
+
+body.dark-mode .actor-name {
+  color: var(--color-primary);
+}
+
+body.dark-mode .toc {
+  background-color: var(--color-gray-50);
+}
+
+body.dark-mode .toc a {
+  color: var(--color-text);
+}
+
+body.dark-mode .toc a:hover {
+  background-color: var(--color-gray-100);
+}
+
+body.dark-mode .toc a[style*="font-weight: bold"] {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+body.dark-mode .scene-overview {
+  background-color: var(--color-primary-light);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+body.dark-mode .scene-overview h3 {
+  color: var(--color-primary);
+}
+
+body.dark-mode .scene-overview th {
+  color: var(--color-primary);
+}
+
+body.dark-mode .scene-summary {
+  background-color: var(--color-gray-50);
+  border-left-color: var(--color-gray-300);
+}
+
+body.dark-mode .scene-separator {
+  border-color: var(--color-primary);
+}
+
+body.dark-mode .settings-section-title {
+  color: var(--color-text-secondary);
+  border-bottom-color: var(--color-border);
+}
+
+body.dark-mode select,
 body.dark-mode input[type="text"],
-body.dark-mode input[type="password"],
-body.dark-mode input[type="range"] {
-  background: #2d3748;
-  border-color: #4a5568;
-  color: #cbd5e0;
+body.dark-mode input[type="password"] {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-border);
+  color: var(--color-text);
 }
 
+body.dark-mode select:hover,
+body.dark-mode input[type="text"]:hover,
+body.dark-mode input[type="password"]:hover {
+  border-color: var(--color-border-hover);
+}
+
+body.dark-mode select:focus,
 body.dark-mode input[type="text"]:focus,
 body.dark-mode input[type="password"]:focus {
-  border-color: #63b3ed;
-  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
-body.dark-mode label {
-  color: #cbd5e0;
+body.dark-mode .checkbox-group input[type="checkbox"] {
+  border-color: var(--color-border);
+  background-color: var(--color-gray-50);
 }
 
-/* Pink Mode */
-body.pink-mode {
-  background: #fff0f6;
-  color: #702459;
+body.dark-mode .checkbox-group input[type="checkbox"]:hover {
+  border-color: var(--color-primary);
 }
 
-body.pink-mode .controls,
-body.pink-mode .script-container,
-body.pink-mode .nav-bar,
-body.pink-mode .sidebar,
-body.pink-mode .bottom-nav {
-  background: #fff5f7;
+body.dark-mode .range-group {
+  background-color: var(--color-gray-50);
 }
 
-body.pink-mode .script-line {
-  background: #fff5f7;
+body.dark-mode input[type="range"] {
+  background: var(--color-gray-200);
 }
 
-body.pink-mode .actor-name {
-  color: #d53f8c;
+body.dark-mode .director-section {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-border);
 }
 
-body.pink-mode .instruction,
-body.pink-mode .technical,
-body.pink-mode .lighting,
-body.pink-mode .audio {
-  background: #fdf2f8;
-  color: #97266d;
+body.dark-mode .director-toggle:hover {
+  background-color: var(--color-gray-100);
 }
 
-body.pink-mode .highlighted {
-  background: #fdf2f8;
-  border-left: 4px solid #d53f8c;
+body.dark-mode .director-content {
+  background-color: var(--color-surface);
+  border-top-color: var(--color-border);
 }
 
-body.pink-mode .scene-separator {
-  border-top: 2px solid #d53f8c;
+body.dark-mode .director-active .director-section {
+  border-color: var(--color-error);
+  background-color: var(--color-error-light);
 }
 
-body.pink-mode .scene-overview,
-body.pink-mode .toc {
-  background: #fdf2f8;
+body.dark-mode .toast {
+  background-color: var(--color-gray-100);
 }
 
-body.pink-mode .scene-overview h3,
-body.pink-mode .toc a {
-  color: #97266d;
+body.dark-mode .link-button {
+  background-color: var(--color-gray-100);
+  color: var(--color-text);
 }
 
-body.pink-mode .fab {
-  background: #ed64a6;
+body.dark-mode .link-button:hover {
+  background-color: var(--color-gray-200);
 }
 
-body.pink-mode .fab:hover {
-  background: #d53f8c;
+body.dark-mode .card {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
 }
 
-body.pink-mode .marked-line {
-  border-left: 4px solid #ed64a6 !important;
+body.dark-mode .card-footer {
+  background-color: var(--color-gray-50);
 }
 
-/* Toast - pink */
-body.pink-mode .toast {
-  background: #fff5f7;
-  color: #702459;
-  box-shadow: 0 6px 20px rgba(213, 63, 140, 0.15);
+body.dark-mode .script-line .line-note {
+  background-color: rgba(245, 158, 11, 0.1);
 }
 
-/* Modal styles for pink mode */
-body.pink-mode .modal {
-  background: #fff5f7;
-  color: #702459;
+body.dark-mode .script-line .line-note-textarea {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-border);
+  color: var(--color-text);
 }
 
-body.pink-mode .modal-header {
-  border-bottom: 1px solid #feb2d0;
+body.dark-mode .script-line .add-note-btn {
+  background-color: var(--color-warning);
+  color: var(--color-gray-900);
 }
 
-body.pink-mode .modal-footer {
-  border-top: 1px solid #feb2d0;
-}
-
-body.pink-mode .modal-close {
-  color: #97266d;
-}
-
-body.pink-mode .modal-close:hover {
-  background: #fdf2f8;
-}
-
-/* Form elements in pink mode */
-body.pink-mode select {
-  background: white;
-  border-color: #feb2d0;
-  color: #702459;
-}
-
-body.pink-mode select:hover {
-  border-color: #d53f8c;
-}
-
-body.pink-mode select:focus {
-  border-color: #d53f8c;
-  box-shadow: 0 0 0 3px rgba(213, 63, 140, 0.2);
-}
-
-body.pink-mode input[type="text"],
-body.pink-mode input[type="password"],
-body.pink-mode input[type="range"] {
-  background: white;
-  border-color: #feb2d0;
-  color: #702459;
-}
-
-body.pink-mode input[type="text"]:focus,
-body.pink-mode input[type="password"]:focus {
-  border-color: #d53f8c;
-  box-shadow: 0 0 0 3px rgba(213, 63, 140, 0.2);
-}
-
-body.pink-mode label {
-  color: #702459;
-}
-
-/* Director Mode */
-body.is-director {
-  position: relative;
-}
-
-body.is-director::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 8px solid #e53e3e;
-  pointer-events: none;
-  z-index: 9999;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    border-color: rgba(229, 62, 62, 1);
-  }
-  50% {
-    border-color: rgba(229, 62, 62, 0.5);
-  }
-  100% {
-    border-color: rgba(229, 62, 62, 1);
-  }
+body.dark-mode .script-line:hover .add-note-btn:hover {
+  background-color: #b45309;
 }
 
 body.dark-mode.is-director::before {
-  border-color: #fc8181;
-  animation: pulse-dark 2s infinite;
+  border-color: #f87171;
+  animation: pulse-border-dark 2s infinite;
 }
 
-@keyframes pulse-dark {
-  0% {
-    border-color: rgba(252, 129, 129, 1);
-  }
-  50% {
-    border-color: rgba(252, 129, 129, 0.5);
-  }
-  100% {
-    border-color: rgba(252, 129, 129, 1);
-  }
+@keyframes pulse-border-dark {
+  0%, 100% { border-color: #f87171; }
+  50% { border-color: rgba(248, 113, 113, 0.5); }
+}
+
+/* ============================================
+   PINK MODE
+   ============================================ */
+
+body.pink-mode {
+  --color-primary: #ec4899;
+  --color-primary-hover: #db2777;
+  --color-primary-light: #fce7f3;
+  --color-primary-dark: #9d174d;
+  
+  --color-background: #fdf2f8;
+  --color-surface: #fff5f7;
+  --color-text: #831843;
+  --color-text-secondary: #9d174d;
+  --color-text-muted: #be185d;
+  --color-border: #fbcfe8;
+  --color-border-hover: #f9a8d4;
+  
+  /* Adjusted grays for pink mode */
+  --color-gray-50: #fff1f2;
+  --color-gray-100: #fce7f3;
+  --color-gray-200: #fbcfe8;
+  --color-gray-300: #f9a8d4;
+  --color-gray-400: #f472b6;
+  --color-gray-500: #ec4899;
+  --color-gray-600: #db2777;
+  --color-gray-700: #be185d;
+  --color-gray-800: #9d174d;
+  --color-gray-900: #831843;
+  
+  /* Adjusted category colors for pink mode */
+  --color-instruction-bg: #fce7f3;
+  --color-technical-bg: #fce7f3;
+  --color-lighting-bg: #fce7f3;
+  --color-audio-bg: #fce7f3;
+  --color-props-bg: #fce7f3;
+  
+  --color-instruction: #9d174d;
+  --color-technical: #9d174d;
+  --color-lighting: #9d174d;
+  --color-audio: #9d174d;
+  --color-props: #9d174d;
+  
+  --color-success: #db2777;
+  --color-success-light: #fce7f3;
+  --color-error: #be185d;
+  --color-error-light: #fce7f3;
+}
+
+body.pink-mode h1,
+body.pink-mode h2,
+body.pink-mode h3,
+body.pink-mode h4,
+body.pink-mode h5,
+body.pink-mode h6 {
+  color: var(--color-text);
+}
+
+body.pink-mode .nav-bar {
+  background-color: var(--color-surface);
+  border-bottom-color: var(--color-border);
+}
+
+body.pink-mode .nav-btn {
+  color: var(--color-text-secondary);
+}
+
+body.pink-mode .nav-btn:hover {
+  background-color: var(--color-gray-100);
+  color: var(--color-text);
+}
+
+body.pink-mode .sidebar {
+  background-color: var(--color-surface);
+  border-left-color: var(--color-border);
+}
+
+body.pink-mode .bottom-nav {
+  background-color: var(--color-surface);
+  border-top-color: var(--color-border);
+}
+
+body.pink-mode .modal {
+  background-color: var(--color-surface);
+}
+
+body.pink-mode .modal-header {
+  border-bottom-color: var(--color-border);
+}
+
+body.pink-mode .modal-footer {
+  border-top-color: var(--color-border);
+}
+
+body.pink-mode .modal-close {
+  color: var(--color-text-secondary);
+}
+
+body.pink-mode .modal-close:hover {
+  background-color: var(--color-gray-100);
+  color: var(--color-text);
+}
+
+body.pink-mode .script-container {
+  background-color: var(--color-surface);
+}
+
+body.pink-mode .script-line {
+  background-color: var(--color-surface);
+}
+
+body.pink-mode .script-line:hover {
+  background-color: var(--color-gray-100);
+}
+
+body.pink-mode .script-line.highlighted {
+  border-left-color: var(--color-primary);
+}
+
+body.pink-mode .script-line.marked-line {
+  border-left-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+body.pink-mode .actor-name {
+  color: var(--color-primary);
+}
+
+body.pink-mode .toc {
+  background-color: var(--color-gray-50);
+}
+
+body.pink-mode .toc a {
+  color: var(--color-text);
+}
+
+body.pink-mode .toc a:hover {
+  background-color: var(--color-gray-100);
+}
+
+body.pink-mode .toc a[style*="font-weight: bold"] {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border-left-color: var(--color-primary);
+}
+
+body.pink-mode .scene-overview {
+  background-color: var(--color-primary-light);
+  border-color: rgba(236, 72, 153, 0.3);
+}
+
+body.pink-mode .scene-overview h3 {
+  color: var(--color-primary-dark);
+}
+
+body.pink-mode .scene-overview th {
+  color: var(--color-primary-dark);
+  border-bottom-color: rgba(236, 72, 153, 0.3);
+}
+
+body.pink-mode .scene-overview td {
+  border-bottom-color: rgba(236, 72, 153, 0.1);
+}
+
+body.pink-mode .scene-summary {
+  background-color: var(--color-gray-50);
+  border-left-color: var(--color-primary);
+}
+
+body.pink-mode .scene-separator {
+  border-color: var(--color-primary);
+}
+
+body.pink-mode .fab {
+  background-color: var(--color-primary);
+}
+
+body.pink-mode .fab:hover {
+  background-color: var(--color-primary-hover);
+}
+
+body.pink-mode select,
+body.pink-mode input[type="text"],
+body.pink-mode input[type="password"] {
+  border-color: var(--color-border);
+}
+
+body.pink-mode select:hover,
+body.pink-mode input[type="text"]:hover,
+body.pink-mode input[type="password"]:hover {
+  border-color: var(--color-border-hover);
+}
+
+body.pink-mode select:focus,
+body.pink-mode input[type="text"]:focus,
+body.pink-mode input[type="password"]:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
+}
+
+body.pink-mode .checkbox-group input[type="checkbox"] {
+  border-color: var(--color-border);
+}
+
+body.pink-mode .checkbox-group input[type="checkbox"]:hover {
+  border-color: var(--color-primary);
+}
+
+body.pink-mode .checkbox-group input[type="checkbox"]:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+body.pink-mode .director-section {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-border);
+}
+
+body.pink-mode .director-toggle:hover {
+  background-color: var(--color-gray-100);
+}
+
+body.pink-mode .director-content {
+  background-color: var(--color-surface);
+  border-top-color: var(--color-border);
+}
+
+body.pink-mode .director-active .director-section {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+body.pink-mode .director-active .director-toggle {
+  color: var(--color-primary);
+}
+
+body.pink-mode .director-active #director-status {
+  color: var(--color-primary);
+}
+
+body.pink-mode .link-button {
+  background-color: var(--color-gray-100);
+  color: var(--color-text);
+}
+
+body.pink-mode .link-button:hover {
+  background-color: var(--color-gray-200);
+}
+
+body.pink-mode .toast {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.15);
+}
+
+body.pink-mode .script-line .line-note {
+  background-color: rgba(236, 72, 153, 0.1);
+  border-left-color: var(--color-primary);
+}
+
+body.pink-mode .script-line .line-note-label {
+  color: var(--color-primary);
 }
 
 body.pink-mode.is-director::before {
-  border-color: #d53f8c;
-  animation: pulse-pink 2s infinite;
+  border-color: var(--color-primary);
+  animation: pulse-border-pink 2s infinite;
 }
 
-@keyframes pulse-pink {
-  0% {
-    border-color: rgba(213, 63, 140, 1);
-  }
-  50% {
-    border-color: rgba(213, 63, 140, 0.5);
-  }
-  100% {
-    border-color: rgba(213, 63, 140, 1);
-  }
+@keyframes pulse-border-pink {
+  0%, 100% { border-color: #ec4899; }
+  50% { border-color: rgba(236, 72, 153, 0.5); }
 }

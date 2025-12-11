@@ -46,8 +46,8 @@ export class ActorViewer extends BaseViewer {
     const currentScene = this.getSceneFromMarker() || this.scenesOrder[0] || null
     const nextScene = this.getNextScene(currentScene)
 
-    this.renderSceneBox('current-scene-box', 'Szene', currentScene)
-    this.renderSceneBox('next-scene-box', 'Nächste Szene', nextScene)
+    this.renderSceneBox('current-scene-box', '🎬 Szene', currentScene)
+    this.renderSceneBox('next-scene-box', '⏭️ Nächste Szene', nextScene)
     this.updateProgress()
   }
 
@@ -73,22 +73,27 @@ export class ActorViewer extends BaseViewer {
       rolesContainer.innerHTML = ''
 
       const roles = this.getSceneRoles(scene)
-      const ul = createElement('ul')
 
       roles.forEach((role) => {
         const actor = this.roleToActor.get(role) || '?'
-        const li = createElement('li')
+        const micro = this.getActorMicro(role, scene)
+        
+        const roleItem = createElement('div', { className: 'role-item' })
+        
+        const roleInfo = createElement('div')
+        const roleName = createElement('span', { className: 'role-name' }, role)
+        const roleActor = createElement('span', { className: 'role-actor' }, ` (${actor})`)
+        roleInfo.appendChild(roleName)
+        roleInfo.appendChild(roleActor)
+        roleItem.appendChild(roleInfo)
 
-        const nameSpan = createElement(
-          'span',
-          { className: 'role-name' },
-          `${role} (${actor})`
-        )
-        li.appendChild(nameSpan)
-        ul.appendChild(li)
+        if (micro) {
+          const microBadge = createElement('span', { className: 'role-micro' }, `🎤 ${micro}`)
+          roleItem.appendChild(microBadge)
+        }
+
+        rolesContainer.appendChild(roleItem)
       })
-
-      rolesContainer.appendChild(ul)
 
       // Start auto-scroll if needed
       setTimeout(() => {
@@ -96,6 +101,13 @@ export class ActorViewer extends BaseViewer {
         this.autoScrollManager.start(rolesContainer)
       }, 50)
     }
+  }
+
+  getActorMicro(role, scene) {
+    const row = this.scriptData.find(
+      (r) => r.Szene === scene && r.Charakter === role && r.Mikrofon
+    )
+    return row ? row.Mikrofon : null
   }
 
   getSceneRoles(scene) {

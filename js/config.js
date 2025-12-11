@@ -25,6 +25,8 @@ const STORAGE_KEYS = {
   DARK_MODE: 'dark-mode',
   PINK_MODE: 'pink-mode',
   SHOW_ACTOR_NAMES: 'show-actor-names',
+  ENABLE_NOTES: 'enable-notes',
+  SCRIPT_NOTES: 'script-notes', // Per-play notes storage
 }
 
 const CATEGORIES = {

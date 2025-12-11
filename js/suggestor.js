@@ -139,7 +139,7 @@ class RoleSuggestor {
     const sortedActors = [...this.actors].sort()
 
     sortedActors.forEach((actor) => {
-      const label = createElement('label', { className: 'actor-checkbox' })
+      const label = createElement('label', { className: 'actor-item' })
 
       const checkbox = createElement('input', {
         type: 'checkbox',
@@ -237,8 +237,8 @@ class RoleSuggestor {
     // Render scenes
     sceneArray.forEach(({ scene, sceneActors, percentage, isPlayable }) => {
       const div = createElement('div', {
-        className: `scene-suggestion ${
-          isPlayable ? 'playable-scene' : 'unplayable-scene'
+        className: `scene-card ${
+          isPlayable ? 'playable' : 'not-playable'
         }`,
       })
 
@@ -252,8 +252,8 @@ class RoleSuggestor {
         const tag = createElement(
           'span',
           {
-            className: `actor-tag ${
-              this.presentActors.has(actor) ? 'actor-present' : 'actor-missing'
+            className: `role-tag ${
+              this.presentActors.has(actor) ? 'available' : 'missing'
             }`,
           },
           actor + this.getActorName(actor)

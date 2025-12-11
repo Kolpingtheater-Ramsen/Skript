@@ -64,15 +64,15 @@ export class BaseViewer {
    */
   setupSocketHandlers() {
     socketManager.on('connect', () => {
-      this.updateConnectionStatus('Verbunden')
+      this.updateConnectionStatus('✅ Verbunden')
     })
 
     socketManager.on('connectError', () => {
-      this.updateConnectionStatus('Verbindungsfehler')
+      this.updateConnectionStatus('❌ Verbindungsfehler')
     })
 
     socketManager.on('disconnect', () => {
-      this.updateConnectionStatus('Getrennt')
+      this.updateConnectionStatus('⚠️ Getrennt')
     })
 
     socketManager.on('setDirector', (data) => {
@@ -114,7 +114,7 @@ export class BaseViewer {
   updateConnectionStatus(status) {
     const el = getEl('connection-status')
     if (el) {
-      el.textContent = `Status: ${status}`
+      el.textContent = status
     }
   }
 
@@ -125,7 +125,13 @@ export class BaseViewer {
   updateDirectorStatus(director) {
     const el = getEl('director-status')
     if (el) {
-      el.textContent = `Director: ${director || 'Niemand'}`
+      if (director && director !== 'Niemand') {
+        el.textContent = `🎬 Director: ${director}`
+        el.classList.add('active')
+      } else {
+        el.textContent = '👤 Director: Niemand'
+        el.classList.remove('active')
+      }
     }
   }
 

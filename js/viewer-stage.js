@@ -44,12 +44,13 @@ export class StageViewer extends BaseViewer {
         // Scene anchor
         const anchor = document.createElement('a')
         anchor.name = `scene-${row.Szene}`
+        anchor.id = `scene-${row.Szene}`
         container.appendChild(anchor)
 
         // Scene title
         const sceneTitle = document.createElement('h2')
         sceneTitle.className = 'scene-title'
-        sceneTitle.textContent = `Szene ${row.Szene}`
+        sceneTitle.textContent = `🎬 Szene ${row.Szene}`
         container.appendChild(sceneTitle)
 
         currentScene = row.Szene
@@ -101,25 +102,25 @@ export class StageViewer extends BaseViewer {
       div.classList.add('audio')
       const tag = document.createElement('div')
       tag.className = 'tag'
-      tag.textContent = 'Einspieler'
+      tag.textContent = '🎵 Einspieler'
       div.appendChild(tag)
     } else if (category === 'Technik') {
       div.classList.add('technical')
       const tag = document.createElement('div')
       tag.className = 'tag'
-      tag.textContent = 'Technik'
+      tag.textContent = '⚙️ Technik'
       div.appendChild(tag)
     } else if (category === 'Licht') {
       div.classList.add('lighting')
       const tag = document.createElement('div')
       tag.className = 'tag'
-      tag.textContent = 'Licht'
+      tag.textContent = '💡 Licht'
       div.appendChild(tag)
     } else if (category === 'Requisiten') {
       div.classList.add('props')
       const tag = document.createElement('div')
       tag.className = 'tag'
-      tag.textContent = 'Requisiten'
+      tag.textContent = '🎭 Requisiten'
       div.appendChild(tag)
     }
   }
@@ -203,14 +204,14 @@ export class StageViewer extends BaseViewer {
     sidebar.innerHTML = ''
 
     // Current scene box
-    const currentBox = this.createSceneInfoBox('Aktuelle Szene', currentScene)
+    const currentBox = this.createSceneInfoBox('🎬 Aktuelle Szene', currentScene)
     currentBox.classList.add('active')
     sidebar.appendChild(currentBox)
 
     // Next scene box
     const nextScene = this.getNextScene(currentScene)
     if (nextScene) {
-      const nextBox = this.createSceneInfoBox('Nächste Szene', nextScene)
+      const nextBox = this.createSceneInfoBox('⏭️ Nächste Szene', nextScene)
       nextBox.classList.add('next')
       sidebar.appendChild(nextBox)
     }
@@ -258,9 +259,10 @@ export class StageViewer extends BaseViewer {
 
     sortedActors.forEach(([actor, micro]) => {
       const li = document.createElement('li')
+      const actorName = this.actors.find(([roleName]) => roleName === actor)?.[1] || '?'
       li.innerHTML = `
-        <span>${actor}</span>
-        ${micro ? `<span class="actor-micro">${micro}</span>` : ''}
+        <span>${actor} <span style="opacity: 0.7">(${actorName})</span></span>
+        ${micro ? `<span class="actor-micro">🎤 ${micro}</span>` : ''}
       `
       list.appendChild(li)
     })

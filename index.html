@@ -7,11 +7,11 @@
 
     <!-- PWA Support -->
     <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#3b82f6" />
 
     <!-- iOS PWA Support -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Drehbuch" />
 
     <!-- Favicon -->
@@ -19,37 +19,31 @@
     <link rel="apple-touch-icon" href="logo.png" />
 
     <!-- Open Graph Meta Tags -->
-    <meta
-      property="og:title"
-      content="Kolpingtheater Ramsen - Drehbuch Viewer"
-    />
-    <meta
-      property="og:description"
-      content="Interaktiver Drehbuch-Viewer für das Kolpingtheater Ramsen. Viele hilfreiche Funktionen für die Probe."
-    />
+    <meta property="og:title" content="Kolpingtheater Ramsen - Drehbuch Viewer" />
+    <meta property="og:description" content="Interaktiver Drehbuch-Viewer für das Kolpingtheater Ramsen. Viele hilfreiche Funktionen für die Probe." />
     <meta property="og:image" content="logo.png" />
     <meta property="og:url" content="https://skript.logge.top" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content="Kolpingtheater Ramsen" />
 
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
     <link rel="stylesheet" href="styles.css" />
     <script src="papaparse.min.js" defer></script>
+    
     <!-- Cloudflare Web Analytics -->
-    <script
-      defer
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon='{"token": "a24bd6cb4b264bd8998ae0b47e98ec71"}'
-    ></script>
-    <!-- End Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a24bd6cb4b264bd8998ae0b47e98ec71"}'></script>
+    
     <script>
       // Register Service Worker (disabled on localhost/127.0.0.1)
-      const isLocalhost =
-        location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
       if ('serviceWorker' in navigator && !isLocalhost) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker
-            .register('/sw.js')
+          navigator.serviceWorker.register('/sw.js')
             .then((registration) => {
               console.log('ServiceWorker registration successful')
             })
@@ -61,16 +55,11 @@
         // Listen for messages from service worker
         navigator.serviceWorker.addEventListener('message', (event) => {
           if (event.data.type === 'CONTENT_UPDATED') {
-            // Show toast prompting user to reload
             const toast = document.getElementById('update-toast')
             if (toast) {
               toast.classList.add('show')
             } else {
-              if (
-                confirm(
-                  'Eine neue Version ist verfügbar. Möchten Sie die Seite neu laden?'
-                )
-              ) {
+              if (confirm('Eine neue Version ist verfügbar. Möchten Sie die Seite neu laden?')) {
                 window.location.reload()
               }
             }
@@ -83,31 +72,23 @@
       const installButton = document.createElement('button')
       installButton.style.display = 'none'
       installButton.className = 'install-button'
-      installButton.textContent = 'App installieren'
+      installButton.textContent = '📲 App installieren'
 
       window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault()
-        // Stash the event so it can be triggered later
         deferredPrompt = e
-        // Show the install button
         installButton.style.display = 'block'
       })
 
       installButton.addEventListener('click', async () => {
         if (deferredPrompt) {
-          // Show the install prompt
           deferredPrompt.prompt()
-          // Wait for the user to respond to the prompt
           const { outcome } = await deferredPrompt.userChoice
-          // We no longer need the prompt. Clear it up.
           deferredPrompt = null
-          // Hide the install button
           installButton.style.display = 'none'
         }
       })
 
-      // Add the install button to the settings modal footer
       window.addEventListener('load', () => {
         const container = document.getElementById('install-button-container')
         if (container) {
@@ -115,295 +96,277 @@
         }
       })
     </script>
+    
     <!-- Socket.io -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
-      integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
-      crossorigin="anonymous"
-    ></script>
-    <!-- Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    
+    <!-- Main Script -->
     <script type="module" src="js/main.js"></script>
   </head>
   <body>
     <!-- Navigation Bar -->
     <div class="nav-bar">
       <div class="title-group">
-        <img src="logo.png" alt="Kolpingtheater Ramsen Logo" />
-        <h1 id="current-scene">Kolpingtheater Ramsen - Drehbuch Viewer</h1>
+        <img src="logo.png" alt="Kolpingtheater Ramsen" class="logo" />
+        <h1 id="current-scene">Drehbuch Viewer</h1>
       </div>
-      <button class="nav-settings" onclick="openSettingsModal()">⚙️</button>
-      <button class="nav-toggle" onclick="toggleSidebar()">☰</button>
+      <div class="nav-actions">
+        <button class="nav-btn" onclick="openSettingsModal()" title="Einstellungen" aria-label="Einstellungen öffnen">⚙️</button>
+        <button class="nav-btn" onclick="toggleSidebar()" title="Inhaltsverzeichnis" aria-label="Inhaltsverzeichnis öffnen">☰</button>
+      </div>
     </div>
 
     <!-- Sidebar and Overlay -->
-    <div class="sidebar"></div>
+    <div class="sidebar" role="navigation" aria-label="Inhaltsverzeichnis"></div>
     <div class="sidebar-overlay" onclick="closeSidebar()"></div>
 
     <!-- Settings Modal -->
-    <div
-      class="modal-overlay"
-      id="settings-modal-overlay"
-      onclick="closeSettingsModal()"
-    ></div>
-    <div
-      class="modal"
-      id="settings-modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="settings-title"
-    >
+    <div class="modal-overlay" id="settings-modal-overlay" onclick="closeSettingsModal()"></div>
+    <div class="modal" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
       <div class="modal-header">
-        <h3 id="settings-title">Einstellungen</h3>
-        <button class="modal-close" onclick="closeSettingsModal()">×</button>
+        <h3 id="settings-title">⚙️ Einstellungen</h3>
+        <button class="modal-close" onclick="closeSettingsModal()" aria-label="Schließen">×</button>
       </div>
+      
       <div class="modal-body">
-        <div class="controls no-print">
-          <div>
-            <label for="actor-select">Schauspieler auswählen:</label>
-            <div class="select-container">
-              <select id="actor-select">
-                <option value="">Alle Schauspieler</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label for="play-select">Stück auswählen:</label>
-            <div class="select-container">
+        <!-- Production Section -->
+        <div class="settings-section">
+          <div class="settings-section-title">📽️ Produktion</div>
+          
+          <div class="settings-row">
+            <label class="form-label" for="play-select">Stück auswählen</label>
+            <div class="select-wrapper">
               <select id="play-select">
                 <option value="default">Standardstück</option>
               </select>
             </div>
           </div>
 
+          <div class="settings-row">
+            <label class="form-label" for="actor-select">Rolle / Charakter</label>
+            <div class="select-wrapper">
+              <select id="actor-select">
+                <option value="">Alle Charaktere anzeigen</option>
+              </select>
+            </div>
+          </div>
+
           <div class="checkbox-group">
             <input type="checkbox" id="show-actor-names" />
-            <label for="show-actor-names"
-              >Akteurnamen zu Rollennamen anzeigen</label
-            >
+            <label for="show-actor-names">Schauspielernamen zu Rollen anzeigen</label>
           </div>
+        </div>
 
-          <div id="checkboxes">
-            <div class="checkbox-group">
-              <input type="checkbox" id="blur-lines" />
-              <label for="blur-lines">Meine Text verstecken</label>
-            </div>
-
-            <div class="checkbox-group">
-              <input type="checkbox" id="show-directions" checked />
-              <label for="show-directions">Bühnenanweisungen anzeigen</label>
-              <div class="context-slider-group" id="directions-context-group">
-                <label for="directions-context">Kontext Zeilen:</label>
-                <input
-                  type="range"
-                  id="directions-context"
-                  min="0"
-                  max="5"
-                  value="0"
-                />
-                <span id="directions-context-value">0</span>
-              </div>
-            </div>
-
-            <div class="checkbox-group">
-              <input type="checkbox" id="show-technical" checked />
-              <label for="show-technical"
-                >Technische Informationen anzeigen</label
-              >
-              <div class="context-slider-group" id="technical-context-group">
-                <label for="technical-context">Kontext Zeilen:</label>
-                <input
-                  type="range"
-                  id="technical-context"
-                  min="0"
-                  max="5"
-                  value="0"
-                />
-                <span id="technical-context-value">0</span>
-              </div>
-            </div>
-
-            <div class="checkbox-group">
-              <input type="checkbox" id="show-lighting" checked />
-              <label for="show-lighting">Beleuchtungshinweise anzeigen</label>
-              <div class="context-slider-group" id="lighting-context-group">
-                <label for="lighting-context">Kontext Zeilen:</label>
-                <input
-                  type="range"
-                  id="lighting-context"
-                  min="0"
-                  max="5"
-                  value="0"
-                />
-                <span id="lighting-context-value">0</span>
-              </div>
-            </div>
-
-            <div class="checkbox-group">
-              <input type="checkbox" id="show-actor-text" checked />
-              <label for="show-actor-text">Schauspielertexte anzeigen</label>
-            </div>
-
-            <div class="checkbox-group">
-              <input type="checkbox" id="show-micro" checked />
-              <label for="show-micro">Mikrofon anzeigen</label>
-            </div>
-
-            <!-- Einspieler -->
-            <div class="checkbox-group">
-              <input type="checkbox" id="show-einspieler" checked />
-              <label for="show-einspieler">Einspieler anzeigen</label>
-              <div class="context-slider-group" id="einspieler-context-group">
-                <label for="einspieler-context">Kontext Zeilen:</label>
-                <input
-                  type="range"
-                  id="einspieler-context"
-                  min="0"
-                  max="5"
-                  value="0"
-                />
-                <span id="einspieler-context-value">0</span>
-              </div>
-            </div>
-
-            <!-- Requisiten -->
-            <div class="checkbox-group">
-              <input type="checkbox" id="show-requisiten" checked />
-              <label for="show-requisiten">Requisiten anzeigen</label>
-              <div class="context-slider-group" id="requisiten-context-group">
-                <label for="requisiten-context">Kontext Zeilen:</label>
-                <input
-                  type="range"
-                  id="requisiten-context"
-                  min="0"
-                  max="5"
-                  value="0"
-                />
-                <span id="requisiten-context-value">0</span>
-              </div>
-            </div>
-
-            <!-- Szenenübersicht -->
-            <div class="checkbox-group">
-              <input type="checkbox" id="show-scene-overview" checked />
-              <label for="show-scene-overview">Szenenübersicht anzeigen</label>
-            </div>
-
-            <!-- Dark Mode -->
-            <div class="checkbox-group">
+        <!-- Display Section -->
+        <div class="settings-section">
+          <div class="settings-section-title">🎨 Darstellung</div>
+          
+          <div class="theme-options">
+            <label class="theme-option" id="theme-light">
+              <div class="theme-preview theme-preview-light"></div>
+              <span>Hell</span>
+            </label>
+            <label class="theme-option" id="theme-dark">
               <input type="checkbox" id="dark-mode" />
-              <label for="dark-mode">Dark Mode</label>
-            </div>
-
-            <!-- Pink Mode -->
-            <div class="checkbox-group">
+              <div class="theme-preview theme-preview-dark"></div>
+              <span>Dunkel</span>
+            </label>
+            <label class="theme-option" id="theme-pink">
               <input type="checkbox" id="pink-mode" />
-              <label for="pink-mode">Pink Mode</label>
-            </div>
-
-            <!-- Autoscroll -->
-            <div class="checkbox-group">
-              <input type="checkbox" id="autoscroll" />
-              <label for="autoscroll"
-                >Automatisch scrollen (Director Mode)</label
-              >
-            </div>
-
-            <div>
-              <button onclick="window.print()">Als PDF drucken</button>
-            </div>
-
-            <!-- Link to Suggestor -->
-            <div class="checkbox-group">
-              <a id="suggestor-link" href="suggestor.html" class="button"
-                >Rollenvorschläge für die Probe</a
-              >
-            </div>
-
-            <!-- Links to Viewer Pages -->
-            <div class="checkbox-group">
-              <a id="viewer-link" href="viewer.html" class="button"
-                >Bühnen-Viewer öffnen</a
-              >
-            </div>
-            <div class="checkbox-group">
-              <a id="viewer2-link" href="viewer2.html" class="button"
-                >Schauspieler-Viewer öffnen</a
-              >
-            </div>
+              <div class="theme-preview theme-preview-pink"></div>
+              <span>Pink</span>
+            </label>
           </div>
 
-          <!-- Collapsible Director -->
-          <div class="director-section">
-            <button class="director-toggle" onclick="toggleDirectorPanel()">
-              <span>Director Mode</span>
-              <span id="director-status">Aktueller Director: Niemand</span>
-            </button>
-            <div class="director-content collapsed">
-              <div class="director-inputs">
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Name"
-                  class="director-input"
-                />
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Passwort"
-                  class="director-input"
-                />
-                <button onclick="toggleDirector()">Director werden</button>
+          <div class="checkbox-group" style="margin-top: var(--space-4);">
+            <input type="checkbox" id="show-scene-overview" checked />
+            <label for="show-scene-overview">Szenenübersicht anzeigen</label>
+          </div>
+        </div>
+
+        <!-- Content Filters Section -->
+        <div class="settings-section" id="checkboxes">
+          <div class="settings-section-title">📝 Inhalt & Filter</div>
+          
+          <div class="content-filters">
+            <!-- Actor Text -->
+            <div class="filter-item">
+              <div class="checkbox-group">
+                <input type="checkbox" id="show-actor-text" checked />
+                <label for="show-actor-text">Schauspielertexte anzeigen</label>
+              </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="filter-item">
+              <div class="checkbox-group checkbox-instruction">
+                <input type="checkbox" id="show-directions" checked />
+                <label for="show-directions">Bühnenanweisungen</label>
+              </div>
+              <div class="range-group" id="directions-context-group">
+                <label for="directions-context">Kontextzeilen:</label>
+                <input type="range" id="directions-context" min="0" max="5" value="0" />
+                <span class="range-value" id="directions-context-value">0</span>
+              </div>
+            </div>
+
+            <!-- Technical -->
+            <div class="filter-item">
+              <div class="checkbox-group checkbox-technical">
+                <input type="checkbox" id="show-technical" checked />
+                <label for="show-technical">Technik</label>
+              </div>
+              <div class="range-group" id="technical-context-group">
+                <label for="technical-context">Kontextzeilen:</label>
+                <input type="range" id="technical-context" min="0" max="5" value="0" />
+                <span class="range-value" id="technical-context-value">0</span>
+              </div>
+            </div>
+
+            <!-- Lighting -->
+            <div class="filter-item">
+              <div class="checkbox-group checkbox-lighting">
+                <input type="checkbox" id="show-lighting" checked />
+                <label for="show-lighting">Beleuchtung</label>
+              </div>
+              <div class="range-group" id="lighting-context-group">
+                <label for="lighting-context">Kontextzeilen:</label>
+                <input type="range" id="lighting-context" min="0" max="5" value="0" />
+                <span class="range-value" id="lighting-context-value">0</span>
+              </div>
+            </div>
+
+            <!-- Audio / Einspieler -->
+            <div class="filter-item">
+              <div class="checkbox-group checkbox-audio">
+                <input type="checkbox" id="show-einspieler" checked />
+                <label for="show-einspieler">Einspieler / Audio</label>
+              </div>
+              <div class="range-group" id="einspieler-context-group">
+                <label for="einspieler-context">Kontextzeilen:</label>
+                <input type="range" id="einspieler-context" min="0" max="5" value="0" />
+                <span class="range-value" id="einspieler-context-value">0</span>
+              </div>
+            </div>
+
+            <!-- Props -->
+            <div class="filter-item">
+              <div class="checkbox-group checkbox-props">
+                <input type="checkbox" id="show-requisiten" checked />
+                <label for="show-requisiten">Requisiten</label>
+              </div>
+              <div class="range-group" id="requisiten-context-group">
+                <label for="requisiten-context">Kontextzeilen:</label>
+                <input type="range" id="requisiten-context" min="0" max="5" value="0" />
+                <span class="range-value" id="requisiten-context-value">0</span>
+              </div>
+            </div>
+
+            <!-- Microphone -->
+            <div class="filter-item">
+              <div class="checkbox-group">
+                <input type="checkbox" id="show-micro" checked />
+                <label for="show-micro">Mikrofonnummern anzeigen</label>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Notes Section -->
+        <div class="settings-section">
+          <div class="settings-section-title">📒 Notizen</div>
+          
+          <div class="notes-toggle">
+            <div class="checkbox-group">
+              <input type="checkbox" id="enable-notes" />
+              <div>
+                <label for="enable-notes">Lokale Notizen aktivieren</label>
+                <div class="notes-info">Notizen werden lokal im Browser gespeichert und nie synchronisiert.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Mode Section -->
+        <div class="settings-section">
+          <div class="settings-section-title">🎭 Übungsmodus</div>
+          
+          <div class="checkbox-group">
+            <input type="checkbox" id="blur-lines" />
+            <label for="blur-lines">Meine Texte verstecken (zum Üben)</label>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="autoscroll" />
+            <label for="autoscroll">Automatisch scrollen (Director Mode)</label>
+          </div>
+        </div>
+
+        <!-- Quick Links Section -->
+        <div class="settings-section">
+          <div class="settings-section-title">🔗 Schnellzugriff</div>
+          
+          <div class="quick-links">
+            <a id="suggestor-link" href="suggestor.html" class="button">
+              🎲 Rollenvorschläge für die Probe
+            </a>
+            <a id="viewer-link" href="viewer.html" class="button">
+              📺 Bühnen-Viewer öffnen
+            </a>
+            <a id="viewer2-link" href="viewer2.html" class="button">
+              🎭 Schauspieler-Viewer öffnen
+            </a>
+            <button onclick="window.print()" class="button">
+              🖨️ Als PDF drucken
+            </button>
+          </div>
+        </div>
+
+        <!-- Director Section -->
+        <div class="director-section">
+          <button class="director-toggle" onclick="toggleDirectorPanel()">
+            <span>🎬 Director Mode</span>
+            <span id="director-status">Aktueller Director: Niemand</span>
+          </button>
+          <div class="director-content collapsed">
+            <div class="director-inputs">
+              <input type="text" id="name" placeholder="Name" class="director-input form-input" />
+              <input type="password" id="password" placeholder="Passwort" class="director-input form-input" />
+              <button onclick="toggleDirector()" class="btn btn-primary">Director werden</button>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="modal-footer">
         <div id="install-button-container"></div>
-        <button onclick="closeSettingsModal()">Schließen</button>
+        <button onclick="closeSettingsModal()" class="btn btn-secondary">Schließen</button>
       </div>
     </div>
 
+    <!-- Main Script Container -->
     <div id="script-container" class="script-container">
       <!-- Script content will be inserted here -->
     </div>
 
-    <!-- Update available toast -->
+    <!-- Update Toast -->
     <div id="update-toast" class="toast" role="status" aria-live="polite">
-      <span>Neue Version verfügbar.</span>
-      <button
-        type="button"
-        class="toast-action"
-        onclick="window.location.reload()"
-      >
-        Neu laden
-      </button>
-      <button
-        type="button"
-        class="toast-close"
-        onclick="this.parentElement.classList.remove('show')"
-        aria-label="Schließen"
-      >
-        ×
-      </button>
+      <span>🔄 Neue Version verfügbar</span>
+      <button type="button" class="toast-action" onclick="window.location.reload()">Neu laden</button>
+      <button type="button" class="toast-close" onclick="this.parentElement.classList.remove('show')" aria-label="Schließen">×</button>
     </div>
 
-    <!-- Cloudflare Web Analytics -->
-    <script
-      defer
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon='{"token": "27138ece224540ad8edd62c49b5f6db4"}'
-    ></script>
-    <!-- End Cloudflare Web Analytics -->
-
+    <!-- Bottom Navigation -->
     <div class="bottom-nav">
-      <button onclick="jumpToPreviousLine()">←</button>
-      <span id="current-line-info"></span>
-      <button onclick="jumpToNextLine()">→</button>
+      <button onclick="jumpToPreviousLine()" class="btn btn-secondary" aria-label="Vorherige Zeile">← Zurück</button>
+      <span id="current-line-info" class="nav-info"></span>
+      <button onclick="jumpToNextLine()" class="btn btn-secondary" aria-label="Nächste Zeile">Weiter →</button>
     </div>
 
-    <!-- Add FAB button before the closing body tag -->
-    <button class="fab" onclick="jumpToMarkedLine()"></button>
+    <!-- FAB Button -->
+    <button class="fab" onclick="jumpToMarkedLine()" aria-label="Zur markierten Zeile springen"></button>
+
+    <!-- Cloudflare Web Analytics (backup) -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "27138ece224540ad8edd62c49b5f6db4"}'></script>
   </body>
 </html>

@@ -5,81 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kolpingtheater Ramsen - Bühnen-Viewer</title>
     
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
     <link rel="stylesheet" href="styles/viewer.css" />
     <style>
-        /* Scene info sidebar specific styles */
+        /* Stage viewer specific - content with sidebar */
         .content {
-            margin-right: 300px;
+            margin-right: 340px;
         }
 
-        .scene-info-sidebar {
-            position: fixed;
-            right: 0;
-            top: 100px;
-            width: 300px;
-            height: calc(100vh - 100px);
-            background-color: rgba(0, 0, 0, 0.9);
-            border-left: 2px solid var(--primary-color);
-            padding: 1rem;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+        @media (max-width: 1200px) {
+            .content {
+                margin-right: 300px;
+            }
         }
 
-        .scene-info-box {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border: 1px solid var(--primary-color);
-            border-radius: 5px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            max-height: calc(50vh - 60px);
-        }
-
-        .scene-info-box h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .actor-list {
-            list-style: none;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .actor-list.small {
-            font-size: 0.8em;
-        }
-
-        .actor-list.very-small {
-            font-size: 0.7em;
-        }
-
-        .actor-list li {
-            margin: 0.25rem 0;
-            padding: 0.5rem;
-            background-color: var(--highlight-color);
-            border-radius: 3px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .actor-micro {
-            color: var(--primary-color);
-            font-size: 0.9em;
-        }
-
-        .scene-info-box.active {
-            border-color: #48bb78;
-            box-shadow: 0 0 10px rgba(72, 187, 120, 0.3);
-        }
-
-        .scene-info-box.next {
-            border-color: #ed8936;
+        @media (max-width: 768px) {
+            .content {
+                margin-right: 0;
+            }
         }
     </style>
 
@@ -88,10 +35,10 @@
 </head>
 <body>
     <div class="header">
-        <h1>Kolpingtheater Ramsen - Bühnen-Viewer</h1>
+        <h1>📺 Bühnen-Viewer</h1>
         <div class="status-group">
-            <span id="connection-status">Status: Verbinde...</span>
-            <span id="director-status">Director: Niemand</span>
+            <span id="connection-status">🔄 Verbinde...</span>
+            <span id="director-status">👤 Director: Niemand</span>
             <span id="clock" class="clock">00:00:00</span>
         </div>
     </div>
@@ -101,12 +48,19 @@
     </div>
 
     <div class="scene-info-sidebar">
-        <!-- Scene information will be inserted here -->
+        <div class="scene-info-box active" id="current-scene-info">
+            <h3>🎬 Aktuelle Szene</h3>
+            <ul class="actor-list" id="current-actors"></ul>
+        </div>
+        <div class="scene-info-box next" id="next-scene-info">
+            <h3>⏭️ Nächste Szene</h3>
+            <ul class="actor-list" id="next-actors"></ul>
+        </div>
     </div>
 
     <div class="bottom-progress">
         <div class="footer-info">
-            <span>Fortschritt</span>
+            <span>📊 Fortschritt</span>
             <span id="global-progress-text">0% (0/0)</span>
         </div>
         <div class="progress">

@@ -127,6 +127,37 @@ class App {
     // Theme switching
     this.uiControls.setupThemeSwitching()
 
+    // Notes toggle listener
+    this.uiControls.setupNotesListeners(() => {
+      this.render()
+    })
+
+    // Scene overview toggle listener
+    const sceneOverview = document.getElementById('show-scene-overview')
+    if (sceneOverview) {
+      sceneOverview.addEventListener('change', () => {
+        this.uiControls.saveState()
+        this.render()
+      })
+    }
+
+    // Blur lines toggle listener
+    const blurLines = document.getElementById('blur-lines')
+    if (blurLines) {
+      blurLines.addEventListener('change', () => {
+        this.uiControls.saveState()
+        this.render()
+      })
+    }
+
+    // Autoscroll toggle listener
+    const autoscroll = document.getElementById('autoscroll')
+    if (autoscroll) {
+      autoscroll.addEventListener('change', () => {
+        this.uiControls.saveState()
+      })
+    }
+
     // Scroll listener
     this.navigation.setupScrollListener(this.directorManager)
 
@@ -137,6 +168,11 @@ class App {
     document.addEventListener('closeSidebar', () => {
       this.uiControls.closeSidebar()
       this.navigation.updateCurrentScene()
+    })
+
+    // Custom event for ToC navigation to prevent scroll bounce
+    document.addEventListener('tocNavigation', () => {
+      this.navigation.startNavigationLock()
     })
   }
 
