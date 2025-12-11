@@ -393,6 +393,12 @@ export class Renderer {
       if (newText) {
         const newNoteEl = this.createNoteElement(lineId, newText, lineElement)
         lineElement.appendChild(newNoteEl)
+      } else {
+        // Restore add-note button if note was deleted
+        const addNoteBtn = lineElement.querySelector('.add-note-btn')
+        if (addNoteBtn) {
+          addNoteBtn.style.display = ''
+        }
       }
     }
     actionsDiv.appendChild(saveBtn)
@@ -403,6 +409,14 @@ export class Renderer {
     cancelBtn.onclick = (e) => {
       e.stopPropagation()
       editorDiv.remove()
+      
+      // Restore add-note button if no note exists
+      if (!existingNoteDiv) {
+        const addNoteBtn = lineElement.querySelector('.add-note-btn')
+        if (addNoteBtn) {
+          addNoteBtn.style.display = ''
+        }
+      }
     }
     actionsDiv.appendChild(cancelBtn)
     
