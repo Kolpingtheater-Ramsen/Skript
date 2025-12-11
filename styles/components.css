@@ -366,9 +366,11 @@ input[type="range"]::-webkit-slider-thumb:hover {
   gap: var(--space-3);
 }
 
-.nav-bar .logo img {
+.nav-bar .logo img,
+.nav-bar img.logo {
   height: 36px;
   width: auto;
+  flex-shrink: 0;
 }
 
 .nav-bar .title-group {
@@ -419,7 +421,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
     padding: 0 var(--space-3);
   }
 
-  .nav-bar .logo img {
+  .nav-bar .logo img,
+  .nav-bar img.logo {
     height: 28px;
   }
 

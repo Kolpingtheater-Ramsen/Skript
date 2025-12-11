@@ -250,6 +250,15 @@ body.dark-mode .script-line .line-note-textarea {
   color: var(--color-text);
 }
 
+body.dark-mode .script-line .add-note-btn {
+  background-color: var(--color-warning);
+  color: var(--color-gray-900);
+}
+
+body.dark-mode .script-line:hover .add-note-btn:hover {
+  background-color: #b45309;
+}
+
 body.dark-mode.is-director::before {
   border-color: #f87171;
   animation: pulse-border-dark 2s infinite;

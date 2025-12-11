@@ -597,7 +597,8 @@ export class Renderer {
       // Add "add note" button
       const addNoteBtn = document.createElement('button')
       addNoteBtn.className = 'add-note-btn'
-      addNoteBtn.textContent = '+ Notiz'
+      addNoteBtn.textContent = '✏️'
+      addNoteBtn.title = 'Notiz hinzufügen'
       addNoteBtn.onclick = (e) => {
         e.stopPropagation()
         this.showNoteEditor(lineId, '', div)
