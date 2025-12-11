@@ -426,7 +426,6 @@ export class Renderer {
     if (existingNoteDiv) {
       existingNoteDiv.style.display = 'none'
       existingNoteDiv.after(editorDiv)
-      existingNoteDiv.style.display = ''
     } else {
       lineElement.appendChild(editorDiv)
     }
