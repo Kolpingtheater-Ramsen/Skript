@@ -5,10 +5,10 @@
 /* CSS Custom Properties (Design Tokens) */
 :root {
   /* Colors - Light Theme */
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-primary-light: #dbeafe;
-  --color-primary-dark: #1e40af;
+  --color-primary: #f97316;
+  --color-primary-hover: #ea580c;
+  --color-primary-light: #ffedd5;
+  --color-primary-dark: #c2410c;
   
   --color-success: #10b981;
   --color-success-light: #d1fae5;

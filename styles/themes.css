@@ -7,24 +7,24 @@
    ============================================ */
 
 body.dark-mode {
-  --color-background: #0f172a;
-  --color-surface: #1e293b;
-  --color-text: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
-  --color-border: #334155;
-  --color-border-hover: #475569;
+  --color-background: #0a0a0a;
+  --color-surface: #1a1a1a;
+  --color-text: #ffffff;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #737373;
+  --color-border: #262626;
+  --color-border-hover: #404040;
   
   /* Adjusted grays for dark mode */
-  --color-gray-50: #1e293b;
-  --color-gray-100: #334155;
-  --color-gray-200: #475569;
-  --color-gray-300: #64748b;
-  --color-gray-400: #94a3b8;
-  --color-gray-500: #cbd5e1;
-  --color-gray-600: #e2e8f0;
-  --color-gray-700: #f1f5f9;
-  --color-gray-800: #f8fafc;
+  --color-gray-50: #1a1a1a;
+  --color-gray-100: #262626;
+  --color-gray-200: #404040;
+  --color-gray-300: #525252;
+  --color-gray-400: #737373;
+  --color-gray-500: #a3a3a3;
+  --color-gray-600: #d4d4d4;
+  --color-gray-700: #e5e5e5;
+  --color-gray-800: #f5f5f5;
   --color-gray-900: #ffffff;
   
   /* Adjusted category colors for dark mode */
@@ -34,7 +34,7 @@ body.dark-mode {
   --color-audio-bg: rgba(236, 72, 153, 0.15);
   --color-props-bg: rgba(6, 182, 212, 0.15);
   
-  --color-primary-light: rgba(59, 130, 246, 0.2);
+  --color-primary-light: rgba(249, 115, 22, 0.2);
   --color-success-light: rgba(16, 185, 129, 0.2);
   --color-error-light: rgba(239, 68, 68, 0.2);
 }
@@ -86,6 +86,15 @@ body.dark-mode .modal-close {
 body.dark-mode .modal-close:hover {
   background-color: var(--color-gray-100);
   color: var(--color-text);
+}
+
+body.dark-mode .notes-toggle {
+  background-color: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+body.dark-mode .notes-info {
+  color: var(--color-text-secondary);
 }
 
 body.dark-mode .script-container {
