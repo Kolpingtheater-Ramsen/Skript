@@ -9,7 +9,7 @@ import threading
 import time
 import datetime
 from typing import Optional, Dict, Any
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, render_template
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from dotenv import load_dotenv
 
@@ -158,7 +158,7 @@ class GitPullScheduler:
 
 
 # Initialize Flask app
-app = Flask(__name__, static_folder=".")
+app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["SECRET_KEY"] = Config.SECRET_KEY
 
 socketio = SocketIO(
@@ -179,13 +179,43 @@ git_scheduler = GitPullScheduler(config)
 @app.route("/")
 def index():
     """Serve index page."""
-    return send_from_directory(".", "index.html")
+    return render_template("index.html")
 
 
-@app.route("/<path:path>")
-def serve_file(path):
+@app.route("/<path:path>.html")
+def serve_html(path):
+    """Serve HTML templates."""
+    return render_template(f"{path}.html")
+
+
+@app.route("/sw.js")
+def serve_sw():
+    """Serve service worker from root for scope."""
+    return send_from_directory(".", "sw.js")
+
+
+@app.route("/manifest.json")
+def serve_manifest():
+    """Serve manifest from root."""
+    return send_from_directory(".", "manifest.json")
+
+
+@app.route("/favicon.ico")
+def favicon():
+    """Serve favicon from root assets."""
+    return send_from_directory("static/assets", "logo.png")
+
+
+@app.route("/plays.json")
+def serve_plays_json_compat():
+    """Compatibility route for root plays.json."""
+    return send_from_directory("static/data", "plays.json")
+
+
+@app.route("/static/<path:path>")
+def serve_static(path):
     """Serve static files."""
-    return send_from_directory(".", path)
+    return send_from_directory("static", path)
 
 
 # Socket.IO handlers

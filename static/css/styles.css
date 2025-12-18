@@ -3,10 +3,10 @@
    Import all component stylesheets
    ============================================ */
 
-@import 'styles/base.css';
-@import 'styles/components.css';
-@import 'styles/script.css';
-@import 'styles/themes.css';
+@import 'base.css';
+@import 'components.css';
+@import 'script.css';
+@import 'themes.css';
 
 /* ============================================
    ADDITIONAL GLOBAL STYLES

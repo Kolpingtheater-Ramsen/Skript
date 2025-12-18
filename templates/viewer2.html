@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kolpingtheater Ramsen - Schauspieler-Viewer</title>
-    
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    
-    <link rel="stylesheet" href="styles/viewer-actor.css" />
+
+    <link rel="stylesheet" href="/static/css/viewer-actor.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-    <script src="papaparse.min.js"></script>
+    <script src="/static/js/vendor/papaparse.min.js"></script>
 </head>
+
 <body>
     <div class="header">
         <h1>🎭 Schauspieler-Viewer</h1>
@@ -55,6 +57,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/viewer-actor.js"></script>
+    <script type="module" src="/static/js/viewer-actor.js"></script>
 </body>
+
 </html>

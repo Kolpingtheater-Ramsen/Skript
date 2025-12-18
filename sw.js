@@ -1,11 +1,14 @@
 const CACHE_NAME = 'drehbuch-cache-v1'
 const ASSETS_TO_CACHE = [
   '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/papaparse.min.js',
-  '/logo.png',
+  '/static/css/styles.css',
+  '/static/css/base.css',
+  '/static/css/components.css',
+  '/static/css/script.css',
+  '/static/css/themes.css',
+  '/static/js/main.js',
+  '/static/js/vendor/papaparse.min.js',
+  '/static/assets/logo.png',
   '/manifest.json',
   'https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js',
 ]

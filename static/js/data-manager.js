@@ -19,7 +19,7 @@ export class DataManager {
    */
   async loadPlaysConfig() {
     try {
-      const res = await fetch('plays.json')
+      const res = await fetch('/static/data/plays.json')
       if (res.ok) {
         this.playsConfig = await res.json()
       }
