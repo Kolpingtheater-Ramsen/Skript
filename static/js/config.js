@@ -3,7 +3,7 @@
  */
 
 const CONFIG = {
-  SOCKET_URL: 'https://skript.logge.top',
+  SOCKET_URL: window.location.origin,
   SOCKET_OPTIONS: {
     transports: ['websocket'],
     reconnectionAttempts: Infinity,
