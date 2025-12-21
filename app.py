@@ -166,6 +166,7 @@ socketio = SocketIO(
     cors_allowed_origins="*",
     logger=True,
     engineio_logger=True,
+    async_mode='threading'
 )
 
 # Initialize managers
