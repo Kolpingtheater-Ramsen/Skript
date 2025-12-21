@@ -31,7 +31,7 @@
 
 .btn-primary {
   background-color: var(--color-primary);
-  color: white;
+  color: #F3F3F3;
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -353,11 +353,14 @@ input[type="range"]::-webkit-slider-thumb:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-4);
-  background-color: var(--color-surface);
+  padding: 0 var(--space-6);
+  background-color: rgba(15, 15, 16, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--color-border);
   z-index: var(--z-fixed);
   transition: background-color var(--transition-normal);
+  color: #F3F3F3;
 }
 
 .nav-bar .logo {
@@ -382,11 +385,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .nav-bar h1 {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xl);
+  font-family: var(--font-family-serif);
+  font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #F3F3F3;
 }
 
 .nav-actions {
@@ -406,13 +411,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
   border-radius: var(--radius-lg);
   cursor: pointer;
   font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
+  color: #F3F3F3;
   transition: all var(--transition-fast);
 }
 
 .nav-btn:hover {
-  background-color: var(--color-gray-100);
-  color: var(--color-text);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-primary);
 }
 
 @media (max-width: 768px) {
@@ -670,7 +675,7 @@ body.has-bottom-nav {
   display: none;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-success);
+  background-color: var(--color-primary);
   color: white;
   border: none;
   border-radius: var(--radius-full);
@@ -682,7 +687,7 @@ body.has-bottom-nav {
 }
 
 .fab:hover {
-  background-color: #059669;
+  background-color: var(--color-primary-hover);
   transform: scale(1.05);
 }
 
@@ -842,8 +847,15 @@ body.is-director::before {
 }
 
 @keyframes pulse-border {
-  0%, 100% { border-color: var(--color-error); }
-  50% { border-color: rgba(239, 68, 68, 0.5); }
+
+  0%,
+  100% {
+    border-color: var(--color-error);
+  }
+
+  50% {
+    border-color: rgba(239, 68, 68, 0.5);
+  }
 }
 
 /* ============================================

@@ -104,7 +104,8 @@ export class UIControlsManager {
     this.updateContextSliderVisibility()
 
     // Load theme
-    const darkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE) === 'true'
+    const storedDarkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE)
+    const darkMode = storedDarkMode === null ? true : storedDarkMode === 'true'
     const pinkMode = localStorage.getItem(STORAGE_KEYS.PINK_MODE) === 'true'
     document.body.classList.toggle('dark-mode', darkMode)
     document.body.classList.toggle('pink-mode', pinkMode)
