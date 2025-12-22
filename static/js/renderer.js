@@ -305,18 +305,18 @@ export class Renderer {
   createNoteElement(lineId, noteText, lineElement) {
     const noteDiv = document.createElement('div')
     noteDiv.className = 'line-note'
-    
+
     const noteHeader = document.createElement('div')
     noteHeader.className = 'line-note-header'
-    
+
     const noteLabel = document.createElement('span')
     noteLabel.className = 'line-note-label'
     noteLabel.textContent = '📝 Notiz'
     noteHeader.appendChild(noteLabel)
-    
+
     const noteActions = document.createElement('div')
     noteActions.className = 'line-note-actions'
-    
+
     const editBtn = document.createElement('button')
     editBtn.className = 'line-note-btn'
     editBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>'
@@ -326,7 +326,7 @@ export class Renderer {
       this.showNoteEditor(lineId, noteText, lineElement, noteDiv)
     }
     noteActions.appendChild(editBtn)
-    
+
     const deleteBtn = document.createElement('button')
     deleteBtn.className = 'line-note-btn'
     deleteBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>'
@@ -344,15 +344,15 @@ export class Renderer {
       }
     }
     noteActions.appendChild(deleteBtn)
-    
+
     noteHeader.appendChild(noteActions)
     noteDiv.appendChild(noteHeader)
-    
+
     const noteTextEl = document.createElement('div')
     noteTextEl.className = 'line-note-text'
     noteTextEl.textContent = noteText
     noteDiv.appendChild(noteTextEl)
-    
+
     return noteDiv
   }
 
@@ -369,20 +369,20 @@ export class Renderer {
     if (existingEditor) {
       existingEditor.remove()
     }
-    
+
     const editorDiv = document.createElement('div')
     editorDiv.className = 'line-note-edit'
-    
+
     const textarea = document.createElement('textarea')
     textarea.className = 'line-note-textarea'
     textarea.value = currentText || ''
     textarea.placeholder = 'Notiz eingeben...'
     textarea.onclick = (e) => e.stopPropagation()
     editorDiv.appendChild(textarea)
-    
+
     const actionsDiv = document.createElement('div')
     actionsDiv.className = 'line-note-edit-actions'
-    
+
     const saveBtn = document.createElement('button')
     saveBtn.className = 'btn btn-sm btn-primary'
     saveBtn.textContent = 'Speichern'
@@ -391,12 +391,12 @@ export class Renderer {
       const newText = textarea.value.trim()
       this.setNote(lineId, newText)
       editorDiv.remove()
-      
+
       // Update or remove note display
       if (existingNoteDiv) {
         existingNoteDiv.remove()
       }
-      
+
       if (newText) {
         const newNoteEl = this.createNoteElement(lineId, newText, lineElement)
         lineElement.appendChild(newNoteEl)
@@ -409,14 +409,14 @@ export class Renderer {
       }
     }
     actionsDiv.appendChild(saveBtn)
-    
+
     const cancelBtn = document.createElement('button')
     cancelBtn.className = 'btn btn-sm btn-secondary'
     cancelBtn.textContent = 'Abbrechen'
     cancelBtn.onclick = (e) => {
       e.stopPropagation()
       editorDiv.remove()
-      
+
       // Restore visibility depending on whether note exists
       if (existingNoteDiv) {
         existingNoteDiv.style.display = ''
@@ -428,9 +428,9 @@ export class Renderer {
       }
     }
     actionsDiv.appendChild(cancelBtn)
-    
+
     editorDiv.appendChild(actionsDiv)
-    
+
     // Hide existing note div while editing
     if (existingNoteDiv) {
       existingNoteDiv.style.display = 'none'
@@ -438,7 +438,7 @@ export class Renderer {
     } else {
       lineElement.appendChild(editorDiv)
     }
-    
+
     textarea.focus()
   }
 
@@ -545,10 +545,9 @@ export class Renderer {
       div.classList.add('highlighted')
     }
 
-    // Map role names to actor names in instructions
+    // Map role names to actor names in all other fields
     if (
       settings.useActorNames &&
-      row.Kategorie === CATEGORIES.INSTRUCTION &&
       actors &&
       actors.length > 0
     ) {
@@ -571,7 +570,7 @@ export class Renderer {
     if (row.Kategorie === CATEGORIES.INSTRUCTION && settings.selectedActor) {
       const nameToBold = settings.useActorNames
         ? actors?.find((a) => a[0] === settings.selectedActor)?.[1] ||
-          settings.selectedActor
+        settings.selectedActor
         : settings.selectedActor
       try {
         const boldPattern = new RegExp(
@@ -590,32 +589,13 @@ export class Renderer {
       }
     }
 
-    // Add actor name to technical instructions if useActorNames is true
-    if (
-      settings.useActorNames &&
-      (row.Kategorie === CATEGORIES.INSTRUCTION ||
-        row.Kategorie === CATEGORIES.TECHNICAL)
-    ) {
-      for (const [roleUpper, actorName] of actors) {
-        try {
-          const pattern = new RegExp(`\\b${escapeRegExp(roleUpper)}\\b`, 'gi')
-          textDiv.innerHTML = textDiv.innerHTML.replace(
-            pattern,
-            `${roleUpper} (${actorName})`
-          )
-        } catch (e) {
-          // Fallback: skip problematic patterns
-        }
-      }
-    }
-
     div.appendChild(textDiv)
 
     // Add notes feature if enabled
     if (settings.enableNotes) {
       const lineId = this.getLineId(row, index)
       const noteText = this.getNote(lineId)
-      
+
       // Add "add note" button
       const addNoteBtn = document.createElement('button')
       addNoteBtn.className = 'add-note-btn'
@@ -626,14 +606,14 @@ export class Renderer {
         this.showNoteEditor(lineId, '', div)
         addNoteBtn.style.display = 'none'
       }
-      
+
       // Only show add button if no note exists
       if (noteText) {
         addNoteBtn.style.display = 'none'
         const noteEl = this.createNoteElement(lineId, noteText, div)
         div.appendChild(noteEl)
       }
-      
+
       div.appendChild(addNoteBtn)
     }
 
