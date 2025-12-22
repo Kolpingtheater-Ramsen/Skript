@@ -38,6 +38,7 @@ const CATEGORIES = {
   ACTOR: 'Schauspieler',
   SCENE_START: 'Szenenbeginn',
   ROLE: 'Rolle',
+  MICROPHONE: 'Mikrofon',
 }
 
 export { CONFIG, STORAGE_KEYS, CATEGORIES }

@@ -244,7 +244,7 @@ export class Renderer {
   calculateLineStates(data, settings) {
     const lineStates = new Map()
 
-    data.forEach((row, index) => {
+      data.forEach((row, index) => {
       const state = { visible: false, isContext: false }
 
       if (
@@ -253,6 +253,7 @@ export class Renderer {
         (settings.showLighting && row.Kategorie === CATEGORIES.LIGHTING) ||
         (settings.showEinspieler && row.Kategorie === CATEGORIES.AUDIO) ||
         (settings.showRequisiten && row.Kategorie === CATEGORIES.PROPS) ||
+        (settings.showMikrofonCues && row.Kategorie === CATEGORIES.MICROPHONE) ||
         (settings.showActorText &&
           row.Charakter &&
           row.Kategorie === CATEGORIES.ACTOR)
@@ -271,6 +272,8 @@ export class Renderer {
           contextRange = settings.einspielContext
         else if (row.Kategorie === CATEGORIES.PROPS)
           contextRange = settings.requisitenContext
+        else if (row.Kategorie === CATEGORIES.MICROPHONE)
+          contextRange = settings.mikrofonContext
 
         // Mark context lines
         for (
@@ -495,6 +498,12 @@ export class Renderer {
       lightSpan.textContent = 'Licht'
       div.appendChild(lightSpan)
       div.classList.add('lighting')
+    } else if (row.Kategorie === CATEGORIES.MICROPHONE) {
+      const mikroSpan = document.createElement('div')
+      mikroSpan.className = 'tag'
+      mikroSpan.textContent = '🎤 Mikrofon'
+      div.appendChild(mikroSpan)
+      div.classList.add('microphone')
     } else if (
       settings.selectedActor &&
       row.Charakter &&

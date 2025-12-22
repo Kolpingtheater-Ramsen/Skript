@@ -122,6 +122,12 @@ export class StageViewer extends BaseViewer {
       tag.className = 'tag'
       tag.textContent = '🎭 Requisiten'
       div.appendChild(tag)
+    } else if (category === 'Mikrofon') {
+      div.classList.add('microphone')
+      const tag = document.createElement('div')
+      tag.className = 'tag'
+      tag.textContent = '🎤 Mikrofon'
+      div.appendChild(tag)
     }
   }
 

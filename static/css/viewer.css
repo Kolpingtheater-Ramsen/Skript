@@ -158,6 +158,11 @@ body {
   background-color: rgba(34, 211, 238, 0.1);
 }
 
+.microphone {
+  color: #ec4899;
+  background-color: rgba(236, 72, 153, 0.1);
+}
+
 /* Tags */
 .tag {
   display: inline-block;
