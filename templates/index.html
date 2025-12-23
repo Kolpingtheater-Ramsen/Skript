@@ -357,7 +357,10 @@
           <div class="director-inputs">
             <input type="text" id="name" placeholder="Name" class="director-input form-input" />
             <input type="password" id="password" placeholder="Passwort" class="director-input form-input" />
-            <button onclick="toggleDirector()" class="btn btn-primary">Director werden</button>
+            <div class="director-buttons">
+              <button onclick="toggleDirector()" class="btn btn-primary">Director werden</button>
+              <button onclick="clearDirectorCredentials()" class="btn btn-secondary btn-sm">Daten löschen</button>
+            </div>
           </div>
         </div>
       </div>

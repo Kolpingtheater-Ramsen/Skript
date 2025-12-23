@@ -12,6 +12,9 @@ export class DirectorManager {
     this.state = stateManager
     this.socket = socketManager
     this.reconnectAttempts = 0
+    this._wasDirector = false
+    this._pendingReconnect = false
+    this._toastTimeout = null
   }
 
   /**
@@ -19,6 +22,29 @@ export class DirectorManager {
    */
   init() {
     this._setupSocketHandlers()
+    this._loadCredentials()
+    
+    // Expose clear credentials globally
+    window.clearDirectorCredentials = () => this.clearCredentials()
+  }
+
+  /**
+   * Load credentials from localStorage
+   * @private
+   */
+  _loadCredentials() {
+    const name = localStorage.getItem('director_name')
+    const password = localStorage.getItem('director_password')
+    
+    if (name) {
+      const nameInput = document.getElementById('name')
+      if (nameInput) nameInput.value = name
+    }
+    
+    if (password) {
+      const passInput = document.getElementById('password')
+      if (passInput) passInput.value = password
+    }
   }
 
   /**
@@ -29,6 +55,26 @@ export class DirectorManager {
     this.socket.on('connect', () => {
       this.state.set('isConnected', true)
       this.reconnectAttempts = 0
+      document.body.classList.remove('reconnecting')
+
+      // Check if we should try to reclaim director status
+      if (this._wasDirector) {
+        const disconnectedAt = localStorage.getItem('director_disconnected_at')
+        if (disconnectedAt) {
+          const elapsed = Date.now() - parseInt(disconnectedAt, 10)
+          
+          if (elapsed < 5 * 60 * 1000) { // < 5 minutes
+            this._pendingReconnect = true
+            this._showToast('Verbindung wiederhergestellt. Prüfe Director-Status...')
+          } else {
+            // Session expired
+            this._wasDirector = false
+            localStorage.removeItem('director_disconnected_at')
+            this._showToast('Sitzung abgelaufen – bitte erneut anmelden.')
+          }
+        }
+      }
+
       this._updateDirectorStatus()
     })
 
@@ -45,19 +91,20 @@ export class DirectorManager {
       this.state.set('isConnected', false)
       const statusEl = document.getElementById('director-status')
       if (statusEl) {
-        statusEl.textContent = 'Director Mode: Offline'
+        statusEl.textContent = 'Verbindung unterbrochen – Director Mode Offline'
       }
 
-      // If we were the director, clear the state
+      // If we were the director, record disconnect time and show visual feedback
       if (this.state.get('isDirector')) {
-        this.state.set('isDirector', false)
-        this.state.set('directorName', '')
-        const nameInput = document.getElementById('name')
-        const passInput = document.getElementById('password')
-        if (nameInput) nameInput.value = ''
-        if (passInput) passInput.value = ''
-        this.updateDirectorUI(false)
+        this._wasDirector = true
+        localStorage.setItem('director_disconnected_at', Date.now().toString())
+        document.body.classList.add('reconnecting')
+        this._showToast('Verbindung verloren. Reconnecting...')
       }
+
+      this.state.set('isDirector', false)
+      this.state.set('directorName', '')
+      this.updateDirectorUI(false)
 
       // Clear any markers
       this.clearMarkedLine()
@@ -110,6 +157,8 @@ export class DirectorManager {
    */
   _handleSetDirector(data) {
     const directorStatus = document.getElementById('director-status')
+    const wasPending = this._pendingReconnect
+
     if (data.success) {
       if (directorStatus) {
         directorStatus.textContent = data.director
@@ -117,8 +166,20 @@ export class DirectorManager {
       if (data.director !== 'Niemand') {
         document.body.classList.add('director-active')
         this.state.set('isDirector', data.isDirector)
+        this.state.set('directorName', data.director)
+
         if (data.isDirector) {
           document.body.classList.add('is-director')
+          // Save credentials and clear disconnect timestamp
+          localStorage.setItem('director_name', document.getElementById('name')?.value || '')
+          localStorage.setItem('director_password', document.getElementById('password')?.value || '')
+          localStorage.removeItem('director_disconnected_at')
+          
+          if (wasPending) {
+            this._pendingReconnect = false
+            this._wasDirector = false
+            this._showToast('Director-Status wiederhergestellt ✓')
+          }
         } else {
           document.body.classList.remove('is-director')
         }
@@ -132,8 +193,30 @@ export class DirectorManager {
       }
       document.body.classList.remove('director-active', 'is-director')
       this.state.set('isDirector', false)
-      if (data.message) {
+      if (data.message && !wasPending) {
         alert(data.message)
+      }
+    }
+
+    // Check if we were trying to reconnect
+    if (wasPending) {
+      const currentDirector = data.director
+      if (currentDirector !== 'Niemand' && !data.isDirector) {
+        // Someone else is director
+        this._pendingReconnect = false
+        this._wasDirector = false
+        localStorage.removeItem('director_disconnected_at')
+        this._showToast(`Verbindung wiederhergestellt. ${currentDirector} ist jetzt Director.`)
+      } else if (currentDirector === 'Niemand') {
+        // No one is director, try to reclaim
+        // We keep _pendingReconnect = true for the next response
+        const savedName = localStorage.getItem('director_name')
+        const savedPassword = localStorage.getItem('director_password')
+        if (savedName && savedPassword) {
+          this.socket.setDirector(savedName, savedPassword)
+        } else {
+          this._pendingReconnect = false
+        }
       }
     }
   }
@@ -145,15 +228,6 @@ export class DirectorManager {
   _handleUnsetDirector(data) {
     this.handleDirectorChange(null, false)
     this.clearMarkedLine()
-
-    // Clear inputs if we were the director
-    const directorName = this.state.get('directorName')
-    if (data.previousDirector === directorName) {
-      const nameInput = document.getElementById('name')
-      const passInput = document.getElementById('password')
-      if (nameInput) nameInput.value = ''
-      if (passInput) passInput.value = ''
-    }
   }
 
   /**
@@ -168,12 +242,8 @@ export class DirectorManager {
     // Update state for the new director
     this.handleDirectorChange(data.newDirector, data.isDirector)
 
-    // If we were the previous director, clear our inputs
+    // If we were the previous director, notify
     if (wasDirector) {
-      const nameInput = document.getElementById('name')
-      const passInput = document.getElementById('password')
-      if (nameInput) nameInput.value = ''
-      if (passInput) passInput.value = ''
       alert('Ein neuer Director hat übernommen.')
     }
   }
@@ -253,6 +323,8 @@ export class DirectorManager {
       // If already director, this acts as a logout
       this.socket.unsetDirector(name)
       this.state.set('isDirector', false)
+      this._wasDirector = false
+      localStorage.removeItem('director_disconnected_at')
     } else {
       // Attempt to become director
       this.socket.setDirector(name, password)
@@ -293,10 +365,52 @@ export class DirectorManager {
 
     // Update UI
     this.updateDirectorUI(newIsDirector)
+
     const statusEl = document.getElementById('director-status')
     if (statusEl) {
       statusEl.textContent = `Aktueller Director: ${newDirector || 'Niemand'}`
     }
+  }
+
+  /**
+   * Show a toast message
+   * @private
+   */
+  _showToast(message, duration = 4000) {
+    let toast = document.getElementById('director-toast')
+    if (!toast) {
+      toast = document.createElement('div')
+      toast.id = 'director-toast'
+      toast.className = 'toast'
+      document.body.appendChild(toast)
+    }
+    
+    toast.textContent = message
+    toast.classList.add('show')
+    
+    if (this._toastTimeout) {
+      clearTimeout(this._toastTimeout)
+    }
+    
+    this._toastTimeout = setTimeout(() => {
+      toast.classList.remove('show')
+    }, duration)
+  }
+
+  /**
+   * Clear director credentials from localStorage
+   */
+  clearCredentials() {
+    localStorage.removeItem('director_name')
+    localStorage.removeItem('director_password')
+    localStorage.removeItem('director_disconnected_at')
+    
+    const nameInput = document.getElementById('name')
+    const passInput = document.getElementById('password')
+    if (nameInput) nameInput.value = ''
+    if (passInput) passInput.value = ''
+    
+    this._showToast('Gespeicherte Daten gelöscht.')
   }
 
   /**
