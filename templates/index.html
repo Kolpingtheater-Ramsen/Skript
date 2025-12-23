@@ -75,13 +75,13 @@
     let deferredPrompt
     const installButton = document.createElement('button')
     installButton.style.display = 'none'
-    installButton.className = 'install-button'
+    installButton.className = 'btn btn-success-soft'
     installButton.textContent = '📲 App installieren'
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault()
       deferredPrompt = e
-      installButton.style.display = 'block'
+      installButton.style.display = 'inline-flex'
     })
 
     installButton.addEventListener('click', async () => {
@@ -364,10 +364,23 @@
           </div>
         </div>
       </div>
+
+      <!-- App & Storage Section -->
+      <div class="settings-section" style="margin-top: 20px;">
+        <div class="settings-section-title">📱 App & Speicher</div>
+        <div class="app-storage-buttons">
+          <div id="install-button-container"></div>
+          <button onclick="clearCache()" class="btn btn-danger-soft">
+            🗑️ Cache & Daten löschen
+          </button>
+        </div>
+        <div class="settings-description" style="font-size: 0.85em; color: var(--color-text-muted); margin-top: 8px;">
+          Löscht alle lokal gespeicherten Skripte und Einstellungen.
+        </div>
+      </div>
     </div>
 
     <div class="modal-footer">
-      <div id="install-button-container"></div>
       <button onclick="closeSettingsModal()" class="btn btn-secondary">Schließen</button>
     </div>
   </div>

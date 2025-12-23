@@ -65,6 +65,28 @@
   background-color: #dc2626;
 }
 
+.btn-success-soft {
+  background-color: var(--color-success-light, rgba(16, 185, 129, 0.1));
+  color: var(--color-success, #10b981);
+  border: 1px solid var(--color-success-light, rgba(16, 185, 129, 0.2));
+}
+
+.btn-success-soft:hover:not(:disabled) {
+  background-color: var(--color-success-light, rgba(16, 185, 129, 0.2));
+  filter: brightness(0.95);
+}
+
+.btn-danger-soft {
+  background-color: var(--color-error-light, rgba(239, 68, 68, 0.1));
+  color: var(--color-error, #ef4444);
+  border: 1px solid var(--color-error-light, rgba(239, 68, 68, 0.2));
+}
+
+.btn-danger-soft:hover:not(:disabled) {
+  background-color: var(--color-error-light, rgba(239, 68, 68, 0.2));
+  filter: brightness(0.95);
+}
+
 .btn-ghost {
   background-color: transparent;
   color: var(--color-text);
@@ -997,24 +1019,51 @@ body.is-director::before {
   color: white;
 }
 
+.app-storage-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.app-storage-buttons .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 480px) {
+  .app-storage-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .app-storage-buttons .btn {
+    width: auto;
+    flex: 1;
+  }
+}
+
 /* ============================================
-   INSTALL BUTTON
+   CARDS
    ============================================ */
 
 .install-button {
   display: none;
   padding: var(--space-2) var(--space-4);
-  background-color: var(--color-success);
-  color: white;
-  border: none;
+  background-color: var(--color-gray-100);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
+  width: fit-content;
+  transition: all var(--transition-fast);
 }
 
 .install-button:hover {
-  background-color: #059669;
+  background-color: var(--color-gray-200);
+  border-color: var(--color-border-hover);
 }
 
 @media (display-mode: standalone) {

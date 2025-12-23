@@ -501,4 +501,35 @@ export class UIControlsManager {
       })
     }
   }
+
+  /**
+   * Clear application cache and local storage
+   */
+  async clearCache() {
+    if (
+      confirm(
+        'Möchten Sie wirklich alle lokal gespeicherten Daten löschen? Dies setzt alle Einstellungen zurück und erfordert eine neue Internetverbindung zum Laden des Skripts.'
+      )
+    ) {
+      // Clear localStorage
+      localStorage.clear()
+
+      // Clear sessionStorage
+      sessionStorage.clear()
+
+      // Clear all caches
+      if ('caches' in window) {
+        try {
+          const cacheNames = await caches.keys()
+          await Promise.all(cacheNames.map((cacheName) => caches.delete(cacheName)))
+        } catch (e) {
+          console.error('Failed to clear caches:', e)
+        }
+      }
+
+      // Reload the page
+      window.location.reload()
+    }
+  }
 }
+

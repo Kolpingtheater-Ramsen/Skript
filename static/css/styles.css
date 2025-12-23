@@ -46,30 +46,6 @@
   color: white;
 }
 
-/* Install button styling */
-.install-button {
-  display: none;
-  padding: var(--space-2) var(--space-4);
-  background-color: var(--color-success);
-  color: white;
-  border: none;
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.install-button:hover {
-  background-color: #059669;
-}
-
-@media (display-mode: standalone) {
-  .install-button {
-    display: none !important;
-  }
-}
-
 /* Table styling */
 th {
   text-align: left;

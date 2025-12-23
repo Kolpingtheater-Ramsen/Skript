@@ -280,6 +280,13 @@ window.jumpToPreviousLine = function () {
   }
 }
 
+window.clearCache = function () {
+  const app = window.appInstance
+  if (app) {
+    app.uiControls.clearCache()
+  }
+}
+
 // Initialize the app
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
