@@ -98,17 +98,21 @@ export class StageViewer extends BaseViewer {
 
     if (category === 'Anweisung') {
       div.classList.add('instruction')
+      const tag = document.createElement('div')
+      tag.className = 'tag'
+      tag.textContent = '📝 Anweisung'
+      div.appendChild(tag)
     } else if (category === 'Einspieler') {
       div.classList.add('audio')
       const tag = document.createElement('div')
       tag.className = 'tag'
-      tag.textContent = '🎵 Einspieler'
+      tag.textContent = '🔊 Einspieler'
       div.appendChild(tag)
     } else if (category === 'Technik') {
       div.classList.add('technical')
       const tag = document.createElement('div')
       tag.className = 'tag'
-      tag.textContent = '⚙️ Technik'
+      tag.textContent = '🛠️ Technik'
       div.appendChild(tag)
     } else if (category === 'Licht') {
       div.classList.add('lighting')
@@ -120,7 +124,7 @@ export class StageViewer extends BaseViewer {
       div.classList.add('props')
       const tag = document.createElement('div')
       tag.className = 'tag'
-      tag.textContent = '🎭 Requisiten'
+      tag.textContent = '📦 Requisiten'
       div.appendChild(tag)
     } else if (category === 'Mikrofon') {
       div.classList.add('microphone')

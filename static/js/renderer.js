@@ -120,7 +120,7 @@ export class Renderer {
       toc.className = 'toc'
 
       const title = document.createElement('h2')
-      title.textContent = 'Inhaltsverzeichnis'
+      title.textContent = '📖 Inhaltsverzeichnis'
       toc.appendChild(title)
 
       Object.keys(scenes).forEach((scene) => {
@@ -195,7 +195,7 @@ export class Renderer {
     overview.className = 'scene-overview'
 
     const title = document.createElement('h3')
-    title.textContent = 'Szenenübersicht'
+    title.textContent = '📊 Szenenübersicht'
     overview.appendChild(title)
 
     const table = document.createElement('table')
@@ -469,18 +469,22 @@ export class Renderer {
     // Apply styling based on type
     if (row.Kategorie === CATEGORIES.INSTRUCTION) {
       div.classList.add('instruction')
+      const instructionSpan = document.createElement('div')
+      instructionSpan.className = 'tag'
+      instructionSpan.textContent = '📝 Anweisung'
+      div.appendChild(instructionSpan)
     } else if (row.Kategorie === CATEGORIES.SCENE_START) {
       div.style.display = 'none'
     } else if (row.Kategorie === CATEGORIES.AUDIO) {
       div.classList.add('audio')
       const audioSpan = document.createElement('div')
       audioSpan.className = 'tag'
-      audioSpan.textContent = 'Einspieler'
+      audioSpan.textContent = '🔊 Einspieler'
       div.appendChild(audioSpan)
     } else if (row.Kategorie === CATEGORIES.PROPS) {
       const propsSpan = document.createElement('div')
       propsSpan.className = 'tag'
-      propsSpan.textContent = 'Requisiten'
+      propsSpan.textContent = '📦 Requisiten'
       div.appendChild(propsSpan)
       div.classList.add('props')
       if (row.Charakter === settings.selectedActor) {
@@ -489,13 +493,13 @@ export class Renderer {
     } else if (row.Kategorie === CATEGORIES.TECHNICAL) {
       const techSpan = document.createElement('div')
       techSpan.className = 'tag'
-      techSpan.textContent = 'Technik'
+      techSpan.textContent = '🛠️ Technik'
       div.appendChild(techSpan)
       div.classList.add('technical')
     } else if (row.Kategorie === CATEGORIES.LIGHTING) {
       const lightSpan = document.createElement('div')
       lightSpan.className = 'tag'
-      lightSpan.textContent = 'Licht'
+      lightSpan.textContent = '💡 Licht'
       div.appendChild(lightSpan)
       div.classList.add('lighting')
     } else if (row.Kategorie === CATEGORIES.MICROPHONE) {
@@ -665,7 +669,7 @@ export class Renderer {
         a.id = `scene-${row.Szene}`
         container.appendChild(a)
         const szeneTitel = document.createElement('h2')
-        szeneTitel.textContent = `Szene ${row.Szene}`
+        szeneTitel.textContent = `🎬 Szene ${row.Szene}`
         container.appendChild(szeneTitel)
 
         // Insert scene summary (Kategorie: Szenenbeginn)

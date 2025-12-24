@@ -986,6 +986,11 @@ body.is-director::before {
   color: var(--color-props);
 }
 
+.tag-microphone {
+  background-color: var(--color-microphone-bg);
+  color: var(--color-microphone);
+}
+
 /* ============================================
    LINKS
    ============================================ */

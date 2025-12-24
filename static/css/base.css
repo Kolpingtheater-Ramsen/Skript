@@ -51,6 +51,8 @@
   --color-audio-bg: #fce7f3;
   --color-props: #06b6d4;
   --color-props-bg: #cffafe;
+  --color-microphone: #0ea5e9;
+  --color-microphone-bg: #e0f2fe;
 
   /* Spacing Scale */
   --space-1: 0.25rem;

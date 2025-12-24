@@ -28,13 +28,15 @@ body.dark-mode {
   --color-gray-900: #ffffff;
 
   /* Adjusted category colors for dark mode */
-  --color-instruction-bg: rgba(139, 92, 246, 0.15);
-  --color-technical-bg: rgba(16, 185, 129, 0.15);
-  --color-lighting-bg: rgba(245, 158, 11, 0.15);
-  --color-audio-bg: rgba(236, 72, 153, 0.15);
-  --color-props-bg: rgba(6, 182, 212, 0.15);
+  --color-instruction-bg: rgba(139, 92, 246, 0.08);
+  --color-technical-bg: rgba(16, 185, 129, 0.08);
+  --color-lighting-bg: rgba(245, 158, 11, 0.08);
+  --color-audio-bg: rgba(236, 72, 153, 0.08);
+  --color-props-bg: rgba(6, 182, 212, 0.08);
+  --color-microphone: #0ea5e9;
+  --color-microphone-bg: rgba(14, 165, 233, 0.08);
 
-  --color-primary-light: rgba(249, 115, 22, 0.2);
+  --color-primary-light: rgba(249, 115, 22, 0.15);
   --color-success-light: rgba(16, 185, 129, 0.2);
   --color-error-light: rgba(239, 68, 68, 0.2);
 }
@@ -119,6 +121,39 @@ body.dark-mode .script-line:hover {
 }
 
 body.dark-mode .script-line.instruction {
+  background-color: var(--color-instruction-bg);
+}
+
+body.dark-mode .script-line.technical {
+  background-color: var(--color-technical-bg);
+}
+
+body.dark-mode .script-line.lighting {
+  background-color: var(--color-lighting-bg);
+}
+
+body.dark-mode .script-line.audio {
+  background-color: var(--color-audio-bg);
+}
+
+body.dark-mode .script-line.props {
+  background-color: var(--color-props-bg);
+}
+
+body.dark-mode .script-line.microphone {
+  background-color: var(--color-microphone-bg);
+}
+
+body.dark-mode .script-line.instruction:hover,
+body.dark-mode .script-line.technical:hover,
+body.dark-mode .script-line.lighting:hover,
+body.dark-mode .script-line.audio:hover,
+body.dark-mode .script-line.props:hover,
+body.dark-mode .script-line.microphone:hover {
+  filter: brightness(1.1);
+}
+
+body.dark-mode .script-line.instruction {
   color: var(--color-text-secondary);
 }
 
@@ -149,7 +184,7 @@ body.dark-mode .toc a:hover {
 }
 
 body.dark-mode .toc a[style*="font-weight: bold"] {
-  background-color: rgba(255, 106, 0, 0.15);
+  background-color: rgba(255, 106, 0, 0.08);
   /* Orange tint */
   color: var(--color-primary);
   border-left-color: var(--color-primary);
@@ -265,7 +300,7 @@ body.dark-mode .card-footer {
 }
 
 body.dark-mode .script-line .line-note {
-  background-color: rgba(245, 158, 11, 0.1);
+  background-color: rgba(245, 158, 11, 0.08);
 }
 
 body.dark-mode .script-line .line-note-textarea {
@@ -336,12 +371,14 @@ body.pink-mode {
   --color-lighting-bg: #fce7f3;
   --color-audio-bg: #fce7f3;
   --color-props-bg: #fce7f3;
+  --color-microphone-bg: #fce7f3;
 
   --color-instruction: #9d174d;
   --color-technical: #9d174d;
   --color-lighting: #9d174d;
   --color-audio: #9d174d;
   --color-props: #9d174d;
+  --color-microphone: #9d174d;
 
   --color-success: #db2777;
   --color-success-light: #fce7f3;
