@@ -505,9 +505,12 @@ export class Renderer {
     } else if (row.Kategorie === CATEGORIES.MICROPHONE) {
       const mikroSpan = document.createElement('div')
       mikroSpan.className = 'tag'
-      mikroSpan.textContent = '🎤 Mikrofon'
+      mikroSpan.textContent = row.isAutoMic ? '🎤 Auto' : '🎤 Mikrofon'
       div.appendChild(mikroSpan)
       div.classList.add('microphone')
+      if (row.isAutoMic) {
+        div.classList.add('microphone-auto')
+      }
     } else if (
       settings.selectedActor &&
       row.Charakter &&

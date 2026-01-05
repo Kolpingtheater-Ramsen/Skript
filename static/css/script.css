@@ -185,6 +185,15 @@
   border-color: rgba(14, 165, 233, 0.2);
 }
 
+.script-line.microphone-auto {
+  border-left: 3px dashed var(--color-microphone);
+  opacity: 0.9;
+}
+
+.script-line.microphone-auto .tag {
+  background-color: #6b7280;
+}
+
 /* Highlighted line (selected actor) */
 .script-line.highlighted {
   background-color: var(--color-primary-light);

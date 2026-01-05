@@ -3,6 +3,7 @@
  */
 
 import { CONFIG, CATEGORIES } from './config.js'
+import { generateSceneMicCues } from './mic-cue-generator.js'
 
 /**
  * Data Manager class
@@ -143,6 +144,9 @@ export class DataManager {
       row.Mikrofon = row.Mikrofon?.trim()
       row.Kategorie = row.Kategorie?.trim()
     })
+
+    // Inject automatic mic cues
+    normalized = generateSceneMicCues(normalized)
 
     return normalized
   }
