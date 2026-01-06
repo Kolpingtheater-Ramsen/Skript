@@ -194,6 +194,14 @@
   background-color: #6b7280;
 }
 
+.script-line.microphone-auto .tag.tag-mic-on {
+  background-color: #22c55e;
+}
+
+.script-line.microphone-auto .tag.tag-mic-off {
+  background-color: #ef4444;
+}
+
 /* Highlighted line (selected actor) */
 .script-line.highlighted {
   background-color: var(--color-primary-light);

@@ -8,8 +8,10 @@ import subprocess
 import threading
 import time
 import datetime
+import json
+import requests
 from typing import Optional, Dict, Any
-from flask import Flask, request, send_from_directory, render_template
+from flask import Flask, request, send_from_directory, render_template, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from dotenv import load_dotenv
 
@@ -20,9 +22,18 @@ load_dotenv()
 class Config:
     """Application configuration."""
 
-    SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-here")
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    if not SECRET_KEY:
+        print("WARNING: SECRET_KEY not set, using insecure default!")
+        SECRET_KEY = "your-secret-key-here"
+
     PORT = int(os.getenv("PORT", 5000))
-    DIRECTOR_PASSWORD = os.getenv("DIRECTOR_PASSWORD", "your-password-here")
+
+    DIRECTOR_PASSWORD = os.getenv("DIRECTOR_PASSWORD")
+    if not DIRECTOR_PASSWORD:
+        print("WARNING: DIRECTOR_PASSWORD not set, using insecure default!")
+        DIRECTOR_PASSWORD = "your-password-here"
+
     ENABLE_GIT_PULL = os.getenv("ENABLE_DAILY_GIT_PULL", "1") in {"1", "true", "True"}
     GIT_PULL_HOUR = int(os.getenv("GIT_PULL_DAILY_HOUR", "3"))
     GIT_PULL_MINUTE = int(os.getenv("GIT_PULL_DAILY_MINUTE", "0"))
@@ -166,7 +177,7 @@ socketio = SocketIO(
     cors_allowed_origins="*",
     logger=True,
     engineio_logger=True,
-    async_mode='threading'
+    async_mode="threading",
 )
 
 # Initialize managers
@@ -210,6 +221,54 @@ def favicon():
 def serve_plays_json_compat():
     """Compatibility route for root plays.json."""
     return send_from_directory("static/data", "plays.json")
+
+
+@app.route("/api/plays")
+def api_plays():
+    """API endpoint to get list of plays."""
+    try:
+        with open("static/data/plays.json", "r", encoding="utf-8") as f:
+            plays_data = json.load(f)
+        plays_list = [
+            {"id": play_id, "name": play_info.get("name", play_id)}
+            for play_id, play_info in plays_data.items()
+        ]
+        return jsonify(plays_list)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/script/<play_id>")
+def api_script(play_id):
+    """API endpoint to get script data for a play."""
+    import csv
+    from io import StringIO
+
+    try:
+        with open("static/data/plays.json", "r", encoding="utf-8") as f:
+            plays_data = json.load(f)
+
+        if play_id not in plays_data:
+            return jsonify({"error": "Play not found"}), 404
+
+        sheet_url = plays_data[play_id].get("sheet")
+        if not sheet_url:
+            return jsonify({"error": "No sheet URL configured"}), 400
+
+        # Fetch CSV from Google Sheets
+        response = requests.get(sheet_url, timeout=30)
+        response.raise_for_status()
+
+        # Parse CSV
+        csv_content = response.text
+        reader = csv.DictReader(StringIO(csv_content))
+        data = list(reader)
+
+        return jsonify(data)
+    except requests.RequestException as e:
+        return jsonify({"error": f"Failed to fetch script: {str(e)}"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/static/<path:path>")

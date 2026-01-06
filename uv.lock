@@ -272,15 +272,15 @@ wheels = [
 
 [[package]]
 name = "eventlet"
-version = "0.38.2"
+version = "0.40.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dnspython" },
     { name = "greenlet" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a6/4e/f974cc85b8d19b31176e0cca90e1650156f385c9c294a96fc42846ca75e9/eventlet-0.38.2.tar.gz", hash = "sha256:6a46823af1dca7d29cf04c0d680365805435473c3acbffc176765c7f8787edac", size = 561526, upload-time = "2024-12-13T18:03:22.777Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ce/4f/1e5227b23aa77d9ea05056b98cf0bf187cca994991060245002b640f9830/eventlet-0.40.3.tar.gz", hash = "sha256:290852db0065d78cec17a821b78c8a51cafb820a792796a354592ae4d5fceeb0", size = 565741, upload-time = "2025-08-27T09:56:16.085Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/07/00feb2c708d71796e190a3051a0d530a4922bfb6b346aa8302725840698c/eventlet-0.38.2-py3-none-any.whl", hash = "sha256:4a2e3cbc53917c8f39074ccf689501168563d3a4df59e9cddd5e9d3b7f85c599", size = 363192, upload-time = "2024-12-13T18:03:19.116Z" },
+    { url = "https://files.pythonhosted.org/packages/6e/b4/981362608131dc4ee8de9fdca6a38ef19e3da66ab6a13937bd158882db91/eventlet-0.40.3-py3-none-any.whl", hash = "sha256:e681cae6ee956cfb066a966b5c0541e734cc14879bda6058024104790595ac9d", size = 364333, upload-time = "2025-08-27T09:56:10.774Z" },
 ]
 
 [[package]]
@@ -1002,7 +1002,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "edge-tts", specifier = ">=7.2.7" },
-    { name = "eventlet", specifier = "==0.38.2" },
+    { name = "eventlet", specifier = "==0.40.3" },
     { name = "flask", specifier = "==3.1.2" },
     { name = "flask-socketio", specifier = "==5.5.1" },
     { name = "gevent-websocket", specifier = "==0.10.1" },

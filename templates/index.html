@@ -46,29 +46,100 @@
     // Register Service Worker (disabled on localhost/127.0.0.1)
     const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
     if ('serviceWorker' in navigator && !isLocalhost) {
+      let refreshing = false;
+
+      // Reload page when new SW takes control
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      });
+
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
           .then((registration) => {
-            console.log('ServiceWorker registration successful')
+            console.log('[SW] Registration successful');
+
+            // Check for updates immediately
+            registration.update();
+
+            // Check for updates every 5 minutes
+            setInterval(() => {
+              registration.update();
+            }, 5 * 60 * 1000);
+
+            // Handle waiting service worker (new version available)
+            const showUpdateToast = () => {
+              const toast = document.getElementById('update-toast');
+              if (toast) {
+                toast.classList.add('show');
+                // Store the waiting SW so we can tell it to skip waiting
+                toast.dataset.hasWaitingSw = 'true';
+              }
+            };
+
+            // If there's already a waiting SW
+            if (registration.waiting) {
+              showUpdateToast();
+            }
+
+            // Listen for new SW installing
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              console.log('[SW] Update found, installing...');
+
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New SW is installed but waiting
+                  console.log('[SW] New version installed, waiting to activate');
+                  showUpdateToast();
+                }
+              });
+            });
           })
           .catch((err) => {
-            console.log('ServiceWorker registration failed: ', err)
-          })
-      })
+            console.log('[SW] Registration failed:', err);
+          });
+      });
 
       // Listen for messages from service worker
       navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data.type === 'CONTENT_UPDATED') {
-          const toast = document.getElementById('update-toast')
-          if (toast) {
-            toast.classList.add('show')
+        if (event.data.type === 'SW_ACTIVATED') {
+          console.log('[SW] Activated version:', event.data.version);
+          updateVersionDisplay(event.data.version);
+        }
+        if (event.data.type === 'VERSION') {
+          updateVersionDisplay(event.data.version);
+        }
+      });
+
+      // Request version from SW
+      function requestVersion() {
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage('GET_VERSION');
+        }
+      }
+
+      // Update version display in settings
+      function updateVersionDisplay(version) {
+        const el = document.getElementById('app-version');
+        if (el && version) {
+          // Convert timestamp to readable date
+          const ts = parseInt(version, 10);
+          if (!isNaN(ts)) {
+            const date = new Date(ts * 1000);
+            el.textContent = date.toLocaleDateString('de-DE') + ' ' + date.toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
           } else {
-            if (confirm('Eine neue Version ist verfügbar. Möchten Sie die Seite neu laden?')) {
-              window.location.reload()
-            }
+            el.textContent = version;
           }
         }
-      })
+      }
+
+      // Request version when SW is ready
+      navigator.serviceWorker.ready.then(() => {
+        requestVersion();
+      });
     }
 
     // Installation prompt handling
@@ -329,6 +400,9 @@
         <div class="settings-section-title">🔗 Schnellzugriff</div>
 
         <div class="quick-links">
+          <a id="stats-link" href="/stats.html" class="button">
+            📊 Statistiken
+          </a>
           <a id="suggestor-link" href="/suggestor.html" class="button">
             🎲 Rollenvorschläge für die Probe
           </a>
@@ -377,6 +451,9 @@
         <div class="settings-description" style="font-size: 0.85em; color: var(--color-text-muted); margin-top: 8px;">
           Löscht alle lokal gespeicherten Skripte und Einstellungen.
         </div>
+        <div class="settings-description" style="font-size: 0.75em; color: var(--color-text-muted); margin-top: 12px; font-family: monospace;">
+          Version: <span id="app-version">—</span>
+        </div>
       </div>
     </div>
 
@@ -393,7 +470,19 @@
   <!-- Update Toast -->
   <div id="update-toast" class="toast" role="status" aria-live="polite">
     <span>🔄 Neue Version verfügbar</span>
-    <button type="button" class="toast-action" onclick="window.location.reload()">Neu laden</button>
+    <button type="button" class="toast-action" onclick="
+      if (navigator.serviceWorker.controller) {
+        navigator.serviceWorker.getRegistration().then(reg => {
+          if (reg && reg.waiting) {
+            reg.waiting.postMessage('SKIP_WAITING');
+          } else {
+            window.location.reload();
+          }
+        });
+      } else {
+        window.location.reload();
+      }
+    ">Neu laden</button>
     <button type="button" class="toast-close" onclick="this.parentElement.classList.remove('show')"
       aria-label="Schließen">×</button>
   </div>

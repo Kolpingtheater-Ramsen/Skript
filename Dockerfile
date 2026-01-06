@@ -25,6 +25,9 @@ RUN pip install --no-cache-dir \
 # Copy app code
 COPY . .
 
+# Inject build timestamp into service worker for cache versioning
+RUN sed -i "s/BUILD_TIMESTAMP_PLACEHOLDER/$(date +%s)/" sw.js
+
 # Expose port
 EXPOSE 5000
 

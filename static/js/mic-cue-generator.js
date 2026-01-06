@@ -149,6 +149,7 @@ function createMicCueRow(scene, actors, type) {
     Mikrofon: '',
     'Text/Anweisung': text,
     isAutoMic: true,
+    micCueType: type,
   }
 }
 
