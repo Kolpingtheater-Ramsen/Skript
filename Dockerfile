@@ -1,35 +1,45 @@
-FROM python:3.12-slim
+# Build stage for Next.js
+FROM node:20-alpine AS builder
+
+# Enable corepack for pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# Install git for git pull feature
-RUN apt-get update && apt-get install -y --no-install-recommends git && \
-    rm -rf /var/lib/apt/lists/*
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
 
-# Copy requirements first for caching
-COPY requirements.txt pyproject.toml ./
+# Install dependencies
+RUN pnpm install --frozen-lockfile
 
-# Install dependencies using pip (from pyproject.toml deps)
-RUN pip install --no-cache-dir \
-    flask==3.1.2 \
-    flask-socketio==5.5.1 \
-    python-dotenv==1.2.1 \
-    eventlet==0.40.3 \
-    python-engineio==4.12.3 \
-    python-socketio==5.15.1 \
-    edge-tts>=7.2.7 \
-    gevent-websocket==0.10.1 \
-    pandas>=2.3.3 \
-    requests>=2.32.5
-
-# Copy app code
+# Copy source code
 COPY . .
 
-# Inject build timestamp into service worker for cache versioning
-RUN sed -i "s/BUILD_TIMESTAMP_PLACEHOLDER/$(date +%s)/" sw.js
+# Build the Next.js app
+RUN pnpm run build
 
-# Expose port
-EXPOSE 5000
+# Production stage
+FROM node:20-alpine AS runner
 
-# Run the app
-CMD ["python", "app.py"]
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy built files
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+CMD ["node", "server.js"]
