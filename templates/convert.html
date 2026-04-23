@@ -164,6 +164,7 @@
     <h1>Theaterstück Parser</h1>
     <div class="input-area">
       <textarea id="scriptInput" placeholder="Fügen Sie hier Ihr Skript ein..."></textarea>
+      <input type="file" id="textFileInput" accept=".txt,.text" />
       <button onclick="parseInputScript()">Skript analysieren</button>
       <button onclick="downloadCSV()">Als CSV herunterladen</button>
     </div>
@@ -328,6 +329,172 @@
       link.download = 'theaterstück.csv'
       link.click()
     }
+
+    const CREEPSHOW_ROLES = [
+      ['GRAF', 'Louis'], ['CLARA', 'Theresa'], ['LUCY', 'Elena'], ['EMIL', 'Niko'],
+      ['WILSON', 'Sebbi'], ['DRUSILLA', 'Carina'], ['VIKTOR', 'Jonas'], ['MOTTE', 'Jule'],
+      ['FIONA', 'Lina R.'], ['FELIA', 'Nela'], ['MIA', 'Sophie'], ['ADRIAN', 'Yunus'],
+      ['HEIDELTRAUT', 'Fernanda'], ['ISET', 'Nele'], ['PORTRAIT 1', 'Nora'],
+      ['PORTRAIT 2', 'Lina K.'], ['JACQUES', 'Tobi'], ['ENSEMBLE 1', 'Julian'],
+      ['ENSEMBLE 2', 'Max H.'], ['ENSEMBLE 3', 'Fynn'], ['ENSEMBLE 4', 'Jakob'],
+      ['BRUNO', 'Jakob'], ['ENSEMBLE 5', 'Max F.'], ['ENSEMBLE 6', 'Raphael'],
+      ['DIENER 2', 'Raphael'], ['ENSEMBLE 7', 'Maria'], ['ENSEMBLE 8', 'Lena'],
+      ['ENSEMBLE 9', 'Vanessa'], ['ENSEMBLE 10', 'Hendrik'], ['KARL', 'Hendrik'],
+      ['ENSEMBLE 11', 'Till'], ['SCHNIEBLI', 'Till'], ['DIENER 4', 'Till'],
+      ['ENSEMBLE 12', 'Marcella'], ['SUZIE', 'Marcella'], ['ENSEMBLE 13', 'Logge'],
+      ['BOTE', 'Logge'], ['DIENER 3', 'Logge'],
+    ]
+
+    const PDF_SPEAKERS = [
+      ...new Set([...CREEPSHOW_ROLES.map(([role]) => role), 'DIENER 1', 'DIENER', 'BEDIENSTETE']),
+    ].sort((a, b) => b.length - a.length)
+
+    function cleanText(value) {
+      return (value || '').replace(/\s+/g, ' ').trim()
+    }
+
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    }
+
+    function createParsedRow(scene, category, character, microphone, text) {
+      return {
+        scene: scene || '',
+        category,
+        character: character || '',
+        microphone: microphone || '',
+        text: cleanText(text),
+      }
+    }
+
+    function normalizePdfText(scriptText) {
+      const paragraphs = []
+      let buffer = []
+
+      scriptText
+        .replace(/\r/g, '')
+        .split('\n')
+        .map((line) => line.trim().replace(/\s+/g, ' '))
+        .forEach((line) => {
+          if (!line || /^\d{1,3}$/.test(line) || /^--- PAGE \d+ ---$/i.test(line)) {
+            if (buffer.length) {
+              paragraphs.push(buffer.join(' '))
+              buffer = []
+            }
+            return
+          }
+          buffer.push(line)
+        })
+
+      if (buffer.length) {
+        paragraphs.push(buffer.join(' '))
+      }
+
+      return paragraphs
+    }
+
+    function parsePdfLayoutScript(scriptText) {
+      const parsedData = []
+      let currentScene = ''
+      const tokenRegex = new RegExp(
+        `(?<![\\wÄÖÜäöüß])(SZENE\\s+\\d+)\\s*:|(?<![\\wÄÖÜäöüß])(LIED)\\s*:|(?<![\\wÄÖÜäöüß])(${PDF_SPEAKERS.map(escapeRegExp).join('|')})\\s*:`,
+        'gu'
+      )
+
+      if (/Creepshow|Falkenstein|Drusilla/i.test(scriptText)) {
+        CREEPSHOW_ROLES.forEach(([role, actor]) => {
+          parsedData.push(createParsedRow('', 'Rolle', role, '', actor))
+        })
+      }
+
+      function add(category, text, character = '') {
+        const cleaned = cleanText(text)
+        if (!cleaned) return
+        parsedData.push(createParsedRow(currentScene, category, character, '', cleaned))
+      }
+
+      normalizePdfText(scriptText).forEach((paragraph) => {
+        const text = cleanText(paragraph)
+        if (!text) return
+
+        const matches = [...text.matchAll(tokenRegex)]
+        if (!matches.length) {
+          if (currentScene) add('Anweisung', text)
+          return
+        }
+
+        let position = 0
+        matches.forEach((match, index) => {
+          const before = text.slice(position, match.index)
+          if (before && currentScene) add('Anweisung', before)
+
+          const nextStart = matches[index + 1]?.index ?? text.length
+          const content = text.slice(match.index + match[0].length, nextStart)
+
+          if (match[1]) {
+            currentScene = match[1].match(/\d+/)?.[0] || currentScene
+            parsedData.push(createParsedRow(currentScene, 'Szenenbeginn', '', '', ''))
+            add('Anweisung', content)
+          } else if (match[2]) {
+            add('Einspieler', content)
+          } else if (match[3]) {
+            add('Schauspieler', content, match[3].toUpperCase())
+          }
+
+          position = nextStart
+        })
+
+        if (position < text.length && currentScene) {
+          add('Anweisung', text.slice(position))
+        }
+      })
+
+      return parsedData
+    }
+
+    const legacyParseScript = parseScript
+    parseScript = function (scriptText) {
+      if (/SZENE\s+\d+\s*:|Creepshow|Falkenstein/i.test(scriptText)) {
+        return parsePdfLayoutScript(scriptText)
+      }
+      return legacyParseScript(scriptText)
+    }
+
+    displayScript = function (parsedData) {
+      const tbody = document.getElementById('scriptBody')
+      tbody.innerHTML = ''
+
+      const overview = document.getElementById('overview')
+      const overviewContent = document.getElementById('overviewContent')
+      const scenes = [...new Set(parsedData.map((row) => row.scene).filter(Boolean))]
+      const characters = [...new Set(parsedData.map((row) => row.character).filter(Boolean))]
+
+      if (scenes.length > 0) {
+        overview.style.display = 'block'
+        overviewContent.textContent = `Anzahl der Szenen: ${scenes.length} | Charaktere: ${characters.join(', ')}`
+      }
+
+      parsedData.forEach((row) => {
+        const tr = document.createElement('tr')
+        if (row.category === 'Szenenbeginn') {
+          tr.className = 'scene-header'
+        }
+
+        ;[row.scene, row.category, row.character, row.microphone, row.text].forEach((value) => {
+          const td = document.createElement('td')
+          td.textContent = value || ''
+          tr.appendChild(td)
+        })
+        tbody.appendChild(tr)
+      })
+    }
+
+    document.getElementById('textFileInput').addEventListener('change', async (event) => {
+      const file = event.target.files?.[0]
+      if (!file) return
+      document.getElementById('scriptInput').value = await file.text()
+      parseInputScript()
+    })
   </script>
 </body>
 
