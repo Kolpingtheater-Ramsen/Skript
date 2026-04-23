@@ -9,8 +9,14 @@
  */
 export function smoothScrollToElement(element, offsetVh = 25) {
   if (!element) return
-  element.style.scrollMarginTop = `${offsetVh}vh`
-  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const offsetPx = Math.max(72, Math.round(window.innerHeight * (offsetVh / 100)))
+  const top = window.scrollY + element.getBoundingClientRect().top - offsetPx
+  window.scrollTo({
+    top: Math.max(0, top),
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? 'auto'
+      : 'smooth',
+  })
 }
 
 /**

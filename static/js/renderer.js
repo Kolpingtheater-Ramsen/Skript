@@ -2,8 +2,36 @@
  * Renderer for script content
  */
 
-import { escapeRegExp } from './utils.js'
+import { escapeRegExp, smoothScrollToElement } from './utils.js'
 import { CATEGORIES, STORAGE_KEYS } from './config.js'
+
+function appendHighlightedText(container, text, needle) {
+  container.textContent = ''
+  if (!needle) {
+    container.textContent = text
+    return
+  }
+
+  const lowerText = text.toLowerCase()
+  const lowerNeedle = needle.toLowerCase()
+  let cursor = 0
+  let matchIndex = lowerText.indexOf(lowerNeedle)
+
+  while (matchIndex !== -1) {
+    if (matchIndex > cursor) {
+      container.appendChild(document.createTextNode(text.slice(cursor, matchIndex)))
+    }
+    const strong = document.createElement('b')
+    strong.textContent = text.slice(matchIndex, matchIndex + needle.length)
+    container.appendChild(strong)
+    cursor = matchIndex + needle.length
+    matchIndex = lowerText.indexOf(lowerNeedle, cursor)
+  }
+
+  if (cursor < text.length) {
+    container.appendChild(document.createTextNode(text.slice(cursor)))
+  }
+}
 
 /**
  * Script Renderer class
@@ -132,9 +160,16 @@ export class Renderer {
           a.style.backgroundColor = 'var(--color-primary-light)'
         }
         a.textContent = `Szene ${scene}`
-        a.onclick = () => {
+        a.onclick = (event) => {
+          event.preventDefault()
           // Dispatch event to lock navigation during scroll
           document.dispatchEvent(new CustomEvent('tocNavigation'))
+          smoothScrollToElement(document.getElementById(`scene-${scene}`), 14)
+          history.replaceState(
+            null,
+            '',
+            `${window.location.pathname}${window.location.search}#scene-${scene}`
+          )
           if (window.innerWidth <= 768) {
             // Will be handled by ui-controls
             const event = new CustomEvent('closeSidebar')
@@ -225,7 +260,13 @@ export class Renderer {
       // Extract role name from display string (e.g., "ROLE (ActorName)" -> "ROLE")
       const roleName = actor.split('(')[0].trim().toUpperCase()
       const isSelected = selectedActor && roleName === selectedActor
-      td2.innerHTML = isSelected ? `<b>${actor}</b>` : actor
+      if (isSelected) {
+        const strong = document.createElement('b')
+        strong.textContent = actor
+        td2.appendChild(strong)
+      } else {
+        td2.textContent = actor
+      }
       tr.appendChild(td2)
       table.appendChild(tr)
     })
@@ -594,19 +635,9 @@ export class Renderer {
         settings.selectedActor
         : settings.selectedActor
       try {
-        const boldPattern = new RegExp(
-          `\\b${escapeRegExp(nameToBold)}\\b`,
-          'gi'
-        )
-        textDiv.innerHTML = textDiv.textContent.replace(
-          boldPattern,
-          `<b>${nameToBold}</b>`
-        )
+        appendHighlightedText(textDiv, textDiv.textContent, nameToBold)
       } catch (e) {
-        // If regex fails, fall back to simple replace
-        textDiv.innerHTML = textDiv.textContent
-          .split(nameToBold)
-          .join(`<b>${nameToBold}</b>`)
+        textDiv.textContent = textDiv.textContent
       }
     }
 
@@ -675,6 +706,7 @@ export class Renderer {
         const a = document.createElement('a')
         a.name = `scene-${row.Szene}`
         a.id = `scene-${row.Szene}`
+        a.className = 'scene-anchor'
         container.appendChild(a)
         const szeneTitel = document.createElement('h2')
         szeneTitel.textContent = `🎬 Szene ${row.Szene}`

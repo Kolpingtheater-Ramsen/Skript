@@ -12,6 +12,7 @@ export class NavigationManager {
     this.state = stateManager
     this.isNavigating = false
     this.navigationTimeout = null
+    this.scrollRaf = null
   }
 
   /**
@@ -33,13 +34,12 @@ export class NavigationManager {
    * @returns {string} Current scene number or title
    */
   getCurrentSceneFromScroll() {
-    const scenes = document.querySelectorAll('[name^="scene-"]')
+    const scenes = document.querySelectorAll('.scene-anchor')
     let currentScene = null
 
     for (const scene of scenes) {
       const rect = scene.getBoundingClientRect()
-      if (rect.top <= 100) {
-        // Adjust this value based on your navbar height
+      if (rect.top <= this.getHeaderOffset() + 8) {
         currentScene = scene
       } else {
         break
@@ -68,8 +68,7 @@ export class NavigationManager {
       if (currentScene === 'Kolpingtheater Ramsen - Drehbuch Viewer') {
         currentSceneEl.textContent = 'Kolpingtheater Ramsen - Drehbuch Viewer'
         if (!this.isNavigating) {
-          history.replaceState(null, null, '')
-          window.location.hash = ''
+          history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
         }
         return
       }
@@ -78,7 +77,11 @@ export class NavigationManager {
       if (!this.isNavigating) {
         const currentHash = window.location.hash.replace('#scene-', '')
         if (currentHash !== currentScene) {
-          history.replaceState(null, null, `#scene-${currentScene}`)
+          history.replaceState(
+            null,
+            '',
+            `${window.location.pathname}${window.location.search}#scene-${currentScene}`
+          )
         }
       }
     }
@@ -138,6 +141,7 @@ export class NavigationManager {
       )
 
       // Scroll to the line with ~25% viewport offset
+      this.startNavigationLock()
       smoothScrollToElement(lines[lineIndex], 25)
       this.updateCurrentLineInfo(lineIndex, lines.length)
     }
@@ -208,6 +212,13 @@ export class NavigationManager {
    */
   setupKeyboardNavigation(directorManager) {
     document.addEventListener('keydown', (e) => {
+      if (
+        e.target instanceof HTMLElement &&
+        ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(e.target.tagName)
+      ) {
+        return
+      }
+
       const selectedActor = document.getElementById('actor-select')?.value
       const markedLine = this.state.get('markedLine')
 
@@ -263,9 +274,18 @@ export class NavigationManager {
    */
   setupScrollListener(directorManager) {
     window.addEventListener('scroll', () => {
-      this.updateCurrentScene()
-      this.updateBottomNav()
-      directorManager.updateFabVisibility()
-    })
+      if (this.scrollRaf) return
+      this.scrollRaf = window.requestAnimationFrame(() => {
+        this.updateCurrentScene()
+        this.updateBottomNav()
+        directorManager.updateFabVisibility()
+        this.scrollRaf = null
+      })
+    }, { passive: true })
+  }
+
+  getHeaderOffset() {
+    const nav = document.querySelector('.nav-bar')
+    return nav ? nav.getBoundingClientRect().height : 64
   }
 }

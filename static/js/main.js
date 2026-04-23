@@ -39,11 +39,11 @@ class App {
 
     stateManager.set('playId', playId)
 
-    // Initialize socket connection
-    socketManager.init(playId)
-
-    // Initialize director mode
+    // Initialize director mode before socket connection so offline fallback events are captured.
     this.directorManager.init()
+
+    // Initialize optional socket connection. The app remains usable if this fails.
+    socketManager.init(playId)
 
     // Load plays configuration
     await dataManager.loadPlaysConfig()
@@ -190,6 +190,7 @@ class App {
 
     // Update bottom navigation after rendering
     this.navigation.updateBottomNav()
+    this.navigation.updateCurrentScene()
   }
 
   /**

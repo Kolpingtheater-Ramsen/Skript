@@ -15,6 +15,7 @@ export class DirectorManager {
     this._wasDirector = false
     this._pendingReconnect = false
     this._toastTimeout = null
+    this.localMode = false
   }
 
   /**
@@ -34,17 +35,13 @@ export class DirectorManager {
    */
   _loadCredentials() {
     const name = localStorage.getItem('director_name')
-    const password = localStorage.getItem('director_password')
+    localStorage.removeItem('director_password')
     
     if (name) {
       const nameInput = document.getElementById('name')
       if (nameInput) nameInput.value = name
     }
     
-    if (password) {
-      const passInput = document.getElementById('password')
-      if (passInput) passInput.value = password
-    }
   }
 
   /**
@@ -82,6 +79,12 @@ export class DirectorManager {
       this.state.set('isConnected', false)
       this.reconnectAttempts++
       const statusEl = document.getElementById('director-status')
+      if (this.localMode) {
+        if (statusEl && !this.state.get('isDirector')) {
+          statusEl.textContent = 'Lokaler Marker-Modus'
+        }
+        return
+      }
       if (statusEl) {
         statusEl.textContent = `Director Mode: Offline (Verbindungsfehler - Versuch ${this.reconnectAttempts})`
       }
@@ -89,6 +92,7 @@ export class DirectorManager {
 
     this.socket.on('disconnect', (reason) => {
       this.state.set('isConnected', false)
+      if (this.localMode) return
       const statusEl = document.getElementById('director-status')
       if (statusEl) {
         statusEl.textContent = 'Verbindung unterbrochen – Director Mode Offline'
@@ -129,6 +133,21 @@ export class DirectorManager {
     this.socket.on('directorTakeover', (data) => {
       this._handleDirectorTakeover(data)
     })
+
+    this.socket.on('syncUnavailable', () => {
+      this.enableLocalMode()
+    })
+  }
+
+  enableLocalMode() {
+    if (this.localMode) return
+    this.localMode = true
+    document.body.classList.add('local-director-mode')
+    const statusEl = document.getElementById('director-status')
+    if (statusEl) {
+      statusEl.textContent = 'Lokaler Marker-Modus'
+    }
+    this._showToast('Live-Sync nicht verfuegbar. Marker funktionieren lokal.')
   }
 
   /**
@@ -170,9 +189,9 @@ export class DirectorManager {
 
         if (data.isDirector) {
           document.body.classList.add('is-director')
-          // Save credentials and clear disconnect timestamp
+          // Save director name and clear disconnect timestamp. Do not persist passwords.
           localStorage.setItem('director_name', document.getElementById('name')?.value || '')
-          localStorage.setItem('director_password', document.getElementById('password')?.value || '')
+          localStorage.removeItem('director_password')
           localStorage.removeItem('director_disconnected_at')
           
           if (wasPending) {
@@ -211,9 +230,10 @@ export class DirectorManager {
         // No one is director, try to reclaim
         // We keep _pendingReconnect = true for the next response
         const savedName = localStorage.getItem('director_name')
-        const savedPassword = localStorage.getItem('director_password')
-        if (savedName && savedPassword) {
-          this.socket.setDirector(savedName, savedPassword)
+        if (savedName) {
+          this._showToast('Bitte Director erneut mit Passwort aktivieren.')
+          this._pendingReconnect = false
+          this._wasDirector = false
         } else {
           this._pendingReconnect = false
         }
@@ -278,7 +298,7 @@ export class DirectorManager {
     this.state.set('markedLineIndex', index)
 
     // If we're the director, broadcast the marker
-    if (broadcast && this.state.get('isDirector')) {
+    if (broadcast && this.state.get('isDirector') && !this.localMode) {
       this.socket.setMarker(index)
     }
 
@@ -315,8 +335,10 @@ export class DirectorManager {
     const password = document.getElementById('password')?.value
 
     if (!name || !password) {
-      alert('Bitte Name und Passwort eingeben')
-      return
+      if (!this.localMode && this.socket.isOnline) {
+        alert('Bitte Name und Passwort eingeben')
+        return
+      }
     }
 
     if (this.state.get('isDirector')) {
@@ -325,7 +347,19 @@ export class DirectorManager {
       this.state.set('isDirector', false)
       this._wasDirector = false
       localStorage.removeItem('director_disconnected_at')
+      if (this.localMode || !this.socket.isOnline) {
+        this.handleDirectorChange(null, false)
+        this.clearMarkedLine()
+      }
     } else {
+      if (this.localMode || !this.socket.isOnline) {
+        this.localMode = true
+        document.body.classList.add('local-director-mode')
+        localStorage.setItem('director_name', name || 'Lokal')
+        this.handleDirectorChange(name || 'Lokal', true)
+        this._showToast('Lokaler Marker-Modus aktiv.')
+        return
+      }
       // Attempt to become director
       this.socket.setDirector(name, password)
     }
@@ -368,7 +402,9 @@ export class DirectorManager {
 
     const statusEl = document.getElementById('director-status')
     if (statusEl) {
-      statusEl.textContent = `Aktueller Director: ${newDirector || 'Niemand'}`
+      statusEl.textContent = this.localMode && newDirector
+        ? `Lokaler Marker: ${newDirector}`
+        : `Aktueller Director: ${newDirector || 'Niemand'}`
     }
   }
 

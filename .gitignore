@@ -35,3 +35,6 @@ ENV/
 *.swp
 *.swo
 
+# Local runtime logs
+*.log
+

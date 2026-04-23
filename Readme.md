@@ -108,6 +108,16 @@ python app.py
 
 Standardmäßig läuft die App unter `http://localhost:5000`.
 
+### Statische Nutzung ohne Backend
+
+Der Haupt-Viewer ist jetzt auch als statische PWA nutzbar. Dafür reicht ein beliebiger Static Host im Projektwurzelverzeichnis, z. B.:
+
+```bash
+python -m http.server 8765
+```
+
+Dann `http://localhost:8765/` öffnen. Der Viewer lädt `static/data/plays.json` und die Google-Sheet-CSV direkt im Browser. Ohne Socket.IO-Backend schaltet Director Mode automatisch in einen lokalen Marker-Modus; Live-Sync zwischen Geräten bleibt optional über den Flask/Socket.IO-Server verfügbar.
+
 ## Datenquelle
 
 - Die Inhalte werden aus einer Google-Sheet-CSV geladen (siehe `script.js`).

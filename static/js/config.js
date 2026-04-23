@@ -6,10 +6,11 @@ const CONFIG = {
   SOCKET_URL: window.location.origin,
   SOCKET_OPTIONS: {
     transports: ['websocket'],
-    reconnectionAttempts: Infinity,
+    reconnectionAttempts: 5,
     reconnectionDelay: 1000,
-    timeout: 20000,
+    timeout: 5000,
   },
+  SYNC_AVAILABLE_TIMEOUT: 2500,
   CACHE_DURATION: 5 * 60 * 1000, // 5 minutes
   DEFAULT_PLAY_ID: 'default',
   DEFAULT_SHEET_URL:

@@ -439,6 +439,17 @@ def handle_set_marker(data: Dict[str, Any]):
     emit("marker_update", data, room=play_id, skip_sid=request.sid)
 
 
+@socketio.on("clear_marker")
+def handle_clear_marker():
+    """Handle marker clear request (director only)."""
+    play_id = director_manager.get_play_for_sid(request.sid)
+
+    if not director_manager.is_director(play_id, request.sid):
+        return
+
+    emit("marker_clear", room=play_id, skip_sid=request.sid)
+
+
 if __name__ == "__main__":
     # Start git pull scheduler (only in production or main process)
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not config.DEBUG:

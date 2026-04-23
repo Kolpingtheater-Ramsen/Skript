@@ -4,6 +4,7 @@
 
 import { CONFIG, CATEGORIES } from './config.js'
 import { generateSceneMicCues } from './mic-cue-generator.js'
+import { assetUrl, fetchFirst } from './runtime.js'
 
 /**
  * Data Manager class
@@ -20,10 +21,12 @@ export class DataManager {
    */
   async loadPlaysConfig() {
     try {
-      const res = await fetch('/static/data/plays.json')
-      if (res.ok) {
-        this.playsConfig = await res.json()
-      }
+      const res = await fetchFirst([
+        assetUrl('static/data/plays.json'),
+        '/static/data/plays.json',
+        'plays.json',
+      ])
+      this.playsConfig = await res.json()
     } catch (e) {
       console.warn('Failed to load plays.json:', e)
     }
@@ -79,7 +82,7 @@ export class DataManager {
       }
 
       const sheetUrl = this.getSheetUrl(playId)
-      const response = await fetch(sheetUrl)
+      const response = await fetch(sheetUrl, { cache: 'no-cache' })
 
       if (!response.ok) {
         // If fetch fails and we have cached data, use it regardless of age
@@ -91,7 +94,11 @@ export class DataManager {
       }
 
       const csvText = await response.text()
-      const data = Papa.parse(csvText, { header: true }).data
+      const parsed = Papa.parse(csvText, { header: true, skipEmptyLines: true })
+      if (parsed.errors && parsed.errors.length > 0) {
+        console.warn('CSV parse warnings:', parsed.errors)
+      }
+      const data = parsed.data
 
       // Only update cache if we got valid data
       if (data && data.length > 0) {

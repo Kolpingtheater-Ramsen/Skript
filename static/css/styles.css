@@ -173,3 +173,118 @@ th {
   color: var(--color-text-muted);
   margin-top: var(--space-2);
 }
+
+/* Static-first refresh and scroll hardening */
+html {
+  scroll-padding-top: 88px;
+}
+
+body {
+  background:
+    linear-gradient(180deg, rgba(255, 106, 0, 0.06), transparent 220px),
+    var(--color-background);
+}
+
+.nav-bar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.script-container {
+  max-width: 1040px;
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-8);
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+}
+
+.scene-anchor {
+  display: block;
+  position: relative;
+  top: -84px;
+  visibility: hidden;
+}
+
+.script-line {
+  scroll-margin-top: 28vh;
+}
+
+.script-line > div:not(.tag):not(.actor-name):not(.line-note):not(.line-note-edit) {
+  max-width: 74ch;
+}
+
+.script-line.marked-line {
+  box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.35);
+}
+
+.bottom-nav {
+  min-height: 64px;
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -8px 24px rgba(17, 24, 39, 0.08);
+}
+
+.bottom-nav .btn {
+  min-width: 112px;
+}
+
+.bottom-nav .nav-info {
+  text-align: center;
+  min-width: 120px;
+}
+
+.local-director-mode .director-section {
+  border-color: var(--color-warning);
+  background-color: var(--color-warning-light);
+}
+
+.local-director-mode #director-status {
+  color: #92400e;
+  font-weight: var(--font-weight-semibold);
+}
+
+.local-director-mode.is-director::before {
+  border-color: var(--color-warning);
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  .script-container {
+    margin-top: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .script-line {
+    margin: var(--space-2) 0;
+    border-radius: var(--radius-md);
+  }
+
+  .bottom-nav {
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+
+  .bottom-nav .btn {
+    min-width: 88px;
+    padding-inline: var(--space-3);
+  }
+
+  .bottom-nav .nav-info {
+    min-width: 84px;
+    font-size: var(--font-size-xs);
+  }
+
+  body.has-bottom-nav {
+    padding-bottom: 78px;
+  }
+}

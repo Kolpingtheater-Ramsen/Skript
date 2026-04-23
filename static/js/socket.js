@@ -11,6 +11,10 @@ export class SocketManager {
   constructor() {
     this.socket = null
     this.playId = null
+    this.isOnline = false
+    this.syncAvailable = false
+    this.syncUnavailableEmitted = false
+    this.offlineTimer = null
     this.callbacks = {
       connect: [],
       disconnect: [],
@@ -20,6 +24,7 @@ export class SocketManager {
       setDirector: [],
       unsetDirector: [],
       directorTakeover: [],
+      syncUnavailable: [],
     }
   }
 
@@ -33,9 +38,23 @@ export class SocketManager {
     }
 
     this.playId = playId
+    this.isOnline = false
+    this.syncAvailable = false
+    this.syncUnavailableEmitted = false
+
+    if (typeof window.io !== 'function') {
+      this._markSyncUnavailable('Socket.IO client unavailable')
+      return
+    }
+
     this.socket = io(CONFIG.SOCKET_URL, CONFIG.SOCKET_OPTIONS)
 
     this._setupEventHandlers()
+    this.offlineTimer = window.setTimeout(() => {
+      if (!this.syncAvailable) {
+        this._markSyncUnavailable('Sync server unavailable')
+      }
+    }, CONFIG.SYNC_AVAILABLE_TIMEOUT)
   }
 
   /**
@@ -45,6 +64,12 @@ export class SocketManager {
   _setupEventHandlers() {
     this.socket.on('connect', () => {
       console.log('Connected to server')
+      this.isOnline = true
+      this.syncAvailable = true
+      if (this.offlineTimer) {
+        clearTimeout(this.offlineTimer)
+        this.offlineTimer = null
+      }
       this._trigger('connect')
       
       // Join play room
@@ -56,12 +81,17 @@ export class SocketManager {
     })
 
     this.socket.on('connect_error', (error) => {
-      console.error('Connection error:', error)
+      console.warn('Connection error:', error)
+      this.isOnline = false
+      if (!this.syncAvailable) {
+        this._markSyncUnavailable('Unable to reach sync server', error)
+      }
       this._trigger('connectError', error)
     })
 
     this.socket.on('disconnect', (reason) => {
       console.log('Disconnected from server:', reason)
+      this.isOnline = false
       this._trigger('disconnect', reason)
     })
 
@@ -121,7 +151,7 @@ export class SocketManager {
    * @param {Object} data - Data to send
    */
   emit(event, data) {
-    if (!this.socket) {
+    if (!this.socket || !this.isOnline) {
       console.error('Socket not initialized')
       return
     }
@@ -173,6 +203,23 @@ export class SocketManager {
       this.socket.disconnect()
       this.socket = null
     }
+    if (this.offlineTimer) {
+      clearTimeout(this.offlineTimer)
+      this.offlineTimer = null
+    }
+    this.isOnline = false
+  }
+
+  _markSyncUnavailable(reason, error = null) {
+    if (this.syncAvailable || this.syncUnavailableEmitted) return
+    this.syncUnavailableEmitted = true
+    this.syncAvailable = false
+    this.isOnline = false
+    if (this.socket) {
+      this.socket.disconnect()
+    }
+    console.warn(reason, error || '')
+    this._trigger('syncUnavailable', { reason, error })
   }
 }
 
