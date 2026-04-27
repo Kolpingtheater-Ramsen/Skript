@@ -1,14 +1,76 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rollenvorschlaege</title>
-  <script>
-    location.replace('templates/suggestor.html' + location.search + location.hash)
-  </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rollenvorschläge - Kolpingtheater Ramsen</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="/static/css/suggestor.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
+
 <body>
-  <p><a href="templates/suggestor.html">Rollenvorschlaege oeffnen</a></p>
+    <nav>
+        <a href="/">← Zurück zum Drehbuch</a>
+        <span id="current-scene">🎲 Rollenvorschläge</span>
+        <div></div>
+    </nav>
+
+    <main class="container">
+        <header class="suggestor-hero">
+            <div>
+                <h1>Rollenvorschläge für die Probe</h1>
+                <p>Wähle die anwesenden Rollen aus und sieh sofort, welche Szenen komplett spielbar sind, wer fehlt und wie viel Text betroffen ist.</p>
+            </div>
+            <div class="hero-badge">sommerstueck2026</div>
+        </header>
+
+        <section class="summary" aria-label="Übersicht">
+            <div class="summary-card"><span>Anwesend</span><strong id="present-count">0</strong><small>von <span id="total-actors">0</span> Rollen</small></div>
+            <div class="summary-card"><span>Spielbar</span><strong id="playable-scenes">0</strong><small>von <span id="total-scenes">0</span> Szenen</small></div>
+            <div class="summary-card"><span>Auswahl</span><strong id="actor-filter-count">0</strong><small>im Rollenfilter</small></div>
+            <div class="summary-card"><span>Filter</span><strong id="hidden-scenes">–</strong><small>ausgeblendete Szenen</small></div>
+        </section>
+
+        <section class="control-panel" aria-label="Steuerung">
+            <input id="actor-search" class="search-box" type="search" placeholder="Rolle oder Schauspieler suchen…" />
+            <select id="sort-scenes" class="sort-select" aria-label="Szenen sortieren">
+                <option value="best">Beste Vorschläge zuerst</option>
+                <option value="script">Skript-Reihenfolge</option>
+                <option value="words">Textstärkste Szenen zuerst</option>
+            </select>
+            <label class="toggle-line"><input id="playable-only" type="checkbox" /> nur spielbare Szenen</label>
+            <button class="select-all-btn" id="toggle-all-btn">☐ Alle abwählen</button>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <div>
+                    <h2>Anwesende Rollen</h2>
+                    <p>Tippe Rollen an, um die Vorschläge sofort neu zu berechnen.</p>
+                </div>
+            </div>
+            <div id="actor-list" class="actor-list"></div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <div>
+                    <h2>Szenen-Vorschläge</h2>
+                    <p>Grün ist komplett spielbar; bei offenen Szenen siehst du die fehlenden Rollen direkt.</p>
+                </div>
+            </div>
+            <div id="suggestions" class="suggestions"></div>
+        </section>
+    </main>
+
+    <script type="module" src="/static/js/suggestor.js"></script>
 </body>
+
 </html>
