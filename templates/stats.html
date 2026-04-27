@@ -44,10 +44,13 @@
     .insight-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:var(--space-3); }
     .insight { border:1px solid var(--color-border); border-radius:16px; padding:var(--space-3); background:rgba(255,255,255,.03); }
     .insight b { display:block; font-size:1.05rem; margin-top:.25rem; }
-    .table-wrap { overflow-x:auto; }
-    .stats-table { width:100%; border-collapse:collapse; min-width:760px; }
+    .table-wrap { overflow:auto; max-height:70vh; border:1px solid var(--color-border); border-radius:16px; }
+    .stats-table { width:100%; border-collapse:separate; border-spacing:0; min-width:760px; }
     .stats-table th, .stats-table td { padding:.85rem; border-bottom:1px solid var(--color-border); text-align:left; }
-    .stats-table th { color:var(--color-text-secondary); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
+    .stats-table th { position:sticky; top:0; z-index:2; background:var(--color-surface); color:var(--color-text-secondary); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
+    .stats-table td:first-child, .stats-table th:first-child { position:sticky; left:0; z-index:1; background:var(--color-surface); }
+    .stats-table th:first-child { z-index:3; }
+    .stats-table tbody tr:last-child td { border-bottom:0; }
     .stats-table td.num, .stats-table th.num { text-align:right; font-variant-numeric:tabular-nums; }
     .bar-track { height:9px; background:rgba(127,127,127,.18); border-radius:99px; overflow:hidden; min-width:110px; }
     .bar-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--stats-accent),#f59e0b); }
@@ -155,13 +158,14 @@
       });
       const totalWords=Object.values(actors).reduce((s,a)=>s+a.words,0);
       const actorArray=Object.values(actors).map(a=>({ ...a, scenes:a.scenes.size, density:ratio(a.words,a.occurrences), percent:totalWords? a.words/totalWords*100:0 })).sort((a,b)=>b.words-a.words);
-      const sceneArray=Object.values(scenes).map(s=>{ const lead=Object.entries(s.actorWords).sort((a,b)=>b[1]-a[1])[0]; return { ...s, actorCount:Object.keys(s.actors).length, lead:lead?lead[0]:'–' }; }).filter(s=>s.occurrences>0).sort((a,b)=>b.words-a.words);
-      const matrix=actorArray.slice(0,12).map(a=>({ actor:a.name, scenes:sceneArray.slice(0,12).map(s=>({ scene:s.name, words:s.actorWords[a.name]||0 })) }));
-      return { actors:actorArray, scenes:sceneArray, matrix, totalActors:actorArray.length, totalWords, totalScenes:sceneArray.length, avgWords:actorArray.length?Math.round(totalWords/actorArray.length):0 };
+      const scenesInOrder=Object.values(scenes).map(s=>{ const lead=Object.entries(s.actorWords).sort((a,b)=>b[1]-a[1])[0]; return { ...s, actorCount:Object.keys(s.actors).length, lead:lead?lead[0]:'–' }; }).filter(s=>s.occurrences>0).sort((a,b)=>a.index-b.index);
+      const scenesByWords=[...scenesInOrder].sort((a,b)=>b.words-a.words);
+      const matrix=actorArray.slice(0,12).map(a=>({ actor:a.name, scenes:scenesInOrder.map(s=>({ scene:s.name, words:s.actorWords[a.name]||0 })) }));
+      return { actors:actorArray, scenes:scenesInOrder, scenesByWords, matrix, totalActors:actorArray.length, totalWords, totalScenes:scenesInOrder.length, avgWords:actorArray.length?Math.round(totalWords/actorArray.length):0 };
     }
     function sortedActors(){ const a=[...currentStats.actors]; if(sortMode==='occurrences') return a.sort((x,y)=>y.occurrences-x.occurrences); if(sortMode==='density') return a.sort((x,y)=>y.density-x.density); return a.sort((x,y)=>y.words-x.words); }
     function displayStats(stats){
-      const top=stats.actors[0], quiet=[...stats.actors].sort((a,b)=>a.words-b.words)[0], scene=stats.scenes[0], cast=[...stats.scenes].sort((a,b)=>b.actorCount-a.actorCount)[0];
+      const top=stats.actors[0], quiet=[...stats.actors].sort((a,b)=>a.words-b.words)[0], scene=stats.scenesByWords[0], cast=[...stats.scenes].sort((a,b)=>b.actorCount-a.actorCount)[0];
       const med=stats.actors.length ? [...stats.actors].map(a=>a.words).sort((a,b)=>a-b)[Math.floor(stats.actors.length/2)] : 0;
       const top3=stats.totalWords ? stats.actors.slice(0,3).reduce((s,a)=>s+a.words,0)/stats.totalWords*100 : 0;
       document.getElementById('total-actors').textContent=stats.totalActors; document.getElementById('total-words').textContent=nf.format(stats.totalWords); document.getElementById('total-scenes').textContent=stats.totalScenes; document.getElementById('avg-words').textContent=nf.format(stats.avgWords);
@@ -175,8 +179,8 @@
       destroy('donut'); charts.donut=new ApexCharts(document.getElementById('words-chart'),{series:top.slice(0,8).map(a=>a.words),labels:top.slice(0,8).map(a=>a.name),chart:{type:'donut',height:390,foreColor:t.foreColor,background:'transparent'},theme:{mode:t.mode},colors,legend:{position:'bottom'},plotOptions:{pie:{donut:{size:'62%',labels:{show:true,total:{show:true,label:'Gesamt',formatter:()=>nf.format(stats.totalWords)}}}}},tooltip:{y:{formatter:(v,o)=>`${nf.format(v)} Wörter (${pct(top[o.dataPointIndex]?.percent)})`}}}); charts.donut.render();
       destroy('combo'); charts.combo=new ApexCharts(document.getElementById('combo-chart'),{series:[{name:'Wörter',type:'column',data:top.map(a=>a.words)},{name:'Auftritte',type:'line',data:top.map(a=>a.occurrences)}],chart:{height:390,type:'line',foreColor:t.foreColor,background:'transparent',toolbar:{show:false}},theme:{mode:t.mode},colors:['#ff6a00','#3b82f6'],stroke:{width:[0,3],curve:'smooth'},xaxis:{categories:top.map(a=>a.name),labels:{rotate:-35}},grid:{borderColor:t.grid},yaxis:[{title:{text:'Wörter'}},{opposite:true,title:{text:'Auftritte'}}],tooltip:{shared:true}}); charts.combo.render();
       const scenes=[...stats.scenes].sort((a,b)=>a.index-b.index).slice(0,18); destroy('scene'); charts.scene=new ApexCharts(document.getElementById('scene-chart'),{series:[{name:'Wörter',type:'column',data:scenes.map(s=>s.words)},{name:'Rollen',type:'line',data:scenes.map(s=>s.actorCount)}],chart:{height:390,type:'line',foreColor:t.foreColor,background:'transparent',toolbar:{show:false}},theme:{mode:t.mode},colors:['#8b5cf6','#10b981'],stroke:{width:[0,3]},xaxis:{categories:scenes.map(s=>s.name),labels:{rotate:-40}},grid:{borderColor:t.grid},yaxis:[{title:{text:'Wörter'}},{opposite:true,title:{text:'Rollen'}}]}); charts.scene.render(); }
-    function renderScenes(stats){ document.getElementById('scene-cards').innerHTML=stats.scenes.slice(0,8).map(s=>`<div class="scene-card"><h4>${s.name}</h4><div class="meta"><span class="pill">${nf.format(s.words)} Wörter</span><span class="pill">${s.occurrences} Einsätze</span><span class="pill">${s.actorCount} Rollen</span><span class="pill">Lead: ${s.lead}</span></div></div>`).join(''); }
-    function renderHeatmap(stats){ const scenes=stats.scenes.slice(0,12); const max=Math.max(1,...stats.matrix.flatMap(r=>r.scenes.map(c=>c.words))); document.getElementById('heatmap').innerHTML=`<table><thead><tr><th>Rolle</th>${scenes.map(s=>`<th>${s.name}</th>`).join('')}</tr></thead><tbody>${stats.matrix.map(r=>`<tr><td><strong>${r.actor}</strong></td>${r.scenes.map(c=>{const o=c.words/max;return `<td><span class="heat-cell" style="background:rgba(255,106,0,${Math.max(.08,o)})">${c.words?nf.format(c.words):''}</span></td>`}).join('')}</tr>`).join('')}</tbody></table>`; }
+    function renderScenes(stats){ document.getElementById('scene-cards').innerHTML=stats.scenes.map(s=>`<div class="scene-card"><h4>${s.index}. ${s.name}</h4><div class="meta"><span class="pill">${nf.format(s.words)} Wörter</span><span class="pill">${s.occurrences} Einsätze</span><span class="pill">${s.actorCount} Rollen</span><span class="pill">Lead: ${s.lead}</span></div></div>`).join(''); }
+    function renderHeatmap(stats){ const scenes=stats.scenes; const max=Math.max(1,...stats.matrix.flatMap(r=>r.scenes.map(c=>c.words))); document.getElementById('heatmap').innerHTML=`<table><thead><tr><th>Rolle</th>${scenes.map(s=>`<th>${s.index}. ${s.name}</th>`).join('')}</tr></thead><tbody>${stats.matrix.map(r=>`<tr><td><strong>${r.actor}</strong></td>${r.scenes.map(c=>{const o=c.words/max;return `<td><span class="heat-cell" style="background:rgba(255,106,0,${Math.max(.08,o)})">${c.words?nf.format(c.words):''}</span></td>`}).join('')}</tr>`).join('')}</tbody></table>`; }
     loadPlays();
   </script>
 </body>
