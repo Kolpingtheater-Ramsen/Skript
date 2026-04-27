@@ -67,7 +67,10 @@
     .heatmap table { border-collapse:collapse; width:max-content; min-width:100%; }
     .heatmap th, .heatmap td { border-bottom:1px solid var(--color-border); border-right:1px solid var(--color-border); padding:.45rem; font-size:.78rem; text-align:center; min-width:54px; }
     .heatmap th:first-child, .heatmap td:first-child { position:sticky; left:0; background:var(--color-surface); text-align:left; min-width:140px; z-index:1; }
-    .heat-cell { color:white; font-weight:700; border-radius:8px; display:block; padding:.35rem .2rem; }
+    .heat-cell { border-radius:8px; display:block; padding:.35rem .2rem; min-height:1.65rem; font-weight:700; }
+    .heat-cell.zero { background:transparent; color:transparent; box-shadow:inset 0 0 0 1px rgba(127,127,127,.12); }
+    .heat-cell.low { background:rgba(255,106,0,.13); color:var(--color-text); box-shadow:inset 0 0 0 1px rgba(255,106,0,.2); }
+    .heat-cell.mid, .heat-cell.high { color:white; }
     @media (max-width:768px){ .stats-container{padding:var(--space-4)} .stats-hero{flex-direction:column} .back-link{white-space:normal} }
   </style>
 </head>
@@ -163,7 +166,7 @@
       const actorArray=Object.values(actors).map(a=>({ ...a, scenes:a.scenes.size, density:ratio(a.words,a.occurrences), percent:totalWords? a.words/totalWords*100:0 })).sort((a,b)=>b.words-a.words);
       const scenesInOrder=Object.values(scenes).map(s=>{ const lead=Object.entries(s.actorWords).sort((a,b)=>b[1]-a[1])[0]; return { ...s, actorCount:Object.keys(s.actors).length, lead:lead?lead[0]:'–' }; }).filter(s=>s.occurrences>0).sort((a,b)=>a.index-b.index);
       const scenesByWords=[...scenesInOrder].sort((a,b)=>b.words-a.words);
-      const matrix=actorArray.slice(0,12).map(a=>({ actor:a.name, scenes:scenesInOrder.map(s=>({ scene:s.name, words:s.actorWords[a.name]||0 })) }));
+      const matrix=actorArray.map(a=>({ actor:a.name, scenes:scenesInOrder.map(s=>({ scene:s.name, words:s.actorWords[a.name]||0 })) }));
       return { actors:actorArray, scenes:scenesInOrder, scenesByWords, matrix, totalActors:actorArray.length, totalWords, totalScenes:scenesInOrder.length, avgWords:actorArray.length?Math.round(totalWords/actorArray.length):0 };
     }
     function sortedActors(){ const a=[...currentStats.actors]; if(sortMode==='occurrences') return a.sort((x,y)=>y.occurrences-x.occurrences); if(sortMode==='density') return a.sort((x,y)=>y.density-x.density); return a.sort((x,y)=>y.words-x.words); }
@@ -183,7 +186,7 @@
       destroy('combo'); charts.combo=new ApexCharts(document.getElementById('combo-chart'),{series:[{name:'Wörter',type:'column',data:top.map(a=>a.words)},{name:'Auftritte',type:'line',data:top.map(a=>a.occurrences)}],chart:{height:390,type:'line',foreColor:t.foreColor,background:'transparent',toolbar:{show:false}},theme:{mode:t.mode},colors:['#ff6a00','#3b82f6'],stroke:{width:[0,3],curve:'smooth'},xaxis:{categories:top.map(a=>a.name),labels:{rotate:-35}},grid:{borderColor:t.grid},yaxis:[{title:{text:'Wörter'}},{opposite:true,title:{text:'Auftritte'}}],tooltip:{shared:true}}); charts.combo.render();
       const scenes=[...stats.scenes].sort((a,b)=>a.index-b.index).slice(0,18); destroy('scene'); charts.scene=new ApexCharts(document.getElementById('scene-chart'),{series:[{name:'Wörter',type:'column',data:scenes.map(s=>s.words)},{name:'Rollen',type:'line',data:scenes.map(s=>s.actorCount)}],chart:{height:390,type:'line',foreColor:t.foreColor,background:'transparent',toolbar:{show:false}},theme:{mode:t.mode},colors:['#8b5cf6','#10b981'],stroke:{width:[0,3]},xaxis:{categories:scenes.map(s=>s.name),labels:{rotate:-40}},grid:{borderColor:t.grid},yaxis:[{title:{text:'Wörter'}},{opposite:true,title:{text:'Rollen'}}]}); charts.scene.render(); }
     function renderScenes(stats){ document.getElementById('scene-table-body').innerHTML=stats.scenes.map((s,i)=>`<tr><td class="num">${i+1}</td><td class="scene-name">${s.name}</td><td class="num">${nf.format(s.words)}</td><td class="num">${nf.format(s.occurrences)}</td><td class="num">${nf.format(s.actorCount)}</td><td>${s.lead}</td></tr>`).join(''); }
-    function renderHeatmap(stats){ const scenes=stats.scenes; const max=Math.max(1,...stats.matrix.flatMap(r=>r.scenes.map(c=>c.words))); document.getElementById('heatmap').innerHTML=`<table><thead><tr><th>Rolle</th>${scenes.map(s=>`<th>${s.name}</th>`).join('')}</tr></thead><tbody>${stats.matrix.map(r=>`<tr><td><strong>${r.actor}</strong></td>${r.scenes.map(c=>{const o=c.words/max;return `<td><span class="heat-cell" style="background:rgba(255,106,0,${Math.max(.08,o)})">${c.words?nf.format(c.words):''}</span></td>`}).join('')}</tr>`).join('')}</tbody></table>`; }
+    function renderHeatmap(stats){ const scenes=stats.scenes; const max=Math.max(1,...stats.matrix.flatMap(r=>r.scenes.map(c=>c.words))); const cell=c=>{ if(!c.words) return '<td><span class="heat-cell zero" title="Keine Wörter">0</span></td>'; const o=c.words/max; const cls=o>=.55?'high':o>=.22?'mid':'low'; const alpha=cls==='low'?0.13:Math.min(.95,.25+o*.75); return `<td><span class="heat-cell ${cls}" title="${nf.format(c.words)} Wörter" style="background:rgba(255,106,0,${alpha})">${nf.format(c.words)}</span></td>`; }; document.getElementById('heatmap').innerHTML=`<table><thead><tr><th>Rolle</th>${scenes.map(s=>`<th>${s.name}</th>`).join('')}</tr></thead><tbody>${stats.matrix.map(r=>`<tr><td><strong>${r.actor}</strong></td>${r.scenes.map(cell).join('')}</tr>`).join('')}</tbody></table>`; }
     loadPlays();
   </script>
 </body>
