@@ -55,10 +55,13 @@
     .bar-track { height:9px; background:rgba(127,127,127,.18); border-radius:99px; overflow:hidden; min-width:110px; }
     .bar-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--stats-accent),#f59e0b); }
     .chart-container { min-height:380px; }
-    .scene-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--space-3); }
-    .scene-card { border:1px solid var(--color-border); border-radius:16px; padding:var(--space-3); background:rgba(127,127,127,.05); }
-    .scene-card h4 { margin:0 0 .5rem; }
-    .scene-card .meta { display:flex; flex-wrap:wrap; gap:.4rem; color:var(--color-text-secondary); font-size:.82rem; }
+    .scene-table-wrap { overflow:auto; max-height:58vh; border:1px solid var(--color-border); border-radius:16px; }
+    .scene-table { width:100%; min-width:720px; border-collapse:separate; border-spacing:0; }
+    .scene-table th, .scene-table td { padding:.75rem .85rem; border-bottom:1px solid var(--color-border); text-align:left; }
+    .scene-table th { position:sticky; top:0; z-index:2; background:var(--color-surface); color:var(--color-text-secondary); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
+    .scene-table tbody tr:last-child td { border-bottom:0; }
+    .scene-table td.num, .scene-table th.num { text-align:right; font-variant-numeric:tabular-nums; }
+    .scene-table .scene-name { font-weight:700; color:var(--color-text); }
     .pill { border:1px solid var(--color-border); border-radius:999px; padding:.2rem .5rem; }
     .heatmap { overflow:auto; border:1px solid var(--color-border); border-radius:16px; }
     .heatmap table { border-collapse:collapse; width:max-content; min-width:100%; }
@@ -114,7 +117,7 @@
       <section class="panel"><div class="panel-header"><div><h3>Wörter vs. Auftritte</h3><div class="sub">Kombiniert Textmenge und Szenenpräsenz.</div></div></div><div id="combo-chart" class="chart-container"></div></section>
       <section class="panel"><div class="panel-header"><div><h3>Szenen-Timeline</h3><div class="sub">Welche Szenen sind textlastig und welche haben den größten Cast?</div></div></div><div id="scene-chart" class="chart-container"></div></section>
 
-      <section class="panel"><div class="panel-header"><div><h3>Szenen-Analytics</h3><div class="sub">Top-Szenen nach Wörtern, Einsätzen und Lead-Figur.</div></div></div><div class="scene-grid" id="scene-cards"></div></section>
+      <section class="panel"><div class="panel-header"><div><h3>Szenen-Analytics</h3><div class="sub">Alle Szenen in Skript-Reihenfolge mit Textmenge, Einsätzen, Cast-Größe und Lead-Figur.</div></div></div><div class="scene-table-wrap"><table class="scene-table"><thead><tr><th class="num">#</th><th>Szene</th><th class="num">Wörter</th><th class="num">Einsätze</th><th class="num">Rollen</th><th>Lead</th></tr></thead><tbody id="scene-table-body"></tbody></table></div></section>
       <section class="panel"><div class="panel-header"><div><h3>Heatmap Rolle × Szene</h3><div class="sub">Dunkler = mehr Wörter in dieser Szene.</div></div></div><div class="heatmap" id="heatmap"></div></section>
     </div>
   </div>
@@ -179,7 +182,7 @@
       destroy('donut'); charts.donut=new ApexCharts(document.getElementById('words-chart'),{series:top.slice(0,8).map(a=>a.words),labels:top.slice(0,8).map(a=>a.name),chart:{type:'donut',height:390,foreColor:t.foreColor,background:'transparent'},theme:{mode:t.mode},colors,legend:{position:'bottom'},plotOptions:{pie:{donut:{size:'62%',labels:{show:true,total:{show:true,label:'Gesamt',formatter:()=>nf.format(stats.totalWords)}}}}},tooltip:{y:{formatter:(v,o)=>`${nf.format(v)} Wörter (${pct(top[o.dataPointIndex]?.percent)})`}}}); charts.donut.render();
       destroy('combo'); charts.combo=new ApexCharts(document.getElementById('combo-chart'),{series:[{name:'Wörter',type:'column',data:top.map(a=>a.words)},{name:'Auftritte',type:'line',data:top.map(a=>a.occurrences)}],chart:{height:390,type:'line',foreColor:t.foreColor,background:'transparent',toolbar:{show:false}},theme:{mode:t.mode},colors:['#ff6a00','#3b82f6'],stroke:{width:[0,3],curve:'smooth'},xaxis:{categories:top.map(a=>a.name),labels:{rotate:-35}},grid:{borderColor:t.grid},yaxis:[{title:{text:'Wörter'}},{opposite:true,title:{text:'Auftritte'}}],tooltip:{shared:true}}); charts.combo.render();
       const scenes=[...stats.scenes].sort((a,b)=>a.index-b.index).slice(0,18); destroy('scene'); charts.scene=new ApexCharts(document.getElementById('scene-chart'),{series:[{name:'Wörter',type:'column',data:scenes.map(s=>s.words)},{name:'Rollen',type:'line',data:scenes.map(s=>s.actorCount)}],chart:{height:390,type:'line',foreColor:t.foreColor,background:'transparent',toolbar:{show:false}},theme:{mode:t.mode},colors:['#8b5cf6','#10b981'],stroke:{width:[0,3]},xaxis:{categories:scenes.map(s=>s.name),labels:{rotate:-40}},grid:{borderColor:t.grid},yaxis:[{title:{text:'Wörter'}},{opposite:true,title:{text:'Rollen'}}]}); charts.scene.render(); }
-    function renderScenes(stats){ document.getElementById('scene-cards').innerHTML=stats.scenes.map(s=>`<div class="scene-card"><h4>${s.index}. ${s.name}</h4><div class="meta"><span class="pill">${nf.format(s.words)} Wörter</span><span class="pill">${s.occurrences} Einsätze</span><span class="pill">${s.actorCount} Rollen</span><span class="pill">Lead: ${s.lead}</span></div></div>`).join(''); }
+    function renderScenes(stats){ document.getElementById('scene-table-body').innerHTML=stats.scenes.map((s,i)=>`<tr><td class="num">${i+1}</td><td class="scene-name">${s.name}</td><td class="num">${nf.format(s.words)}</td><td class="num">${nf.format(s.occurrences)}</td><td class="num">${nf.format(s.actorCount)}</td><td>${s.lead}</td></tr>`).join(''); }
     function renderHeatmap(stats){ const scenes=stats.scenes; const max=Math.max(1,...stats.matrix.flatMap(r=>r.scenes.map(c=>c.words))); document.getElementById('heatmap').innerHTML=`<table><thead><tr><th>Rolle</th>${scenes.map(s=>`<th>${s.index}. ${s.name}</th>`).join('')}</tr></thead><tbody>${stats.matrix.map(r=>`<tr><td><strong>${r.actor}</strong></td>${r.scenes.map(c=>{const o=c.words/max;return `<td><span class="heat-cell" style="background:rgba(255,106,0,${Math.max(.08,o)})">${c.words?nf.format(c.words):''}</span></td>`}).join('')}</tr>`).join('')}</tbody></table>`; }
     loadPlays();
   </script>
