@@ -237,7 +237,6 @@ class RoleSuggestor {
       const checkbox = createElement('input', {
         type: 'checkbox',
         value: actor,
-        checked: this.presentActors.has(actor),
         onchange: (e) => {
           if (e.target.checked) this.presentActors.add(actor)
           else this.presentActors.delete(actor)
@@ -247,6 +246,7 @@ class RoleSuggestor {
           this.updateSuggestions()
         },
       })
+      checkbox.checked = this.presentActors.has(actor)
 
       const text = createElement('span', { className: 'actor-copy' })
       text.innerHTML = `<strong>${actor}</strong><small>${this.getActorName(actor) || '–'} · ${stats.scenes.size} Szenen · ${stats.words} Wörter</small>`
