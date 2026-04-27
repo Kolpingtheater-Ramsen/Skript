@@ -1,556 +1,183 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Statistiken - Kolpingtheater Ramsen</title>
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="/static/assets/logo.png" />
   <link rel="apple-touch-icon" href="/static/assets/logo.png" />
-
-  <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/apexcharts@4.7.0/dist/apexcharts.min.js"></script>
-
   <style>
-    .stats-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: var(--space-6);
-    }
-
-    .stats-header {
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
-      margin-bottom: var(--space-6);
-    }
-
-    .stats-header .logo {
-      width: 48px;
-      height: 48px;
-    }
-
-    .stats-header h1 {
-      margin: 0;
-      font-size: var(--font-size-2xl);
-    }
-
-    .back-link {
-      margin-left: auto;
-      color: var(--color-primary);
-      text-decoration: none;
-      font-weight: var(--font-weight-semibold);
-    }
-
-    .back-link:hover {
-      text-decoration: underline;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--space-4);
-      margin-bottom: var(--space-6);
-    }
-
-    .stat-card {
-      background: var(--color-surface);
-      border-radius: var(--radius-lg);
-      padding: var(--space-4);
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--color-border);
-    }
-
-    .stat-card .stat-label {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
-      margin-bottom: var(--space-1);
-    }
-
-    .stat-card .stat-value {
-      font-size: var(--font-size-2xl);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text);
-    }
-
-    .chart-section {
-      background: var(--color-surface);
-      border-radius: var(--radius-lg);
-      padding: var(--space-4);
-      margin-bottom: var(--space-6);
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--color-border);
-    }
-
-    .chart-section h3 {
-      margin: 0 0 var(--space-4) 0;
-      font-size: var(--font-size-lg);
-    }
-
-    .chart-container {
-      min-height: 400px;
-    }
-
-    .table-section {
-      background: var(--color-surface);
-      border-radius: var(--radius-lg);
-      padding: var(--space-4);
-      margin-bottom: var(--space-6);
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--color-border);
-      overflow-x: auto;
-    }
-
-    .table-section h3 {
-      margin: 0 0 var(--space-4) 0;
-      font-size: var(--font-size-lg);
-    }
-
-    .stats-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .stats-table th,
-    .stats-table td {
-      text-align: left;
-      padding: var(--space-3);
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .stats-table th {
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-text-secondary);
-      font-size: var(--font-size-sm);
-    }
-
-    .stats-table tr:hover {
-      background: var(--color-gray-50);
-    }
-
-    .play-selector {
-      margin-bottom: var(--space-6);
-    }
-
-    .play-selector label {
-      font-weight: var(--font-weight-semibold);
-      margin-right: var(--space-2);
-    }
-
-    .play-selector select {
-      padding: var(--space-2) var(--space-3);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
-      background: var(--color-surface);
-      font-size: var(--font-size-base);
-      min-width: 200px;
-    }
-
-    .loading {
-      text-align: center;
-      padding: var(--space-8);
-      color: var(--color-text-secondary);
-    }
-
-    @media (max-width: 768px) {
-      .stats-container {
-        padding: var(--space-4);
-      }
-
-      .stats-header {
-        flex-wrap: wrap;
-      }
-
-      .back-link {
-        width: 100%;
-        margin-left: 0;
-        margin-top: var(--space-2);
-      }
-    }
+    :root { --stats-accent:#ff6a00; --stats-blue:#3b82f6; --stats-purple:#8b5cf6; --stats-green:#10b981; }
+    body { font-family: Inter, system-ui, sans-serif; }
+    .stats-container { max-width: 1240px; margin: 0 auto; padding: var(--space-6); }
+    .stats-hero { display:flex; justify-content:space-between; gap:var(--space-4); align-items:flex-start; margin-bottom:var(--space-6); padding:var(--space-5); border:1px solid var(--color-border); border-radius:24px; background:linear-gradient(135deg, rgba(255,106,0,.14), rgba(139,92,246,.08)), var(--color-surface); box-shadow:var(--shadow-sm); }
+    .stats-title { display:flex; gap:var(--space-3); align-items:center; }
+    .stats-title img { width:52px; height:52px; }
+    .stats-title h1 { margin:0; font-size:clamp(1.6rem, 4vw, 2.5rem); letter-spacing:-.04em; }
+    .stats-title p { margin:.3rem 0 0; color:var(--color-text-secondary); }
+    .back-link { color:var(--color-primary); text-decoration:none; font-weight:700; white-space:nowrap; }
+    .back-link:hover { text-decoration:underline; }
+    .play-selector { display:flex; flex-wrap:wrap; gap:var(--space-2); align-items:center; margin-bottom:var(--space-6); }
+    .play-selector label { font-weight:700; }
+    .play-selector select, .segmented button { padding:.65rem .85rem; border-radius:999px; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-text); font:inherit; }
+    .segmented { display:flex; flex-wrap:wrap; gap:.35rem; }
+    .segmented button { cursor:pointer; font-size:.9rem; }
+    .segmented button.active { background:var(--color-primary); border-color:var(--color-primary); color:white; }
+    .loading { text-align:center; padding:var(--space-8); color:var(--color-text-secondary); }
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:var(--space-4); margin-bottom:var(--space-6); }
+    .stat-card, .panel { background:var(--color-surface); border:1px solid var(--color-border); border-radius:20px; box-shadow:var(--shadow-sm); }
+    .stat-card { padding:var(--space-4); position:relative; overflow:hidden; }
+    .stat-card::after { content:""; position:absolute; right:-26px; top:-26px; width:90px; height:90px; border-radius:999px; background:rgba(255,106,0,.12); }
+    .stat-card .icon { font-size:1.6rem; margin-bottom:.5rem; }
+    .stat-label { font-size:.88rem; color:var(--color-text-secondary); font-weight:600; }
+    .stat-value { font-size:clamp(1.65rem, 3vw, 2.35rem); font-weight:800; color:var(--color-text); letter-spacing:-.04em; }
+    .stat-sub { margin-top:.25rem; color:var(--color-text-secondary); font-size:.8rem; }
+    .panel { padding:var(--space-5); margin-bottom:var(--space-6); overflow:hidden; }
+    .panel-header { display:flex; justify-content:space-between; align-items:flex-start; gap:var(--space-3); margin-bottom:var(--space-4); }
+    .panel h3 { margin:0; font-size:1.16rem; }
+    .panel .sub { color:var(--color-text-secondary); font-size:.9rem; margin-top:.25rem; }
+    .insight-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:var(--space-3); }
+    .insight { border:1px solid var(--color-border); border-radius:16px; padding:var(--space-3); background:rgba(255,255,255,.03); }
+    .insight b { display:block; font-size:1.05rem; margin-top:.25rem; }
+    .table-wrap { overflow-x:auto; }
+    .stats-table { width:100%; border-collapse:collapse; min-width:760px; }
+    .stats-table th, .stats-table td { padding:.85rem; border-bottom:1px solid var(--color-border); text-align:left; }
+    .stats-table th { color:var(--color-text-secondary); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
+    .stats-table td.num, .stats-table th.num { text-align:right; font-variant-numeric:tabular-nums; }
+    .bar-track { height:9px; background:rgba(127,127,127,.18); border-radius:99px; overflow:hidden; min-width:110px; }
+    .bar-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--stats-accent),#f59e0b); }
+    .chart-container { min-height:380px; }
+    .scene-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--space-3); }
+    .scene-card { border:1px solid var(--color-border); border-radius:16px; padding:var(--space-3); background:rgba(127,127,127,.05); }
+    .scene-card h4 { margin:0 0 .5rem; }
+    .scene-card .meta { display:flex; flex-wrap:wrap; gap:.4rem; color:var(--color-text-secondary); font-size:.82rem; }
+    .pill { border:1px solid var(--color-border); border-radius:999px; padding:.2rem .5rem; }
+    .heatmap { overflow:auto; border:1px solid var(--color-border); border-radius:16px; }
+    .heatmap table { border-collapse:collapse; width:max-content; min-width:100%; }
+    .heatmap th, .heatmap td { border-bottom:1px solid var(--color-border); border-right:1px solid var(--color-border); padding:.45rem; font-size:.78rem; text-align:center; min-width:54px; }
+    .heatmap th:first-child, .heatmap td:first-child { position:sticky; left:0; background:var(--color-surface); text-align:left; min-width:140px; z-index:1; }
+    .heat-cell { color:white; font-weight:700; border-radius:8px; display:block; padding:.35rem .2rem; }
+    @media (max-width:768px){ .stats-container{padding:var(--space-4)} .stats-hero{flex-direction:column} .back-link{white-space:normal} }
   </style>
 </head>
-
 <body>
   <div class="stats-container">
-    <div class="stats-header">
-      <img src="/static/assets/logo.png" alt="Kolpingtheater Ramsen" class="logo" />
-      <h1>📊 Statistiken</h1>
+    <header class="stats-hero">
+      <div class="stats-title">
+        <img src="/static/assets/logo.png" alt="Kolpingtheater Ramsen" />
+        <div><h1>Statistiken</h1><p>Rollen, Szenengewicht und Wortverteilung für die Probe.</p></div>
+      </div>
       <a href="/" class="back-link">← Zurück zum Drehbuch</a>
-    </div>
+    </header>
 
     <div class="play-selector">
       <label for="play-select">Stück auswählen:</label>
-      <select id="play-select">
-        <option value="">Lade...</option>
-      </select>
+      <select id="play-select"><option value="">Lade...</option></select>
     </div>
 
     <div id="loading" class="loading">Lade Daten...</div>
 
-    <div id="stats-content" style="display: none;">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">Rollen</div>
-          <div class="stat-value" id="total-actors">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Gesprochene Wörter</div>
-          <div class="stat-value" id="total-words">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Szenen</div>
-          <div class="stat-value" id="total-scenes">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Ø Wörter pro Rolle</div>
-          <div class="stat-value" id="avg-words">0</div>
-        </div>
-      </div>
+    <div id="stats-content" style="display:none;">
+      <section class="stats-grid">
+        <div class="stat-card"><div class="icon">🎭</div><div class="stat-value" id="total-actors">0</div><div class="stat-label">Rollen</div><div class="stat-sub" id="top-actor-sub">–</div></div>
+        <div class="stat-card"><div class="icon">💬</div><div class="stat-value" id="total-words">0</div><div class="stat-label">Gesprochene Wörter</div><div class="stat-sub" id="median-sub">–</div></div>
+        <div class="stat-card"><div class="icon">🎬</div><div class="stat-value" id="total-scenes">0</div><div class="stat-label">Szenen</div><div class="stat-sub" id="scene-density-sub">–</div></div>
+        <div class="stat-card"><div class="icon">📊</div><div class="stat-value" id="avg-words">0</div><div class="stat-label">Ø Wörter pro Rolle</div><div class="stat-sub" id="top-share-sub">–</div></div>
+      </section>
 
-      <div class="table-section">
-        <h3>📋 Rollen-Übersicht</h3>
-        <table class="stats-table">
-          <thead>
-            <tr>
-              <th>Rolle</th>
-              <th>Auftritte</th>
-              <th>Wörter</th>
-              <th>Anteil (%)</th>
-            </tr>
-          </thead>
-          <tbody id="stats-table-body">
-          </tbody>
-        </table>
-      </div>
+      <section class="panel">
+        <div class="panel-header"><div><h3>Quick Insights</h3><div class="sub">Die wichtigsten Proben-Hinweise auf einen Blick.</div></div></div>
+        <div class="insight-grid" id="insights"></div>
+      </section>
 
-      <div class="chart-section">
-        <h3>📊 Wortanteil pro Rolle</h3>
-        <div id="words-chart" class="chart-container"></div>
-      </div>
+      <section class="panel">
+        <div class="panel-header">
+          <div><h3>Rollenranking</h3><div class="sub">Sortierbar nach Textgewicht, Einsätzen oder Dichte.</div></div>
+          <div class="segmented" id="sort-buttons">
+            <button data-sort="words" class="active">Wörter</button>
+            <button data-sort="occurrences">Auftritte</button>
+            <button data-sort="density">Wörter/Auftritt</button>
+          </div>
+        </div>
+        <div class="table-wrap"><table class="stats-table"><thead><tr><th>#</th><th>Rolle</th><th class="num">Auftritte</th><th class="num">Wörter</th><th class="num">Wörter/Auftritt</th><th class="num">Anteil</th><th>Gewicht</th></tr></thead><tbody id="stats-table-body"></tbody></table></div>
+      </section>
 
-      <div class="chart-section">
-        <h3>📈 Auftritte pro Rolle</h3>
-        <div id="occurrences-chart" class="chart-container"></div>
-      </div>
+      <section class="panel"><div class="panel-header"><div><h3>Wortanteil Top Rollen</h3><div class="sub">Donut zeigt die stärksten Textanteile.</div></div></div><div id="words-chart" class="chart-container"></div></section>
+      <section class="panel"><div class="panel-header"><div><h3>Wörter vs. Auftritte</h3><div class="sub">Kombiniert Textmenge und Szenenpräsenz.</div></div></div><div id="combo-chart" class="chart-container"></div></section>
+      <section class="panel"><div class="panel-header"><div><h3>Szenen-Timeline</h3><div class="sub">Welche Szenen sind textlastig und welche haben den größten Cast?</div></div></div><div id="scene-chart" class="chart-container"></div></section>
 
-      <div class="chart-section">
-        <h3>📉 Wörter pro Rolle</h3>
-        <div id="words-bar-chart" class="chart-container"></div>
-      </div>
+      <section class="panel"><div class="panel-header"><div><h3>Szenen-Analytics</h3><div class="sub">Top-Szenen nach Wörtern, Einsätzen und Lead-Figur.</div></div></div><div class="scene-grid" id="scene-cards"></div></section>
+      <section class="panel"><div class="panel-header"><div><h3>Heatmap Rolle × Szene</h3><div class="sub">Dunkler = mehr Wörter in dieser Szene.</div></div></div><div class="heatmap" id="heatmap"></div></section>
     </div>
   </div>
 
   <script>
     const BLACKLIST = ['OFFTEXT', 'ALLE', 'LIED', '[LIED]', 'CHOR'];
     const ACTOR_CATEGORY = 'Schauspieler';
-
-    let wordsDonutChart = null;
-    let occurrencesBarChart = null;
-    let wordsBarChart = null;
-
-    // Check for dark mode
-    function isDarkMode() {
-      return document.body.classList.contains('dark-mode') ||
-        localStorage.getItem('darkMode') === 'true';
+    let charts = {}; let currentStats = null; let sortMode = 'words';
+    const nf = new Intl.NumberFormat('de-DE');
+    const pct = (n) => `${Number(n || 0).toFixed(1)}%`;
+    const ratio = (a,b) => b ? a / b : 0;
+    function isDarkMode(){ return document.body.classList.contains('dark-mode') || localStorage.getItem('darkMode') === 'true'; }
+    if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    function theme(){ const dark=isDarkMode(); return { mode:dark?'dark':'light', foreColor:dark?'#e5e7eb':'#374151', grid:dark?'#2e2e33':'#e5e7eb' }; }
+    function destroy(name){ if(charts[name]){ charts[name].destroy(); charts[name]=null; } }
+    function actorName(raw){ return String(raw||'').replace(/\(.*\)/,'').trim().toUpperCase(); }
+    async function loadPlays(){
+      try{ const plays=await (await fetch('/api/plays')).json(); const select=document.getElementById('play-select'); select.innerHTML='';
+        plays.forEach(play=>{ const o=document.createElement('option'); o.value=play.id; o.textContent=play.name; select.appendChild(o); });
+        const saved=localStorage.getItem('selectedPlay'); if(saved && plays.some(p=>p.id===saved)) select.value=saved;
+        select.addEventListener('change',()=>{ localStorage.setItem('selectedPlay',select.value); loadStats(select.value); });
+        if(plays.length) loadStats(select.value);
+      }catch(e){ console.error(e); document.getElementById('loading').textContent='Fehler beim Laden der Stücke.'; }
     }
-
-    function getChartTheme() {
-      const dark = isDarkMode();
-      return {
-        mode: dark ? 'dark' : 'light',
-        foreColor: dark ? '#e5e7eb' : '#374151',
-        background: 'transparent'
-      };
+    async function loadStats(playId){
+      document.getElementById('loading').style.display='block'; document.getElementById('stats-content').style.display='none';
+      try{ const data=await (await fetch(`/api/script/${playId}`)).json(); currentStats=processScriptData(data); displayStats(currentStats); document.getElementById('loading').style.display='none'; document.getElementById('stats-content').style.display='block'; }
+      catch(e){ console.error(e); document.getElementById('loading').textContent='Fehler beim Laden der Statistiken.'; }
     }
-
-    // Apply dark mode if saved
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.body.classList.add('dark-mode');
-    }
-
-    async function loadPlays() {
-      try {
-        const response = await fetch('/api/plays');
-        const plays = await response.json();
-        const select = document.getElementById('play-select');
-        select.innerHTML = '';
-
-        plays.forEach(play => {
-          const option = document.createElement('option');
-          option.value = play.id;
-          option.textContent = play.name;
-          select.appendChild(option);
-        });
-
-        // Load saved play or first one
-        const savedPlay = localStorage.getItem('selectedPlay');
-        if (savedPlay && plays.some(p => p.id === savedPlay)) {
-          select.value = savedPlay;
-        }
-
-        select.addEventListener('change', () => {
-          localStorage.setItem('selectedPlay', select.value);
-          loadStats(select.value);
-        });
-
-        if (plays.length > 0) {
-          loadStats(select.value);
-        }
-      } catch (error) {
-        console.error('Failed to load plays:', error);
-        document.getElementById('loading').textContent = 'Fehler beim Laden der Stücke.';
-      }
-    }
-
-    async function loadStats(playId) {
-      document.getElementById('loading').style.display = 'block';
-      document.getElementById('stats-content').style.display = 'none';
-
-      try {
-        const response = await fetch(`/api/script/${playId}`);
-        const data = await response.json();
-
-        const stats = processScriptData(data);
-        displayStats(stats);
-
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('stats-content').style.display = 'block';
-      } catch (error) {
-        console.error('Failed to load stats:', error);
-        document.getElementById('loading').textContent = 'Fehler beim Laden der Statistiken.';
-      }
-    }
-
-    function processScriptData(data) {
-      const actors = {};
-      const scenes = new Set();
-
-      data.forEach(row => {
-        if (row.Szene) {
-          scenes.add(row.Szene);
-        }
-
-        if (row.Kategorie !== ACTOR_CATEGORY) return;
-
-        let actor = row.Charakter;
-        if (!actor) return;
-
-        actor = actor.replace(/\(.*\)/, '').trim().toUpperCase();
-        if (BLACKLIST.includes(actor) || !actor) return;
-
-        const text = row['Text/Anweisung'] || '';
-        const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
-
-        if (!actors[actor]) {
-          actors[actor] = { occurrences: 0, words: 0 };
-        }
-
-        actors[actor].occurrences++;
-        actors[actor].words += words;
+    function processScriptData(data){
+      const actors={}, scenes={};
+      data.forEach((row, idx)=>{
+        const scene=row.Szene || row.Scene || 'Ohne Szene';
+        if(!scenes[scene]) scenes[scene]={ name:scene, index:Object.keys(scenes).length+1, words:0, occurrences:0, actors:{}, actorWords:{}, lead:null, actorCount:0 };
+        if(row.Kategorie !== ACTOR_CATEGORY) return;
+        const actor=actorName(row.Charakter); if(!actor || BLACKLIST.includes(actor)) return;
+        const text=row['Text/Anweisung'] || ''; const words=text.trim().split(/\s+/).filter(Boolean).length;
+        if(!actors[actor]) actors[actor]={ name:actor, occurrences:0, words:0, scenes:new Set() };
+        actors[actor].occurrences++; actors[actor].words += words; actors[actor].scenes.add(scene);
+        scenes[scene].words += words; scenes[scene].occurrences++; scenes[scene].actors[actor]=(scenes[scene].actors[actor]||0)+1; scenes[scene].actorWords[actor]=(scenes[scene].actorWords[actor]||0)+words;
       });
-
-      const totalWords = Object.values(actors).reduce((sum, a) => sum + a.words, 0);
-
-      const actorArray = Object.entries(actors)
-        .map(([name, stats]) => ({
-          name,
-          occurrences: stats.occurrences,
-          words: stats.words,
-          percent: totalWords > 0 ? ((stats.words / totalWords) * 100).toFixed(1) : 0
-        }))
-        .sort((a, b) => b.words - a.words);
-
-      return {
-        actors: actorArray,
-        totalActors: actorArray.length,
-        totalWords,
-        totalScenes: scenes.size,
-        avgWords: actorArray.length > 0 ? Math.round(totalWords / actorArray.length) : 0
-      };
+      const totalWords=Object.values(actors).reduce((s,a)=>s+a.words,0);
+      const actorArray=Object.values(actors).map(a=>({ ...a, scenes:a.scenes.size, density:ratio(a.words,a.occurrences), percent:totalWords? a.words/totalWords*100:0 })).sort((a,b)=>b.words-a.words);
+      const sceneArray=Object.values(scenes).map(s=>{ const lead=Object.entries(s.actorWords).sort((a,b)=>b[1]-a[1])[0]; return { ...s, actorCount:Object.keys(s.actors).length, lead:lead?lead[0]:'–' }; }).filter(s=>s.occurrences>0).sort((a,b)=>b.words-a.words);
+      const matrix=actorArray.slice(0,12).map(a=>({ actor:a.name, scenes:sceneArray.slice(0,12).map(s=>({ scene:s.name, words:s.actorWords[a.name]||0 })) }));
+      return { actors:actorArray, scenes:sceneArray, matrix, totalActors:actorArray.length, totalWords, totalScenes:sceneArray.length, avgWords:actorArray.length?Math.round(totalWords/actorArray.length):0 };
     }
-
-    function displayStats(stats) {
-      // Update stat cards
-      document.getElementById('total-actors').textContent = stats.totalActors;
-      document.getElementById('total-words').textContent = stats.totalWords.toLocaleString('de-DE');
-      document.getElementById('total-scenes').textContent = stats.totalScenes;
-      document.getElementById('avg-words').textContent = stats.avgWords.toLocaleString('de-DE');
-
-      // Update table
-      const tbody = document.getElementById('stats-table-body');
-      tbody.innerHTML = stats.actors.map(actor => `
-        <tr>
-          <td><strong>${actor.name}</strong></td>
-          <td>${actor.occurrences}</td>
-          <td>${actor.words.toLocaleString('de-DE')}</td>
-          <td>${actor.percent}%</td>
-        </tr>
-      `).join('');
-
-      // Update charts
-      updateWordsDonutChart(stats.actors);
-      updateOccurrencesChart(stats.actors);
-      updateWordsBarChart(stats.actors);
+    function sortedActors(){ const a=[...currentStats.actors]; if(sortMode==='occurrences') return a.sort((x,y)=>y.occurrences-x.occurrences); if(sortMode==='density') return a.sort((x,y)=>y.density-x.density); return a.sort((x,y)=>y.words-x.words); }
+    function displayStats(stats){
+      const top=stats.actors[0], quiet=[...stats.actors].sort((a,b)=>a.words-b.words)[0], scene=stats.scenes[0], cast=[...stats.scenes].sort((a,b)=>b.actorCount-a.actorCount)[0];
+      const med=stats.actors.length ? [...stats.actors].map(a=>a.words).sort((a,b)=>a-b)[Math.floor(stats.actors.length/2)] : 0;
+      const top3=stats.totalWords ? stats.actors.slice(0,3).reduce((s,a)=>s+a.words,0)/stats.totalWords*100 : 0;
+      document.getElementById('total-actors').textContent=stats.totalActors; document.getElementById('total-words').textContent=nf.format(stats.totalWords); document.getElementById('total-scenes').textContent=stats.totalScenes; document.getElementById('avg-words').textContent=nf.format(stats.avgWords);
+      document.getElementById('top-actor-sub').textContent=top?`Top: ${top.name}`:'–'; document.getElementById('median-sub').textContent=`Median: ${nf.format(med)} Wörter`; document.getElementById('scene-density-sub').textContent=`Ø ${nf.format(Math.round(ratio(stats.totalWords, stats.totalScenes)))} Wörter/Szene`; document.getElementById('top-share-sub').textContent=`Top 3: ${pct(top3)}`;
+      document.getElementById('insights').innerHTML=[['Meiste Wörter', top?`${top.name}: ${nf.format(top.words)} Wörter`:'–'], ['Größte Szene', scene?`${scene.name}: ${nf.format(scene.words)} Wörter`:'–'], ['Größter Cast', cast?`${cast.name}: ${cast.actorCount} Rollen`:'–'], ['Kleinste Textrolle', quiet?`${quiet.name}: ${nf.format(quiet.words)} Wörter`:'–']].map(([k,v])=>`<div class="insight"><span>${k}</span><b>${v}</b></div>`).join('');
+      renderTable(); renderCharts(stats); renderScenes(stats); renderHeatmap(stats);
     }
-
-    function updateWordsDonutChart(actors) {
-      if (wordsDonutChart) {
-        wordsDonutChart.destroy();
-      }
-
-      const theme = getChartTheme();
-      const options = {
-        series: actors.map(a => a.words),
-        labels: actors.map(a => a.name),
-        chart: {
-          type: 'donut',
-          height: 400,
-          foreColor: theme.foreColor,
-          background: theme.background
-        },
-        theme: {
-          mode: theme.mode,
-          palette: 'palette1'
-        },
-        legend: {
-          position: 'bottom'
-        },
-        tooltip: {
-          y: {
-            formatter: (val, { dataPointIndex }) => {
-              const actor = actors[dataPointIndex];
-              return `${val.toLocaleString('de-DE')} Wörter (${actor.percent}%)`;
-            }
-          }
-        },
-        noData: {
-          text: 'Keine Daten verfügbar'
-        }
-      };
-
-      wordsDonutChart = new ApexCharts(document.getElementById('words-chart'), options);
-      wordsDonutChart.render();
-    }
-
-    function updateOccurrencesChart(actors) {
-      if (occurrencesBarChart) {
-        occurrencesBarChart.destroy();
-      }
-
-      const theme = getChartTheme();
-      const options = {
-        series: [{
-          name: 'Auftritte',
-          data: actors.map(a => a.occurrences)
-        }],
-        chart: {
-          type: 'bar',
-          height: 400,
-          foreColor: theme.foreColor,
-          background: theme.background
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            barHeight: '70%'
-          }
-        },
-        dataLabels: {
-          enabled: true
-        },
-        xaxis: {
-          categories: actors.map(a => a.name),
-          title: {
-            text: 'Anzahl Auftritte'
-          }
-        },
-        theme: {
-          mode: theme.mode,
-          palette: 'palette2'
-        },
-        tooltip: {
-          y: {
-            formatter: val => `${val} Auftritte`
-          }
-        },
-        noData: {
-          text: 'Keine Daten verfügbar'
-        }
-      };
-
-      occurrencesBarChart = new ApexCharts(document.getElementById('occurrences-chart'), options);
-      occurrencesBarChart.render();
-    }
-
-    function updateWordsBarChart(actors) {
-      if (wordsBarChart) {
-        wordsBarChart.destroy();
-      }
-
-      const theme = getChartTheme();
-      const options = {
-        series: [{
-          name: 'Wörter',
-          data: actors.map(a => a.words)
-        }],
-        chart: {
-          type: 'bar',
-          height: 400,
-          foreColor: theme.foreColor,
-          background: theme.background
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '70%'
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        xaxis: {
-          categories: actors.map(a => a.name),
-          labels: {
-            rotate: -45,
-            trim: true
-          },
-          title: {
-            text: 'Rolle'
-          }
-        },
-        yaxis: {
-          title: {
-            text: 'Gesprochene Wörter'
-          }
-        },
-        theme: {
-          mode: theme.mode,
-          palette: 'palette3'
-        },
-        tooltip: {
-          y: {
-            formatter: val => `${val.toLocaleString('de-DE')} Wörter`
-          }
-        },
-        noData: {
-          text: 'Keine Daten verfügbar'
-        }
-      };
-
-      wordsBarChart = new ApexCharts(document.getElementById('words-bar-chart'), options);
-      wordsBarChart.render();
-    }
-
-    // Initialize
+    function renderTable(){ const rows=sortedActors(); const max=rows[0]?.words||1; document.getElementById('stats-table-body').innerHTML=rows.map((a,i)=>`<tr><td>${i+1}</td><td><strong>${a.name}</strong></td><td class="num">${nf.format(a.occurrences)}</td><td class="num">${nf.format(a.words)}</td><td class="num">${nf.format(Math.round(a.density))}</td><td class="num">${pct(a.percent)}</td><td><div class="bar-track"><div class="bar-fill" style="width:${Math.max(3,a.words/max*100)}%"></div></div></td></tr>`).join(''); }
+    document.getElementById('sort-buttons').addEventListener('click', e=>{ if(!e.target.dataset.sort) return; sortMode=e.target.dataset.sort; document.querySelectorAll('#sort-buttons button').forEach(b=>b.classList.toggle('active', b.dataset.sort===sortMode)); renderTable(); if(currentStats) renderCharts(currentStats); });
+    function renderCharts(stats){ const t=theme(), top=sortedActors().slice(0,10), colors=['#ff6a00','#f97316','#fb7185','#8b5cf6','#3b82f6','#06b6d4','#10b981','#84cc16','#eab308','#f59e0b'];
+      destroy('donut'); charts.donut=new ApexCharts(document.getElementById('words-chart'),{series:top.slice(0,8).map(a=>a.words),labels:top.slice(0,8).map(a=>a.name),chart:{type:'donut',height:390,foreColor:t.foreColor,background:'transparent'},theme:{mode:t.mode},colors,legend:{position:'bottom'},plotOptions:{pie:{donut:{size:'62%',labels:{show:true,total:{show:true,label:'Gesamt',formatter:()=>nf.format(stats.totalWords)}}}}},tooltip:{y:{formatter:(v,o)=>`${nf.format(v)} Wörter (${pct(top[o.dataPointIndex]?.percent)})`}}}); charts.donut.render();
+      destroy('combo'); charts.combo=new ApexCharts(document.getElementById('combo-chart'),{series:[{name:'Wörter',type:'column',data:top.map(a=>a.words)},{name:'Auftritte',type:'line',data:top.map(a=>a.occurrences)}],chart:{height:390,type:'line',foreColor:t.foreColor,background:'transparent',toolbar:{show:false}},theme:{mode:t.mode},colors:['#ff6a00','#3b82f6'],stroke:{width:[0,3],curve:'smooth'},xaxis:{categories:top.map(a=>a.name),labels:{rotate:-35}},grid:{borderColor:t.grid},yaxis:[{title:{text:'Wörter'}},{opposite:true,title:{text:'Auftritte'}}],tooltip:{shared:true}}); charts.combo.render();
+      const scenes=[...stats.scenes].sort((a,b)=>a.index-b.index).slice(0,18); destroy('scene'); charts.scene=new ApexCharts(document.getElementById('scene-chart'),{series:[{name:'Wörter',type:'column',data:scenes.map(s=>s.words)},{name:'Rollen',type:'line',data:scenes.map(s=>s.actorCount)}],chart:{height:390,type:'line',foreColor:t.foreColor,background:'transparent',toolbar:{show:false}},theme:{mode:t.mode},colors:['#8b5cf6','#10b981'],stroke:{width:[0,3]},xaxis:{categories:scenes.map(s=>s.name),labels:{rotate:-40}},grid:{borderColor:t.grid},yaxis:[{title:{text:'Wörter'}},{opposite:true,title:{text:'Rollen'}}]}); charts.scene.render(); }
+    function renderScenes(stats){ document.getElementById('scene-cards').innerHTML=stats.scenes.slice(0,8).map(s=>`<div class="scene-card"><h4>${s.name}</h4><div class="meta"><span class="pill">${nf.format(s.words)} Wörter</span><span class="pill">${s.occurrences} Einsätze</span><span class="pill">${s.actorCount} Rollen</span><span class="pill">Lead: ${s.lead}</span></div></div>`).join(''); }
+    function renderHeatmap(stats){ const scenes=stats.scenes.slice(0,12); const max=Math.max(1,...stats.matrix.flatMap(r=>r.scenes.map(c=>c.words))); document.getElementById('heatmap').innerHTML=`<table><thead><tr><th>Rolle</th>${scenes.map(s=>`<th>${s.name}</th>`).join('')}</tr></thead><tbody>${stats.matrix.map(r=>`<tr><td><strong>${r.actor}</strong></td>${r.scenes.map(c=>{const o=c.words/max;return `<td><span class="heat-cell" style="background:rgba(255,106,0,${Math.max(.08,o)})">${c.words?nf.format(c.words):''}</span></td>`}).join('')}</tr>`).join('')}</tbody></table>`; }
     loadPlays();
   </script>
 </body>
-
 </html>
