@@ -3,6 +3,7 @@
  */
 
 import { STORAGE_KEYS } from './config.js'
+import { groupActorsByName } from './actor-groups.js'
 
 /**
  * UI Controls Manager class
@@ -373,11 +374,13 @@ export class UIControlsManager {
     const select = document.getElementById('actor-select')
     if (!select) return
 
+    const groups = groupActorsByName(actors)
+
     select.innerHTML = '<option value="">Alle Charaktere anzeigen</option>'
-    actors.forEach(([roleName, actorName]) => {
+    groups.forEach((group) => {
       const option = document.createElement('option')
-      option.value = roleName
-      option.textContent = `${roleName} (${actorName})`
+      option.value = group.value
+      option.textContent = group.label
       select.appendChild(option)
     })
   }

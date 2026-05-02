@@ -4,6 +4,11 @@
 
 import { escapeRegExp, smoothScrollToElement } from './utils.js'
 import { CATEGORIES, STORAGE_KEYS } from './config.js'
+import {
+  findActorGroupBySelection,
+  getActorDisplayName,
+  rowMatchesSelectedActor,
+} from './actor-groups.js'
 
 function appendHighlightedText(container, text, needle) {
   container.textContent = ''
@@ -131,13 +136,7 @@ export class Renderer {
         if (!scenes[row.Szene]) {
           scenes[row.Szene] = false
         }
-        if (row.Charakter && row.Charakter === selectedActor) {
-          scenes[row.Szene] = true
-        } else if (
-          row.Kategorie === CATEGORIES.INSTRUCTION &&
-          selectedActor &&
-          row['Text/Anweisung'].toUpperCase().includes(selectedActor)
-        ) {
+        if (rowMatchesSelectedActor(row, selectedActor, this.state.get('actors') || [])) {
           scenes[row.Szene] = true
         }
       }
@@ -210,13 +209,7 @@ export class Renderer {
 
     sceneData.forEach((row) => {
       if (row.Charakter) {
-        let display
-        if (useActorNames) {
-          const actor = actors?.find((a) => a[0] === row.Charakter)?.[1]
-          display = actor ? `${row.Charakter} (${actor})` : row.Charakter
-        } else {
-          display = row.Charakter
-        }
+        const display = getActorDisplayName(row.Charakter, actors, useActorNames)
         actorsSet.add(display)
         if (row.Mikrofon) {
           micros.set(display, row.Mikrofon)
@@ -257,9 +250,10 @@ export class Renderer {
       td1.textContent = micros.get(actor) || ''
       tr.appendChild(td1)
       const td2 = document.createElement('td')
-      // Extract role name from display string (e.g., "ROLE (ActorName)" -> "ROLE")
-      const roleName = actor.split('(')[0].trim().toUpperCase()
-      const isSelected = selectedActor && roleName === selectedActor
+      const selectedGroup = findActorGroupBySelection(actors, selectedActor)
+      const isSelected = selectedGroup
+        ? selectedGroup.roles.some((role) => getActorDisplayName(role, actors, useActorNames) === actor)
+        : false
       if (isSelected) {
         const strong = document.createElement('b')
         strong.textContent = actor
@@ -557,11 +551,7 @@ export class Renderer {
       if (row.isAutoMic) {
         div.classList.add('microphone-auto')
       }
-    } else if (
-      settings.selectedActor &&
-      row.Charakter &&
-      row.Charakter.toUpperCase() === settings.selectedActor
-    ) {
+    } else if (rowMatchesSelectedActor(row, settings.selectedActor, actors)) {
       div.classList.add('highlighted')
       if (settings.blurLines) {
         div.style.filter = 'blur(4px)'
@@ -578,13 +568,11 @@ export class Renderer {
     if (row.Charakter) {
       const nameSpan = document.createElement('div')
       nameSpan.className = 'actor-name'
-      let displayName
-      if (settings.useActorNames) {
-        const actor = actors.find((a) => a[0] === row.Charakter)
-        displayName = actor ? `${row.Charakter} (${actor[1]})` : row.Charakter
-      } else {
-        displayName = row.Charakter
-      }
+      const displayName = getActorDisplayName(
+        row.Charakter,
+        actors,
+        settings.useActorNames
+      )
       nameSpan.textContent =
         row.Mikrofon && settings.showMicro
           ? `${displayName} (${row.Mikrofon})`
@@ -598,11 +586,8 @@ export class Renderer {
 
     // Highlight selected actor in text (case-insensitive)
     if (
-      settings.selectedActor &&
-      row['Text/Anweisung'] &&
-      row['Text/Anweisung'].toUpperCase().includes(settings.selectedActor) &&
-      // not in actors lines
-      row.Kategorie !== CATEGORIES.ACTOR
+      row.Kategorie !== CATEGORIES.ACTOR &&
+      rowMatchesSelectedActor(row, settings.selectedActor, actors)
     ) {
       div.classList.add('highlighted')
     }
@@ -630,10 +615,10 @@ export class Renderer {
 
     // Bold name in instruction according to toggle
     if (row.Kategorie === CATEGORIES.INSTRUCTION && settings.selectedActor) {
+      const selectedGroup = findActorGroupBySelection(actors, settings.selectedActor)
       const nameToBold = settings.useActorNames
-        ? actors?.find((a) => a[0] === settings.selectedActor)?.[1] ||
-        settings.selectedActor
-        : settings.selectedActor
+        ? selectedGroup?.actorName || settings.selectedActor
+        : selectedGroup?.roles?.[0] || settings.selectedActor
       try {
         appendHighlightedText(textDiv, textDiv.textContent, nameToBold)
       } catch (e) {

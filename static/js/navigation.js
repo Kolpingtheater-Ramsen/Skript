@@ -61,9 +61,11 @@ export class NavigationManager {
     if (currentSceneEl && currentScene) {
       currentSceneEl.textContent = `Szene ${currentScene}`
       // add Role Name if it's not empty and scene is numeric
-      const roleName = document.getElementById('actor-select')?.value
+      const actorSelect = document.getElementById('actor-select')
+      const roleName = actorSelect?.value
+      const roleLabel = actorSelect?.selectedOptions?.[0]?.textContent || roleName
       if (parseInt(currentScene) && roleName) {
-        currentSceneEl.textContent += ` - ${roleName}`
+        currentSceneEl.textContent += ` - ${roleLabel}`
       }
       if (currentScene === 'Kolpingtheater Ramsen - Drehbuch Viewer') {
         currentSceneEl.textContent = 'Kolpingtheater Ramsen - Drehbuch Viewer'
