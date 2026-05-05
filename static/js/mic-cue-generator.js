@@ -138,9 +138,10 @@ function findExitAnweisung(data, lastLine, sceneEnd, actorName) {
  * @returns {Object} Virtual row object
  */
 function createMicCueRow(scene, actors, type) {
-  // Format: "HANS (1), GRETA (3) EIN" or "HANS, GRETA EIN" if no mic
+  // Format: "HANS (1), GRETA (3)" or "HANS, GRETA" if no mic.
+  // EIN/AUS is shown in the chip via micCueType, not repeated in the text.
   const actorTexts = actors.map((a) => (a.mic ? `${a.name} (${a.mic})` : a.name))
-  const text = `${actorTexts.join(', ')} ${type}`
+  const text = actorTexts.join(', ')
 
   return {
     Szene: scene,
