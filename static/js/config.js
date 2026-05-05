@@ -14,7 +14,7 @@ const CONFIG = {
   CACHE_DURATION: 5 * 60 * 1000, // 5 minutes
   DEFAULT_PLAY_ID: 'sommerstueck2026',
   DEFAULT_SHEET_URL:
-    'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/export?format=csv&gid=532983087',
+    'https://docs.google.com/spreadsheets/d/1LEhNzES1aLQ_UVA8esjXcGgkK3I5gv3q/edit?gid=382114612#gid=382114612',
 }
 
 const STORAGE_KEYS = {

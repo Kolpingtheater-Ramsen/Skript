@@ -33,6 +33,19 @@ export async function loadPlaysConfig() {
  * @param {string} playId - Play identifier for caching
  * @returns {Promise<Array>} Parsed script data
  */
+function toCsvExportUrl(sheetUrl) {
+  try {
+    const url = new URL(sheetUrl)
+    const match = url.pathname.match(/\/spreadsheets\/d\/([^/]+)/)
+    if (!match) return sheetUrl
+    if (url.pathname.includes('/export') && url.searchParams.get('format') === 'csv') return sheetUrl
+    const gid = url.searchParams.get('gid') || url.hash.match(/gid=([^&]+)/)?.[1] || '0'
+    return `https://docs.google.com/spreadsheets/d/${match[1]}/export?format=csv&gid=${gid}`
+  } catch (error) {
+    return sheetUrl
+  }
+}
+
 export async function loadScript(sheetUrl, playId) {
   if (!window.Papa) {
     throw new Error('PapaParse library not loaded')
@@ -53,7 +66,7 @@ export async function loadScript(sheetUrl, playId) {
     }
 
     // Fetch fresh data
-    const response = await fetch(sheetUrl)
+    const response = await fetch(toCsvExportUrl(sheetUrl))
 
     if (!response.ok) {
       // Fall back to cache if fetch fails

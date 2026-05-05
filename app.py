@@ -262,6 +262,17 @@ def _workbook_export_url(sheet_url: str) -> Optional[str]:
     return f"https://docs.google.com/spreadsheets/d/{match.group(1)}/export?format=xlsx"
 
 
+def _csv_export_url(sheet_url: str) -> str:
+    match = re.search(r"/spreadsheets/d/([^/]+)", sheet_url or "")
+    if not match:
+        return sheet_url
+    if "/export" in sheet_url and "format=csv" in sheet_url:
+        return sheet_url
+    gid_match = re.search(r"[?#&]gid=([^&#]+)", sheet_url)
+    gid = gid_match.group(1) if gid_match else "0"
+    return f"https://docs.google.com/spreadsheets/d/{match.group(1)}/export?format=csv&gid={gid}"
+
+
 def _clean_legend_value(value):
     if isinstance(value, str):
         value = value.strip()
@@ -282,7 +293,7 @@ def api_script(play_id):
             return jsonify({"error": "No sheet URL configured"}), 400
 
         # Fetch CSV from Google Sheets
-        response = requests.get(sheet_url, timeout=30)
+        response = requests.get(_csv_export_url(sheet_url), timeout=30)
         response.raise_for_status()
 
         # Parse CSV

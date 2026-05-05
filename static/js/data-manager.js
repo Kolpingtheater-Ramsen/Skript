@@ -62,6 +62,25 @@ export class DataManager {
   }
 
   /**
+   * Convert a Google Sheets edit/share URL into a CSV export URL.
+   * Stored config may use human-friendly /edit?gid=... links.
+   * @param {string} sheetUrl - Configured sheet URL
+   * @returns {string} Fetchable CSV URL
+   */
+  toCsvExportUrl(sheetUrl) {
+    try {
+      const url = new URL(sheetUrl)
+      const match = url.pathname.match(/\/spreadsheets\/d\/([^/]+)/)
+      if (!match) return sheetUrl
+      if (url.pathname.includes('/export') && url.searchParams.get('format') === 'csv') return sheetUrl
+      const gid = url.searchParams.get('gid') || url.hash.match(/gid=([^&]+)/)?.[1] || '0'
+      return `https://docs.google.com/spreadsheets/d/${match[1]}/export?format=csv&gid=${gid}`
+    } catch (error) {
+      return sheetUrl
+    }
+  }
+
+  /**
    * Load script data from Google Sheets CSV
    * @param {string} playId - Play identifier
    * @returns {Promise<Array>} Script data array
@@ -81,7 +100,7 @@ export class DataManager {
         return JSON.parse(cachedData)
       }
 
-      const sheetUrl = this.getSheetUrl(playId)
+      const sheetUrl = this.toCsvExportUrl(this.getSheetUrl(playId))
       const response = await fetch(sheetUrl, { cache: 'no-cache' })
 
       if (!response.ok) {
