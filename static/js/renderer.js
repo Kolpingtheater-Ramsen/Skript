@@ -12,29 +12,58 @@ import {
 
 function appendHighlightedText(container, text, needle) {
   container.textContent = ''
-  if (!needle) {
-    container.textContent = text
+  appendTextWithTransforms(container, text, { highlight: needle })
+}
+
+function appendTextWithTransforms(container, text, options = {}) {
+  const highlight = options.highlight || ''
+  const dimParentheses = options.dimParentheses || false
+  const lowerHighlight = highlight.toLowerCase()
+  const parenRegex = /\([^()]*\)/g
+
+  function appendSegment(segment) {
+    if (!segment) return
+    if (!highlight) {
+      container.appendChild(document.createTextNode(segment))
+      return
+    }
+
+    const lowerSegment = segment.toLowerCase()
+    let cursor = 0
+    let matchIndex = lowerSegment.indexOf(lowerHighlight)
+    while (matchIndex !== -1) {
+      if (matchIndex > cursor) {
+        container.appendChild(document.createTextNode(segment.slice(cursor, matchIndex)))
+      }
+      const strong = document.createElement('b')
+      strong.textContent = segment.slice(matchIndex, matchIndex + highlight.length)
+      container.appendChild(strong)
+      cursor = matchIndex + highlight.length
+      matchIndex = lowerSegment.indexOf(lowerHighlight, cursor)
+    }
+    if (cursor < segment.length) {
+      container.appendChild(document.createTextNode(segment.slice(cursor)))
+    }
+  }
+
+  if (!dimParentheses) {
+    appendSegment(text)
     return
   }
 
-  const lowerText = text.toLowerCase()
-  const lowerNeedle = needle.toLowerCase()
   let cursor = 0
-  let matchIndex = lowerText.indexOf(lowerNeedle)
-
-  while (matchIndex !== -1) {
-    if (matchIndex > cursor) {
-      container.appendChild(document.createTextNode(text.slice(cursor, matchIndex)))
+  for (const match of text.matchAll(parenRegex)) {
+    if (match.index > cursor) {
+      appendSegment(text.slice(cursor, match.index))
     }
-    const strong = document.createElement('b')
-    strong.textContent = text.slice(matchIndex, matchIndex + needle.length)
-    container.appendChild(strong)
-    cursor = matchIndex + needle.length
-    matchIndex = lowerText.indexOf(lowerNeedle, cursor)
+    const span = document.createElement('span')
+    span.className = 'inline-stage-direction'
+    appendTextWithTransforms(span, match[0], { highlight })
+    container.appendChild(span)
+    cursor = match.index + match[0].length
   }
-
   if (cursor < text.length) {
-    container.appendChild(document.createTextNode(text.slice(cursor)))
+    appendSegment(text.slice(cursor))
   }
 }
 
@@ -612,7 +641,13 @@ export class Renderer {
       }
     }
 
-    textDiv.textContent = displayText
+    // Actor text can contain short stage directions in parentheses.
+    // Render those muted inline instead of treating the whole line as an instruction.
+    if (row.Kategorie === CATEGORIES.ACTOR) {
+      appendTextWithTransforms(textDiv, displayText, { dimParentheses: true })
+    } else {
+      textDiv.textContent = displayText
+    }
 
     // Bold name in instruction according to toggle
     if (row.Kategorie === CATEGORIES.INSTRUCTION && settings.selectedActor) {

@@ -131,6 +131,12 @@ body {
   margin-bottom: var(--space-2);
 }
 
+.inline-stage-direction {
+  color: var(--viewer-text-secondary);
+  font-style: italic;
+  opacity: 0.68;
+}
+
 /* Line Types */
 .instruction {
   color: var(--viewer-success);

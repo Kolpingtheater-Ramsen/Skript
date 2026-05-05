@@ -219,6 +219,12 @@
   font-size: var(--font-size-sm);
 }
 
+.inline-stage-direction {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  opacity: 0.68;
+}
+
 /* Line Types */
 .script-line.instruction {
   background-color: var(--color-instruction-bg);

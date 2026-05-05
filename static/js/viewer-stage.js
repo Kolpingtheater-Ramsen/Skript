@@ -5,6 +5,24 @@
 import { BaseViewer } from './viewer-shared.js'
 import { AutoScrollManager, smoothScrollToElement, getEl } from './utils.js'
 
+function appendActorText(container, text) {
+  const parenRegex = /\([^()]*\)/g
+  let cursor = 0
+  for (const match of String(text || '').matchAll(parenRegex)) {
+    if (match.index > cursor) {
+      container.appendChild(document.createTextNode(text.slice(cursor, match.index)))
+    }
+    const span = document.createElement('span')
+    span.className = 'inline-stage-direction'
+    span.textContent = match[0]
+    container.appendChild(span)
+    cursor = match.index + match[0].length
+  }
+  if (cursor < String(text || '').length) {
+    container.appendChild(document.createTextNode(text.slice(cursor)))
+  }
+}
+
 export class StageViewer extends BaseViewer {
   constructor() {
     super()
@@ -77,7 +95,11 @@ export class StageViewer extends BaseViewer {
 
       // Add text content
       const textDiv = document.createElement('div')
-      textDiv.textContent = row['Text/Anweisung']
+      if (row.Kategorie === 'Schauspieler') {
+        appendActorText(textDiv, row['Text/Anweisung'])
+      } else {
+        textDiv.textContent = row['Text/Anweisung']
+      }
       div.appendChild(textDiv)
 
       container.appendChild(div)

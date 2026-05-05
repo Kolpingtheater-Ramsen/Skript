@@ -169,6 +169,11 @@ body.dark-mode .actor-name {
   color: var(--color-primary);
 }
 
+body.dark-mode .inline-stage-direction {
+  color: var(--color-text-secondary);
+  opacity: 0.72;
+}
+
 body.dark-mode .toc {
   background-color: #18181A;
   border: 1px solid var(--color-border);
