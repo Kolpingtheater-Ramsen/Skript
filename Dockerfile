@@ -19,7 +19,6 @@ RUN pip install --no-cache-dir \
     python-socketio==5.15.1 \
     edge-tts>=7.2.7 \
     gevent-websocket==0.10.1 \
-    openpyxl==3.1.5 \
     pandas>=2.3.3 \
     requests>=2.32.5
 

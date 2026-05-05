@@ -10,10 +10,8 @@ import time
 import datetime
 import json
 import re
-from io import BytesIO
 
 import requests
-from openpyxl import load_workbook
 from typing import Optional, Dict, Any
 from flask import Flask, request, send_from_directory, render_template, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
@@ -255,13 +253,6 @@ def _sheet_url_for_play(play_id: str) -> Optional[str]:
     return play.get("sheet")
 
 
-def _workbook_export_url(sheet_url: str) -> Optional[str]:
-    match = re.search(r"/spreadsheets/d/([^/]+)", sheet_url or "")
-    if not match:
-        return None
-    return f"https://docs.google.com/spreadsheets/d/{match.group(1)}/export?format=xlsx"
-
-
 def _csv_export_url(sheet_url: str) -> str:
     match = re.search(r"/spreadsheets/d/([^/]+)", sheet_url or "")
     if not match:
@@ -271,14 +262,6 @@ def _csv_export_url(sheet_url: str) -> str:
     gid_match = re.search(r"[?#&]gid=([^&#]+)", sheet_url)
     gid = gid_match.group(1) if gid_match else "0"
     return f"https://docs.google.com/spreadsheets/d/{match.group(1)}/export?format=csv&gid={gid}"
-
-
-def _clean_legend_value(value):
-    if isinstance(value, str):
-        value = value.strip()
-        if value.startswith("**") and value.endswith("**"):
-            value = value[2:-2].strip()
-    return value
 
 
 @app.route("/api/script/<play_id>")
@@ -304,48 +287,6 @@ def api_script(play_id):
         return jsonify(data)
     except requests.RequestException as e:
         return jsonify({"error": f"Failed to fetch script: {str(e)}"}), 500
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route("/api/legend/<play_id>")
-def api_legend(play_id):
-    """Extract the Legende sheet from the Google Sheets XLSX export."""
-    try:
-        sheet_url = _sheet_url_for_play(play_id)
-        workbook_url = _workbook_export_url(sheet_url or "")
-        if not workbook_url:
-            return jsonify({"error": "No XLSX workbook URL available"}), 400
-
-        response = requests.get(workbook_url, timeout=30)
-        response.raise_for_status()
-
-        workbook = load_workbook(BytesIO(response.content), read_only=True, data_only=True)
-        sheet_name = next((name for name in workbook.sheetnames if name.lower() == "legende"), None)
-        if not sheet_name:
-            return jsonify({"columns": [], "rows": [], "sheet": None})
-
-        worksheet = workbook[sheet_name]
-        rows = [
-            [_clean_legend_value(cell) for cell in row]
-            for row in worksheet.iter_rows(values_only=True)
-            if any(cell is not None and str(cell).strip() for cell in row)
-        ]
-        if not rows:
-            return jsonify({"columns": [], "rows": [], "sheet": sheet_name})
-
-        columns = [str(value).strip() if value is not None else f"Spalte {idx + 1}" for idx, value in enumerate(rows[0])]
-        legend_rows = []
-        for raw_row in rows[1:]:
-            item = {}
-            for idx, column in enumerate(columns):
-                item[column] = raw_row[idx] if idx < len(raw_row) else None
-            if any(value is not None and str(value).strip() for value in item.values()):
-                legend_rows.append(item)
-
-        return jsonify({"columns": columns, "rows": legend_rows, "sheet": sheet_name})
-    except requests.RequestException as e:
-        return jsonify({"error": f"Failed to fetch workbook: {str(e)}"}), 500
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
