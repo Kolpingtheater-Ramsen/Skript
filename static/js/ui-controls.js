@@ -2,7 +2,7 @@
  * UI controls and settings management
  */
 
-import { STORAGE_KEYS } from './config.js'
+import { CONFIG, STORAGE_KEYS } from './config.js'
 import { groupActorsByName } from './actor-groups.js'
 
 /**
@@ -385,13 +385,23 @@ export class UIControlsManager {
     const playSelect = document.getElementById('play-select')
     if (playSelect && playsConfig) {
       playSelect.innerHTML = ''
-      Object.entries(playsConfig).forEach(([id, info]) => {
+      const entries = Object.entries(playsConfig)
+      const duplicateDefault =
+        playsConfig.default &&
+        entries.some(
+          ([id, info]) =>
+            id !== 'default' &&
+            info?.name === playsConfig.default.name &&
+            info?.sheet === playsConfig.default.sheet
+        )
+      entries.forEach(([id, info]) => {
+        if (id === 'default' && duplicateDefault) return
         const opt = document.createElement('option')
         opt.value = id
         opt.textContent = info?.name || id
         playSelect.appendChild(opt)
       })
-      playSelect.value = currentPlayId
+      playSelect.value = currentPlayId === 'default' && duplicateDefault ? CONFIG.DEFAULT_PLAY_ID : currentPlayId
       playSelect.addEventListener('change', (e) => {
         const newPlay = e.target.value
         localStorage.setItem(STORAGE_KEYS.PLAY_ID, newPlay)
