@@ -317,8 +317,7 @@ export class Renderer {
         (settings.showLighting && row.Kategorie === CATEGORIES.LIGHTING) ||
         (settings.showEinspieler && row.Kategorie === CATEGORIES.AUDIO) ||
         (settings.showRequisiten && row.Kategorie === CATEGORIES.PROPS) ||
-        (settings.showMicrophone && row.Kategorie === CATEGORIES.MICROPHONE && !row.isAutoMic) ||
-        (settings.showMikrofonCues && row.Kategorie === CATEGORIES.MICROPHONE && row.isAutoMic) ||
+        (settings.showMicrophone && row.Kategorie === CATEGORIES.MICROPHONE) ||
         (settings.showActorText &&
           row.Charakter &&
           row.Kategorie === CATEGORIES.ACTOR)
@@ -338,7 +337,7 @@ export class Renderer {
         else if (row.Kategorie === CATEGORIES.PROPS)
           contextRange = settings.requisitenContext
         else if (row.Kategorie === CATEGORIES.MICROPHONE)
-          contextRange = row.isAutoMic ? settings.mikrofonContext : settings.microphoneContext
+          contextRange = settings.microphoneContext
 
         // Mark context lines
         for (

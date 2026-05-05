@@ -144,15 +144,6 @@ export class UIControlsManager {
       }
     }
 
-    // Load mikrofon cues state
-    const showMikrofonCues = document.getElementById('show-mikrofon-cues')
-    if (showMikrofonCues) {
-      const stored = localStorage.getItem('show-mikrofon-cues')
-      if (stored !== null) {
-        showMikrofonCues.checked = stored === 'true'
-      }
-    }
-
     // Load blur lines state
     const blurLines = document.getElementById('blur-lines')
     if (blurLines) {
@@ -464,8 +455,6 @@ export class UIControlsManager {
         document.getElementById('show-requisiten')?.checked || false,
       showMicrophone:
         document.getElementById('show-microphone')?.checked || false,
-      showMikrofonCues:
-        document.getElementById('show-mikrofon-cues')?.checked || false,
       showSceneOverview:
         document.getElementById('show-scene-overview')?.checked || false,
       blurLines: document.getElementById('blur-lines')?.checked || false,
@@ -487,9 +476,6 @@ export class UIControlsManager {
       ),
       microphoneContext: parseInt(
         document.getElementById('microphone-context')?.value || '0'
-      ),
-      mikrofonContext: parseInt(
-        document.getElementById('mikrofon-context')?.value || '0'
       ),
     }
   }
