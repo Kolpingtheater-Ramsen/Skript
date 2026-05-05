@@ -89,5 +89,5 @@ export function getActorDisplayName(role, actors = [], useActorNames = false) {
   const group = findActorGroupBySelection(actors, role)
   if (!group) return role
 
-  return `${group.actorName} (${formatRoleSummary(group.roles)})`
+  return `${group.actorName} (${role})`
 }
