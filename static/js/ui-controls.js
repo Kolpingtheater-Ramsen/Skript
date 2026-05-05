@@ -462,6 +462,8 @@ export class UIControlsManager {
         document.getElementById('show-einspieler')?.checked || false,
       showRequisiten:
         document.getElementById('show-requisiten')?.checked || false,
+      showMicrophone:
+        document.getElementById('show-microphone')?.checked || false,
       showMikrofonCues:
         document.getElementById('show-mikrofon-cues')?.checked || false,
       showSceneOverview:
@@ -482,6 +484,9 @@ export class UIControlsManager {
       ),
       requisitenContext: parseInt(
         document.getElementById('requisiten-context')?.value || '0'
+      ),
+      microphoneContext: parseInt(
+        document.getElementById('microphone-context')?.value || '0'
       ),
       mikrofonContext: parseInt(
         document.getElementById('mikrofon-context')?.value || '0'

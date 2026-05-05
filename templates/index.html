@@ -342,11 +342,24 @@
             </div>
           </div>
 
-          <!-- Microphone -->
+          <!-- Microphone numbers -->
           <div class="filter-item">
             <div class="checkbox-group">
               <input type="checkbox" id="show-micro" checked />
               <label for="show-micro">🎤 Mikrofonnummern anzeigen</label>
+            </div>
+          </div>
+
+          <!-- Microphone free-text cues -->
+          <div class="filter-item">
+            <div class="checkbox-group checkbox-microphone">
+              <input type="checkbox" id="show-microphone" checked />
+              <label for="show-microphone">🎤 Mikrofon</label>
+            </div>
+            <div class="range-group" id="microphone-context-group">
+              <label for="microphone-context">Kontextzeilen:</label>
+              <input type="range" id="microphone-context" min="0" max="5" value="0" />
+              <span class="range-value" id="microphone-context-value">0</span>
             </div>
           </div>
 
