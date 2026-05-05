@@ -11,6 +11,7 @@ import { DirectorManager } from './director.js'
 import { UIControlsManager } from './ui-controls.js'
 import { NavigationManager } from './navigation.js'
 import { getUrlParams } from './utils.js'
+import { createLegendElement, loadLegend } from './legend.js'
 
 /**
  * Main Application class
@@ -59,11 +60,16 @@ class App {
     // Normalize data
     data = dataManager.normalizeData(data)
 
+    // Load XLSX workbook legend when the backend can expose it.
+    const legend = await loadLegend(playId)
+
     // Store in state and global for backward compatibility
     stateManager.set('scriptData', data)
     stateManager.set('actors', actors)
+    stateManager.set('legend', legend)
     window.scriptData = data
     window.actors = actors
+    window.scriptLegend = legend
 
     // Populate actors dropdown
     this.uiControls.populateActors(actors)
@@ -184,9 +190,18 @@ class App {
     const actors = stateManager.get('actors')
     const settings = this.uiControls.getRenderSettings()
 
+    const legend = stateManager.get('legend')
     this.renderer.renderScript(data, settings, actors, (element, row) => {
       this.handleLineClick(element, row, settings)
     })
+
+    if (legend) {
+      const container = document.getElementById('script-container')
+      const toc = container?.querySelector('.toc')
+      if (container && toc) {
+        toc.after(createLegendElement(legend))
+      }
+    }
 
     // Update bottom navigation after rendering
     this.navigation.updateBottomNav()
