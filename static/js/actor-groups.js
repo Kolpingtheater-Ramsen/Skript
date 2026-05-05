@@ -6,6 +6,11 @@ function normalizeKey(value) {
   return (value || '').toString().trim().toUpperCase()
 }
 
+function formatRoleSummary(roles = []) {
+  if (roles.length <= 2) return roles.join(', ')
+  return `${roles.length} Rollen`
+}
+
 export function groupActorsByName(actors = []) {
   const groups = new Map()
 
@@ -33,10 +38,7 @@ export function groupActorsByName(actors = []) {
     .map((group) => ({
       ...group,
       roles: [...group.roles].sort((a, b) => a.localeCompare(b, 'de')),
-      label:
-        group.roles.length > 1
-          ? `${group.actorName} (${group.roles.join(', ')})`
-          : `${group.actorName} (${group.roles[0]})`,
+      label: `${group.actorName} (${formatRoleSummary(group.roles)})`,
     }))
     .sort((a, b) => a.actorName.localeCompare(b.actorName, 'de'))
 }
@@ -87,9 +89,5 @@ export function getActorDisplayName(role, actors = [], useActorNames = false) {
   const group = findActorGroupBySelection(actors, role)
   if (!group) return role
 
-  if (group.roles.length > 1) {
-    return `${group.actorName} (${group.roles.join(', ')})`
-  }
-
-  return `${group.actorName} (${group.roles[0]})`
+  return `${group.actorName} (${formatRoleSummary(group.roles)})`
 }
