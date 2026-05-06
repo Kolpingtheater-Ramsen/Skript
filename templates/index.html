@@ -383,16 +383,29 @@
             </div>
           </div>
 
-          <!-- Microphone free-text cues -->
+          <!-- Manual microphone cues -->
           <div class="filter-item">
             <div class="checkbox-group checkbox-microphone">
               <input type="checkbox" id="show-microphone" checked />
-              <label for="show-microphone">🎤 Mikrofon</label>
+              <label for="show-microphone">🎤 Manuelle Mikrofon-Cues</label>
             </div>
             <div class="range-group" id="microphone-context-group">
               <label for="microphone-context">Kontextzeilen:</label>
               <input type="range" id="microphone-context" min="0" max="5" value="0" />
               <span class="range-value" id="microphone-context-value">0</span>
+            </div>
+          </div>
+
+          <!-- Automatic microphone cues -->
+          <div class="filter-item">
+            <div class="checkbox-group checkbox-microphone">
+              <input type="checkbox" id="show-auto-microphone" checked />
+              <label for="show-auto-microphone">🤖 Automatische Mikrofon-Cues</label>
+            </div>
+            <div class="range-group" id="auto-microphone-context-group">
+              <label for="auto-microphone-context">Kontextzeilen:</label>
+              <input type="range" id="auto-microphone-context" min="0" max="5" value="0" />
+              <span class="range-value" id="auto-microphone-context-value">0</span>
             </div>
           </div>
 

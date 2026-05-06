@@ -492,6 +492,8 @@ export class UIControlsManager {
         document.getElementById('show-requisiten')?.checked || false,
       showMicrophone:
         document.getElementById('show-microphone')?.checked || false,
+      showAutoMicrophone:
+        document.getElementById('show-auto-microphone')?.checked || false,
       showSceneOverview:
         document.getElementById('show-scene-overview')?.checked || false,
       blurLines: document.getElementById('blur-lines')?.checked || false,
@@ -513,6 +515,9 @@ export class UIControlsManager {
       ),
       microphoneContext: parseInt(
         document.getElementById('microphone-context')?.value || '0'
+      ),
+      autoMicrophoneContext: parseInt(
+        document.getElementById('auto-microphone-context')?.value || '0'
       ),
     }
   }
