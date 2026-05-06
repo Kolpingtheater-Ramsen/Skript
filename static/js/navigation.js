@@ -241,6 +241,8 @@ export class NavigationManager {
               const allVisibleLines = Array.from(allLines)
               const globalIndex = allVisibleLines.indexOf(nextLine)
               directorManager.markLine(nextLine, globalIndex)
+              this.startNavigationLock()
+              smoothScrollToElement(nextLine, 25)
               break
             }
           }
@@ -262,6 +264,8 @@ export class NavigationManager {
               const allVisibleLines = Array.from(allLines)
               const globalIndex = allVisibleLines.indexOf(prevLine)
               directorManager.markLine(prevLine, globalIndex)
+              this.startNavigationLock()
+              smoothScrollToElement(prevLine, 25)
               break
             }
           }
