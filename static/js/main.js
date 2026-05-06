@@ -5,7 +5,6 @@
 import { CONFIG, STORAGE_KEYS } from './config.js'
 import { stateManager } from './state.js'
 import { socketManager } from './socket.js'
-import { dataManager } from './data-manager.js'
 import { Renderer } from './renderer.js'
 import { DirectorManager } from './director.js'
 import { UIControlsManager } from './ui-controls.js'
@@ -13,7 +12,8 @@ import { NavigationManager } from './navigation.js'
 import { getUrlParams } from './utils.js'
 import { LoadingScreen } from './loading-screen.js'
 import { setupAppEvents } from './app-events.js'
-import { renderSettingsDiagnostics, validateScriptData } from './sheet-validation.js'
+import { loadScriptModel } from './script-loader.js'
+import { renderSettingsDiagnostics } from './sheet-validation.js'
 
 /**
  * Main Application class
@@ -51,21 +51,14 @@ class App {
     // Initialize optional socket connection. The app remains usable if this fails.
     socketManager.init(playId)
 
-    // Load plays configuration
-    await dataManager.loadPlaysConfig()
-    stateManager.set('playsConfig', dataManager.getPlaysConfig())
+    // Load script model and derived metadata
+    const scriptModel = await loadScriptModel(playId)
+    const { playsConfig, data, actors, validation } = scriptModel
+    stateManager.set('playsConfig', playsConfig)
 
     // Setup play selector and update links
-    this.uiControls.setupPlaySelector(dataManager.getPlaysConfig(), playId)
+    this.uiControls.setupPlaySelector(playsConfig, playId)
     this.uiControls.updateLinksWithPlayParam(playId)
-
-    // Load script data
-    const rawData = await dataManager.loadScript(playId)
-    const actors = dataManager.getActors(rawData)
-
-    // Normalize data
-    const data = dataManager.normalizeData(rawData)
-    const validation = validateScriptData(rawData, data)
 
     // Store in state and global for backward compatibility
     stateManager.set('scriptData', data)
