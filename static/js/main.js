@@ -24,6 +24,18 @@ class App {
     this.navigation = new NavigationManager(stateManager)
   }
 
+  hideLoading() {
+    const overlay = document.getElementById('loading-overlay')
+    const scriptContainer = document.getElementById('script-container')
+    document.body.classList.remove('app-loading')
+    document.body.classList.add('app-ready')
+    if (scriptContainer) scriptContainer.setAttribute('aria-busy', 'false')
+    if (overlay) {
+      overlay.classList.add('hidden')
+      setTimeout(() => overlay.remove(), 260)
+    }
+  }
+
   /**
    * Initialize the application
    */
@@ -80,6 +92,7 @@ class App {
 
     // Initial render
     this.render()
+    this.hideLoading()
 
     // Update current scene
     this.navigation.updateCurrentScene()

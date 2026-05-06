@@ -12,6 +12,106 @@
    ADDITIONAL GLOBAL STYLES
    ============================================ */
 
+/* Initial loading state */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: color-mix(in srgb, var(--color-background) 88%, transparent);
+  backdrop-filter: blur(8px);
+  opacity: 1;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-card {
+  width: min(420px, 100%);
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.loading-logo {
+  font-size: 2.4rem;
+  margin-bottom: var(--space-3);
+}
+
+.loading-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-1);
+}
+
+.loading-subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-5);
+}
+
+.loading-bars {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.loading-bars span,
+.loading-skeleton .skeleton-toc,
+.loading-skeleton .skeleton-line {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-gray-100), var(--color-gray-200), var(--color-gray-100));
+  background-size: 220% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+}
+
+.loading-bars span:nth-child(1) { width: 100%; }
+.loading-bars span:nth-child(2) { width: 82%; }
+.loading-bars span:nth-child(3) { width: 64%; }
+
+.loading-skeleton {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.loading-skeleton .skeleton-toc {
+  height: 90px;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-2);
+}
+
+.loading-skeleton .skeleton-line {
+  height: 58px;
+  border-radius: var(--radius-lg);
+}
+
+.loading-skeleton .skeleton-line.wide { width: 100%; }
+.loading-skeleton .skeleton-line:not(.wide):not(.short) { width: 86%; }
+.loading-skeleton .skeleton-line.short { width: 62%; }
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-bars span,
+  .loading-skeleton .skeleton-toc,
+  .loading-skeleton .skeleton-line {
+    animation: none;
+  }
+}
+
 /* Legacy button support for links */
 .button {
   display: inline-flex;
