@@ -22,6 +22,31 @@ class App {
     this.directorManager = new DirectorManager(stateManager, socketManager)
     this.uiControls = new UIControlsManager(stateManager)
     this.navigation = new NavigationManager(stateManager)
+    this.loadingLineTimer = null
+  }
+
+  startLoadingLines() {
+    const loadingLine = document.getElementById('loading-line')
+    if (!loadingLine) return
+    const lines = [
+      'Bühne wird gefegt.',
+      'Requisiten werden sortiert.',
+      'Souffleuse sucht Seite 1.',
+      'Mikros werden wachgeküsst.',
+      'Lichtpult sagt kurz Hallo.',
+      'Vorhang klemmt noch ein bisschen.',
+      'Text wird entknittert.',
+    ]
+    let index = Math.floor(Math.random() * lines.length)
+    loadingLine.textContent = lines[index]
+    this.loadingLineTimer = window.setInterval(() => {
+      loadingLine.classList.add('changing')
+      window.setTimeout(() => {
+        index = (index + 1) % lines.length
+        loadingLine.textContent = lines[index]
+        loadingLine.classList.remove('changing')
+      }, 160)
+    }, 1400)
   }
 
   hideLoading() {
@@ -29,10 +54,14 @@ class App {
     const scriptContainer = document.getElementById('script-container')
     document.body.classList.remove('app-loading')
     document.body.classList.add('app-ready')
+    if (this.loadingLineTimer) {
+      window.clearInterval(this.loadingLineTimer)
+      this.loadingLineTimer = null
+    }
     if (scriptContainer) scriptContainer.setAttribute('aria-busy', 'false')
     if (overlay) {
       overlay.classList.add('hidden')
-      setTimeout(() => overlay.remove(), 260)
+      setTimeout(() => overlay.remove(), 520)
     }
   }
 
@@ -40,6 +69,8 @@ class App {
    * Initialize the application
    */
   async init() {
+    this.startLoadingLines()
+
     // Get play ID from URL or localStorage
     const urlParams = getUrlParams()
     const storedPlayId =
@@ -60,6 +91,7 @@ class App {
 
     // Load plays configuration
     await dataManager.loadPlaysConfig()
+    stateManager.set('playsConfig', dataManager.getPlaysConfig())
 
     // Setup play selector and update links
     this.uiControls.setupPlaySelector(dataManager.getPlaysConfig(), playId)

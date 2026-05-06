@@ -182,11 +182,24 @@
 </head>
 
 <body class="app-loading">
+  <script>
+    ;(() => {
+      try {
+        const storedDark = localStorage.getItem('dark-mode')
+        const darkMode = storedDark === null ? true : storedDark === 'true'
+        const pinkMode = localStorage.getItem('pink-mode') === 'true'
+        document.body.classList.toggle('dark-mode', darkMode && !pinkMode)
+        document.body.classList.toggle('pink-mode', pinkMode)
+      } catch (e) {
+        document.body.classList.add('dark-mode')
+      }
+    })()
+  </script>
   <div id="loading-overlay" class="loading-overlay" role="status" aria-live="polite">
     <div class="loading-card">
-      <div class="loading-logo">🎭</div>
+      <img class="loading-logo" src="/static/assets/logo.png" alt="Kolpingtheater Ramsen" />
       <div class="loading-title">Skript wird geladen…</div>
-      <div class="loading-subtitle">Daten werden aus dem Sheet vorbereitet.</div>
+      <div id="loading-line" class="loading-subtitle">Bühne wird gefegt.</div>
       <div class="loading-bars" aria-hidden="true">
         <span></span>
         <span></span>
@@ -432,6 +445,9 @@
           </a>
           <a id="viewer2-link" href="/viewer2.html" class="button">
             🎭 Schauspieler-Viewer öffnen
+          </a>
+          <a id="sheet-link" href="#" class="button" target="_blank" rel="noopener noreferrer">
+            📊 Google Sheet öffnen
           </a>
           <a id="convert-link" href="/convert.html" class="button">
             📑 Skript-Konverter

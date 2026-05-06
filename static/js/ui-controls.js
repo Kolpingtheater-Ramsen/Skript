@@ -509,6 +509,17 @@ export class UIControlsManager {
    * @param {string} playId - Current play ID
    */
   updateLinksWithPlayParam(playId) {
+    const sheet = document.getElementById('sheet-link')
+    if (sheet) {
+      const sheetUrl = this.state.get('playsConfig')?.[playId]?.sheet || this.state.get('playsConfig')?.default?.sheet
+      if (sheetUrl) {
+        sheet.setAttribute('href', sheetUrl)
+        sheet.style.display = ''
+      } else {
+        sheet.style.display = 'none'
+      }
+    }
+
     // Update suggestor link
     const sugg = document.getElementById('suggestor-link')
     if (sugg) {
