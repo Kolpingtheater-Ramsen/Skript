@@ -9,7 +9,7 @@ import {
   getActorDisplayName,
   rowMatchesSelectedActor,
 } from './actor-groups.js'
-import { appendHighlightedText, appendTextWithTransforms } from './inline-text.js'
+import { appendHighlightedText, appendTextWithTransforms } from './inline-text.js?v=819c608'
 
 /**
  * Script Renderer class
