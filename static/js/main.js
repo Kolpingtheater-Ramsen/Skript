@@ -23,6 +23,7 @@ class App {
     this.uiControls = new UIControlsManager(stateManager)
     this.navigation = new NavigationManager(stateManager)
     this.loadingLineTimer = null
+    this.loadingStartedAt = null
   }
 
   startLoadingLines() {
@@ -50,25 +51,30 @@ class App {
   }
 
   hideLoading() {
-    const overlay = document.getElementById('loading-overlay')
-    const scriptContainer = document.getElementById('script-container')
-    document.body.classList.remove('app-loading')
-    document.body.classList.add('app-ready')
-    if (this.loadingLineTimer) {
-      window.clearInterval(this.loadingLineTimer)
-      this.loadingLineTimer = null
-    }
-    if (scriptContainer) scriptContainer.setAttribute('aria-busy', 'false')
-    if (overlay) {
-      overlay.classList.add('hidden')
-      setTimeout(() => overlay.remove(), 520)
-    }
+    const elapsed = this.loadingStartedAt ? performance.now() - this.loadingStartedAt : 1000
+    const remaining = Math.max(0, 1000 - elapsed)
+    window.setTimeout(() => {
+      const overlay = document.getElementById('loading-overlay')
+      const scriptContainer = document.getElementById('script-container')
+      document.body.classList.remove('app-loading')
+      document.body.classList.add('app-ready')
+      if (this.loadingLineTimer) {
+        window.clearInterval(this.loadingLineTimer)
+        this.loadingLineTimer = null
+      }
+      if (scriptContainer) scriptContainer.setAttribute('aria-busy', 'false')
+      if (overlay) {
+        overlay.classList.add('hidden')
+        setTimeout(() => overlay.remove(), 520)
+      }
+    }, remaining)
   }
 
   /**
    * Initialize the application
    */
   async init() {
+    this.loadingStartedAt = performance.now()
     this.startLoadingLines()
 
     // Get play ID from URL or localStorage
