@@ -4,6 +4,7 @@
 
 import { CONFIG, STORAGE_KEYS } from './config.js'
 import { groupActorsByName } from './actor-groups.js'
+import { applyFilterPreset } from './filter-presets.js'
 
 /**
  * UI Controls Manager class
@@ -186,92 +187,15 @@ export class UIControlsManager {
   }
 
   /**
-   * Apply a quick content-filter preset.
-   * @param {string} preset - Preset id
-   */
-  applyPreset(preset) {
-    const presets = {
-      actor: {
-        checks: {
-          'show-actor-text': true,
-          'show-directions': true,
-          'show-technical': false,
-          'show-lighting': false,
-          'show-einspieler': false,
-          'show-requisiten': false,
-          'show-microphone': false,
-          'show-micro': true,
-        },
-        sliders: {},
-      },
-      tech: {
-        checks: {
-          'show-actor-text': true,
-          'show-directions': true,
-          'show-technical': true,
-          'show-lighting': true,
-          'show-einspieler': true,
-          'show-requisiten': true,
-          'show-microphone': true,
-          'show-micro': true,
-        },
-        sliders: {},
-      },
-      text: {
-        checks: {
-          'show-actor-text': true,
-          'show-directions': false,
-          'show-technical': false,
-          'show-lighting': false,
-          'show-einspieler': false,
-          'show-requisiten': false,
-          'show-microphone': false,
-          'show-micro': false,
-        },
-        sliders: {},
-      },
-      all: {
-        checks: {
-          'show-actor-text': true,
-          'show-directions': true,
-          'show-technical': true,
-          'show-lighting': true,
-          'show-einspieler': true,
-          'show-requisiten': true,
-          'show-microphone': true,
-          'show-micro': true,
-        },
-        sliders: {},
-      },
-    }
-
-    const config = presets[preset]
-    if (!config) return
-
-    Object.entries(config.checks).forEach(([id, checked]) => {
-      const checkbox = document.getElementById(id)
-      if (checkbox) checkbox.checked = checked
-    })
-
-    Object.entries(config.sliders).forEach(([id, value]) => {
-      const slider = document.getElementById(id)
-      const valueDisplay = document.getElementById(`${id}-value`)
-      if (slider) slider.value = value
-      if (valueDisplay) valueDisplay.textContent = value
-    })
-
-    this.updateContextSliderVisibility()
-    this.saveState()
-  }
-
-  /**
    * Setup preset buttons.
    * @param {Function} onPreset - Callback after preset apply
    */
   setupPresetButtons(onPreset) {
     document.querySelectorAll('[data-preset]').forEach((button) => {
       button.addEventListener('click', () => {
-        this.applyPreset(button.dataset.preset)
+        if (!applyFilterPreset(button.dataset.preset)) return
+        this.updateContextSliderVisibility()
+        this.saveState()
         if (onPreset) onPreset(button.dataset.preset)
       })
     })

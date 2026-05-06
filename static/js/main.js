@@ -11,6 +11,7 @@ import { DirectorManager } from './director.js'
 import { UIControlsManager } from './ui-controls.js'
 import { NavigationManager } from './navigation.js'
 import { getUrlParams } from './utils.js'
+import { LoadingScreen } from './loading-screen.js'
 import { renderSettingsDiagnostics, validateScriptData } from './sheet-validation.js'
 
 /**
@@ -22,60 +23,14 @@ class App {
     this.directorManager = new DirectorManager(stateManager, socketManager)
     this.uiControls = new UIControlsManager(stateManager)
     this.navigation = new NavigationManager(stateManager)
-    this.loadingLineTimer = null
-    this.loadingStartedAt = null
-  }
-
-  startLoadingLines() {
-    const loadingLine = document.getElementById('loading-line')
-    if (!loadingLine) return
-    const lines = [
-      'Bühne wird gefegt.',
-      'Requisiten werden sortiert.',
-      'Souffleuse sucht Seite 1.',
-      'Mikros werden wachgeküsst.',
-      'Lichtpult sagt kurz Hallo.',
-      'Vorhang klemmt noch ein bisschen.',
-      'Text wird entknittert.',
-    ]
-    let index = Math.floor(Math.random() * lines.length)
-    loadingLine.textContent = lines[index]
-    this.loadingLineTimer = window.setInterval(() => {
-      loadingLine.classList.add('changing')
-      window.setTimeout(() => {
-        index = (index + 1) % lines.length
-        loadingLine.textContent = lines[index]
-        loadingLine.classList.remove('changing')
-      }, 160)
-    }, 1400)
-  }
-
-  hideLoading() {
-    const elapsed = this.loadingStartedAt ? performance.now() - this.loadingStartedAt : 1000
-    const remaining = Math.max(0, 1000 - elapsed)
-    window.setTimeout(() => {
-      const overlay = document.getElementById('loading-overlay')
-      const scriptContainer = document.getElementById('script-container')
-      document.body.classList.remove('app-loading')
-      document.body.classList.add('app-ready')
-      if (this.loadingLineTimer) {
-        window.clearInterval(this.loadingLineTimer)
-        this.loadingLineTimer = null
-      }
-      if (scriptContainer) scriptContainer.setAttribute('aria-busy', 'false')
-      if (overlay) {
-        overlay.classList.add('hidden')
-        setTimeout(() => overlay.remove(), 520)
-      }
-    }, remaining)
+    this.loadingScreen = new LoadingScreen()
   }
 
   /**
    * Initialize the application
    */
   async init() {
-    this.loadingStartedAt = performance.now()
-    this.startLoadingLines()
+    this.loadingScreen.start()
 
     // Get play ID from URL or localStorage
     const urlParams = getUrlParams()
@@ -130,7 +85,7 @@ class App {
 
     // Initial render
     this.render()
-    this.hideLoading()
+    this.loadingScreen.finish()
 
     // Update current scene
     this.navigation.updateCurrentScene()
