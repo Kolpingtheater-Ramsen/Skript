@@ -217,7 +217,40 @@ export class Renderer {
     const sidebarToc = createTocContent()
     const sidebar = document.querySelector('.sidebar')
     if (sidebar) {
+      const playsConfig = this.state.get('playsConfig') || {}
+      const playId = this.state.get('playId') || 'default'
+      const playName = playsConfig[playId]?.name || playsConfig.default?.name || 'Drehbuch'
+      const header = document.createElement('div')
+      header.className = 'sidebar-header'
+
+      const brand = document.createElement('div')
+      brand.className = 'sidebar-brand'
+      const logo = document.createElement('img')
+      logo.src = '/static/assets/logo.png'
+      logo.alt = ''
+      logo.className = 'sidebar-logo'
+      const titleWrap = document.createElement('div')
+      const kicker = document.createElement('div')
+      kicker.className = 'sidebar-kicker'
+      kicker.textContent = 'Kolpingtheater Ramsen'
+      const title = document.createElement('div')
+      title.className = 'sidebar-title'
+      title.textContent = playName
+      titleWrap.append(kicker, title)
+      brand.append(logo, titleWrap)
+
+      const close = document.createElement('button')
+      close.type = 'button'
+      close.className = 'sidebar-close'
+      close.setAttribute('aria-label', 'Inhaltsverzeichnis schließen')
+      close.textContent = '×'
+      close.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('closeSidebar'))
+      })
+
+      header.append(brand, close)
       sidebar.innerHTML = ''
+      sidebar.appendChild(header)
       sidebar.appendChild(sidebarToc)
     }
 
