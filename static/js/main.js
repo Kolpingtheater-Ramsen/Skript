@@ -128,6 +128,11 @@ class App {
       this.render()
     })
 
+    // Quick content presets
+    this.uiControls.setupPresetButtons(() => {
+      this.render()
+    })
+
     // Theme switching
     this.uiControls.setupThemeSwitching()
 

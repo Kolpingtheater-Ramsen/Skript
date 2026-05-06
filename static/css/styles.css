@@ -71,6 +71,18 @@ th {
   justify-content: flex-start;
 }
 
+/* Content filter presets */
+.preset-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.preset-buttons .btn {
+  width: 100%;
+}
+
 /* Content filter grid */
 .content-filters {
   display: grid;
