@@ -12,6 +12,7 @@ import { UIControlsManager } from './ui-controls.js'
 import { NavigationManager } from './navigation.js'
 import { getUrlParams } from './utils.js'
 import { LoadingScreen } from './loading-screen.js'
+import { setupAppEvents } from './app-events.js'
 import { renderSettingsDiagnostics, validateScriptData } from './sheet-validation.js'
 
 /**
@@ -95,99 +96,11 @@ class App {
    * Setup all event listeners
    */
   setupEventListeners() {
-    // Checkbox change listeners
-    document
-      .querySelectorAll('#checkboxes input[type="checkbox"]')
-      .forEach((input) => {
-        input.addEventListener('change', () => {
-          if (input.id === 'show-actor-text') {
-            this.uiControls.updateContextSliderVisibility()
-          }
-          this.uiControls.saveState()
-          this.render()
-        })
-      })
-
-    // Actor name toggle listener
-    const showActorNames = document.getElementById('show-actor-names')
-    if (showActorNames) {
-      showActorNames.addEventListener('change', () => {
-        localStorage.setItem(
-          STORAGE_KEYS.SHOW_ACTOR_NAMES,
-          showActorNames.checked
-        )
-        this.render()
-      })
-    }
-
-    // Actor select change listener
-    const actorSelect = document.getElementById('actor-select')
-    if (actorSelect) {
-      actorSelect.addEventListener('change', () => {
-        this.uiControls.saveState()
-        this.render()
-      })
-    }
-
-    // Context slider listeners
-    this.uiControls.addContextSliderListeners(() => {
-      this.render()
-    })
-
-    // Quick content presets
-    this.uiControls.setupPresetButtons(() => {
-      this.render()
-    })
-
-    // Theme switching
-    this.uiControls.setupThemeSwitching()
-
-    // Notes toggle listener
-    this.uiControls.setupNotesListeners(() => {
-      this.render()
-    })
-
-    // Scene overview toggle listener
-    const sceneOverview = document.getElementById('show-scene-overview')
-    if (sceneOverview) {
-      sceneOverview.addEventListener('change', () => {
-        this.uiControls.saveState()
-        this.render()
-      })
-    }
-
-    // Blur lines toggle listener
-    const blurLines = document.getElementById('blur-lines')
-    if (blurLines) {
-      blurLines.addEventListener('change', () => {
-        this.uiControls.saveState()
-        this.render()
-      })
-    }
-
-    // Autoscroll toggle listener
-    const autoscroll = document.getElementById('autoscroll')
-    if (autoscroll) {
-      autoscroll.addEventListener('change', () => {
-        this.uiControls.saveState()
-      })
-    }
-
-    // Scroll listener
-    this.navigation.setupScrollListener(this.directorManager)
-
-    // Keyboard navigation
-    this.navigation.setupKeyboardNavigation(this.directorManager)
-
-    // Custom event for closing sidebar (from ToC links)
-    document.addEventListener('closeSidebar', () => {
-      this.uiControls.closeSidebar()
-      this.navigation.updateCurrentScene()
-    })
-
-    // Custom event for ToC navigation to prevent scroll bounce
-    document.addEventListener('tocNavigation', () => {
-      this.navigation.startNavigationLock()
+    setupAppEvents({
+      uiControls: this.uiControls,
+      navigation: this.navigation,
+      directorManager: this.directorManager,
+      render: () => this.render(),
     })
   }
 
