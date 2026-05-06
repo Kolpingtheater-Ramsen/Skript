@@ -684,6 +684,36 @@ body.has-bottom-nav {
   margin-bottom: 0;
 }
 
+.settings-diagnostics {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  line-height: 1.5;
+}
+
+.settings-diagnostics:last-child {
+  margin-bottom: 0;
+}
+
+.settings-diagnostics ul {
+  margin: var(--space-2) 0 0 var(--space-4);
+  padding: 0;
+}
+
+.validation-ok {
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+}
+
+.validation-warning-title {
+  color: var(--color-warning);
+  font-weight: var(--font-weight-semibold);
+}
+
 /* ============================================
    FAB (Floating Action Button)
    ============================================ */

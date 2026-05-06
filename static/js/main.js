@@ -11,6 +11,7 @@ import { DirectorManager } from './director.js'
 import { UIControlsManager } from './ui-controls.js'
 import { NavigationManager } from './navigation.js'
 import { getUrlParams } from './utils.js'
+import { renderSettingsDiagnostics, validateScriptData } from './sheet-validation.js'
 
 /**
  * Main Application class
@@ -53,15 +54,17 @@ class App {
     this.uiControls.updateLinksWithPlayParam(playId)
 
     // Load script data
-    let data = await dataManager.loadScript(playId)
-    const actors = dataManager.getActors(data)
+    const rawData = await dataManager.loadScript(playId)
+    const actors = dataManager.getActors(rawData)
 
     // Normalize data
-    data = dataManager.normalizeData(data)
+    const data = dataManager.normalizeData(rawData)
+    const validation = validateScriptData(rawData, data)
 
     // Store in state and global for backward compatibility
     stateManager.set('scriptData', data)
     stateManager.set('actors', actors)
+    stateManager.set('sheetValidation', validation)
     window.scriptData = data
     window.actors = actors
 
@@ -70,6 +73,7 @@ class App {
 
     // Load UI state
     this.uiControls.loadState()
+    renderSettingsDiagnostics(playId, validation)
 
     // Setup event listeners
     this.setupEventListeners()
