@@ -33,20 +33,23 @@
 }
 
 .loading-card {
-  width: min(360px, 100%);
-  padding: var(--space-6);
+  width: min(320px, 100%);
+  padding: var(--space-6) var(--space-5);
   border-radius: var(--radius-xl);
   background: var(--color-surface);
   box-shadow: var(--shadow-xl);
   border: 1px solid var(--color-border);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .loading-logo {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
   filter: drop-shadow(0 8px 18px color-mix(in srgb, var(--color-primary) 28%, transparent));
   animation: loading-logo-bow 1.8s ease-in-out infinite;
   transform-origin: 50% 80%;
@@ -55,14 +58,16 @@
 .loading-title {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-lg);
+  line-height: 1.15;
   margin-bottom: var(--space-2);
 }
 
 .loading-subtitle {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
+  line-height: 1.35;
   min-height: 1.35em;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
   transition: opacity 0.16s ease, transform 0.16s ease;
 }
 
@@ -73,14 +78,16 @@
 
 .loading-bars {
   display: grid;
-  gap: 7px;
+  gap: 6px;
+  width: min(210px, 78%);
+  justify-items: center;
 }
 
 .loading-bars span,
 .loading-skeleton .skeleton-toc,
 .loading-skeleton .skeleton-line {
   display: block;
-  height: 10px;
+  height: 8px;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--color-gray-100), var(--color-gray-200), var(--color-gray-100));
   background-size: 220% 100%;
@@ -88,8 +95,8 @@
 }
 
 .loading-bars span:nth-child(1) { width: 100%; }
-.loading-bars span:nth-child(2) { width: 82%; }
-.loading-bars span:nth-child(3) { width: 64%; }
+.loading-bars span:nth-child(2) { width: 76%; }
+.loading-bars span:nth-child(3) { width: 52%; }
 
 .loading-skeleton {
   display: grid;
