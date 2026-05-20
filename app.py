@@ -204,7 +204,11 @@ def serve_html(path):
 @app.route("/sw.js")
 def serve_sw():
     """Serve service worker from root for scope."""
-    return send_from_directory(".", "sw.js")
+    response = send_from_directory(".", "sw.js")
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 
 @app.route("/manifest.json")

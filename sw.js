@@ -3,6 +3,7 @@ const CACHE_VERSION = 'BUILD_TIMESTAMP_PLACEHOLDER';
 const CACHE_NAME = `drehbuch-cache-${CACHE_VERSION}`;
 
 const ASSETS_TO_CACHE = [
+  '/',
   '/static/css/styles.css',
   '/static/css/base.css',
   '/static/css/components.css',
@@ -10,9 +11,30 @@ const ASSETS_TO_CACHE = [
   '/static/css/themes.css',
   '/static/js/main.js',
   '/static/js/vendor/papaparse.min.js',
+  '/static/js/state.js',
+  '/static/js/config.js',
+  '/static/js/socket.js',
+  '/static/js/ui-controls.js',
+  '/static/js/loading-screen.js',
+  '/static/js/utils.js',
+  '/static/js/navigation.js',
+  '/static/js/app-events.js',
+  '/static/js/script-loader.js',
+  '/static/js/director.js',
+  '/static/js/renderer.js',
+  '/static/js/sheet-validation.js',
+  '/static/js/data-manager.js',
+  '/static/js/actor-groups.js',
+  '/static/js/filter-presets.js',
+  '/static/js/inline-text.js',
+  '/static/js/mic-cue-generator.js',
+  '/static/js/runtime.js',
+  '/static/data/plays.json',
   '/static/assets/logo.png',
   '/manifest.json',
 ];
+
+const FALLBACK_STATUSES = new Set([408, 425, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524]);
 
 // Install event - cache assets and skip waiting
 self.addEventListener('install', (event) => {
@@ -87,14 +109,33 @@ async function networkFirst(request) {
       const cache = await caches.open(CACHE_NAME);
       cache.put(request, networkResponse.clone());
     }
+    if (networkResponse && FALLBACK_STATUSES.has(networkResponse.status)) {
+      const cachedResponse = await matchCachedFallback(request);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+    }
     return networkResponse;
   } catch (error) {
-    const cachedResponse = await caches.match(request);
+    const cachedResponse = await matchCachedFallback(request);
     if (cachedResponse) {
       return cachedResponse;
     }
     throw error;
   }
+}
+
+async function matchCachedFallback(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
+  if (request.mode === 'navigate') {
+    return caches.match('/');
+  }
+
+  return null;
 }
 
 // Cache-first strategy: try cache, fall back to network
