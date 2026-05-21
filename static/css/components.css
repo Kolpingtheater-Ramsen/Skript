@@ -497,15 +497,21 @@ body.has-bottom-nav {
 .sidebar {
   position: fixed;
   top: 0;
-  right: -320px;
-  width: 300px;
-  height: 100vh;
+  right: calc(-1 * min(420px, 100vw));
+  width: min(420px, 100vw);
+  height: 100dvh;
   background-color: var(--color-surface);
   border-left: 1px solid var(--color-border);
   z-index: var(--z-modal);
   overflow-y: auto;
-  padding: var(--space-6);
+  overscroll-behavior: contain;
+  padding: var(--space-4);
+  padding-top: max(var(--space-4), env(safe-area-inset-top));
+  padding-right: max(var(--space-4), env(safe-area-inset-right));
+  padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+  box-sizing: border-box;
   transition: right var(--transition-slow);
+  scrollbar-gutter: stable;
 }
 
 .sidebar.active {
@@ -529,13 +535,17 @@ body.has-bottom-nav {
 }
 
 .sidebar-header {
+  position: sticky;
+  top: calc(-1 * max(var(--space-4), env(safe-area-inset-top)));
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  padding-bottom: var(--space-4);
+  padding: 0 0 var(--space-4) 0;
   margin-bottom: var(--space-4);
   border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface);
 }
 
 .sidebar-brand {
@@ -543,6 +553,7 @@ body.has-bottom-nav {
   align-items: center;
   gap: var(--space-3);
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .sidebar-logo {
@@ -567,6 +578,7 @@ body.has-bottom-nav {
   line-height: var(--line-height-tight);
   overflow: hidden;
   text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .sidebar-close {
@@ -583,6 +595,7 @@ body.has-bottom-nav {
   font: inherit;
   font-size: 1.4rem;
   line-height: 1;
+  flex: 0 0 auto;
 }
 
 .sidebar-close:hover {
@@ -598,16 +611,40 @@ body.has-bottom-nav {
   font-size: var(--font-size-lg);
   margin-bottom: var(--space-4);
   margin-top: 0;
+  line-height: 1.2;
 }
 
 .sidebar .toc a {
   display: block;
-  padding: var(--space-2) var(--space-3);
-  margin-bottom: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
   border-radius: var(--radius-md);
   color: var(--color-text);
   text-decoration: none;
   transition: all var(--transition-fast);
+  overflow-wrap: anywhere;
+}
+
+body.sidebar-open {
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    right: calc(-100vw - 2px);
+    width: 100vw;
+    border-left: 0;
+    padding-left: var(--space-5);
+  }
+
+  .sidebar-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sidebar-title {
+    font-size: var(--font-size-sm);
+  }
 }
 
 .sidebar .toc a:hover {

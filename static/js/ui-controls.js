@@ -246,6 +246,7 @@ export class UIControlsManager {
     if (sidebar && overlay) {
       sidebar.classList.toggle('active')
       overlay.classList.toggle('active')
+      document.body.classList.toggle('sidebar-open', sidebar.classList.contains('active'))
 
       // Update button text if exists
       if (navToggle) {
@@ -265,6 +266,7 @@ export class UIControlsManager {
     if (sidebar && overlay) {
       sidebar.classList.remove('active')
       overlay.classList.remove('active')
+      document.body.classList.remove('sidebar-open')
       if (navToggle) {
         navToggle.textContent = '☰'
       }
@@ -568,4 +570,3 @@ export class UIControlsManager {
     }
   }
 }
-
