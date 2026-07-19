@@ -28,6 +28,7 @@ const STORAGE_KEYS = {
   SHOW_ACTOR_NAMES: 'show-actor-names',
   ENABLE_NOTES: 'enable-notes',
   SCRIPT_NOTES: 'script-notes', // Per-play notes storage
+  ONBOARDING_COMPLETE: 'view-onboarding-complete-v1',
 }
 
 const CATEGORIES = {

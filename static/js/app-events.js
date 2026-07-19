@@ -10,6 +10,7 @@ import { STORAGE_KEYS } from './config.js'
 export function setupAppEvents({ uiControls, navigation, directorManager, render }) {
   const rerenderAndSave = () => {
     uiControls.saveState()
+    uiControls.syncPresetSelection()
     render()
   }
 
@@ -63,6 +64,7 @@ export function setupAppEvents({ uiControls, navigation, directorManager, render
   if (autoscroll) {
     autoscroll.addEventListener('change', () => {
       uiControls.saveState()
+      uiControls.syncPresetSelection()
     })
   }
 

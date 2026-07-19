@@ -207,9 +207,16 @@ export class Renderer {
    * @param {string} selectedActor - Selected actor/role name
    * @param {Array} actors - All actors array
    * @param {boolean} useActorNames - Whether to show actor names
+   * @param {boolean} showMicro - Whether to show microphone numbers
    * @returns {HTMLElement} Scene overview element
    */
-  createSceneOverview(sceneData, selectedActor, actors, useActorNames) {
+  createSceneOverview(
+    sceneData,
+    selectedActor,
+    actors,
+    useActorNames,
+    showMicro
+  ) {
     let actorsSet = new Set()
     const micros = new Map()
 
@@ -235,16 +242,19 @@ export class Renderer {
     const table = document.createElement('table')
 
     const tr = document.createElement('tr')
-    const th1 = document.createElement('th')
-    th1.textContent = 'Mikro'
-    tr.appendChild(th1)
+    if (showMicro) {
+      const th1 = document.createElement('th')
+      th1.textContent = 'Mikro'
+      tr.appendChild(th1)
+    }
     const th2 = document.createElement('th')
     th2.textContent = 'Schauspieler'
     tr.appendChild(th2)
     table.appendChild(tr)
 
-    // Sort actors by micro and try to parse micros as numbers
+    // Technical views prioritize microphone order; other views stay alphabetical.
     actorsSet = Array.from(actorsSet).sort((a, b) => {
+      if (!showMicro) return a.localeCompare(b, 'de')
       const microA = parseInt(micros.get(a), 10)
       const microB = parseInt(micros.get(b), 10)
       return microA - microB
@@ -252,9 +262,11 @@ export class Renderer {
 
     actorsSet.forEach((actor) => {
       const tr = document.createElement('tr')
-      const td1 = document.createElement('td')
-      td1.textContent = micros.get(actor) || ''
-      tr.appendChild(td1)
+      if (showMicro) {
+        const td1 = document.createElement('td')
+        td1.textContent = micros.get(actor) || ''
+        tr.appendChild(td1)
+      }
       const td2 = document.createElement('td')
       const selectedGroup = findActorGroupBySelection(actors, selectedActor)
       const isSelected = selectedGroup
@@ -740,7 +752,8 @@ export class Renderer {
                 sceneData,
                 settings.selectedActor,
                 actors,
-                settings.useActorNames
+                settings.useActorNames,
+                settings.showMicro
               )
             )
           }

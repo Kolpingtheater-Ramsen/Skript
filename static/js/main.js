@@ -80,6 +80,7 @@ class App {
     // Initial render
     this.render()
     this.loadingScreen.finish()
+    this.uiControls.maybeOpenOnboarding()
 
     // Update current scene
     this.navigation.updateCurrentScene()

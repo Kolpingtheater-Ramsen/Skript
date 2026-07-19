@@ -13,9 +13,45 @@ const FILTER_PRESETS = {
       'show-requisiten': false,
       'show-microphone': false,
       'show-auto-microphone': false,
-      'show-micro': true,
+      'show-micro': false,
+      'show-scene-overview': true,
+      'blur-lines': false,
+      'autoscroll': false,
     },
-    sliders: {},
+    sliders: {
+      'directions-context': 0,
+      'technical-context': 0,
+      'lighting-context': 0,
+      'einspieler-context': 0,
+      'requisiten-context': 0,
+      'microphone-context': 0,
+      'auto-microphone-context': 0,
+    },
+  },
+  practice: {
+    checks: {
+      'show-actor-text': true,
+      'show-directions': true,
+      'show-technical': false,
+      'show-lighting': false,
+      'show-einspieler': false,
+      'show-requisiten': false,
+      'show-microphone': false,
+      'show-auto-microphone': false,
+      'show-micro': false,
+      'show-scene-overview': true,
+      'blur-lines': true,
+      'autoscroll': false,
+    },
+    sliders: {
+      'directions-context': 0,
+      'technical-context': 0,
+      'lighting-context': 0,
+      'einspieler-context': 0,
+      'requisiten-context': 0,
+      'microphone-context': 0,
+      'auto-microphone-context': 0,
+    },
   },
   tech: {
     checks: {
@@ -28,8 +64,19 @@ const FILTER_PRESETS = {
       'show-microphone': true,
       'show-auto-microphone': true,
       'show-micro': true,
+      'show-scene-overview': true,
+      'blur-lines': false,
+      'autoscroll': false,
     },
-    sliders: {},
+    sliders: {
+      'directions-context': 0,
+      'technical-context': 0,
+      'lighting-context': 0,
+      'einspieler-context': 0,
+      'requisiten-context': 0,
+      'microphone-context': 0,
+      'auto-microphone-context': 0,
+    },
   },
   text: {
     checks: {
@@ -42,22 +89,19 @@ const FILTER_PRESETS = {
       'show-microphone': false,
       'show-auto-microphone': false,
       'show-micro': false,
+      'show-scene-overview': true,
+      'blur-lines': false,
+      'autoscroll': false,
     },
-    sliders: {},
-  },
-  all: {
-    checks: {
-      'show-actor-text': true,
-      'show-directions': true,
-      'show-technical': true,
-      'show-lighting': true,
-      'show-einspieler': true,
-      'show-requisiten': true,
-      'show-microphone': true,
-      'show-auto-microphone': true,
-      'show-micro': true,
+    sliders: {
+      'directions-context': 0,
+      'technical-context': 0,
+      'lighting-context': 0,
+      'einspieler-context': 0,
+      'requisiten-context': 0,
+      'microphone-context': 0,
+      'auto-microphone-context': 0,
     },
-    sliders: {},
   },
 }
 
@@ -78,4 +122,20 @@ export function applyFilterPreset(preset) {
   })
 
   return true
+}
+
+export function getMatchingFilterPreset() {
+  return (
+    Object.entries(FILTER_PRESETS).find(([, config]) => {
+      const checksMatch = Object.entries(config.checks).every(([id, checked]) => {
+        const checkbox = document.getElementById(id)
+        return !checkbox || checkbox.checked === checked
+      })
+      const slidersMatch = Object.entries(config.sliders).every(([id, value]) => {
+        const slider = document.getElementById(id)
+        return !slider || slider.value === String(value)
+      })
+      return checksMatch && slidersMatch
+    })?.[0] || null
+  )
 }
