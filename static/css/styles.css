@@ -209,6 +209,202 @@ th {
   width: 100%;
 }
 
+.settings-intro {
+  margin: calc(-1 * var(--space-1)) 0 var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.preset-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.preset-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-3);
+  color: var(--color-text);
+  text-align: left;
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.preset-card:hover {
+  color: var(--color-text);
+  background: var(--color-gray-100);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.preset-card.active {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.preset-card-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  font-size: var(--font-size-xl);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.preset-card-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.preset-card-copy strong {
+  font-size: var(--font-size-sm);
+  line-height: 1.2;
+}
+
+.preset-card-copy small {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.35;
+}
+
+.settings-subtitle {
+  margin: var(--space-5) 0 var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.settings-disclosure {
+  margin-top: var(--space-3);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.settings-disclosure summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  cursor: pointer;
+  list-style: none;
+}
+
+.settings-disclosure summary::-webkit-details-marker {
+  display: none;
+}
+
+.settings-disclosure summary:hover {
+  background: var(--color-gray-50);
+}
+
+.settings-disclosure summary span {
+  display: grid;
+  gap: 2px;
+}
+
+.settings-disclosure summary strong {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.settings-disclosure summary small {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.settings-disclosure summary::after {
+  content: '+';
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xl);
+  line-height: 1;
+}
+
+.settings-disclosure[open] summary::after {
+  content: '−';
+}
+
+.settings-disclosure-body {
+  padding: 0 var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.onboarding-modal {
+  max-width: 680px;
+}
+
+.onboarding-header {
+  padding-top: var(--space-5);
+}
+
+.onboarding-kicker {
+  margin-bottom: var(--space-1);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.onboarding-role {
+  margin-bottom: var(--space-5);
+}
+
+.onboarding-role .form-label span {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-normal);
+}
+
+.onboarding-presets {
+  grid-template-columns: 1fr;
+}
+
+.onboarding-presets .preset-card {
+  padding: var(--space-4);
+}
+
+.onboarding-skip {
+  display: block;
+  margin: var(--space-4) auto 0;
+  padding: var(--space-2);
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.onboarding-skip:hover {
+  color: var(--color-text);
+  background: transparent;
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .preset-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Content filter grid */
 .content-filters {
   display: grid;

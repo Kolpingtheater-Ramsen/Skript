@@ -4,7 +4,30 @@
 
 import { CONFIG, STORAGE_KEYS } from './config.js'
 import { groupActorsByName } from './actor-groups.js'
-import { applyFilterPreset } from './filter-presets.js'
+import {
+  applyFilterPreset,
+  getMatchingFilterPreset,
+} from './filter-presets.js'
+
+const EXISTING_PREFERENCE_KEYS = [
+  STORAGE_KEYS.ACTOR_SELECT,
+  STORAGE_KEYS.DARK_MODE,
+  STORAGE_KEYS.PINK_MODE,
+  STORAGE_KEYS.SHOW_ACTOR_NAMES,
+  STORAGE_KEYS.ENABLE_NOTES,
+  'show-actor-text',
+  'show-directions',
+  'show-technical',
+  'show-lighting',
+  'show-einspieler',
+  'show-requisiten',
+  'show-micro',
+  'show-microphone',
+  'show-auto-microphone',
+  'show-scene-overview',
+  'blur-lines',
+  'autoscroll',
+]
 
 /**
  * UI Controls Manager class
@@ -109,12 +132,12 @@ export class UIControlsManager {
     const storedDarkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE)
     const darkMode = storedDarkMode === null ? true : storedDarkMode === 'true'
     const pinkMode = localStorage.getItem(STORAGE_KEYS.PINK_MODE) === 'true'
-    document.body.classList.toggle('dark-mode', darkMode)
+    document.body.classList.toggle('dark-mode', darkMode && !pinkMode)
     document.body.classList.toggle('pink-mode', pinkMode)
 
     const darkModeCheckbox = document.getElementById('dark-mode')
     const pinkModeCheckbox = document.getElementById('pink-mode')
-    if (darkModeCheckbox) darkModeCheckbox.checked = darkMode
+    if (darkModeCheckbox) darkModeCheckbox.checked = darkMode && !pinkMode
     if (pinkModeCheckbox) pinkModeCheckbox.checked = pinkMode
 
     // Update theme option visual state
@@ -162,6 +185,8 @@ export class UIControlsManager {
         autoscroll.checked = stored === 'true'
       }
     }
+
+    this.syncPresetSelection()
   }
 
   /**
@@ -194,11 +219,40 @@ export class UIControlsManager {
     document.querySelectorAll('[data-preset]').forEach((button) => {
       button.addEventListener('click', () => {
         if (!applyFilterPreset(button.dataset.preset)) return
+
+        if (button.hasAttribute('data-complete-onboarding')) {
+          this.completeOnboarding()
+        }
+
         this.updateContextSliderVisibility()
         this.saveState()
+        this.syncPresetSelection(button.dataset.preset)
         if (onPreset) onPreset(button.dataset.preset)
       })
     })
+
+    const skipButton = document.getElementById('onboarding-skip')
+    if (skipButton) {
+      skipButton.addEventListener('click', () => {
+        this.completeOnboarding()
+        this.saveState()
+        if (onPreset) onPreset(null)
+      })
+    }
+  }
+
+  /**
+   * Show which preset represents the current detailed settings.
+   * @param {string|null} preset - Known preset, or derive it from the controls
+   */
+  syncPresetSelection(preset = getMatchingFilterPreset()) {
+    document
+      .querySelectorAll('#settings-modal [data-preset]')
+      .forEach((button) => {
+        const isActive = button.dataset.preset === preset
+        button.classList.toggle('active', isActive)
+        button.setAttribute('aria-pressed', String(isActive))
+      })
   }
 
   /**
@@ -228,6 +282,7 @@ export class UIControlsManager {
           valueDisplay.textContent = e.target.value
         }
         this.saveState()
+        this.syncPresetSelection()
         if (onChangeCallback) {
           onChangeCallback()
         }
@@ -280,6 +335,7 @@ export class UIControlsManager {
     const overlay = document.getElementById('settings-modal-overlay')
     const modal = document.getElementById('settings-modal')
     if (overlay && modal) {
+      this.syncPresetSelection()
       overlay.classList.add('active')
       modal.classList.add('active')
       document.body.style.overflow = 'hidden'
@@ -292,6 +348,60 @@ export class UIControlsManager {
   closeSettingsModal() {
     const overlay = document.getElementById('settings-modal-overlay')
     const modal = document.getElementById('settings-modal')
+    if (overlay && modal) {
+      overlay.classList.remove('active')
+      modal.classList.remove('active')
+      document.body.style.overflow = ''
+    }
+  }
+
+  /**
+   * Ask genuinely new users for their preferred starting view.
+   */
+  maybeOpenOnboarding() {
+    if (
+      localStorage.getItem(STORAGE_KEYS.ONBOARDING_COMPLETE) === 'true'
+    ) {
+      return
+    }
+
+    const hasExistingPreferences = EXISTING_PREFERENCE_KEYS.some(
+      (key) => localStorage.getItem(key) !== null
+    )
+    if (hasExistingPreferences) {
+      localStorage.setItem(STORAGE_KEYS.ONBOARDING_COMPLETE, 'true')
+      return
+    }
+
+    const actorSelect = document.getElementById('actor-select')
+    const onboardingActor = document.getElementById('onboarding-actor-select')
+    if (actorSelect && onboardingActor) {
+      onboardingActor.value = actorSelect.value
+    }
+
+    const overlay = document.getElementById('onboarding-modal-overlay')
+    const modal = document.getElementById('onboarding-modal')
+    if (overlay && modal) {
+      overlay.classList.add('active')
+      modal.classList.add('active')
+      document.body.style.overflow = 'hidden'
+      modal.querySelector('[data-preset]')?.focus()
+    }
+  }
+
+  /**
+   * Remember the onboarding decision and return to the script.
+   */
+  completeOnboarding() {
+    const onboardingActor = document.getElementById('onboarding-actor-select')
+    const actorSelect = document.getElementById('actor-select')
+    if (onboardingActor && actorSelect) {
+      actorSelect.value = onboardingActor.value
+    }
+
+    localStorage.setItem(STORAGE_KEYS.ONBOARDING_COMPLETE, 'true')
+    const overlay = document.getElementById('onboarding-modal-overlay')
+    const modal = document.getElementById('onboarding-modal')
     if (overlay && modal) {
       overlay.classList.remove('active')
       modal.classList.remove('active')
@@ -380,17 +490,18 @@ export class UIControlsManager {
    * @param {Array} actors - Array of [roleName, actorName] pairs
    */
   populateActors(actors) {
-    const select = document.getElementById('actor-select')
-    if (!select) return
-
     const groups = groupActorsByName(actors)
+    ;['actor-select', 'onboarding-actor-select'].forEach((id) => {
+      const select = document.getElementById(id)
+      if (!select) return
 
-    select.innerHTML = '<option value="">Alle Charaktere anzeigen</option>'
-    groups.forEach((group) => {
-      const option = document.createElement('option')
-      option.value = group.value
-      option.textContent = group.label
-      select.appendChild(option)
+      select.innerHTML = '<option value="">Alle Charaktere anzeigen</option>'
+      groups.forEach((group) => {
+        const option = document.createElement('option')
+        option.value = group.value
+        option.textContent = group.label
+        select.appendChild(option)
+      })
     })
   }
 

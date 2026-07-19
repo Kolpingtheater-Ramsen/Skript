@@ -226,28 +226,108 @@
   <div class="sidebar" role="navigation" aria-label="Inhaltsverzeichnis"></div>
   <div class="sidebar-overlay" onclick="closeSidebar()"></div>
 
+  <!-- First-use view selection -->
+  <div class="modal-overlay onboarding-overlay" id="onboarding-modal-overlay"></div>
+  <div class="modal onboarding-modal" id="onboarding-modal" role="dialog" aria-modal="true"
+    aria-labelledby="onboarding-title" aria-describedby="onboarding-description">
+    <div class="modal-header onboarding-header">
+      <div>
+        <div class="onboarding-kicker">Einmal kurz einrichten</div>
+        <h3 id="onboarding-title">Wie nutzt du das Drehbuch?</h3>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p id="onboarding-description" class="settings-intro">
+        Wähle eine passende Ansicht. Du kannst sie später jederzeit über das Zahnrad ändern.
+      </p>
+
+      <div class="settings-row onboarding-role">
+        <label class="form-label" for="onboarding-actor-select">Meine Rolle <span>(optional)</span></label>
+        <div class="select-wrapper">
+          <select id="onboarding-actor-select">
+            <option value="">Alle Charaktere anzeigen</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="preset-card-grid onboarding-presets" aria-label="Startansicht auswählen">
+        <button type="button" class="preset-card" data-preset="actor" data-complete-onboarding>
+          <span class="preset-card-icon" aria-hidden="true">🎭</span>
+          <span class="preset-card-copy">
+            <strong>Schauspiel</strong>
+            <small>Dialog und wichtige Bühnenanweisungen</small>
+          </span>
+        </button>
+        <button type="button" class="preset-card" data-preset="tech" data-complete-onboarding>
+          <span class="preset-card-icon" aria-hidden="true">🛠️</span>
+          <span class="preset-card-copy">
+            <strong>Technik</strong>
+            <small>Alle Cues und der vollständige Text</small>
+          </span>
+        </button>
+        <button type="button" class="preset-card" data-preset="text" data-complete-onboarding>
+          <span class="preset-card-icon" aria-hidden="true">📖</span>
+          <span class="preset-card-copy">
+            <strong>Lesen</strong>
+            <small>Nur der Stücktext, ohne technische Details</small>
+          </span>
+        </button>
+      </div>
+
+      <button type="button" id="onboarding-skip" class="onboarding-skip">
+        Vorerst Standardansicht verwenden
+      </button>
+    </div>
+  </div>
+
   <!-- Settings Modal -->
   <div class="modal-overlay" id="settings-modal-overlay" onclick="closeSettingsModal()"></div>
   <div class="modal" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
     <div class="modal-header">
-      <h3 id="settings-title">⚙️ Einstellungen</h3>
+      <h3 id="settings-title">Ansicht & Einstellungen</h3>
       <button class="modal-close" onclick="closeSettingsModal()" aria-label="Schließen">×</button>
     </div>
 
     <div class="modal-body">
-      <!-- Production Section -->
       <div class="settings-section">
-        <div class="settings-section-title">📽️ Produktion</div>
-
-        <div class="settings-row">
-          <label class="form-label" for="play-select">Stück auswählen</label>
-          <div class="select-wrapper">
-            <select id="play-select">
-              <option value="default">Standardstück</option>
-            </select>
-          </div>
+        <div class="settings-section-title">Passende Ansicht</div>
+        <p class="settings-intro">
+          Ein Preset übernimmt die passenden Filter und Übungsoptionen für dich.
+        </p>
+        <div class="preset-card-grid" aria-label="Ansichts-Presets">
+          <button type="button" class="preset-card" data-preset="actor">
+            <span class="preset-card-icon" aria-hidden="true">🎭</span>
+            <span class="preset-card-copy">
+              <strong>Schauspiel</strong>
+              <small>Dialog & Anweisungen</small>
+            </span>
+          </button>
+          <button type="button" class="preset-card" data-preset="practice">
+            <span class="preset-card-icon" aria-hidden="true">🙈</span>
+            <span class="preset-card-copy">
+              <strong>Text lernen</strong>
+              <small>Texte der gewählten Rolle verdecken</small>
+            </span>
+          </button>
+          <button type="button" class="preset-card" data-preset="tech">
+            <span class="preset-card-icon" aria-hidden="true">🛠️</span>
+            <span class="preset-card-copy">
+              <strong>Technik</strong>
+              <small>Alle Cues anzeigen</small>
+            </span>
+          </button>
+          <button type="button" class="preset-card" data-preset="text">
+            <span class="preset-card-icon" aria-hidden="true">📖</span>
+            <span class="preset-card-copy">
+              <strong>Lesen</strong>
+              <small>Nur der Stücktext</small>
+            </span>
+          </button>
         </div>
+      </div>
 
+      <div class="settings-section">
+        <div class="settings-section-title">Meine Ansicht</div>
         <div class="settings-row">
           <label class="form-label" for="actor-select">Rolle / Charakter</label>
           <div class="select-wrapper">
@@ -256,16 +336,6 @@
             </select>
           </div>
         </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="show-actor-names" />
-          <label for="show-actor-names">Schauspielernamen zu Rollen anzeigen</label>
-        </div>
-      </div>
-
-      <!-- Display Section -->
-      <div class="settings-section">
-        <div class="settings-section-title">🎨 Darstellung</div>
 
         <div class="theme-options">
           <label class="theme-option" id="theme-light">
@@ -283,25 +353,27 @@
             <span>Pink</span>
           </label>
         </div>
-
-        <div class="checkbox-group" style="margin-top: var(--space-4);">
-          <input type="checkbox" id="show-scene-overview" checked />
-          <label for="show-scene-overview">Szenenübersicht anzeigen</label>
-        </div>
       </div>
 
-      <!-- Content Filters Section -->
-      <div class="settings-section" id="checkboxes">
-        <div class="settings-section-title">📝 Inhalt & Filter</div>
+      <details class="settings-disclosure">
+        <summary>
+          <span>
+            <strong>Ansicht fein einstellen</strong>
+            <small>Filter, Üben und Notizen</small>
+          </span>
+        </summary>
+        <div class="settings-disclosure-body">
+          <div class="checkbox-group">
+            <input type="checkbox" id="show-actor-names" />
+            <label for="show-actor-names">Schauspielernamen zu Rollen anzeigen</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="show-scene-overview" checked />
+            <label for="show-scene-overview">Szenenübersicht anzeigen</label>
+          </div>
 
-        <div class="preset-buttons" aria-label="Filter-Presets">
-          <button type="button" class="btn btn-secondary" data-preset="actor">🎭 Schauspieler</button>
-          <button type="button" class="btn btn-secondary" data-preset="tech">🛠️ Technik (alles)</button>
-          <button type="button" class="btn btn-secondary" data-preset="text">📖 Nur Text</button>
-          <button type="button" class="btn btn-secondary" data-preset="all">✅ Alles</button>
-        </div>
-
-        <div class="content-filters">
+          <div class="settings-subtitle">Inhalt & Filter</div>
+          <div class="content-filters" id="checkboxes">
           <!-- Actor Text -->
           <div class="filter-item">
             <div class="checkbox-group">
@@ -408,45 +480,50 @@
               <span class="range-value" id="auto-microphone-context-value">0</span>
             </div>
           </div>
+          </div>
 
-        </div>
-      </div>
-
-      <!-- Notes Section -->
-      <div class="settings-section">
-        <div class="settings-section-title">📒 Notizen</div>
-
-        <div class="notes-toggle">
+          <div class="settings-subtitle">Notizen & Üben</div>
+          <div class="notes-toggle">
           <div class="checkbox-group">
             <input type="checkbox" id="enable-notes" />
             <div>
-              <label for="enable-notes">📝 Lokale Notizen aktivieren</label>
+                <label for="enable-notes">Lokale Notizen aktivieren</label>
               <div class="notes-info">Notizen werden lokal im Browser gespeichert und nie synchronisiert.</div>
             </div>
           </div>
-        </div>
-      </div>
+          </div>
 
-      <!-- Practice Mode Section -->
-      <div class="settings-section">
-        <div class="settings-section-title">🎭 Übungsmodus</div>
-
-        <div class="checkbox-group">
+          <div class="checkbox-group">
           <input type="checkbox" id="blur-lines" />
-              <label for="blur-lines">🙈 Meine Texte verstecken (zum Üben)</label>
-        </div>
+            <label for="blur-lines">Meine Texte verstecken (zum Üben)</label>
+          </div>
 
-        <div class="checkbox-group">
+          <div class="checkbox-group">
           <input type="checkbox" id="autoscroll" />
-              <label for="autoscroll">📜 Automatisch scrollen (Director Mode)</label>
+            <label for="autoscroll">Automatisch scrollen (Director Mode)</label>
+          </div>
         </div>
-      </div>
+      </details>
 
-      <!-- Quick Links Section -->
-      <div class="settings-section">
-        <div class="settings-section-title">🔗 Schnellzugriff</div>
+      <details class="settings-disclosure">
+        <summary>
+          <span>
+            <strong>Werkzeuge & Verwaltung</strong>
+            <small>Stück, Viewer, Director und Speicher</small>
+          </span>
+        </summary>
+        <div class="settings-disclosure-body">
+          <div class="settings-row">
+            <label class="form-label" for="play-select">Stück auswählen</label>
+            <div class="select-wrapper">
+              <select id="play-select">
+                <option value="default">Standardstück</option>
+              </select>
+            </div>
+          </div>
 
-        <div class="quick-links">
+          <div class="settings-subtitle">Werkzeuge</div>
+          <div class="quick-links">
           <a id="stats-link" href="/stats.html" class="button">
             📊 Statistiken
           </a>
@@ -468,11 +545,9 @@
           <button onclick="window.print()" class="button">
             🖨️ Als PDF drucken
           </button>
-        </div>
-      </div>
+          </div>
 
-      <!-- Director Section -->
-      <div class="director-section">
+          <div class="director-section">
         <button class="director-toggle" onclick="toggleDirectorPanel()">
           <span>🎬 Director Mode</span>
           <span id="director-status">Aktueller Director: Niemand</span>
@@ -487,22 +562,17 @@
             </div>
           </div>
         </div>
-      </div>
+          </div>
 
-      <!-- Data Health Section -->
-      <div class="settings-section">
-        <div class="settings-section-title">🛰️ Daten & Sheet-Check</div>
+          <div class="settings-subtitle">Daten & Sheet-Check</div>
         <div id="data-cache-status" class="settings-diagnostics">
           Datenstatus wird geladen…
         </div>
         <div id="sheet-validation-status" class="settings-diagnostics validation-box">
           Sheet-Check wird geladen…
         </div>
-      </div>
 
-      <!-- App & Storage Section -->
-      <div class="settings-section" style="margin-top: 20px;">
-        <div class="settings-section-title">📱 App & Speicher</div>
+          <div class="settings-subtitle">App & Speicher</div>
         <div class="app-storage-buttons">
           <div id="install-button-container"></div>
           <button onclick="clearCache()" class="btn btn-danger-soft">
@@ -515,7 +585,8 @@
         <div class="settings-description" style="font-size: 0.75em; color: var(--color-text-muted); margin-top: 12px; font-family: monospace;">
           Version: <span id="app-version">—</span>
         </div>
-      </div>
+        </div>
+      </details>
     </div>
 
     <div class="modal-footer">
