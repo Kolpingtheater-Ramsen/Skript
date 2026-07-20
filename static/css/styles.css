@@ -484,6 +484,7 @@ th {
 }
 
 .onboarding-presets .preset-card {
+  justify-content: flex-start;
   padding: var(--space-4);
 }
 
