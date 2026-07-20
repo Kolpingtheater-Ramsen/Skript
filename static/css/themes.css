@@ -179,6 +179,10 @@ body.dark-mode .toc {
   border: 1px solid var(--color-border);
 }
 
+body.dark-mode .sidebar .toc {
+  border: 0;
+}
+
 body.dark-mode .toc a {
   color: var(--color-text);
 }
