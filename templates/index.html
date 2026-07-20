@@ -35,7 +35,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel:wght@800&display=swap"
     rel="stylesheet" />
 
-  <link rel="stylesheet" href="/static/css/styles.css?v=20260720-settings-v3" />
+  <link rel="stylesheet" href="/static/css/styles.css?v=20260720-settings-v4" />
   <script src="/static/js/vendor/papaparse.min.js" defer></script>
 
   <!-- Cloudflare Web Analytics -->
@@ -178,7 +178,7 @@
     crossorigin="anonymous"></script>
 
   <!-- Main Script -->
-  <script type="module" src="/static/js/main.js?v=20260720-onboarding-v2"></script>
+  <script type="module" src="/static/js/main.js?v=20260720-theme-select"></script>
 </head>
 
 <body class="app-loading">
@@ -342,22 +342,13 @@
           </div>
 
           <div class="settings-theme-field">
-            <div class="settings-field-label" id="theme-options-label">Farbschema</div>
-            <div class="theme-options" aria-labelledby="theme-options-label">
-              <label class="theme-option" id="theme-light">
-                <div class="theme-preview theme-preview-light"></div>
-                <span>Hell</span>
-              </label>
-              <label class="theme-option" id="theme-dark">
-                <input type="checkbox" id="dark-mode" />
-                <div class="theme-preview theme-preview-dark"></div>
-                <span>Dunkel</span>
-              </label>
-              <label class="theme-option" id="theme-pink">
-                <input type="checkbox" id="pink-mode" />
-                <div class="theme-preview theme-preview-pink"></div>
-                <span>Pink</span>
-              </label>
+            <label class="settings-field-label" for="theme-select">Farbschema</label>
+            <div class="select-wrapper">
+              <select id="theme-select">
+                <option value="light">Hell</option>
+                <option value="dark">Dunkel</option>
+                <option value="pink">Pink</option>
+              </select>
             </div>
           </div>
         </div>

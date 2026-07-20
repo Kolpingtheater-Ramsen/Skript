@@ -603,7 +603,6 @@ body.pink-mode input[type="range"] {
 }
 
 body.pink-mode .preset-card,
-body.pink-mode .theme-option,
 body.pink-mode .settings-disclosure,
 body.pink-mode .director-section,
 body.pink-mode .btn-success-soft,
@@ -619,9 +618,7 @@ body.pink-mode .link-button:not(.link-button-primary) {
 }
 
 body.pink-mode .preset-card:hover,
-body.pink-mode .preset-card.active,
-body.pink-mode .theme-option:hover,
-body.pink-mode .theme-option.active {
+body.pink-mode .preset-card.active {
   border-color: var(--color-primary);
 }
 

@@ -112,16 +112,7 @@ export class UIControlsManager {
     const storedDarkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE)
     const darkMode = storedDarkMode === null ? true : storedDarkMode === 'true'
     const pinkMode = localStorage.getItem(STORAGE_KEYS.PINK_MODE) === 'true'
-    document.body.classList.toggle('dark-mode', darkMode && !pinkMode)
-    document.body.classList.toggle('pink-mode', pinkMode)
-
-    const darkModeCheckbox = document.getElementById('dark-mode')
-    const pinkModeCheckbox = document.getElementById('pink-mode')
-    if (darkModeCheckbox) darkModeCheckbox.checked = darkMode && !pinkMode
-    if (pinkModeCheckbox) pinkModeCheckbox.checked = pinkMode
-
-    // Update theme option visual state
-    this.updateThemeOptionVisuals()
+    this.applyTheme(pinkMode ? 'pink' : darkMode ? 'dark' : 'light')
 
     // Load actor names toggle
     const showActorNames = document.getElementById('show-actor-names')
@@ -170,24 +161,19 @@ export class UIControlsManager {
   }
 
   /**
-   * Update theme option visual state
+   * Apply a theme and keep the dropdown in sync.
+   * @param {'light'|'dark'|'pink'} theme - Theme identifier
    */
-  updateThemeOptionVisuals() {
-    const isDark = document.body.classList.contains('dark-mode')
-    const isPink = document.body.classList.contains('pink-mode')
+  applyTheme(theme) {
+    const selectedTheme = ['light', 'dark', 'pink'].includes(theme)
+      ? theme
+      : 'dark'
+    document.body.classList.toggle('dark-mode', selectedTheme === 'dark')
+    document.body.classList.toggle('pink-mode', selectedTheme === 'pink')
 
-    const lightOption = document.getElementById('theme-light')
-    const darkOption = document.getElementById('theme-dark')
-    const pinkOption = document.getElementById('theme-pink')
-
-    if (lightOption) {
-      lightOption.classList.toggle('active', !isDark && !isPink)
-    }
-    if (darkOption) {
-      darkOption.classList.toggle('active', isDark)
-    }
-    if (pinkOption) {
-      pinkOption.classList.toggle('active', isPink)
+    const themeSelect = document.getElementById('theme-select')
+    if (themeSelect) {
+      themeSelect.value = selectedTheme
     }
   }
 
@@ -382,76 +368,13 @@ export class UIControlsManager {
   }
 
   /**
-   * Setup theme switching (dark/pink mode)
+   * Setup theme switching.
    */
   setupThemeSwitching() {
-    const pinkMode = document.getElementById('pink-mode')
-    const darkMode = document.getElementById('dark-mode')
-    const lightOption = document.getElementById('theme-light')
-    const darkOption = document.getElementById('theme-dark')
-    const pinkOption = document.getElementById('theme-pink')
-
-    // Theme option click handlers
-    if (lightOption) {
-      lightOption.addEventListener('click', (e) => {
-        e.preventDefault()
-        document.body.classList.remove('dark-mode', 'pink-mode')
-        if (darkMode) darkMode.checked = false
-        if (pinkMode) pinkMode.checked = false
-        this.updateThemeOptionVisuals()
-        this.saveState()
-      })
-    }
-
-    if (darkOption) {
-      darkOption.addEventListener('click', (e) => {
-        e.preventDefault()
-        document.body.classList.remove('pink-mode')
-        document.body.classList.add('dark-mode')
-        if (darkMode) darkMode.checked = true
-        if (pinkMode) pinkMode.checked = false
-        this.updateThemeOptionVisuals()
-        this.saveState()
-      })
-    }
-
-    if (pinkOption) {
-      pinkOption.addEventListener('click', (e) => {
-        e.preventDefault()
-        document.body.classList.remove('dark-mode')
-        document.body.classList.add('pink-mode')
-        if (pinkMode) pinkMode.checked = true
-        if (darkMode) darkMode.checked = false
-        this.updateThemeOptionVisuals()
-        this.saveState()
-      })
-    }
-
-    // Legacy checkbox handlers (for backward compatibility)
-    if (pinkMode) {
-      pinkMode.addEventListener('change', (e) => {
-        if (e.target.checked) {
-          document.body.classList.remove('dark-mode')
-          if (darkMode) darkMode.checked = false
-          document.body.classList.add('pink-mode')
-        } else {
-          document.body.classList.remove('pink-mode')
-        }
-        this.updateThemeOptionVisuals()
-        this.saveState()
-      })
-    }
-
-    if (darkMode) {
-      darkMode.addEventListener('change', (e) => {
-        if (e.target.checked) {
-          document.body.classList.remove('pink-mode')
-          if (pinkMode) pinkMode.checked = false
-          document.body.classList.add('dark-mode')
-        } else {
-          document.body.classList.remove('dark-mode')
-        }
-        this.updateThemeOptionVisuals()
+    const themeSelect = document.getElementById('theme-select')
+    if (themeSelect) {
+      themeSelect.addEventListener('change', (event) => {
+        this.applyTheme(event.target.value)
         this.saveState()
       })
     }
