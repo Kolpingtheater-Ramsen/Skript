@@ -2,12 +2,12 @@
  * Main entry point for the application
  */
 
-import { CONFIG, STORAGE_KEYS } from './config.js'
+import { CONFIG, STORAGE_KEYS } from './config.js?v=20260720-onboarding-v2'
 import { stateManager } from './state.js'
 import { socketManager } from './socket.js'
 import { Renderer } from './renderer.js'
 import { DirectorManager } from './director.js'
-import { UIControlsManager } from './ui-controls.js'
+import { UIControlsManager } from './ui-controls.js?v=20260720-onboarding-v2'
 import { NavigationManager } from './navigation.js'
 import { getUrlParams } from './utils.js'
 import { LoadingScreen } from './loading-screen.js'

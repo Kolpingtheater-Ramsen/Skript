@@ -2,32 +2,12 @@
  * UI controls and settings management
  */
 
-import { CONFIG, STORAGE_KEYS } from './config.js'
+import { CONFIG, STORAGE_KEYS } from './config.js?v=20260720-onboarding-v2'
 import { groupActorsByName } from './actor-groups.js'
 import {
   applyFilterPreset,
   getMatchingFilterPreset,
 } from './filter-presets.js'
-
-const EXISTING_PREFERENCE_KEYS = [
-  STORAGE_KEYS.ACTOR_SELECT,
-  STORAGE_KEYS.DARK_MODE,
-  STORAGE_KEYS.PINK_MODE,
-  STORAGE_KEYS.SHOW_ACTOR_NAMES,
-  STORAGE_KEYS.ENABLE_NOTES,
-  'show-actor-text',
-  'show-directions',
-  'show-technical',
-  'show-lighting',
-  'show-einspieler',
-  'show-requisiten',
-  'show-micro',
-  'show-microphone',
-  'show-auto-microphone',
-  'show-scene-overview',
-  'blur-lines',
-  'autoscroll',
-]
 
 /**
  * UI Controls Manager class
@@ -362,14 +342,6 @@ export class UIControlsManager {
     if (
       localStorage.getItem(STORAGE_KEYS.ONBOARDING_COMPLETE) === 'true'
     ) {
-      return
-    }
-
-    const hasExistingPreferences = EXISTING_PREFERENCE_KEYS.some(
-      (key) => localStorage.getItem(key) !== null
-    )
-    if (hasExistingPreferences) {
-      localStorage.setItem(STORAGE_KEYS.ONBOARDING_COMPLETE, 'true')
       return
     }
 
