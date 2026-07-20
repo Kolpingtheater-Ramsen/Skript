@@ -35,7 +35,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel:wght@800&display=swap"
     rel="stylesheet" />
 
-  <link rel="stylesheet" href="/static/css/styles.css?v=20260720-settings-v4" />
+  <link rel="stylesheet" href="/static/css/styles.css?v=20260720-settings-v5" />
   <script src="/static/js/vendor/papaparse.min.js" defer></script>
 
   <!-- Cloudflare Web Analytics -->
@@ -178,7 +178,7 @@
     crossorigin="anonymous"></script>
 
   <!-- Main Script -->
-  <script type="module" src="/static/js/main.js?v=20260720-theme-select"></script>
+  <script type="module" src="/static/js/main.js?v=20260720-theme-swatches"></script>
 </head>
 
 <body class="app-loading">
@@ -342,13 +342,32 @@
           </div>
 
           <div class="settings-theme-field">
-            <label class="settings-field-label" for="theme-select">Farbschema</label>
-            <div class="select-wrapper">
-              <select id="theme-select">
-                <option value="light">Hell</option>
-                <option value="dark">Dunkel</option>
-                <option value="pink">Pink</option>
-              </select>
+            <label class="settings-field-label" id="theme-select-label" for="theme-select">Farbschema</label>
+            <div class="theme-dropdown">
+              <button type="button" class="theme-dropdown-trigger" id="theme-select" aria-haspopup="listbox"
+                aria-controls="theme-select-menu" aria-expanded="false"
+                aria-labelledby="theme-select-label theme-select-value">
+                <span class="theme-swatch theme-swatch-dark" data-theme-swatch aria-hidden="true"></span>
+                <span id="theme-select-value">Dunkel</span>
+              </button>
+              <div class="theme-dropdown-menu" id="theme-select-menu" role="listbox"
+                aria-labelledby="theme-select-label" hidden>
+                <button type="button" class="theme-dropdown-option" role="option" data-theme-value="light"
+                  aria-selected="false">
+                  <span class="theme-swatch theme-swatch-light" aria-hidden="true"></span>
+                  <span>Hell</span>
+                </button>
+                <button type="button" class="theme-dropdown-option" role="option" data-theme-value="dark"
+                  aria-selected="true">
+                  <span class="theme-swatch theme-swatch-dark" aria-hidden="true"></span>
+                  <span>Dunkel</span>
+                </button>
+                <button type="button" class="theme-dropdown-option" role="option" data-theme-value="pink"
+                  aria-selected="false">
+                  <span class="theme-swatch theme-swatch-pink" aria-hidden="true"></span>
+                  <span>Pink</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

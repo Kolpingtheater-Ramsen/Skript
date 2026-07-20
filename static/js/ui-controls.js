@@ -168,13 +168,33 @@ export class UIControlsManager {
     const selectedTheme = ['light', 'dark', 'pink'].includes(theme)
       ? theme
       : 'dark'
+    const themeLabels = {
+      light: 'Hell',
+      dark: 'Dunkel',
+      pink: 'Pink',
+    }
     document.body.classList.toggle('dark-mode', selectedTheme === 'dark')
     document.body.classList.toggle('pink-mode', selectedTheme === 'pink')
 
-    const themeSelect = document.getElementById('theme-select')
-    if (themeSelect) {
-      themeSelect.value = selectedTheme
+    const themeTrigger = document.getElementById('theme-select')
+    const themeValue = document.getElementById('theme-select-value')
+    const themeSwatch = themeTrigger?.querySelector('[data-theme-swatch]')
+    if (themeTrigger) {
+      themeTrigger.dataset.value = selectedTheme
     }
+    if (themeValue) {
+      themeValue.textContent = themeLabels[selectedTheme]
+    }
+    if (themeSwatch) {
+      themeSwatch.className = `theme-swatch theme-swatch-${selectedTheme}`
+    }
+
+    document.querySelectorAll('[data-theme-value]').forEach((option) => {
+      option.setAttribute(
+        'aria-selected',
+        String(option.dataset.themeValue === selectedTheme)
+      )
+    })
   }
 
   /**
@@ -371,13 +391,66 @@ export class UIControlsManager {
    * Setup theme switching.
    */
   setupThemeSwitching() {
-    const themeSelect = document.getElementById('theme-select')
-    if (themeSelect) {
-      themeSelect.addEventListener('change', (event) => {
-        this.applyTheme(event.target.value)
-        this.saveState()
-      })
+    const themeTrigger = document.getElementById('theme-select')
+    const themeMenu = document.getElementById('theme-select-menu')
+    const themeOptions = Array.from(
+      document.querySelectorAll('[data-theme-value]')
+    )
+    if (!themeTrigger || !themeMenu || !themeOptions.length) return
+
+    const setMenuOpen = (isOpen, focusSelected = false) => {
+      themeMenu.hidden = !isOpen
+      themeTrigger.setAttribute('aria-expanded', String(isOpen))
+      if (isOpen && focusSelected) {
+        const selectedOption =
+          themeOptions.find(
+            (option) => option.dataset.themeValue === themeTrigger.dataset.value
+          ) || themeOptions[0]
+        selectedOption.focus()
+      }
     }
+
+    themeTrigger.addEventListener('click', () => {
+      setMenuOpen(themeMenu.hidden, true)
+    })
+
+    themeTrigger.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault()
+        setMenuOpen(true, true)
+      }
+    })
+
+    themeOptions.forEach((option, index) => {
+      option.addEventListener('click', () => {
+        this.applyTheme(option.dataset.themeValue)
+        this.saveState()
+        setMenuOpen(false)
+        themeTrigger.focus()
+      })
+
+      option.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault()
+          setMenuOpen(false)
+          themeTrigger.focus()
+          return
+        }
+
+        if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
+        event.preventDefault()
+        const direction = event.key === 'ArrowDown' ? 1 : -1
+        themeOptions[
+          (index + direction + themeOptions.length) % themeOptions.length
+        ].focus()
+      })
+    })
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.theme-dropdown')) {
+        setMenuOpen(false)
+      }
+    })
   }
 
   /**
