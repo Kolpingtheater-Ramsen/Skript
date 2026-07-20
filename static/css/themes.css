@@ -349,10 +349,11 @@ body.dark-mode.is-director::before {
    ============================================ */
 
 body.pink-mode {
-  --color-primary: #ec4899;
-  --color-primary-hover: #db2777;
+  /* AA contrast: accent text >= 5.14:1; interactive borders >= 3.07:1. */
+  --color-primary: #be185d;
+  --color-primary-hover: #9d174d;
   --color-primary-light: #fce7f3;
-  --color-primary-dark: #9d174d;
+  --color-primary-dark: #831843;
 
   --color-background: #fdf2f8;
   --color-surface: #fff5f7;
@@ -361,18 +362,20 @@ body.pink-mode {
   --color-text-muted: #be185d;
   --color-border: #fbcfe8;
   --color-border-hover: #f9a8d4;
+  --color-control-border: #e05297;
+  --color-control-border-hover: #be185d;
 
   /* Adjusted grays for pink mode */
   --color-gray-50: #fff1f2;
   --color-gray-100: #fce7f3;
   --color-gray-200: #fbcfe8;
-  --color-gray-300: #f9a8d4;
-  --color-gray-400: #f472b6;
+  --color-gray-300: #e05297;
+  --color-gray-400: #be185d;
   --color-gray-500: #ec4899;
   --color-gray-600: #db2777;
-  --color-gray-700: #be185d;
-  --color-gray-800: #9d174d;
-  --color-gray-900: #831843;
+  --color-gray-700: #9d174d;
+  --color-gray-800: #831843;
+  --color-gray-900: #500724;
 
   /* Adjusted category colors for pink mode */
   --color-instruction-bg: #fce7f3;
@@ -389,7 +392,7 @@ body.pink-mode {
   --color-props: #9d174d;
   --color-microphone: #9d174d;
 
-  --color-success: #db2777;
+  --color-success: #be185d;
   --color-success-light: #fce7f3;
   --color-error: #be185d;
   --color-error-light: #fce7f3;
@@ -461,6 +464,14 @@ body.pink-mode .script-line:hover {
   background-color: var(--color-gray-100);
 }
 
+body.pink-mode .inline-stage-direction {
+  opacity: 1;
+}
+
+body.pink-mode .script-line.context-line {
+  opacity: 0.85;
+}
+
 body.pink-mode .script-line.highlighted {
   border-left-color: var(--color-primary);
 }
@@ -527,31 +538,59 @@ body.pink-mode .fab:hover {
   background-color: var(--color-primary-hover);
 }
 
-body.pink-mode select,
+body.pink-mode .form-input,
 body.pink-mode input[type="text"],
-body.pink-mode input[type="password"] {
-  border-color: var(--color-border);
+body.pink-mode input[type="password"],
+body.pink-mode input[type="email"],
+body.pink-mode input[type="number"],
+body.pink-mode select,
+body.pink-mode .form-select,
+body.pink-mode .script-line .line-note-textarea {
+  background-color: var(--color-surface);
+  border-color: var(--color-control-border);
+  color: var(--color-text);
 }
 
-body.pink-mode select:hover,
+body.pink-mode .form-input:hover,
 body.pink-mode input[type="text"]:hover,
-body.pink-mode input[type="password"]:hover {
-  border-color: var(--color-border-hover);
+body.pink-mode input[type="password"]:hover,
+body.pink-mode input[type="email"]:hover,
+body.pink-mode input[type="number"]:hover,
+body.pink-mode select:hover,
+body.pink-mode .form-select:hover,
+body.pink-mode .script-line .line-note-textarea:hover {
+  border-color: var(--color-control-border-hover);
 }
 
-body.pink-mode select:focus,
+body.pink-mode .form-input:focus,
 body.pink-mode input[type="text"]:focus,
-body.pink-mode input[type="password"]:focus {
+body.pink-mode input[type="password"]:focus,
+body.pink-mode input[type="email"]:focus,
+body.pink-mode input[type="number"]:focus,
+body.pink-mode select:focus,
+body.pink-mode .form-select:focus,
+body.pink-mode .script-line .line-note-textarea:focus {
+  outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
 }
 
+body.pink-mode input::placeholder,
+body.pink-mode .script-line .line-note-textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+body.pink-mode .select-wrapper::after {
+  border-top-color: var(--color-primary);
+}
+
 body.pink-mode .checkbox-group input[type="checkbox"] {
-  border-color: var(--color-border);
+  border-color: var(--color-control-border);
 }
 
 body.pink-mode .checkbox-group input[type="checkbox"]:hover {
-  border-color: var(--color-primary);
+  border-color: var(--color-control-border-hover);
 }
 
 body.pink-mode .checkbox-group input[type="checkbox"]:checked {
@@ -559,9 +598,42 @@ body.pink-mode .checkbox-group input[type="checkbox"]:checked {
   border-color: var(--color-primary);
 }
 
+body.pink-mode input[type="range"] {
+  background: var(--color-control-border);
+}
+
+body.pink-mode .preset-card,
+body.pink-mode .theme-option,
+body.pink-mode .settings-disclosure,
+body.pink-mode .director-section,
+body.pink-mode .btn-success-soft,
+body.pink-mode .btn-danger-soft,
+body.pink-mode .install-button {
+  border-color: var(--color-control-border);
+}
+
+body.pink-mode .btn-secondary,
+body.pink-mode .button:not(.button-primary),
+body.pink-mode .link-button:not(.link-button-primary) {
+  border: 1px solid var(--color-control-border);
+}
+
+body.pink-mode .preset-card:hover,
+body.pink-mode .preset-card.active,
+body.pink-mode .theme-option:hover,
+body.pink-mode .theme-option.active {
+  border-color: var(--color-primary);
+}
+
+body.pink-mode .btn-secondary:hover:not(:disabled),
+body.pink-mode .button:not(.button-primary):hover,
+body.pink-mode .link-button:not(.link-button-primary):hover,
+body.pink-mode .install-button:hover {
+  border-color: var(--color-control-border-hover);
+}
+
 body.pink-mode .director-section {
   background-color: var(--color-gray-50);
-  border-color: var(--color-border);
 }
 
 body.pink-mode .director-toggle:hover {
@@ -601,6 +673,20 @@ body.pink-mode .toast {
   box-shadow: 0 6px 20px rgba(236, 72, 153, 0.15);
 }
 
+body.pink-mode .toast-close {
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+body.pink-mode .toast-close:hover {
+  opacity: 1;
+}
+
+body.pink-mode .btn-success:hover:not(:disabled),
+body.pink-mode .toast-action:hover {
+  background-color: var(--color-primary-hover);
+}
+
 body.pink-mode .script-line .line-note {
   background-color: rgba(236, 72, 153, 0.1);
   border-left-color: var(--color-primary);
@@ -608,6 +694,14 @@ body.pink-mode .script-line .line-note {
 
 body.pink-mode .script-line .line-note-label {
   color: var(--color-primary);
+}
+
+body.pink-mode .script-line .add-note-btn {
+  background-color: var(--color-primary);
+}
+
+body.pink-mode .script-line:hover .add-note-btn:hover {
+  background-color: var(--color-primary-hover);
 }
 
 body.pink-mode.is-director::before {
@@ -619,10 +713,16 @@ body.pink-mode.is-director::before {
 
   0%,
   100% {
-    border-color: #ec4899;
+    border-color: #be185d;
   }
 
   50% {
-    border-color: rgba(236, 72, 153, 0.5);
+    border-color: rgba(190, 24, 93, 0.6);
+  }
+}
+
+@media (max-width: 768px) {
+  body.pink-mode .script-line .add-note-btn {
+    opacity: 1;
   }
 }
