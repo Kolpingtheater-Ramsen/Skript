@@ -912,6 +912,7 @@ body.has-bottom-nav .fab {
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-top: var(--space-4);
+  margin-bottom: var(--space-8);
 }
 
 .director-toggle {
