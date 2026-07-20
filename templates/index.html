@@ -35,7 +35,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel:wght@800&display=swap"
     rel="stylesheet" />
 
-  <link rel="stylesheet" href="/static/css/styles.css" />
+  <link rel="stylesheet" href="/static/css/styles.css?v=20260720-settings-v2" />
   <script src="/static/js/vendor/papaparse.min.js" defer></script>
 
   <!-- Cloudflare Web Analytics -->
@@ -284,15 +284,18 @@
   <div class="modal-overlay" id="settings-modal-overlay" onclick="closeSettingsModal()"></div>
   <div class="modal" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
     <div class="modal-header">
-      <h3 id="settings-title">Ansicht & Einstellungen</h3>
+      <div class="settings-modal-heading">
+        <span>Drehbuch konfigurieren</span>
+        <h3 id="settings-title">Ansicht & Einstellungen</h3>
+      </div>
       <button class="modal-close" onclick="closeSettingsModal()" aria-label="Schließen">×</button>
     </div>
 
     <div class="modal-body">
-      <div class="settings-section">
-        <div class="settings-section-title">Passende Ansicht</div>
+      <div class="settings-section settings-preset-section">
+        <div class="settings-section-title">Schnellstart</div>
         <p class="settings-intro">
-          Ein Preset übernimmt die passenden Filter und Übungsoptionen für dich.
+          Wähle, was du gerade vorhast. Die passenden Filter werden automatisch gesetzt.
         </p>
         <div class="preset-card-grid" aria-label="Ansichts-Presets">
           <button type="button" class="preset-card" data-preset="actor">
@@ -326,35 +329,41 @@
         </div>
       </div>
 
-      <div class="settings-section">
+      <div class="settings-section settings-view-section">
         <div class="settings-section-title">Meine Ansicht</div>
-        <div class="settings-row">
-          <label class="form-label" for="actor-select">Rolle / Charakter</label>
-          <div class="select-wrapper">
-            <select id="actor-select">
-              <option value="">Alle Charaktere anzeigen</option>
-            </select>
+        <div class="settings-view-controls">
+          <div class="settings-row">
+            <label class="form-label" for="actor-select">Rolle / Charakter</label>
+            <div class="select-wrapper">
+              <select id="actor-select">
+                <option value="">Alle Charaktere anzeigen</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div class="theme-options">
-          <label class="theme-option" id="theme-light">
-            <div class="theme-preview theme-preview-light"></div>
-            <span>Hell</span>
-          </label>
-          <label class="theme-option" id="theme-dark">
-            <input type="checkbox" id="dark-mode" />
-            <div class="theme-preview theme-preview-dark"></div>
-            <span>Dunkel</span>
-          </label>
-          <label class="theme-option" id="theme-pink">
-            <input type="checkbox" id="pink-mode" />
-            <div class="theme-preview theme-preview-pink"></div>
-            <span>Pink</span>
-          </label>
+          <div class="settings-theme-field">
+            <div class="settings-field-label" id="theme-options-label">Farbschema</div>
+            <div class="theme-options" aria-labelledby="theme-options-label">
+              <label class="theme-option" id="theme-light">
+                <div class="theme-preview theme-preview-light"></div>
+                <span>Hell</span>
+              </label>
+              <label class="theme-option" id="theme-dark">
+                <input type="checkbox" id="dark-mode" />
+                <div class="theme-preview theme-preview-dark"></div>
+                <span>Dunkel</span>
+              </label>
+              <label class="theme-option" id="theme-pink">
+                <input type="checkbox" id="pink-mode" />
+                <div class="theme-preview theme-preview-pink"></div>
+                <span>Pink</span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
 
+      <div class="settings-disclosures">
       <details class="settings-disclosure">
         <summary>
           <span>
@@ -587,6 +596,7 @@
         </div>
         </div>
       </details>
+      </div>
     </div>
 
     <div class="modal-footer">
