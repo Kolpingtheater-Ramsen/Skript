@@ -2,7 +2,7 @@
  * Main entry point for the application
  */
 
-import { CONFIG, STORAGE_KEYS } from './config.js?v=20260720-onboarding-v2'
+import { CONFIG, STORAGE_KEYS, CATEGORIES } from './config.js?v=20260720-onboarding-v2'
 import { stateManager } from './state.js'
 import { socketManager } from './socket.js'
 import { Renderer } from './renderer.js'
@@ -14,6 +14,7 @@ import { LoadingScreen } from './loading-screen.js'
 import { setupAppEvents } from './app-events.js'
 import { loadScriptModel } from './script-loader.js'
 import { renderSettingsDiagnostics } from './sheet-validation.js'
+import { rowMatchesSelectedActor } from './actor-groups.js'
 
 /**
  * Main Application class
@@ -126,15 +127,17 @@ class App {
     const lineIndex = Array.from(allLines).indexOf(element)
     this.directorManager.markLine(element, lineIndex)
 
-    // Toggle blur if blur lines is enabled and this is the selected actor (case-insensitive)
+    // In learning mode, tapping one of the selected actor's lines reveals or
+    // hides only that line. Use the shared actor-group matcher so this also
+    // works when one actor plays multiple roles.
     if (
       settings.blurLines &&
-      settings.selectedActor &&
-      row.Charakter &&
-      row.Charakter.toUpperCase() === settings.selectedActor
+      row.Kategorie === CATEGORIES.ACTOR &&
+      rowMatchesSelectedActor(row, settings.selectedActor, stateManager.get('actors'))
     ) {
-      element.style.filter =
-        element.style.filter === 'none' ? 'blur(4px)' : 'none'
+      const isHidden = element.style.filter !== 'none'
+      element.style.filter = isHidden ? 'none' : 'blur(4px)'
+      element.setAttribute('aria-expanded', String(isHidden))
     }
   }
 }
