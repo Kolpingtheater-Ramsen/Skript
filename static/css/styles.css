@@ -717,9 +717,92 @@ html {
 }
 
 body {
-  background:
-    linear-gradient(180deg, rgba(255, 106, 0, 0.06), transparent 220px),
-    var(--color-background);
+  --theme-background-image: url('/static/assets/theme-backgrounds/background-light.webp?v=theater-v2');
+  --theme-background-overlay: linear-gradient(
+    180deg,
+    rgba(249, 250, 251, 0.58),
+    rgba(249, 250, 251, 0.78)
+  );
+  --layer-shell: color-mix(in srgb, var(--color-surface) 78%, transparent);
+  --layer-panel: color-mix(in srgb, var(--color-surface) 62%, transparent);
+  --layer-row: color-mix(in srgb, var(--color-surface) 54%, transparent);
+  --layer-chrome: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  background-color: var(--color-background);
+  background-image: var(--theme-background-overlay), var(--theme-background-image);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* Translucent surface hierarchy keeps the themed artwork visible without
+   letting it compete with the script text. */
+body .script-container,
+body.dark-mode .script-container,
+body.pink-mode .script-container {
+  background-color: var(--layer-shell);
+  -webkit-backdrop-filter: blur(14px) saturate(0.9);
+  backdrop-filter: blur(14px) saturate(0.9);
+}
+
+body .toc,
+body.dark-mode .toc,
+body.pink-mode .toc,
+body .scene-summary,
+body.dark-mode .scene-summary,
+body.pink-mode .scene-summary,
+body .card,
+body.dark-mode .card,
+body.pink-mode .card {
+  background-color: var(--layer-panel);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+body .scene-overview,
+body.dark-mode .scene-overview,
+body.pink-mode .scene-overview {
+  background-color: color-mix(in srgb, var(--color-primary-light) 56%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+body .script-line:not(.instruction):not(.technical):not(.lighting):not(.audio):not(.props):not(.microphone):not(.highlighted):not(.marked-line),
+body.dark-mode .script-line:not(.instruction):not(.technical):not(.lighting):not(.audio):not(.props):not(.microphone):not(.highlighted):not(.marked-line),
+body.pink-mode .script-line:not(.instruction):not(.technical):not(.lighting):not(.audio):not(.props):not(.microphone):not(.highlighted):not(.marked-line) {
+  background-color: var(--layer-row);
+}
+
+body .bottom-nav,
+body.dark-mode .bottom-nav,
+body.pink-mode .bottom-nav,
+body .sidebar,
+body.dark-mode .sidebar,
+body.pink-mode .sidebar,
+body .sidebar-header,
+body.dark-mode .sidebar-header,
+body.pink-mode .sidebar-header,
+body .modal,
+body.dark-mode .modal,
+body.pink-mode .modal {
+  background-color: var(--layer-chrome);
+  -webkit-backdrop-filter: blur(16px) saturate(0.9);
+  backdrop-filter: blur(16px) saturate(0.9);
+}
+
+.nav-bar,
+body.dark-mode .nav-bar {
+  background-color: rgba(15, 15, 16, 0.78);
+}
+
+body.pink-mode .nav-bar {
+  background-color: var(--layer-chrome);
+}
+
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 .nav-bar {

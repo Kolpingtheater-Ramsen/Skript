@@ -31,6 +31,9 @@ const ASSETS_TO_CACHE = [
   '/static/js/runtime.js',
   '/static/data/plays.json',
   '/static/assets/logo.png',
+  '/static/assets/theme-backgrounds/background-light.webp?v=theater-v2',
+  '/static/assets/theme-backgrounds/background-dark.webp?v=theater-v2',
+  '/static/assets/theme-backgrounds/background-pink.webp?v=theater-v2',
   '/manifest.json',
 ];
 

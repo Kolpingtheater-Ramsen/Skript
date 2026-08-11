@@ -7,6 +7,12 @@
    ============================================ */
 
 body.dark-mode {
+  --theme-background-image: url('/static/assets/theme-backgrounds/background-dark.webp?v=theater-v2');
+  --theme-background-overlay: linear-gradient(
+    180deg,
+    rgba(15, 15, 16, 0.58),
+    rgba(15, 15, 16, 0.76)
+  );
   --color-background: #0F0F10;
   --color-surface: #18181A;
   --color-text: #F3F3F3;
@@ -354,6 +360,12 @@ body.dark-mode.is-director::before {
    ============================================ */
 
 body.pink-mode {
+  --theme-background-image: url('/static/assets/theme-backgrounds/background-pink.webp?v=theater-v2');
+  --theme-background-overlay: linear-gradient(
+    180deg,
+    rgba(253, 242, 248, 0.58),
+    rgba(253, 242, 248, 0.8)
+  );
   /* AA contrast: accent text >= 5.14:1; interactive borders >= 3.07:1. */
   --color-primary: #be185d;
   --color-primary-hover: #9d174d;
