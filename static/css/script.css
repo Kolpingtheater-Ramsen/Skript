@@ -69,6 +69,22 @@
    SCENE ELEMENTS
    ============================================ */
 
+.script-scene-title {
+  width: fit-content;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.script-scene-title.has-selected-actor {
+  color: var(--color-primary-dark);
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  box-shadow: inset 4px 0 0 var(--color-primary);
+  padding: var(--space-2) var(--space-3);
+}
+
 .scene-separator {
   border-top: 2px solid var(--color-primary);
   margin: 0 0 var(--space-4) 0;
