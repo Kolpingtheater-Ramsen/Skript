@@ -7,6 +7,7 @@ import { CATEGORIES, STORAGE_KEYS } from './config.js'
 import {
   findActorGroupBySelection,
   getActorDisplayName,
+  getMentionedRolesInRow,
   rowMatchesSelectedActor,
 } from './actor-groups.js'
 import { appendHighlightedText, appendTextWithTransforms } from './inline-text.js?v=819c608'
@@ -220,14 +221,21 @@ export class Renderer {
     let actorsSet = new Set()
     const micros = new Map()
 
+    const addRole = (role, microphone = '') => {
+      if (!role) return
+      const display = getActorDisplayName(role, actors, useActorNames)
+      actorsSet.add(display)
+      if (microphone) {
+        micros.set(display, microphone)
+      }
+    }
+
     sceneData.forEach((row) => {
       if (row.Charakter) {
-        const display = getActorDisplayName(row.Charakter, actors, useActorNames)
-        actorsSet.add(display)
-        if (row.Mikrofon) {
-          micros.set(display, row.Mikrofon)
-        }
+        addRole(row.Charakter, row.Mikrofon)
       }
+
+      getMentionedRolesInRow(row, actors).forEach((role) => addRole(role))
     })
 
     if (actorsSet.size === 0) return document.createElement('div')
@@ -248,7 +256,7 @@ export class Renderer {
       tr.appendChild(th1)
     }
     const th2 = document.createElement('th')
-    th2.textContent = 'Schauspieler'
+    th2.textContent = useActorNames ? 'Schauspieler / Rolle' : 'Rollen'
     tr.appendChild(th2)
     table.appendChild(tr)
 
@@ -257,9 +265,12 @@ export class Renderer {
       if (!showMicro) return a.localeCompare(b, 'de')
       const microA = parseInt(micros.get(a), 10)
       const microB = parseInt(micros.get(b), 10)
-      return microA - microB
+      const orderA = Number.isFinite(microA) ? microA : Number.POSITIVE_INFINITY
+      const orderB = Number.isFinite(microB) ? microB : Number.POSITIVE_INFINITY
+      return orderA - orderB || a.localeCompare(b, 'de')
     })
 
+    const selectedGroup = findActorGroupBySelection(actors, selectedActor)
     actorsSet.forEach((actor) => {
       const tr = document.createElement('tr')
       if (showMicro) {
@@ -268,7 +279,6 @@ export class Renderer {
         tr.appendChild(td1)
       }
       const td2 = document.createElement('td')
-      const selectedGroup = findActorGroupBySelection(actors, selectedActor)
       const isSelected = selectedGroup
         ? selectedGroup.roles.some((role) => getActorDisplayName(role, actors, useActorNames) === actor)
         : false
@@ -702,7 +712,6 @@ export class Renderer {
     container.appendChild(toc)
 
     let currentScene = ''
-    let sceneData = []
 
     // First pass: determine which lines should be visible or context
     const lineStates = this.calculateLineStates(data, settings)
@@ -715,12 +724,25 @@ export class Renderer {
       const isNewScene = row.Szene !== currentScene
 
       if (isNewScene) {
+        const sceneData = []
+        for (let i = index; i < data.length; i++) {
+          if (data[i].Szene !== row.Szene) break
+          sceneData.push(data[i])
+        }
+        const selectedActorIsInScene = sceneData.some((sceneRow) =>
+          rowMatchesSelectedActor(sceneRow, settings.selectedActor, actors)
+        )
+
         const a = document.createElement('a')
         a.name = `scene-${row.Szene}`
         a.id = `scene-${row.Szene}`
         a.className = 'scene-anchor'
         container.appendChild(a)
         const szeneTitel = document.createElement('h2')
+        szeneTitel.className = 'script-scene-title'
+        if (selectedActorIsInScene) {
+          szeneTitel.classList.add('has-selected-actor')
+        }
         szeneTitel.textContent = `🎬 Szene ${row.Szene}`
         container.appendChild(szeneTitel)
 
@@ -739,13 +761,6 @@ export class Renderer {
         container.appendChild(separator)
 
         if (settings.showSceneOverview) {
-          for (let i = index; i < data.length; i++) {
-            if (data[i].Szene === row.Szene) {
-              sceneData.push(data[i])
-            } else {
-              break
-            }
-          }
           if (sceneData.length > 0) {
             container.appendChild(
               this.createSceneOverview(
@@ -757,7 +772,6 @@ export class Renderer {
               )
             )
           }
-          sceneData = []
         }
         currentScene = row.Szene
       }
