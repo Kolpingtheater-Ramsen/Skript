@@ -6,7 +6,7 @@ const CONFIG = {
   SOCKET_URL: window.location.origin,
   SOCKET_OPTIONS: {
     transports: ['websocket'],
-    reconnectionAttempts: 5,
+    reconnectionAttempts: Infinity,
     reconnectionDelay: 1000,
     timeout: 5000,
   },

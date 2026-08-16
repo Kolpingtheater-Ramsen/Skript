@@ -14,6 +14,35 @@
 
     <link rel="stylesheet" href="/static/css/viewer-actor.css" />
 
+    <script>
+        ;(() => {
+            const isLocalhost =
+                location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+            if (
+                !('serviceWorker' in navigator) ||
+                isLocalhost ||
+                !location.protocol.startsWith('http')
+            ) {
+                return
+            }
+
+            let refreshing = false
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return
+                refreshing = true
+                window.location.reload()
+            })
+
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => registration.update())
+                    .catch((error) => {
+                        console.warn('[SW] Viewer registration failed:', error)
+                    })
+            })
+        })()
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="/static/js/vendor/papaparse.min.js"></script>
 </head>

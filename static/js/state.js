@@ -14,9 +14,11 @@ export class StateManager extends EventEmitter {
     this.state = {
       playId: null,
       scriptData: null,
+      scriptRevision: null,
       actors: [],
       markedLine: null,
       markedLineIndex: null,
+      currentCursor: null,
       isDirector: false,
       directorName: '',
       isConnected: false,

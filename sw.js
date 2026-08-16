@@ -9,6 +9,8 @@ const ASSETS_TO_CACHE = [
   '/static/css/components.css',
   '/static/css/script.css',
   '/static/css/themes.css',
+  '/static/css/viewer.css',
+  '/static/css/viewer-actor.css',
   '/static/js/main.js',
   '/static/js/client-error-reporter.js',
   '/static/js/errors-dashboard.js',
@@ -32,11 +34,19 @@ const ASSETS_TO_CACHE = [
   '/static/js/inline-text.js',
   '/static/js/mic-cue-generator.js',
   '/static/js/runtime.js',
+  '/static/js/viewer-shared.js',
+  '/static/js/viewer-shared.js?v=20260816-cue-window',
+  '/static/js/viewer-stage.js?v=20260816-cue-window',
+  '/static/js/viewer-actor.js',
+  '/static/js/cue-window.js',
+  '/static/js/viewer-profile.js',
   '/static/data/plays.json',
   '/static/assets/logo.png',
   '/static/assets/theme-backgrounds/background-light.webp?v=theater-v2',
   '/static/assets/theme-backgrounds/background-dark.webp?v=theater-v2',
   '/static/assets/theme-backgrounds/background-pink.webp?v=theater-v2',
+  '/viewer.html',
+  '/viewer2.html',
   '/manifest.json',
 ];
 
@@ -137,12 +147,23 @@ async function networkFirst(request) {
 }
 
 async function matchCachedFallback(request) {
-  const cachedResponse = await caches.match(request);
+  const isNavigation = request.mode === 'navigate';
+  const cachedResponse = await caches.match(
+    request,
+    isNavigation ? { ignoreSearch: true } : undefined
+  );
   if (cachedResponse) {
     return cachedResponse;
   }
 
-  if (request.mode === 'navigate') {
+  if (isNavigation) {
+    const pathname = new URL(request.url).pathname;
+    if (pathname === '/viewer.html' || pathname === '/viewer2.html') {
+      const viewerFallback = await caches.match(pathname, { ignoreSearch: true });
+      if (viewerFallback) {
+        return viewerFallback;
+      }
+    }
     return caches.match('/');
   }
 

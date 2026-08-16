@@ -83,9 +83,6 @@ export class SocketManager {
     this.socket.on('connect_error', (error) => {
       console.warn('Connection error:', error)
       this.isOnline = false
-      if (!this.syncAvailable) {
-        this._markSyncUnavailable('Unable to reach sync server', error)
-      }
       this._trigger('connectError', error)
     })
 
@@ -99,8 +96,8 @@ export class SocketManager {
       this._trigger('markerUpdate', data)
     })
 
-    this.socket.on('marker_clear', () => {
-      this._trigger('markerClear')
+    this.socket.on('marker_clear', (data) => {
+      this._trigger('markerClear', data)
     })
 
     this.socket.on('set_director', (data) => {
@@ -124,9 +121,14 @@ export class SocketManager {
   on(event, callback) {
     if (this.callbacks[event]) {
       this.callbacks[event].push(callback)
+      return () => {
+        const index = this.callbacks[event].indexOf(callback)
+        if (index >= 0) this.callbacks[event].splice(index, 1)
+      }
     } else {
       console.warn(`Unknown event: ${event}`)
     }
+    return () => {}
   }
 
   /**
@@ -165,10 +167,15 @@ export class SocketManager {
 
   /**
    * Set marker position (director only)
-   * @param {number} index - Line index
+   * Accepts the canonical v2 cursor while retaining numeric indices for old
+   * callers during the protocol migration.
+   * @param {Object|number} cursorOrIndex - Canonical cursor or legacy line index
    */
-  setMarker(index) {
-    this.emit('set_marker', { index })
+  setMarker(cursorOrIndex) {
+    const payload = Number.isInteger(cursorOrIndex)
+      ? { index: cursorOrIndex }
+      : cursorOrIndex
+    this.emit('set_marker', payload)
   }
 
   /**
@@ -215,9 +222,9 @@ export class SocketManager {
     this.syncUnavailableEmitted = true
     this.syncAvailable = false
     this.isOnline = false
-    if (this.socket) {
-      this.socket.disconnect()
-    }
+    // Keep Socket.IO alive. The display may have opened before the server was
+    // ready or briefly lost Wi-Fi; its configured reconnect attempts should be
+    // allowed to recover synchronization without a manual page reload.
     console.warn(reason, error || '')
     this._trigger('syncUnavailable', { reason, error })
   }

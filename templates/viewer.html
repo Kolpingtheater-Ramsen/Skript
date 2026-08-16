@@ -5,73 +5,183 @@
     <meta charset="UTF-8" />
     <script src="/static/js/client-error-reporter.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kolpingtheater Ramsen - Bühnen-Viewer</title>
+    <meta name="color-scheme" content="dark" />
+    <title>Kolpingtheater Ramsen – Bühnen-Viewer</title>
 
-    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/viewer.css" />
-    <style>
-        /* Stage viewer specific - content with sidebar */
-        .content {
-            margin-right: 340px;
-        }
-
-        @media (max-width: 1200px) {
-            .content {
-                margin-right: 300px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .content {
-                margin-right: 0;
-            }
-        }
-    </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="/static/js/vendor/papaparse.min.js"></script>
 </head>
 
 <body>
-    <div class="header">
-        <h1>📺 Bühnen-Viewer</h1>
-        <div class="status-group">
-            <span id="connection-status">🔄 Verbinde...</span>
-            <span id="director-status">👤 Director: Niemand</span>
-            <span id="clock" class="clock">00:00:00</span>
+    <header class="header">
+        <div class="viewer-heading">
+            <h1>📺 Bühnen-Viewer</h1>
+            <span id="active-profile-label" class="profile-chip">Ansicht wählen</span>
         </div>
+
+        <div class="header-actions">
+            <div class="status-group" aria-label="Verbindungsstatus">
+                <span id="connection-status">🔄 Verbinde…</span>
+                <span id="director-status">👤 Director: Niemand</span>
+                <span id="clock" class="clock">00:00:00</span>
+            </div>
+            <button
+                id="settings-open"
+                class="settings-button"
+                type="button"
+                aria-controls="viewer-settings"
+                aria-expanded="false"
+            >
+                <span aria-hidden="true">⚙️</span>
+                <span>Ansicht</span>
+            </button>
+        </div>
+    </header>
+
+    <div id="viewer-message" class="viewer-message" role="status" aria-live="polite" hidden></div>
+
+    <main id="viewer-root">
+        <section id="timeline-layout" class="viewer-layout timeline-layout" aria-label="Cue-Vorschau">
+            <header class="timeline-scene">
+                <div class="timeline-scene-label" id="timeline-scene-label">Noch keine Szene</div>
+                <p class="timeline-scene-summary" id="timeline-scene-summary">Warte auf den Director-Marker.</p>
+            </header>
+
+            <div class="cue-window" id="cue-window" aria-live="polite">
+                <article class="cue-card cue-card-previous" id="cue-previous" data-slot="previous"></article>
+                <article class="cue-card cue-card-current" id="cue-current" data-slot="current"></article>
+
+                <div class="forecast-divider" aria-label="Beginn der Vorschau">
+                    <span>Vorschau</span>
+                </div>
+
+                <article class="cue-card cue-card-next" id="cue-next" data-slot="next"></article>
+                <article class="cue-card cue-card-next cue-card-next-two" id="cue-next2" data-slot="next2"></article>
+            </div>
+        </section>
+
+        <section id="script-layout" class="viewer-layout script-layout" aria-label="Vollständiges Skript" hidden>
+            <div id="script-container" class="content with-sidebar"></div>
+            <aside class="scene-info-sidebar" aria-label="Szenenübersicht">
+                <div class="scene-info-box active" id="current-scene-info">
+                    <h3>🎬 Aktuelle Szene</h3>
+                    <ul class="actor-list" id="current-actors"></ul>
+                </div>
+                <div class="scene-info-box next" id="next-scene-info">
+                    <h3>⏭️ Nächste Szene</h3>
+                    <ul class="actor-list" id="next-actors"></ul>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <div id="settings-backdrop" class="panel-backdrop" hidden></div>
+    <aside id="viewer-settings" class="settings-panel" aria-hidden="true" aria-labelledby="settings-title">
+        <div class="settings-header">
+            <div>
+                <div class="settings-eyebrow">Dieser Monitor</div>
+                <h2 id="settings-title">Ansicht konfigurieren</h2>
+            </div>
+            <button id="settings-close" class="icon-button" type="button" aria-label="Einstellungen schließen">×</button>
+        </div>
+
+        <div class="settings-body">
+            <label class="settings-field" for="preset-select">
+                <span>Preset</span>
+                <select id="preset-select">
+                    <option value="schauspiel">Schauspiel</option>
+                    <option value="buehne">Bühne</option>
+                    <option value="klassisch">Bühnenmonitor klassisch</option>
+                    <option value="licht">Licht</option>
+                    <option value="ton">Ton</option>
+                    <option value="gesamttechnik">Gesamttechnik</option>
+                    <option value="custom">Benutzerdefiniert</option>
+                </select>
+            </label>
+
+            <fieldset class="settings-group">
+                <legend>Darstellung</legend>
+                <label class="choice-row">
+                    <input type="radio" name="viewer-layout" value="timeline" />
+                    <span><strong>Vier Cues</strong><small>Vergangen, aktuell und zwei als Vorschau</small></span>
+                </label>
+                <label class="choice-row">
+                    <input type="radio" name="viewer-layout" value="script" />
+                    <span><strong>Ganzes Skript</strong><small>Klassische Bühnenansicht</small></span>
+                </label>
+            </fieldset>
+
+            <fieldset class="settings-group filter-grid">
+                <legend>Inhalte</legend>
+                <label class="choice-row"><input type="checkbox" data-viewer-filter="schauspieler" /><span>Schauspieler</span></label>
+                <label class="choice-row"><input type="checkbox" data-viewer-filter="anweisung" /><span>Anweisung</span></label>
+                <label class="choice-row"><input type="checkbox" data-viewer-filter="technik" /><span>Technik</span></label>
+                <label class="choice-row"><input type="checkbox" data-viewer-filter="licht" /><span>Licht</span></label>
+                <label class="choice-row"><input type="checkbox" data-viewer-filter="einspieler" /><span>Einspieler</span></label>
+                <label class="choice-row"><input type="checkbox" data-viewer-filter="requisiten" /><span>Requisiten</span></label>
+                <label class="choice-row"><input type="checkbox" data-viewer-filter="mikrofon-manuell" /><span>Mikrofon manuell</span></label>
+                <label class="choice-row"><input type="checkbox" data-viewer-filter="mikrofon-auto" /><span>Mikrofon automatisch</span></label>
+            </fieldset>
+
+            <label class="choice-row settings-summary-toggle">
+                <input id="show-scene-summary" type="checkbox" />
+                <span><strong>Szenenzusammenfassung</strong><small>Text aus Kategorie „Szenenbeginn“ anzeigen</small></span>
+            </label>
+        </div>
+
+        <div class="settings-footer">
+            <span id="display-scope-label"></span>
+            <button id="settings-done" class="primary-button" type="button">Fertig</button>
+        </div>
+    </aside>
+
+    <div id="preset-chooser" class="modal-backdrop" hidden>
+        <section class="preset-dialog" role="dialog" aria-modal="true" aria-labelledby="preset-title">
+            <div class="settings-eyebrow">Bühnen-Viewer einrichten</div>
+            <h2 id="preset-title">Was soll dieser Monitor zeigen?</h2>
+            <p>Wähle ein Preset. Du kannst alle Inhalte danach über das Zahnrad ändern.</p>
+            <div id="preset-choices" class="preset-choices"></div>
+        </section>
     </div>
 
-    <div id="script-container" class="content">
-        <!-- Script content will be inserted here -->
-    </div>
-
-    <div class="scene-info-sidebar">
-        <div class="scene-info-box active" id="current-scene-info">
-            <h3>🎬 Aktuelle Szene</h3>
-            <ul class="actor-list" id="current-actors"></ul>
-        </div>
-        <div class="scene-info-box next" id="next-scene-info">
-            <h3>⏭️ Nächste Szene</h3>
-            <ul class="actor-list" id="next-actors"></ul>
-        </div>
-    </div>
-
-    <div class="bottom-progress">
+    <footer class="bottom-progress">
         <div class="footer-info">
-            <span>📊 Fortschritt</span>
+            <span>📊 Szenenfortschritt</span>
             <span id="global-progress-text">0% (0/0)</span>
         </div>
-        <div class="progress">
+        <div class="progress" role="progressbar" aria-label="Szenenfortschritt">
             <div class="progress-bar" id="global-progress-bar"></div>
         </div>
-    </div>
+    </footer>
 
-    <script type="module" src="/static/js/viewer-stage.js"></script>
+    <script>
+        if (
+            'serviceWorker' in navigator &&
+            /^https?:$/.test(window.location.protocol) &&
+            !['localhost', '127.0.0.1'].includes(window.location.hostname)
+        ) {
+            let reloadingForWorker = false
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (reloadingForWorker) return
+                reloadingForWorker = true
+                window.location.reload()
+            })
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js')
+                    await registration.update()
+                } catch (error) {
+                    console.warn('Service Worker konnte nicht aktualisiert werden:', error)
+                }
+            }, { once: true })
+        }
+    </script>
+    <script type="module" src="/static/js/viewer-stage.js?v=20260816-cue-window"></script>
 </body>
 
 </html>

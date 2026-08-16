@@ -6,7 +6,7 @@
  * ordering details between data-manager, validation, and derived actors.
  */
 
-import { dataManager } from './data-manager.js'
+import { computeScriptRevision, dataManager } from './data-manager.js'
 import { validateScriptData } from './sheet-validation.js'
 
 export async function loadScriptModel(playId) {
@@ -16,6 +16,7 @@ export async function loadScriptModel(playId) {
   const rawData = await dataManager.loadScript(playId)
   const actors = dataManager.getActors(rawData)
   const data = dataManager.normalizeData(rawData)
+  const scriptRevision = computeScriptRevision(data)
   const validation = validateScriptData(rawData, data)
 
   return {
@@ -23,6 +24,7 @@ export async function loadScriptModel(playId) {
     playsConfig,
     rawData,
     data,
+    scriptRevision,
     actors,
     validation,
   }

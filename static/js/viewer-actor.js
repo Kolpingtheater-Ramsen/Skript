@@ -9,37 +9,82 @@ export class ActorViewer extends BaseViewer {
   constructor() {
     super()
     this.roleToActor = new Map()
-  }
-
-  async init() {
-    await super.init()
-    
-    // Build role to actor mapping
-    this.roleToActor = this.buildRoleMapping()
+    this.cursorProblem = null
   }
 
   buildRoleMapping() {
     const map = new Map()
-    this.scriptData.forEach((row) => {
-      if (row.Szene === '0' && row.Charakter && row['Text/Anweisung']) {
-        map.set(row.Charakter, row['Text/Anweisung'])
+
+    // The canonical loader derives the cast before scene-zero rows are removed
+    // from the playback timeline. Prefer that model so the first render already
+    // has the correct actor names.
+    this.actors.forEach(([role, actor]) => {
+      const normalizedRole = this.normalizeRole(role)
+      const actorName = String(actor || '').trim()
+      if (normalizedRole && actorName) map.set(normalizedRole, actorName)
+    })
+
+    // Keep older sheets working when their scene-zero cast rows do not yet use
+    // Kategorie "Rolle" and therefore are absent from model.actors.
+    this.rawScriptData.forEach((row) => {
+      const scene = String(row?.Szene ?? '').trim()
+      const role = this.normalizeRole(row?.Charakter)
+      const actor = String(row?.['Text/Anweisung'] ?? '').trim()
+      if (scene === '0' && role && actor && !map.has(role)) {
+        map.set(role, actor)
       }
     })
+
     return map
   }
 
   render() {
+    this.roleToActor = this.buildRoleMapping()
     this.updateBothPanels()
   }
 
-  onMarkerUpdate(data) {
-    this.currentMarkerIndex = data.index
+  onMarkerUpdate() {
+    this.cursorProblem = null
+    this.restoreConnectionStatus()
     this.updateBothPanels()
   }
 
   onMarkerClear() {
-    this.currentMarkerIndex = null
+    this.cursorProblem = null
+    this.restoreConnectionStatus()
     this.updateBothPanels()
+  }
+
+  onCursorMismatch() {
+    this.cursorProblem = 'mismatch'
+    this.updateConnectionStatus('⚠️ Nicht synchron')
+  }
+
+  onCursorInvalid() {
+    this.cursorProblem = 'invalid'
+    this.updateConnectionStatus('⚠️ Marker unbekannt')
+  }
+
+  onLoadError() {
+    this.updateConnectionStatus('❌ Skript nicht verfügbar')
+  }
+
+  onConnectionStateChange() {
+    this.restoreConnectionStatus()
+  }
+
+  restoreConnectionStatus() {
+    if (this.loadError) {
+      this.updateConnectionStatus('❌ Skript nicht verfügbar')
+    } else if (this.cursorProblem === 'mismatch') {
+      this.updateConnectionStatus('⚠️ Nicht synchron')
+    } else if (this.cursorProblem === 'invalid') {
+      this.updateConnectionStatus('⚠️ Marker unbekannt')
+    } else {
+      this.updateConnectionStatus(
+        this.connectionState === 'online' ? '✅ Verbunden' : '⚠️ Offline'
+      )
+    }
   }
 
   updateBothPanels() {
@@ -69,8 +114,13 @@ export class ActorViewer extends BaseViewer {
 
     // Update roles list
     const rolesContainer = box.querySelector('.roles-list')
-    if (rolesContainer && scene) {
+    if (rolesContainer) {
       rolesContainer.innerHTML = ''
+
+      if (!scene) {
+        this.autoScrollManager.stopAll()
+        return
+      }
 
       const roles = this.getSceneRoles(scene)
 
@@ -105,7 +155,10 @@ export class ActorViewer extends BaseViewer {
 
   getActorMicro(role, scene) {
     const row = this.scriptData.find(
-      (r) => r.Szene === scene && r.Charakter === role && r.Mikrofon
+      (candidate) =>
+        String(candidate?.Szene ?? '').trim() === String(scene) &&
+        this.normalizeRole(candidate?.Charakter) === this.normalizeRole(role) &&
+        candidate?.Mikrofon
     )
     return row ? row.Mikrofon : null
   }
@@ -115,11 +168,11 @@ export class ActorViewer extends BaseViewer {
 
     // Find all roles in the scene
     this.scriptData.forEach((row) => {
-      if (row.Szene !== scene) return
+      if (String(row?.Szene ?? '').trim() !== String(scene)) return
 
       // Check character field
       if (row.Charakter) {
-        roles.add(row.Charakter)
+        roles.add(this.normalizeRole(row.Charakter))
       }
 
       // Check if role is mentioned in instructions
@@ -134,7 +187,13 @@ export class ActorViewer extends BaseViewer {
     })
 
     // Return sorted roles
-    return Array.from(roles).sort()
+    return Array.from(roles).filter(Boolean).sort((left, right) =>
+      left.localeCompare(right, 'de')
+    )
+  }
+
+  normalizeRole(value) {
+    return String(value || '').trim().toUpperCase()
   }
 
   escapeRegExp(str) {

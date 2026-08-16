@@ -53,6 +53,9 @@ class DirectorManager:
         self.current_director: Dict[str, Optional[str]] = {}
         self.current_director_sid: Dict[str, Optional[str]] = {}
         self.sid_to_play: Dict[str, str] = {}
+        self.current_cursor: Dict[str, Dict[str, Any]] = {}
+        self.cursor_sequence: Dict[str, int] = {}
+        self._lock = threading.RLock()
 
     def get_director(self, play_id: str) -> Optional[str]:
         """Get current director name for a play."""
@@ -91,6 +94,56 @@ class DirectorManager:
     def remove_sid(self, sid: str):
         """Remove SID tracking."""
         self.sid_to_play.pop(sid, None)
+
+    def get_cursor(self, play_id: str) -> Optional[Dict[str, Any]]:
+        """Return a copy of the latest canonical or legacy cursor for a play."""
+        with self._lock:
+            cursor = self.current_cursor.get(play_id)
+            return dict(cursor) if cursor else None
+
+    def get_cursor_event(
+        self, play_id: str
+    ) -> Optional[tuple[str, Dict[str, Any]]]:
+        """Return the latest ordered marker or explicit-clear snapshot."""
+        with self._lock:
+            cursor = self.current_cursor.get(play_id)
+            if cursor:
+                return "marker_update", dict(cursor)
+
+            sequence = self.cursor_sequence.get(play_id)
+            if sequence is not None:
+                return "marker_clear", {
+                    "playId": play_id,
+                    "sequence": sequence,
+                }
+            return None
+
+    def _next_cursor_sequence(self, play_id: str) -> int:
+        """Issue a server-authoritative, monotonically increasing sequence."""
+        previous = self.cursor_sequence.get(play_id, 0)
+        timestamp = time.time_ns() // 1_000
+        sequence = max(previous + 1, timestamp)
+        self.cursor_sequence[play_id] = sequence
+        return sequence
+
+    def set_cursor(
+        self, play_id: str, cursor: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Store and return a cursor with a server-issued sequence."""
+        with self._lock:
+            stored_cursor = dict(cursor)
+            stored_cursor["sequence"] = self._next_cursor_sequence(play_id)
+            self.current_cursor[play_id] = stored_cursor
+            return dict(stored_cursor)
+
+    def clear_cursor(self, play_id: str) -> Dict[str, Any]:
+        """Explicitly clear a cursor and return an ordered clear event."""
+        with self._lock:
+            self.current_cursor.pop(play_id, None)
+            return {
+                "playId": play_id,
+                "sequence": self._next_cursor_sequence(play_id),
+            }
 
 
 class GitPullScheduler:
@@ -256,7 +309,67 @@ def _rate_limited(ip: str) -> bool:
         if len(entries) >= CLIENT_ERROR_RATE_LIMIT:
             return True
         entries.append(now)
-        return False
+    return False
+
+
+MAX_SAFE_JS_INTEGER = 9_007_199_254_740_991
+
+
+def _nonnegative_safe_int(value: Any) -> Optional[int]:
+    """Return a JSON/JavaScript-safe non-negative integer or None."""
+    if isinstance(value, bool) or not isinstance(value, int):
+        return None
+    if value < 0 or value > MAX_SAFE_JS_INTEGER:
+        return None
+    return value
+
+
+def _bounded_string(value: Any, max_length: int) -> Optional[str]:
+    """Return a trimmed, bounded string or None."""
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    if not value or len(value) > max_length:
+        return None
+    return value
+
+
+def sanitize_cursor_payload(
+    data: Any, play_id: str
+) -> Optional[Dict[str, Any]]:
+    """Validate and normalize canonical v2 and legacy marker payloads."""
+    if not isinstance(data, dict):
+        return None
+
+    supplied_play_id = data.get("playId")
+    if supplied_play_id is not None and supplied_play_id != play_id:
+        return None
+
+    cue_id = _bounded_string(data.get("cueId"), 256)
+    ordinal = _nonnegative_safe_int(data.get("ordinal"))
+    legacy_index = _nonnegative_safe_int(data.get("index"))
+    if cue_id is None and ordinal is None and legacy_index is None:
+        return None
+
+    cursor: Dict[str, Any] = {"playId": play_id}
+    protocol_version = _nonnegative_safe_int(data.get("protocolVersion"))
+    script_revision = _bounded_string(data.get("scriptRevision"), 256)
+    sequence = _nonnegative_safe_int(data.get("sequence"))
+
+    if protocol_version is not None:
+        cursor["protocolVersion"] = protocol_version
+    if script_revision is not None:
+        cursor["scriptRevision"] = script_revision
+    if cue_id is not None:
+        cursor["cueId"] = cue_id
+    if ordinal is not None:
+        cursor["ordinal"] = ordinal
+    if sequence is not None:
+        cursor["sequence"] = sequence
+    if legacy_index is not None:
+        cursor["index"] = legacy_index
+
+    return cursor
 
 
 # Flask routes
@@ -477,7 +590,8 @@ def handle_connect():
 @socketio.on("join_play")
 def handle_join_play(data: Dict[str, Any]):
     """Handle client joining a play room."""
-    play_id = data.get("playId", "default")
+    join_data = data if isinstance(data, dict) else {}
+    play_id = _bounded_string(join_data.get("playId"), 128) or "default"
     previous = director_manager.get_play_for_sid(request.sid)
 
     # Leave previous room if different
@@ -500,6 +614,13 @@ def handle_join_play(data: Dict[str, Any]):
         },
         to=request.sid,
     )
+
+    # A joining or reconnecting display must immediately recover the current
+    # playback position instead of waiting for the Director's next click.
+    cursor_event = director_manager.get_cursor_event(play_id)
+    if cursor_event:
+        event_name, payload = cursor_event
+        emit(event_name, payload, to=request.sid)
 
 
 @socketio.on("set_director")
@@ -625,8 +746,15 @@ def handle_set_marker(data: Dict[str, Any]):
     if not director_manager.is_director(play_id, request.sid):
         return
 
-    # Broadcast marker to all clients in play except sender
-    emit("marker_update", data, room=play_id, skip_sid=request.sid)
+    cursor = sanitize_cursor_payload(data, play_id)
+    if cursor is None:
+        return
+
+    cursor = director_manager.set_cursor(play_id, cursor)
+
+    # Broadcast the authoritative server sequence to every client, including
+    # the sender, so all displays share the same ordering state.
+    emit("marker_update", cursor, room=play_id)
 
 
 @socketio.on("clear_marker")
@@ -637,7 +765,8 @@ def handle_clear_marker():
     if not director_manager.is_director(play_id, request.sid):
         return
 
-    emit("marker_clear", room=play_id, skip_sid=request.sid)
+    clear_event = director_manager.clear_cursor(play_id)
+    emit("marker_clear", clear_event, room=play_id)
 
 
 if __name__ == "__main__":

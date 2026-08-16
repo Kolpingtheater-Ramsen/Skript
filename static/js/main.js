@@ -54,7 +54,7 @@ class App {
 
     // Load script model and derived metadata
     const scriptModel = await loadScriptModel(playId)
-    const { playsConfig, data, actors, validation } = scriptModel
+    const { playsConfig, data, scriptRevision, actors, validation } = scriptModel
     stateManager.set('playsConfig', playsConfig)
 
     // Setup play selector and update links
@@ -63,9 +63,11 @@ class App {
 
     // Store in state and global for backward compatibility
     stateManager.set('scriptData', data)
+    stateManager.set('scriptRevision', scriptRevision)
     stateManager.set('actors', actors)
     stateManager.set('sheetValidation', validation)
     window.scriptData = data
+    window.scriptRevision = scriptRevision
     window.actors = actors
 
     // Populate actors dropdown
@@ -110,6 +112,7 @@ class App {
     this.renderer.renderScript(data, settings, actors, (element, row) => {
       this.handleLineClick(element, row, settings)
     })
+    this.directorManager.restoreCurrentCursor()
 
     // Update bottom navigation after rendering
     this.navigation.updateBottomNav()

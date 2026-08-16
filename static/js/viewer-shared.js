@@ -1,248 +1,288 @@
 /**
- * Shared functionality for viewer pages
+ * Shared loading, canonical cursor, status, and scene helpers for viewer pages.
  */
 
-import { AutoScrollManager, formatTime, getEl } from './utils.js'
-import { loadPlaysConfig, loadScript, getActors, buildSceneIndexMap, collectScenes } from './api.js'
+import { AutoScrollManager, formatTime, getEl, getUrlParams } from './utils.js'
+import { loadScriptModel } from './script-loader.js'
 import { socketManager } from './socket.js'
-import { STORAGE_KEYS } from './config.js'
-import { getUrlParams } from './utils.js'
+import { CONFIG, STORAGE_KEYS } from './config.js'
+import {
+  advanceCursorSequence,
+  deriveLocalScriptRevision,
+  getCueOrdinal,
+  resolveCueCursor,
+} from './cue-window.js'
 
-/**
- * Base viewer class with common functionality
- */
 export class BaseViewer {
   constructor() {
-    this.scriptData = null
+    this.scriptData = []
+    this.rawScriptData = []
     this.actors = []
     this.sceneToIndices = new Map()
     this.scenesOrder = []
     this.currentMarkerIndex = null
+    this.currentMarkerCursor = null
+    this.lastMarkerSequence = null
+    this.scriptRevision = null
     this.autoScrollManager = new AutoScrollManager()
     this.playId = null
-    this.sheetUrl = null
+    this.displayId = 'default'
+    this.loadError = null
+    this.connectionState = 'connecting'
   }
 
-  /**
-   * Initialize viewer
-   */
   async init() {
-    // Get play ID from URL or storage
     const urlParams = getUrlParams()
-    const storedPlayId = localStorage.getItem(STORAGE_KEYS.PLAY_ID) || 'default'
+    let storedPlayId = CONFIG.DEFAULT_PLAY_ID || 'default'
+    try {
+      storedPlayId = localStorage.getItem(STORAGE_KEYS.PLAY_ID) || storedPlayId
+    } catch (error) {
+      console.warn('Lokale Stückauswahl ist nicht verfügbar:', error)
+    }
     this.playId = urlParams.get('play') || storedPlayId
+    this.displayId = urlParams.get('display')?.trim() || 'default'
 
     if (urlParams.get('play')) {
-      localStorage.setItem(STORAGE_KEYS.PLAY_ID, this.playId)
+      try {
+        localStorage.setItem(STORAGE_KEYS.PLAY_ID, this.playId)
+      } catch (error) {
+        console.warn('Stückauswahl konnte nicht lokal gespeichert werden:', error)
+      }
     }
 
-    // Load configuration
-    const playsConfig = await loadPlaysConfig()
-    this.sheetUrl =
-      playsConfig?.[this.playId]?.sheet ||
-      playsConfig?.default?.sheet
+    try {
+      const model = await loadScriptModel(this.playId)
+      this.scriptData = Array.isArray(model?.data) ? model.data : []
+      this.rawScriptData = Array.isArray(model?.rawData) ? model.rawData : []
+      this.actors = Array.isArray(model?.actors) ? model.actors : []
+      this.scriptRevision =
+        model?.scriptRevision || deriveLocalScriptRevision(this.scriptData)
+      this.scenesOrder = this.collectScenes(this.scriptData)
+      this.sceneToIndices = this.buildSceneIndexMap(this.scriptData)
+    } catch (error) {
+      console.error('Viewer-Skript konnte nicht geladen werden:', error)
+      this.loadError = error
+      this.scriptRevision = deriveLocalScriptRevision([])
+    }
 
-    // Load script data
-    this.scriptData = await loadScript(this.sheetUrl, this.playId)
-    this.actors = getActors(this.scriptData)
-    this.scenesOrder = collectScenes(this.scriptData)
-    this.sceneToIndices = buildSceneIndexMap(this.scriptData)
-
-    // Initialize socket
-    socketManager.init(this.playId)
     this.setupSocketHandlers()
-
-    // Start clock
+    socketManager.init(this.playId)
     this.startClock()
-
-    // Initial render
     this.render()
+
+    if (this.loadError) this.onLoadError(this.loadError)
   }
 
-  /**
-   * Setup socket event handlers
-   */
+  collectScenes(data) {
+    const scenes = []
+    const seen = new Set()
+    for (const row of data || []) {
+      const scene = String(row?.Szene ?? '').trim()
+      if (!scene || scene === '0' || seen.has(scene)) continue
+      seen.add(scene)
+      scenes.push(scene)
+    }
+    return scenes
+  }
+
+  buildSceneIndexMap(data) {
+    const map = new Map()
+    ;(data || []).forEach((row, index) => {
+      const scene = String(row?.Szene ?? '').trim()
+      if (!scene || scene === '0') return
+      if (!map.has(scene)) map.set(scene, [])
+      map.get(scene).push(index)
+    })
+    return map
+  }
+
   setupSocketHandlers() {
     socketManager.on('connect', () => {
+      this.connectionState = 'online'
       this.updateConnectionStatus('✅ Verbunden')
+      this.onConnectionStateChange('online')
     })
 
     socketManager.on('connectError', () => {
-      this.updateConnectionStatus('❌ Verbindungsfehler')
+      this.connectionState = 'offline'
+      this.updateConnectionStatus('⚠️ Offline')
+      this.onConnectionStateChange('offline')
     })
 
     socketManager.on('disconnect', () => {
+      this.connectionState = 'offline'
       this.updateConnectionStatus('⚠️ Getrennt')
+      this.onConnectionStateChange('offline')
+    })
+
+    socketManager.on('syncUnavailable', () => {
+      this.connectionState = 'offline'
+      this.updateConnectionStatus('⚠️ Lokaler Betrieb')
+      this.onConnectionStateChange('offline')
     })
 
     socketManager.on('setDirector', (data) => {
       this.updateDirectorStatus(data.director)
     })
 
-    socketManager.on('markerUpdate', (data) => {
-      this.currentMarkerIndex = data.index
-      this.onMarkerUpdate(data)
-      this.updateProgress()
+    socketManager.on('unsetDirector', () => {
+      this.updateDirectorStatus('Niemand')
     })
 
-    socketManager.on('markerClear', () => {
+    socketManager.on('markerUpdate', (data) => {
+      this.handleMarkerPayload(data)
+    })
+
+    socketManager.on('markerClear', (data = {}) => {
+      const ordering = advanceCursorSequence(this.lastMarkerSequence, data)
+      if (!ordering.accept) return
+      this.lastMarkerSequence = ordering.lastSequence
       this.currentMarkerIndex = null
+      this.currentMarkerCursor = null
       this.onMarkerClear()
       this.updateProgress()
     })
   }
 
-  /**
-   * Start clock updater
-   */
+  handleMarkerPayload(data) {
+    const ordering = advanceCursorSequence(this.lastMarkerSequence, data)
+    if (!ordering.accept) return
+    this.lastMarkerSequence = ordering.lastSequence
+
+    const resolution = resolveCueCursor(
+      this.scriptData,
+      data,
+      this.scriptRevision
+    )
+
+    if (resolution.status === 'mismatch') {
+      this.onCursorMismatch(resolution, data)
+      return
+    }
+    if (resolution.status !== 'ok') {
+      this.onCursorInvalid(resolution, data)
+      return
+    }
+
+    this.currentMarkerCursor = resolution.cursor
+    this.currentMarkerIndex = resolution.cursor.rowIndex
+    const normalizedPayload = {
+      ...data,
+      cueId: resolution.cursor.cueId,
+      ordinal: resolution.cursor.ordinal,
+      index: resolution.cursor.rowIndex,
+    }
+    this.onMarkerUpdate(normalizedPayload, resolution)
+    this.updateProgress()
+  }
+
   startClock() {
     const clockEl = getEl('clock')
     if (!clockEl) return
-
     const updateClock = () => {
       clockEl.textContent = formatTime()
     }
-
     updateClock()
-    setInterval(updateClock, 1000)
+    this.clockTimer = setInterval(updateClock, 1000)
   }
 
-  /**
-   * Update connection status display
-   * @param {string} status - Status text
-   */
   updateConnectionStatus(status) {
-    const el = getEl('connection-status')
-    if (el) {
-      el.textContent = status
-    }
+    const element = getEl('connection-status')
+    if (element) element.textContent = status
   }
 
-  /**
-   * Update director status display
-   * @param {string} director - Director name
-   */
   updateDirectorStatus(director) {
-    const el = getEl('director-status')
-    if (el) {
-      if (director && director !== 'Niemand') {
-        el.textContent = `🎬 Director: ${director}`
-        el.classList.add('active')
-      } else {
-        el.textContent = '👤 Director: Niemand'
-        el.classList.remove('active')
-      }
+    const element = getEl('director-status')
+    if (!element) return
+    if (director && director !== 'Niemand') {
+      element.textContent = `🎬 Director: ${director}`
+      element.classList.add('active')
+    } else {
+      element.textContent = '👤 Director: Niemand'
+      element.classList.remove('active')
     }
   }
 
-  /**
-   * Compute scene progress
-   * @returns {Object} Progress data {percent, current, total}
-   */
   computeSceneProgressCounts() {
-    if (this.currentMarkerIndex === null) {
+    if (!Number.isInteger(this.currentMarkerIndex) || this.currentMarkerIndex < 0) {
       return { percent: 0, current: 0, total: 0 }
     }
 
-    let remainingIndex = this.currentMarkerIndex
+    const row = this.scriptData[this.currentMarkerIndex]
+    const scene = String(row?.Szene ?? '').trim()
+    const indices = this.sceneToIndices.get(scene) || []
+    if (indices.length === 0) return { percent: 0, current: 0, total: 0 }
 
-    for (const [, indices] of this.sceneToIndices) {
-      const count = indices.length
-      if (count > remainingIndex) {
-        const current = Math.max(0, Math.min(remainingIndex, count))
-        const percent = count > 0 ? Math.floor((current / count) * 100) : 0
-        return { percent, current, total: count }
-      }
-      remainingIndex -= count
+    const exactPosition = indices.indexOf(this.currentMarkerIndex)
+    const current = exactPosition >= 0
+      ? exactPosition + 1
+      : indices.filter((index) => index <= this.currentMarkerIndex).length
+    return {
+      percent: Math.min(100, Math.floor((current / indices.length) * 100)),
+      current,
+      total: indices.length,
     }
-
-    return { percent: 100, current: 0, total: 0 }
   }
 
-  /**
-   * Update progress bar
-   */
   updateProgress() {
     const { percent, current, total } = this.computeSceneProgressCounts()
     const bar = getEl('global-progress-bar')
     const text = getEl('global-progress-text')
-
     if (bar) bar.style.width = `${percent}%`
     if (text) text.textContent = `${percent}% (${current}/${total})`
   }
 
-  /**
-   * Get current scene from marker index
-   * @returns {string|null} Current scene number
-   */
   getSceneFromMarker() {
-    if (this.currentMarkerIndex === null) return null
-
-    let remainingIndex = this.currentMarkerIndex
-
-    for (const [scene, indices] of this.sceneToIndices) {
-      const count = indices.length
-      if (count > remainingIndex) {
-        return scene
-      }
-      remainingIndex -= count
-    }
-
-    return null
-  }
-
-  /**
-   * Get next scene
-   * @param {string} currentScene - Current scene number
-   * @returns {string|null} Next scene number
-   */
-  getNextScene(currentScene) {
-    const index = this.scenesOrder.indexOf(currentScene)
-    if (index === -1 || index === this.scenesOrder.length - 1) {
+    if (!Number.isInteger(this.currentMarkerIndex) || this.currentMarkerIndex < 0) {
       return null
     }
+    return String(this.scriptData[this.currentMarkerIndex]?.Szene ?? '').trim() || null
+  }
+
+  getNextScene(currentScene) {
+    const index = this.scenesOrder.indexOf(currentScene)
+    if (index < 0 || index >= this.scenesOrder.length - 1) return null
     return this.scenesOrder[index + 1]
   }
 
-  /**
-   * Get actors in a specific scene
-   * @param {string} scene - Scene number
-   * @returns {Map<string, string>} Map of actor to microphone number
-   */
   getSceneActors(scene) {
     const actors = new Map()
-
     this.scriptData.forEach((row) => {
-      if (row.Szene === scene && row.Charakter) {
+      if (String(row.Szene) === String(scene) && row.Charakter) {
         actors.set(row.Charakter, row.Mikrofon || '')
       }
     })
-
     return actors
   }
 
-  /**
-   * Get scene summary text
-   * @param {string} scene - Scene number
-   * @returns {string} Scene summary
-   */
   getSceneSummary(scene) {
     const row = this.scriptData.find(
-      (r) => r.Szene === scene && r.Kategorie === 'Szenenbeginn'
+      (candidate) =>
+        String(candidate.Szene) === String(scene) &&
+        candidate.Kategorie === 'Szenenbeginn'
     )
-    return row ? row['Text/Anweisung'] : ''
+    return row ? row['Text/Anweisung'] || row.Text || '' : ''
   }
 
-  // Override these in subclasses
+  getMarkerOrdinal() {
+    if (this.currentMarkerCursor) return this.currentMarkerCursor.ordinal
+    if (!Number.isInteger(this.currentMarkerIndex) || this.currentMarkerIndex < 0) {
+      return null
+    }
+    return getCueOrdinal(
+      this.scriptData[this.currentMarkerIndex],
+      this.currentMarkerIndex
+    )
+  }
+
   render() {
     throw new Error('render() must be implemented by subclass')
   }
 
-  onMarkerUpdate(data) {
-    // Optional override
-  }
-
-  onMarkerClear() {
-    // Optional override
-  }
+  onMarkerUpdate() {}
+  onMarkerClear() {}
+  onConnectionStateChange() {}
+  onCursorMismatch() {}
+  onCursorInvalid() {}
+  onLoadError() {}
 }

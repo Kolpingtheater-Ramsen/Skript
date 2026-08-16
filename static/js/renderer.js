@@ -524,6 +524,13 @@ export class Renderer {
   createScriptLine(row, state, settings, actors, onLineClick, index) {
     const div = document.createElement('div')
     div.className = 'script-line'
+    div.dataset.cueId = row.cueId || ''
+    div.dataset.cueOrdinal = String(
+      Number.isInteger(row.cueOrdinal) ? row.cueOrdinal : index
+    )
+    // Retained during the protocol migration for clients that still navigate
+    // by the rendered line index.
+    div.dataset.legacyIndex = String(index)
 
     // Set visibility based on state
     if (!state.visible && !state.isContext) {

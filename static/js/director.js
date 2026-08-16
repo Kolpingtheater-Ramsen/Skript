@@ -15,6 +15,8 @@ export class DirectorManager {
     this._wasDirector = false
     this._pendingReconnect = false
     this._toastTimeout = null
+    this._cursorSequence = Date.now() * 1000
+    this._lastServerSequence = null
     this.localMode = false
   }
 
@@ -53,6 +55,11 @@ export class DirectorManager {
       this.state.set('isConnected', true)
       this.reconnectAttempts = 0
       document.body.classList.remove('reconnecting')
+      if (this.localMode) {
+        this.localMode = false
+        document.body.classList.remove('local-director-mode')
+        this._showToast('Live-Sync wieder verfügbar.')
+      }
 
       // Check if we should try to reclaim director status
       if (this._wasDirector) {
@@ -92,6 +99,7 @@ export class DirectorManager {
 
     this.socket.on('disconnect', (reason) => {
       this.state.set('isConnected', false)
+      this._lastServerSequence = null
       if (this.localMode) return
       const statusEl = document.getElementById('director-status')
       if (statusEl) {
@@ -110,16 +118,16 @@ export class DirectorManager {
       this.state.set('directorName', '')
       this.updateDirectorUI(false)
 
-      // Clear any markers
-      this.clearMarkedLine()
+      // Keep the last cursor visible while reconnecting. The server retains
+      // the same snapshot and will confirm it again after room rejoin.
     })
 
     this.socket.on('markerUpdate', (data) => {
       this._handleMarkerUpdate(data)
     })
 
-    this.socket.on('markerClear', () => {
-      this.clearMarkedLine()
+    this.socket.on('markerClear', (data) => {
+      this._handleMarkerClear(data)
     })
 
     this.socket.on('setDirector', (data) => {
@@ -155,19 +163,146 @@ export class DirectorManager {
    * @private
    */
   _handleMarkerUpdate(data) {
-    // Clear any existing marker
-    this.clearMarkedLine()
+    const cursor = this._normalizeCursor(data)
+    if (!cursor) return
+    if (cursor.playId && cursor.playId !== this.state.get('playId')) return
 
-    // Find and mark the line
-    const allLines = document.querySelectorAll('.script-line')
-    if (allLines[data.index]) {
-      this.markLine(allLines[data.index], data.index, false)
-      // Autoscroll if enabled (for non-directors) or if director has autoscroll enabled
-      const shouldAutoscroll = document.getElementById('autoscroll')?.checked
-      if (shouldAutoscroll) {
-        smoothScrollToElement(allLines[data.index], 25)
-      }
+    if (this._isStaleServerEvent(cursor)) return
+
+    // Keep the cursor even if script loading/rendering has not finished yet.
+    // App.render() calls restoreCurrentCursor once canonical line metadata exists.
+    this.state.set('currentCursor', cursor)
+    this.restoreCurrentCursor(true)
+  }
+
+  /**
+   * Apply an explicitly ordered marker clear from the server.
+   * @param {Object} data - Clear event
+   * @private
+   */
+  _handleMarkerClear(data) {
+    if (data?.playId && data.playId !== this.state.get('playId')) return
+    if (this._isStaleServerEvent(data)) return
+    this.clearMarkedLine()
+  }
+
+  /**
+   * Ignore reordered server events while accepting legacy unsequenced events.
+   * @param {Object} data - Marker or clear event
+   * @returns {boolean} Whether the event is stale
+   * @private
+   */
+  _isStaleServerEvent(data) {
+    const sequence = data?.sequence
+    if (!Number.isSafeInteger(sequence) || sequence < 0) return false
+    if (
+      Number.isSafeInteger(this._lastServerSequence) &&
+      sequence <= this._lastServerSequence
+    ) {
+      return true
     }
+    this._lastServerSequence = sequence
+    return false
+  }
+
+  /**
+   * Normalize canonical and legacy marker payloads into one cursor shape.
+   * @param {Object} data - Socket payload
+   * @returns {Object|null} Normalized cursor
+   * @private
+   */
+  _normalizeCursor(data) {
+    if (!data || typeof data !== 'object') return null
+
+    const cursor = {
+      protocolVersion: Number.isSafeInteger(data.protocolVersion)
+        ? data.protocolVersion
+        : 1,
+      playId: typeof data.playId === 'string' ? data.playId : null,
+      scriptRevision:
+        typeof data.scriptRevision === 'string' ? data.scriptRevision : null,
+      cueId: typeof data.cueId === 'string' ? data.cueId : null,
+      ordinal: Number.isSafeInteger(data.ordinal) && data.ordinal >= 0
+        ? data.ordinal
+        : null,
+      sequence: Number.isSafeInteger(data.sequence) && data.sequence >= 0
+        ? data.sequence
+        : null,
+      index: Number.isSafeInteger(data.index) && data.index >= 0
+        ? data.index
+        : null,
+    }
+
+    return cursor.cueId || cursor.ordinal !== null || cursor.index !== null
+      ? cursor
+      : null
+  }
+
+  /**
+   * Resolve a cursor against the currently rendered script. Cue identity is
+   * authoritative. Canonical ordinals are safe only for the same revision;
+   * numeric DOM indices remain a migration fallback for legacy clients.
+   *
+   * @param {Object} cursor - Normalized cursor
+   * @param {Array<HTMLElement>} allLines - Rendered script lines
+   * @returns {{element: HTMLElement, index: number}|null} Resolved line
+   * @private
+   */
+  _resolveCursor(cursor, allLines) {
+    if (cursor.cueId) {
+      const index = allLines.findIndex(
+        (line) => line.dataset.cueId === cursor.cueId
+      )
+      if (index >= 0) return { element: allLines[index], index }
+    }
+
+    const localRevision = this.state.get('scriptRevision')
+    const sameRevision = Boolean(
+      localRevision &&
+      cursor.scriptRevision &&
+      localRevision === cursor.scriptRevision
+    )
+
+    if (sameRevision && cursor.ordinal !== null) {
+      const ordinal = String(cursor.ordinal)
+      const index = allLines.findIndex(
+        (line) => line.dataset.cueOrdinal === ordinal
+      )
+      if (index >= 0) return { element: allLines[index], index }
+    }
+
+    const isLegacyCursor = !cursor.cueId && !cursor.scriptRevision
+    if (
+      cursor.index !== null &&
+      cursor.index < allLines.length &&
+      (isLegacyCursor || sameRevision)
+    ) {
+      return { element: allLines[cursor.index], index: cursor.index }
+    }
+
+    return null
+  }
+
+  /**
+   * Apply the latest cursor after initial loading, reconnects, or re-rendering.
+   * @param {boolean} autoscroll - Whether to scroll to the resolved line
+   * @returns {boolean} Whether a line was resolved
+   */
+  restoreCurrentCursor(autoscroll = false) {
+    const cursor = this.state.get('currentCursor')
+    if (!cursor) return false
+
+    const allLines = Array.from(document.querySelectorAll('.script-line'))
+    const resolved = this._resolveCursor(cursor, allLines)
+    if (!resolved) return false
+
+    this._setMarkedElement(resolved.element, resolved.index)
+    const shouldAutoscroll =
+      autoscroll && document.getElementById('autoscroll')?.checked
+    if (shouldAutoscroll) {
+      smoothScrollToElement(resolved.element, 25)
+    }
+    return true
   }
 
   /**
@@ -247,7 +382,6 @@ export class DirectorManager {
    */
   _handleUnsetDirector(data) {
     this.handleDirectorChange(null, false)
-    this.clearMarkedLine()
   }
 
   /**
@@ -288,18 +422,16 @@ export class DirectorManager {
    * @param {number} index - Line index
    * @param {boolean} broadcast - Whether to broadcast to other clients
    */
-  markLine(element, index, broadcast = true) {
-    // Clear previous mark
-    this.clearMarkedLine()
+  markLine(element, index, broadcast = true, receivedCursor = null) {
+    if (!element) return
 
-    // Set new mark
-    element.classList.add('marked-line')
-    this.state.set('markedLine', element)
-    this.state.set('markedLineIndex', index)
+    const cursor = receivedCursor || this._createCursor(element, index)
+    this.state.set('currentCursor', cursor)
+    this._setMarkedElement(element, index)
 
     // If we're the director, broadcast the marker
     if (broadcast && this.state.get('isDirector') && !this.localMode) {
-      this.socket.setMarker(index)
+      this.socket.setMarker(cursor)
     }
 
     const shouldAutoscroll = document.getElementById('autoscroll')?.checked
@@ -312,15 +444,58 @@ export class DirectorManager {
   }
 
   /**
+   * Build the versioned cursor published by a Director.
+   * @param {HTMLElement} element - Canonical script line
+   * @param {number} index - Legacy rendered line index
+   * @returns {Object} Versioned cursor payload
+   * @private
+   */
+  _createCursor(element, index) {
+    this._cursorSequence = Math.max(
+      this._cursorSequence + 1,
+      Date.now() * 1000
+    )
+
+    const ordinal = Number.parseInt(element.dataset.cueOrdinal, 10)
+    return {
+      protocolVersion: 2,
+      playId: this.state.get('playId'),
+      scriptRevision: this.state.get('scriptRevision'),
+      cueId: element.dataset.cueId || null,
+      ordinal: Number.isSafeInteger(ordinal) ? ordinal : index,
+      sequence: this._cursorSequence,
+      // Kept until every display has migrated to canonical cue identity.
+      index,
+    }
+  }
+
+  /**
+   * Replace only the rendered marker while preserving its canonical cursor.
+   * @param {HTMLElement} element - Element to mark
+   * @param {number} index - Rendered line index
+   * @private
+   */
+  _setMarkedElement(element, index) {
+    const previous = this.state.get('markedLine')
+    if (previous && previous !== element) {
+      previous.classList.remove('marked-line')
+    }
+    element.classList.add('marked-line')
+    this.state.set('markedLine', element)
+    this.state.set('markedLineIndex', index)
+  }
+
+  /**
    * Clear marked line
    */
   clearMarkedLine() {
     const markedLine = this.state.get('markedLine')
     if (markedLine) {
       markedLine.classList.remove('marked-line')
-      this.state.set('markedLine', null)
-      this.state.set('markedLineIndex', null)
     }
+    this.state.set('markedLine', null)
+    this.state.set('markedLineIndex', null)
+    this.state.set('currentCursor', null)
     const fab = document.querySelector('.fab')
     if (fab) {
       fab.style.display = 'none'
