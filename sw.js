@@ -1,5 +1,5 @@
 // Build version - replaced at build time
-const CACHE_VERSION = 'BUILD_TIMESTAMP_PLACEHOLDER';
+const CACHE_VERSION = 'client-errors-dashboard-v1';
 const CACHE_NAME = `drehbuch-cache-${CACHE_VERSION}`;
 
 const ASSETS_TO_CACHE = [
@@ -10,6 +10,9 @@ const ASSETS_TO_CACHE = [
   '/static/css/script.css',
   '/static/css/themes.css',
   '/static/js/main.js',
+  '/static/js/client-error-reporter.js',
+  '/static/js/errors-dashboard.js',
+  '/static/css/errors.css',
   '/static/js/vendor/papaparse.min.js',
   '/static/js/state.js',
   '/static/js/config.js',
@@ -91,11 +94,16 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-first for HTML pages and API calls
+  // API responses may contain private data and must never enter Cache Storage.
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // Network-first for HTML pages
   if (event.request.mode === 'navigate' || 
       url.pathname.endsWith('.html') || 
-      url.pathname === '/' ||
-      url.pathname.startsWith('/api/')) {
+      url.pathname === '/') {
     event.respondWith(networkFirst(event.request));
     return;
   }

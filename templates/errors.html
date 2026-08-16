@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Client-Fehler</title><link rel="stylesheet" href="/static/css/errors.css">
+</head>
+<body>
+  <main>
+    <header><div><h1>Client-Fehler</h1><p class="muted">Zentrale Fehlerübersicht</p></div><button id="logout" hidden>Abmelden</button></header>
+    <form id="login" class="panel"><h2>Geschützter Bereich</h2><label>Regie-Passwort<input id="password" type="password" required autocomplete="current-password"></label><button>Anmelden</button><p id="login-error" class="error" role="alert"></p></form>
+    <section id="dashboard" hidden>
+      <div id="summary" class="cards"></div>
+      <div class="toolbar panel"><input id="search" type="search" placeholder="Nachricht, Rolle, Client, Stück …" aria-label="Fehler durchsuchen"><select id="status" aria-label="Status"><option value="all">Alle Status</option><option value="open">Offen</option><option value="resolved">Gelöst</option></select><button id="refresh">Aktualisieren</button><button id="clear" class="danger">Gelöste löschen</button></div>
+      <p id="notice" role="status"></p><div id="errors"></div><div class="pager"><button id="previous">Zurück</button><span id="page"></span><button id="next">Weiter</button></div>
+    </section>
+  </main>
+  <script src="/static/js/errors-dashboard.js"></script>
+</body></html>

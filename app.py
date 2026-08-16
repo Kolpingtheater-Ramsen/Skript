@@ -10,12 +10,16 @@ import time
 import datetime
 import json
 import re
+import logging
+import hmac
+from collections import defaultdict, deque
 
 import requests
 from typing import Optional, Dict, Any
 from flask import Flask, request, send_from_directory, render_template, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from dotenv import load_dotenv
+from client_error_store import ClientErrorStore
 
 # Load environment variables
 load_dotenv()
@@ -187,6 +191,73 @@ config = Config()
 director_manager = DirectorManager()
 git_scheduler = GitPullScheduler(config)
 
+# Small per-process limiter avoids adding infrastructure. Each accepted report
+# is emitted as one structured JSON record to the normal container logs.
+CLIENT_ERROR_MAX_BODY = 16 * 1024
+CLIENT_ERROR_RATE_LIMIT = 20
+CLIENT_ERROR_RATE_WINDOW = 60
+_client_error_requests = defaultdict(deque)
+_client_error_lock = threading.Lock()
+client_error_logger = logging.getLogger("client_errors")
+client_error_store = ClientErrorStore()
+
+
+def _admin_authorized() -> bool:
+    supplied = request.headers.get("X-Director-Password", "")
+    return bool(supplied) and hmac.compare_digest(supplied.encode(), config.DIRECTOR_PASSWORD.encode())
+
+
+def _require_admin():
+    if not _admin_authorized():
+        return jsonify({"error": "unauthorized"}), 401
+    return None
+
+
+def _require_safe_mutation():
+    unauthorized = _require_admin()
+    if unauthorized:
+        return unauthorized
+    if not request.is_json or request.headers.get("X-Requested-With") != "ErrorDashboard":
+        return jsonify({"error": "JSON and X-Requested-With required"}), 415
+    origin = request.headers.get("Origin")
+    if origin and origin.rstrip("/") != request.host_url.rstrip("/"):
+        return jsonify({"error": "cross-origin request rejected"}), 403
+    return None
+
+
+def _client_ip() -> str:
+    """Trust forwarding headers only from explicitly configured proxies."""
+    remote = request.remote_addr or "unknown"
+    trusted = {"127.0.0.1", "::1"}
+    trusted.update(filter(None, os.getenv("TRUSTED_PROXY_IPS", "").split(",")))
+    if remote in trusted:
+        forwarded = request.headers.get("X-Forwarded-For", "")
+        if forwarded:
+            candidate = forwarded.split(",", 1)[0].strip()
+            if re.fullmatch(r"[0-9a-fA-F:.]{2,45}", candidate):
+                return candidate
+    return remote
+
+
+def _safe_text(value, limit: int) -> str:
+    if not isinstance(value, str):
+        return ""
+    value = re.sub(r"(https?://[^\s?#]+)[?#][^\s)\]]*", r"\1", value)
+    value = re.sub(r"(?i)(password|passwd|token|secret|authorization|cookie)\s*[:=]\s*[^\s,;]+", r"\1=[REDACTED]", value)
+    return value[:limit]
+
+
+def _rate_limited(ip: str) -> bool:
+    now = time.monotonic()
+    with _client_error_lock:
+        entries = _client_error_requests[ip]
+        while entries and entries[0] <= now - CLIENT_ERROR_RATE_WINDOW:
+            entries.popleft()
+        if len(entries) >= CLIENT_ERROR_RATE_LIMIT:
+            return True
+        entries.append(now)
+        return False
+
 
 # Flask routes
 @app.route("/")
@@ -242,6 +313,101 @@ def api_plays():
         return jsonify(plays_list)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.post("/api/client-errors")
+def api_client_errors():
+    """Validate and log a privacy-conscious browser error report."""
+    if request.content_length is not None and request.content_length > CLIENT_ERROR_MAX_BODY:
+        return jsonify({"error": "payload too large"}), 413
+    if not request.is_json:
+        return jsonify({"error": "application/json required"}), 415
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({"error": "JSON object required"}), 400
+    ip = _client_ip()
+    if _rate_limited(ip):
+        return jsonify({"error": "rate limit exceeded"}), 429
+
+    error_type = _safe_text(data.get("type"), 64)
+    message = _safe_text(data.get("message"), 1000)
+    client_id = _safe_text(data.get("clientId"), 64)
+    if not error_type or not message or not re.fullmatch(r"[A-Za-z0-9_-]{8,64}", client_id):
+        return jsonify({"error": "type, message and valid clientId are required"}), 400
+
+    pathname = _safe_text(data.get("pathname"), 256).split("?", 1)[0].split("#", 1)[0]
+    if not pathname.startswith("/"):
+        pathname = "/"
+    record = {
+        "event": "client_error",
+        "serverTimestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "ip": ip,
+        "userAgent": _safe_text(request.user_agent.string, 512),
+        "pathname": pathname,
+        "appId": _safe_text(data.get("appId"), 64),
+        "playId": _safe_text(data.get("playId"), 64),
+        "actorRole": _safe_text(data.get("actorRole"), 128),
+        "clientId": client_id,
+        "type": error_type,
+        "message": message,
+        "stack": _safe_text(data.get("stack"), 6000),
+        "source": _safe_text(data.get("source"), 512).split("?", 1)[0].split("#", 1)[0],
+        "line": data.get("line") if isinstance(data.get("line"), int) else None,
+        "column": data.get("column") if isinstance(data.get("column"), int) else None,
+        "appVersion": _safe_text(data.get("appVersion"), 64),
+        "serviceWorkerVersion": _safe_text(data.get("serviceWorkerVersion"), 64),
+    }
+    client_error_store.add(record)
+    client_error_logger.warning(json.dumps(record, ensure_ascii=False, separators=(",", ":")))
+    return "", 204
+
+
+@app.get("/api/admin/client-errors")
+def admin_client_errors():
+    unauthorized = _require_admin()
+    if unauthorized:
+        return unauthorized
+    status = request.args.get("status", "all")
+    if status not in ("all", "open", "resolved"):
+        return jsonify({"error": "invalid status"}), 400
+    try:
+        limit = max(1, min(int(request.args.get("limit", 50)), 100))
+        offset = max(0, int(request.args.get("offset", 0)))
+    except ValueError:
+        return jsonify({"error": "invalid pagination"}), 400
+    search = request.args.get("search", "")[:200]
+    response = jsonify(client_error_store.list(status, search, limit, offset))
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
+
+@app.patch("/api/admin/client-errors/<int:error_id>")
+def admin_update_client_error(error_id):
+    rejected = _require_safe_mutation()
+    if rejected:
+        return rejected
+    data = request.get_json(silent=True) or {}
+    if not client_error_store.set_status(error_id, data.get("status")):
+        return jsonify({"error": "not found or invalid status"}), 404
+    return jsonify({"ok": True})
+
+
+@app.delete("/api/admin/client-errors/<int:error_id>")
+def admin_delete_client_error(error_id):
+    rejected = _require_safe_mutation()
+    if rejected:
+        return rejected
+    if not client_error_store.delete(error_id):
+        return jsonify({"error": "not found"}), 404
+    return jsonify({"ok": True})
+
+
+@app.delete("/api/admin/client-errors")
+def admin_clear_client_errors():
+    rejected = _require_safe_mutation()
+    if rejected:
+        return rejected
+    return jsonify({"ok": True, "deleted": client_error_store.clear_resolved()})
 
 
 def _load_plays_data():
