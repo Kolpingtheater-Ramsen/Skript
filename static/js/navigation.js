@@ -119,11 +119,35 @@ export class NavigationManager {
   }
 
   /**
+   * Return highlighted script lines that participate in browser layout.
+   * Hidden actor rows remain highlighted, so the class alone is not enough.
+   * @returns {Element[]} Navigable highlighted lines
+   */
+  getNavigableHighlightedLines() {
+    return Array.from(
+      document.querySelectorAll('.script-line.highlighted')
+    ).filter((line) => {
+      if (line.hidden) return false
+
+      const style = window.getComputedStyle(line)
+      if (
+        style.display === 'none' ||
+        style.visibility === 'hidden' ||
+        style.visibility === 'collapse'
+      ) {
+        return false
+      }
+
+      return line.getClientRects().length > 0
+    })
+  }
+
+  /**
    * Jump to a specific line with flash effect
    * @param {number} lineIndex - Index of line to jump to
    */
   jumpToLine(lineIndex) {
-    const lines = document.querySelectorAll('.script-line.highlighted')
+    const lines = this.getNavigableHighlightedLines()
     if (lines[lineIndex]) {
       // Remove any existing flash effects
       document.querySelectorAll('.flash-highlight').forEach((el) => {
@@ -153,7 +177,7 @@ export class NavigationManager {
    * Jump to next line
    */
   jumpToNextLine() {
-    const lines = document.querySelectorAll('.script-line.highlighted')
+    const lines = this.getNavigableHighlightedLines()
     const currentIndex = this.getCurrentLineIndex(lines)
     // Stop at the last item; do not jump to top
     if (currentIndex < lines.length - 1) {
@@ -165,7 +189,7 @@ export class NavigationManager {
    * Jump to previous line
    */
   jumpToPreviousLine() {
-    const lines = document.querySelectorAll('.script-line.highlighted')
+    const lines = this.getNavigableHighlightedLines()
     const currentIndex = this.getCurrentLineIndex(lines)
     // Stop at the first item; do not wrap to end
     if (currentIndex > 0) {
@@ -182,8 +206,15 @@ export class NavigationManager {
   updateCurrentLineInfo(currentIndex, totalLines) {
     const infoElement = document.getElementById('current-line-info')
     if (infoElement) {
-      infoElement.textContent = `Text ${currentIndex + 1} von ${totalLines}`
+      infoElement.textContent = totalLines > 0
+        ? `Text ${currentIndex + 1} von ${totalLines}`
+        : 'Keine Texte'
     }
+
+    const previousButton = document.getElementById('bottom-nav-previous')
+    const nextButton = document.getElementById('bottom-nav-next')
+    if (previousButton) previousButton.disabled = currentIndex <= 0
+    if (nextButton) nextButton.disabled = currentIndex < 0 || currentIndex >= totalLines - 1
   }
 
   /**
@@ -198,7 +229,7 @@ export class NavigationManager {
         bottomNav.style.display = 'flex'
         document.body.classList.add('has-bottom-nav')
 
-        const lines = document.querySelectorAll('.script-line.highlighted')
+        const lines = this.getNavigableHighlightedLines()
         const currentIndex = this.getCurrentLineIndex(lines)
         this.updateCurrentLineInfo(currentIndex, lines.length)
       } else {
