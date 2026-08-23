@@ -1,5 +1,5 @@
 // Build version - replaced at build time
-const CACHE_VERSION = 'bottom-navigation-v2';
+const CACHE_VERSION = 'scene-sorting-v3';
 const CACHE_NAME = `drehbuch-cache-${CACHE_VERSION}`;
 
 const ASSETS_TO_CACHE = [

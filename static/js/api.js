@@ -163,5 +163,17 @@ export function collectScenes(data) {
   const scenes = [
     ...new Set(data.filter((r) => r.Szene && r.Szene !== '0').map((r) => r.Szene)),
   ]
-  return scenes.sort((a, b) => (parseInt(a) || 0) - (parseInt(b) || 0))
+  const collator = new Intl.Collator('de', { numeric: true, sensitivity: 'base' })
+
+  return scenes.sort((a, b) => {
+    const numberA = Number(a)
+    const numberB = Number(b)
+    const isNumberA = Number.isFinite(numberA)
+    const isNumberB = Number.isFinite(numberB)
+
+    if (isNumberA && isNumberB) return numberA - numberB
+    if (isNumberA) return -1
+    if (isNumberB) return 1
+    return collator.compare(a, b)
+  })
 }
