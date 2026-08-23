@@ -3,6 +3,7 @@
  */
 
 import { escapeRegExp, smoothScrollToElement } from './utils.js'
+import { collectScenes } from './api.js'
 import { CATEGORIES, STORAGE_KEYS } from './config.js'
 import {
   findActorGroupBySelection,
@@ -124,7 +125,7 @@ export class Renderer {
       title.textContent = '📖 Inhaltsverzeichnis'
       toc.appendChild(title)
 
-      Object.keys(scenes).forEach((scene) => {
+      collectScenes(data).forEach((scene) => {
         const a = document.createElement('a')
         a.href = `#scene-${scene}`
         if (scenes[scene]) {
