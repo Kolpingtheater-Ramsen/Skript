@@ -91,11 +91,17 @@ test('bottom navigation counts and targets only rendered highlighted lines', () 
   globalThis.scrolledTo = null
   manager.jumpToNextLine()
   assert.equal(globalThis.scrolledTo, visibleSecond)
+  manager.updateBottomNav()
+  assert.equal(dom.info.textContent, 'Text 2 von 2')
+  assert.equal(dom.previous.disabled, false)
+  assert.equal(dom.next.disabled, true)
 
-  visibleFirst.getBoundingClientRect = () => ({ top: -100 })
-  visibleSecond.getBoundingClientRect = () => ({ top: 200 })
+  // Previous must use the intended target even while smooth scrolling is active.
   manager.jumpToPreviousLine()
   assert.equal(globalThis.scrolledTo, visibleFirst)
+  manager.updateBottomNav()
+  assert.equal(dom.info.textContent, 'Text 1 von 2')
+  assert.equal(dom.previous.disabled, true)
 })
 
 test('bottom navigation has a sensible empty state', () => {

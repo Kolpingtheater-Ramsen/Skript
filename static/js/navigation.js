@@ -13,6 +13,7 @@ export class NavigationManager {
     this.isNavigating = false
     this.navigationTimeout = null
     this.scrollRaf = null
+    this.navigationTargetIndex = null
   }
 
   /**
@@ -26,6 +27,7 @@ export class NavigationManager {
     }
     this.navigationTimeout = setTimeout(() => {
       this.isNavigating = false
+      this.navigationTargetIndex = null
     }, duration)
   }
 
@@ -166,7 +168,8 @@ export class NavigationManager {
         { once: true }
       )
 
-      // Scroll to the line with ~25% viewport offset
+      // Keep the intended line stable while a long smooth scroll is still moving.
+      this.navigationTargetIndex = lineIndex
       this.startNavigationLock()
       smoothScrollToElement(lines[lineIndex], 25)
       this.updateCurrentLineInfo(lineIndex, lines.length)
@@ -178,7 +181,9 @@ export class NavigationManager {
    */
   jumpToNextLine() {
     const lines = this.getNavigableHighlightedLines()
-    const currentIndex = this.getCurrentLineIndex(lines)
+    const currentIndex = this.isNavigating && this.navigationTargetIndex !== null
+      ? this.navigationTargetIndex
+      : this.getCurrentLineIndex(lines)
     // Stop at the last item; do not jump to top
     if (currentIndex < lines.length - 1) {
       this.jumpToLine(currentIndex + 1)
@@ -190,7 +195,9 @@ export class NavigationManager {
    */
   jumpToPreviousLine() {
     const lines = this.getNavigableHighlightedLines()
-    const currentIndex = this.getCurrentLineIndex(lines)
+    const currentIndex = this.isNavigating && this.navigationTargetIndex !== null
+      ? this.navigationTargetIndex
+      : this.getCurrentLineIndex(lines)
     // Stop at the first item; do not wrap to end
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1
@@ -230,7 +237,9 @@ export class NavigationManager {
         document.body.classList.add('has-bottom-nav')
 
         const lines = this.getNavigableHighlightedLines()
-        const currentIndex = this.getCurrentLineIndex(lines)
+        const currentIndex = this.isNavigating && this.navigationTargetIndex !== null
+          ? this.navigationTargetIndex
+          : this.getCurrentLineIndex(lines)
         this.updateCurrentLineInfo(currentIndex, lines.length)
       } else {
         bottomNav.style.display = 'none'
