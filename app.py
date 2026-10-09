@@ -16,8 +16,9 @@ from collections import defaultdict, deque
 
 import requests
 from typing import Optional, Dict, Any
-from flask import Flask, request, send_from_directory, render_template, jsonify
+from flask import Flask, request, send_from_directory, render_template, jsonify, abort
 from flask_socketio import SocketIO, emit, join_room, leave_room
+from jinja2 import TemplateNotFound
 from dotenv import load_dotenv
 from client_error_store import ClientErrorStore
 
@@ -382,7 +383,10 @@ def index():
 @app.route("/<path:path>.html")
 def serve_html(path):
     """Serve HTML templates."""
-    return render_template(f"{path}.html")
+    try:
+        return render_template(f"{path}.html")
+    except TemplateNotFound:
+        abort(404)
 
 
 @app.route("/sw.js")
