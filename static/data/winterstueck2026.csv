@@ -1,0 +1,503 @@
+Szene,Kategorie,Charakter,Mikrofon,Text/Anweisung
+0,Rolle,ROMEO,,Niko
+0,Rolle,JULIA,,Jule
+0,Rolle,MERCUTIO,,Hendrik
+0,Rolle,TYBALT,,Jakob
+0,Rolle,LAURENTIA,,Emilia
+0,Rolle,PRINZESSIN,,Nela
+0,Rolle,LADY MONTAGUE,,Maren
+0,Rolle,LADY CAPULET,,Vanessa
+0,Rolle,PARIS,,Sophie
+0,Rolle,AMME,,Lina
+0,Rolle,BENVOLIA,,Marcella
+0,Rolle,GLORIA,,Elea
+0,Rolle,FRANCESCA,,Lucia
+0,Rolle,ROMEO UND JULIA,,Niko / Jule
+1,Szenenbeginn,,,Szene 1
+1,Einspieler,,,Intro (Herzschlag)
+1,Anweisung,,,"Auf den Takt eines Herzschlags laufen MERCUTIO, TYBALT, LADY MONTAGUE, LADY CAPULET, LAURENTIA und GLORIA von links und rechts auf die Bühne. LAURENTIA und GLORIA treten nach vorne."
+1,Schauspieler,LAURENTIA,,"Verona, eine Stadt."
+1,Schauspieler,GLORIA,,Alt und ehrwürdig.
+1,Schauspieler,LAURENTIA,,Und gleichzeitig verrucht und voller Hass.
+1,Schauspieler,GLORIA,,"Zwei Familien, die Montagues (alle Montagues treten nach links)."
+1,Schauspieler,LAURENTIA,,Und die Capulets (alle Capulets treten nach rechts).
+1,Schauspieler,GLORIA,,Liegen in tiefer Fehde.
+1,Schauspieler,LAURENTIA,,"Keiner wusste mehr, wie es begann:"
+1,Schauspieler,GLORIA,,"Wer wen zuerst beleidigt hatte,"
+1,Schauspieler,LAURENTIA,,"Oder wer wen zuerst bestohlen hatte,"
+1,Schauspieler,GLORIA,,"Ganz zu schweigen davon, wer wen zuerst angegriffen hatte,"
+1,Schauspieler,LAURENTIA,,Doch sie hassten sich.
+1,Schauspieler,GLORIA,,Das wussten sie.
+1,Anweisung,,,"Der Herzschlag wird leiser, bis er ganz verstummt. LAURENTIA geht nach links hinten und GLORIA geht nach rechts hinten. MERCUTIO löst sich aus der Gruppe links und TYBALT löst sich aus der Gruppe rechts."
+1,Schauspieler,MERCUTIO,,"Was glotzt du mich so an, du elender Capulet?"
+1,Schauspieler,TYBALT,,"Ihr solltet besser eure Zunge hüten, sonst werde ich sie euch mit Freuden herausreißen."
+1,Schauspieler,MERCUTIO,,"Na dann komm her, trau dich. Oder hast du Angst?"
+1,Schauspieler,TYBALT,,"Nur Geduld und Contenance, aber was erzähle ich einem Rüpel, wie euch."
+1,Schauspieler,LADY CAPULET,,Recht so Tybalt. Gib dich nicht mit diesem Pack ab.
+1,Schauspieler,LADY MONTAGUE,,"Mercutio, lass dich nicht provozieren. Das ist es nicht wert."
+1,Anweisung,,,PRINZESSIN kommt von hinten.
+1,Schauspieler,PRINZESSIN,,"Ihr solltet besser auf sie hören, junge Herren. Hier soll heute kein Blut vergossen werden. Nicht an diesem Festtag."
+1,Anweisung,,,Die Szene friert ein und GLORIA und LAURENTIA treten vor.
+1,Schauspieler,LAURENTIA,,"Prinzessin Escalus, die Fürstin von Verona."
+1,Schauspieler,GLORIA,,"Die einzige, die diesem Treiben zumindest zeitweise ein Ende bereiten konnte."
+1,Schauspieler,LAURENTIA,,"Nun, zumindest versuchte sie das."
+1,Anweisung,,,Die Szene spielt wieder und GLORIA und LAURENTIA gehen nach links bzw. rechts ab.
+1,Schauspieler,PRINZESSIN,,"Heute, am Fest des Heiligen Zeno, sollt ihr von eurer Fehde absehen. Ich möchte keine Vorkommnisse. Ich hoffe, ich drücke mich klar aus."
+1,Schauspieler,LADY CAPULET,,"Aber ja doch, meine Fürstin."
+1,Schauspieler,LADY MONTAGUE,,Wir werden uns dem Fest gebührend zurückhalten.
+1,Schauspieler,PRINZESSIN,,"Sehr schön. Lady Capulet, ich freue mich auf den Maskenball. Er wird sicherlich genauso erfreulich sein wie im letzten Jahr."
+1,Schauspieler,LADY CAPULET,,Aber sicher doch: Die Vorbereitungen sind in vollem Gange.
+1,Schauspieler,PRINZESSIN,,Fantastisch. Wir sehen uns heute Abend.
+1,Anweisung,,,PRINZESSIN geht nach links ab. Die CAPULETS gehen nach rechts und die MONTAGUES gehen nach links ab.
+2,Szenenbeginn,,,Szene 2
+2,Einspieler,,,Vogelgezwitscher
+2,Anweisung,,,Die linke Bühnenhälfte wird blau und die rechte Bühnenhälfte wird grün beleuchtet. JULIA kommt von rechts und legt sich auf die Erhöhung. Man hört Vögel zwitschern. AMME kommt von rechts.
+2,Schauspieler,AMME,,"(außer Puste) Mensch Kind, hier steckst du. Deine Mutter sucht dich schon überall."
+2,Schauspieler,JULIA,,Was gibt es denn wichtiges?
+2,Schauspieler,AMME,,"Es gibt da jemanden, den sie dir vorstellen möchte?"
+2,Schauspieler,JULIA,,(setzt sich auf) Sie will mir jemanden vorstellen?
+2,Schauspieler,AMME,,"Habe ich das nicht gerade gesagt. (setzt sich neben sie) Julia, deine Mutter ist der Meinung, dass du langsam in ein Alter kommst, in dem du dich vielleicht auch mal in der Männerwelt umschauen solltest."
+2,Schauspieler,JULIA,,"Das heißt, sie möchte…"
+2,Schauspieler,AMME,,…dass du einen Mann findest. Ganz genau. (hebt entschuldigend die Hände) Das kommt nicht von mir. Ich überbringe nur die Botschaft.
+2,Schauspieler,JULIA,,"Ja, aber sich selbst einen Partner suchen oder sich einen von der Mutter vorschlagen lassen, ist schon ein Unterschied, findest du nicht?"
+2,Anweisung,,,Die Szene friert ein und die Bühne wird rechts abgedunkelt. Links kommen BENVOLIA und MERCUTIO auf die Bühne.
+2,Schauspieler,MERCUTIO,,"Wo ist denn dieser liebestrunke Narr? (ruft) Romeo, komm jetzt raus."
+2,Schauspieler,BENVOLIA,,"Genau, es hat sowieso keinen Sinn."
+2,Anweisung,,,ROMEO reißt hinten den Vorhang auf und schaut hervor.
+2,Schauspieler,ROMEO,,"Das sagt ihr vielleicht, aber ich werde sie bestimmt noch erobern können. Ich muss nur den richtigen Ton treffen."
+2,Schauspieler,BENVOLIA,,"Rosalinde hat dir klar und deutlich gesagt, dass sie kein Interesse an dir hat."
+2,Schauspieler,MERCUTIO,,"Jop, da kann man nichts machen. Du solltest dich besser mit deinem Schicksal abfinden."
+2,Anweisung,,,ROMEO tritt vor und setzt sich auf die Erhöhung.
+2,Schauspieler,ROMEO,,Womöglich habt ihr Recht. Warum ist Liebe denn immer so schmerzhaft?
+2,Anweisung,,,BENVOLIA und MERCUTIO setzen sich links und rechts von ihm hin.
+2,Schauspieler,BENVOLIA,,"Naja, wenn sie nicht auch wehtun würde, könnte man die schönen Momente gar nicht wertschätzen."
+2,Schauspieler,ROMEO,,Schöne Momente? Darauf warte ich seit jeher vergebens…
+2,Anweisung,,,Die Szene links friert ein und das Licht wechselt sich wieder nach rechts. Die Szene rechts geht aus dem Freeze. LADY CAPULET und PARIS kommen von rechts. JULIA und AMME stehen daraufhin auf.
+2,Schauspieler,LADY CAPULET,,"Da bist du ja Julia. Ich habe jemanden, den ich dir gerne vorstellen würde."
+2,Schauspieler,JULIA,,Das hörte ich bereits Mutter.
+2,Schauspieler,LADY CAPULET,,"(sieht AMME böse an) Ist das so? Nun, das ist Graf Paris. Er stammt aus einer wohlhabenden Familie."
+2,Schauspieler,PARIS,,"Sehr erfreut, eure Bekanntschaft zu machen, Julia Capulet. Ich muss sagen, die Erzählungen über eure Schönheit waren untertrieben. Ihr seht fantastisch aus."
+2,Schauspieler,JULIA,,"Habt Dank, mein Graf."
+2,Schauspieler,LADY CAPULET,,"Graf Paris wird heute Abend auch auf dem Maskenball sein. Ihr werdet dort sicher viel Zeit haben, euch etwas besser kennenzulernen."
+2,Schauspieler,JULIA,,"Ja, sicher…"
+2,Schauspieler,PARIS,,Ich freue mich schon auf unsere Konversation.
+2,Schauspieler,LADY CAPULET,,Alles in Ordnung Kind?
+2,Schauspieler,JULIA,,"Ja, sicher…"
+2,Schauspieler,LADY CAPULET,,"Mein Graf, würdet ihr mich mit meiner Tochter kurz alleine lassen?"
+2,Schauspieler,PARIS,,"Aber sicher doch, Lady Capulet."
+2,Anweisung,,,Der Graf verneigt sich knapp und geht nach rechts ab.
+2,Schauspieler,LADY CAPULET,,"Na los, ihr auch!"
+2,Anweisung,,,Die AMME nickt auch knapp und geht nach rechts ab.
+2,Schauspieler,LADY CAPULET,,"Was verschweigst du mir, mein Kind?"
+2,Schauspieler,JULIA,,"Mutter, ich würde gerne selbst entscheiden, mit welchen Männern ich mich treffe und nicht, dass du sie für mich auswählst."
+2,Schauspieler,LADY CAPULET,,"Aber Julia, ich weiß doch, was gut für dich ist. Dieser Graf ist sehr wohlhabend. Er bringt sehr viel Geld mit in eure zukünftige Ehe. Davon wirst du profitieren."
+2,Schauspieler,JULIA,,Und ihr auch. Soll ich glücklich sein oder ihr?
+2,Schauspieler,LADY CAPULET,,"Dann sag, wie kann ich dich glücklich machen?"
+2,Anweisung,,,Die Szene rechts friert ein und wird abgedunkelt. Links geht das Licht wieder an und die Szene geht links weiter.
+2,Schauspieler,MERCUTIO,,"(steht auf) Romeo, du lebst in einem Luftschloss. So etwas wie Liebe auf den ersten Blick gibt es nicht. Schlag dir das aus dem Kopf. Mit der Einstellung wirst du nur immer wieder enttäuscht."
+2,Schauspieler,BENVOLIA,,"Genau, Rosalinde wird nicht die letzte gewesen sein, die dich abweisen wird. Du musst lernen damit umzugehen."
+2,Schauspieler,ROMEO,,"Ihr habt leicht reden. Es fühlt sich so an, als könnte ich ohne sie nicht leben. Am liebsten würde ich mein Herz herausreißen und es durch einen Stein ersetzen. Dann würden diese Schmerzen endlich aufhören."
+2,Schauspieler,BENVOLIA,,"Du hast mich wohl nicht ganz verstanden: Ein steinernes Herz hält vielleicht den Liebeskummer fern, wird dich aber auch nie wieder das Kribbeln tausender Schmetterlinge in deinem Bauch spüren lassen, wenn die Liebe dich übermannt."
+2,Schauspieler,ROMEO,,"Ja, die neue Liebe. (steht auf) Ich muss sie finden. Nur sie kann mich wieder glücklich machen."
+2,Anweisung,,,Die Szene links friert ein und das Licht wechselt sich wieder nach rechts. Die Szene rechts geht aus dem Freeze.
+2,Schauspieler,JULIA,,"Mich glücklich machen? Na, indem ich die Freiheit habe, selbst die Liebe zu suchen. Und zu finden."
+2,Anweisung,,,Links geht das Licht wieder an und die Szene geht links weiter.
+2,Schauspieler,ROMEO,,"Jemanden zu finden, den ich in den Armen halten kann."
+2,Schauspieler,JULIA,,"Jemanden, der für mich da ist, auch wenn es gerade schwer ist."
+2,Schauspieler,ROMEO,,"Jemanden, der mich genauso liebt, wie ich bin."
+2,Schauspieler,JULIA,,"Ein Mensch, der einem immer zuhört."
+2,Schauspieler,ROMEO,,Der leidenschaftlich liebt.
+2,Schauspieler,JULIA,,Der alles für einen tun würde.
+2,Schauspieler,ROMEO,,Und der bedingungslos für einen da ist.
+2,Schauspieler,JULIA,,Und zu dem ich aus voller Überzeugung und aus freien Stücken ja sagen kann. Das…
+2,Schauspieler,ROMEO UND JULIA,,Das würde mich glücklich machen.
+2,Anweisung,,,Die Szene links friert ein und das Licht wechselt sich wieder nach rechts.
+2,Schauspieler,LADY CAPULET,,"Kind, sei nicht albern. Vertrau auf das Wort deiner lieben Mutter und halt dich an die Reichen. Graf Paris wird gut für dich sorgen können."
+2,Schauspieler,JULIA,,Aber Reichtum ist nicht alles. Dann sitze ich wie ein Vogel im goldenen Käfig.
+2,Schauspieler,LADY CAPULET,,"Ich schlage vor, dass du ihn erst einmal kennenlernst, bevor du voreilige Schlüsse ziehst. Ich ziehe mich nun zurück und bereite mich auf die Feierlichkeiten vor. Bis dahin."
+2,Anweisung,,,LADY CAPULET geht nach rechts ab. JULIA bleibt im Freeze stehen. Das Licht wechselt wieder nach links.
+2,Schauspieler,BENVOLIA,,"Unser Romeo, ein Träumer und Poet."
+2,Schauspieler,ROMEO,,"Ist es denn zu viel, was ich ersehne?"
+2,Schauspieler,MERCUTIO,,"Ich glaube du brauchst mal ein kleines Abenteuer, was dich von Rosalinde und diesem ganzen Gefühlschaos ablenkt."
+2,Schauspieler,BENVOLIA,,"Gute Idee. Was haltet ihr davon, wenn wir uns auf die Feier der Capulets schleichen?"
+2,Schauspieler,MERCUTIO,,Eine fantastische Idee. Dann sprengen wir diesem aufgeblasenenen Tybalt das Fest.
+2,Schauspieler,ROMEO,,"Aber ist das nicht gefährlich, wenn wir auffliegen?"
+2,Schauspieler,MERCUTIO,,Ach was. Das ist ein Maskenball. Da kommen wir ungesehen rein…
+2,Schauspieler,BENVOLIA,,… und auch ungesehen wieder raus.
+2,Schauspieler,ROMEO,,Möglicherweise brauche ich wirklich etwas Ablenkung. Vermutlich habt ihr Recht.
+2,Schauspieler,MERCUTIO,,Das haben wir immer.
+2,Anweisung,,,"MERCUTIO und BENVOLIA gehen nach links ab. Die Bühne wird wieder komplett hell und JULIA kommt aus dem Freeze. Sie gehen beide nach links, bzw. rechts ab, bleiben dann kurz stehen, wenden sich um, bevor sie final abgehen."
+3,Szenenbeginn,,,Szene 3
+3,Einspieler,,,leise Musik
+3,Anweisung,,,Es spielt leise Musik. PRINZESSIN und TYBALT kommen von hinten und bleiben auf der Erhöhung stehen.
+3,Schauspieler,PRINZESSIN,,"Werte Gäste, es ist mir eine Freude, euch heute am Festtag des Heiligen Zeno begrüßen zu dürfen. Mein großer Dank geht an unsere Gastgeber: Die Familie Capulet."
+3,Einspieler,,,Applaus
+3,Schauspieler,TYBALT,,So mögen die Feierlichkeiten beginnen.
+3,Einspieler,,,Party
+3,Anweisung,,,Von links kommen FRANCESCA und PARIS. Von rechts kommen LADY CAPULET und JULIA.
+3,Schauspieler,PARIS,,"(zu Francesca, Laurentia und Gloria) Da ist sie. Wie sehe ich aus?"
+3,Schauspieler,FRANCESCA,,Ganz fantastisch.
+3,Schauspieler,PARIS,,Sehr gut. Dann will ich mal mein Glück versuchen.
+3,Anweisung,,,PARIS geht zu JULIA. FRANCESCA geht nach links ab.
+3,Schauspieler,PARIS,,Seid gegrüßt. Ihr seht wirklich bezaubernd aus.
+3,Schauspieler,JULIA,,"Danke,..."
+3,Anweisung,,,"PARIS und JULIA unterhalten sich weiter. ROMEO, MERCUTIO und BENVOLIA kommen mit Masken von hinten und sehen sich um."
+3,Schauspieler,ROMEO,,Ihr habt nicht zu viel versprochen. Das ist wirklich imposant.
+3,Schauspieler,MERCUTIO,,"Und warte mal, bis du das Buffet gesehen hast."
+3,Anweisung,,,"ROMEO, MERCUTIO und BENVOLIA sehen sich weiter um. TYBALT tritt vor und klatscht in die Hände."
+3,Schauspieler,TYBALT,,"Liebe Gäste, es ist soweit. Das Essen wird aufgetragen."
+3,Anweisung,,,"LAURENTIA, GLORIA und FRANCESCA laufen mit Schürze von links nach rechts mit Platten voller Essen über die Bühne und gehen nach rechts wieder ab. Alle sehen ihnen mit großen Augen nach."
+3,Schauspieler,ROMEO,,"Du hast Recht, das sieht wirklich vorzüglich aus."
+3,Schauspieler,MERCUTIO,,"Dann halte dich nicht zurück, mein Freund. Schlag dir den Magen voll, dann kommst du sicher auf andere Gedanken."
+3,Schauspieler,BENVOLIA,,Wir werden uns zunächst einmal nach einem guten Getränk umschauen.
+3,Anweisung,,,"BENVOLIA und MERCUTIO gehen nach links ab. ROMEO möchte nach rechts, doch dann tritt ihm JULIA in den Weg."
+3,Schauspieler,JULIA,,"(zu Paris) Tut mir leid, aber ich muss jetzt…"
+3,Anweisung,,,JULIA und ROMEO stoßen zusammen. Dabei verliert JULIA ihre Maske.
+3,Schauspieler,ROMEO,,"Verzeiht, ich wollte nicht…"
+3,Anweisung,,,Beide bücken sich nach ihr und blicken sich beim Hochgehen tief in die Augen. ROMEO lässt JULIAS Maske los.
+3,Schauspieler,JULIA,,"Ihr,... ihr müsst euch nicht entschuldigen. Ich hätte auch,... also euch auch sehen müssen."
+3,Anweisung,,,ROMEO nimmt auch seine Maske ab. Beide sehen sich tief in die Augen. PARIS schüttelt mit dem Kopf und geht nach hinten ab.
+3,Schauspieler,ROMEO,,"Ihr seid wunderschön,... ich meine, also eigentlich,..."
+3,Schauspieler,JULIA,,(grinst) Eigentlich?
+3,Schauspieler,ROMEO,,"Eigentlich hätte ich nicht gedacht, dass ich mich so schnell aus dem Konzept bringen lasse."
+3,Schauspieler,JULIA,,"Und wer seid ihr, dass ihr euch so leicht aus dem Konzept bringen lasst?"
+3,Schauspieler,ROMEO,,Ich bin Romeo… und ihr seid?
+3,Schauspieler,JULIA,,"Julia,.... Julia Capulet."
+3,Anweisung,,,TYBALT mustert die beiden aus dem Hintergrund.
+3,Schauspieler,ROMEO,,"Capulet? Nun, das ist… ach wisst ihr,..."
+3,Schauspieler,JULIA,,(verschmitzt) Was? Habe ich euch wieder aus dem Konzept gebracht?
+3,Anweisung,,,TYBALT erkennt ROMEO.
+3,Schauspieler,ROMEO,,"Ich weiß nicht, ob es so schlau ist, wenn wir uns hier unterhalten."
+3,Schauspieler,TYBALT,,Diese Visage kenne ich doch. Du bist ein Spross der Montagues. Wie kannst du es wagen hier aufkreuzen?
+3,Schauspieler,ROMEO,,"Ich, also…"
+3,Schauspieler,TYBALT,,"Selbst für einen Montague ist das eine Dreistigkeit, die ihresgleichen sucht. (zieht den Degen) Dafür sollte ich dich aufschlitzen."
+3,Schauspieler,JULIA,,"Tybalt, bitte… das ist doch nicht nötig."
+3,Schauspieler,TYBALT,,Halte dich da raus Cousinchen.
+3,Anweisung,,,BENVOLIA und MERCUTIO kommen von links hereingesprungen.
+3,Schauspieler,MERCUTIO,,"Komm runter, Tybalt. Er ist nicht alleine."
+3,Schauspieler,BENVOLIA,,"Genau, mach dich auf eine Abreibung gefasst."
+3,Schauspieler,TYBALT,,"Ihr seid hier auf unserem Anwesen. Schon vergessen. Seid froh, wenn euch unsere Wachen und nicht ich töte. Die machen das im Gegensatz zu mir nämlich kurz und schmerzlos."
+3,Schauspieler,PRINZESSIN,,Genug! Es soll hier heute Abend kein Blut vergossen werden.
+3,Schauspieler,TYBALT,,Aber Prinzessin: Diese Frevler haben sich hier heute Abend unerlaubt Zutritt verschafft.
+3,Schauspieler,PRINZESSIN,,"Und dennoch findet dieses Fest unter meinem Schutz statt. Ich dulde nicht, dass hier jemand das Schwert gegen einen anderen erhebt. Schon gar nicht wegen eines alten Streits, dessen Grund niemand mehr kennt."
+3,Schauspieler,TYBALT,,"(senkt den Degen) Wie ihr befehlt,..."
+3,Schauspieler,PRINZESSIN,,"(zu ROMEO) Und ihr, Romeo Montague, solltet wissen, wann ihr willkommen seid und wann es besser ist, sich zurückzuziehen."
+3,Schauspieler,ROMEO,,"Ihr habt Recht, Prinzessin. Verzeiht, ich wollte niemanden mit meiner Anwesenheit beleidigen. Ich werde gehen. (verneigt sich knapp)"
+3,Anweisung,,,"ROMEO, MERCUTIO und BENVOLIA gehen nach hinten ab."
+3,Schauspieler,TYBALT,,(zu Julia) Ist alles in Ordnung bei dir?
+3,Schauspieler,JULIA,,"Ja,... ich meine nein,... ich glaube, ich ziehe mich zurück."
+3,Schauspieler,TYBALT,,Hat dieser dreckige Montague dich etwa belästigt?
+3,Schauspieler,JULIA,,"Nein, mir ist nur gerade nicht so wohl."
+3,Anweisung,,,JULIA geht nach links ab.
+3,Schauspieler,TYBALT,,Diese Mistkerle haben die Feier zerstört. Ich werde ihnen eine Lektion erteilen.
+3,Anweisung,,,TYBALT stürmt nach rechts raus.
+3,Schauspieler,PRINZESSIN,,(zu Lady Capulet) Ihr solltet eure Leute besser unter Kontrolle haben. Wir müssen die öffentliche Ordnung wahren.
+3,Schauspieler,LADY CAPULET,,"Tybalt ist ein Heißssporn, aber seid unbesorgt. Ich werde ein Auge auf ihn haben."
+3,Anweisung,,,PRINZESSIN und LADY CAPULET gehen nach hinten von der Bühne ab. TYBALT geht nach links ab.
+4,Szenenbeginn,,,Szene 4
+4,Einspieler,,,Regen
+4,Anweisung,,,BENVOLIA und MERCUTIO kommen von links auf die Bühne. Sie haben sich in Regenmäntel gehüllt. ROMEO trottet ohne Mantel hinterher. Man hört Regengeräusche.
+4,Schauspieler,MERCUTIO,,"Das Wetter spiegelt den Verlauf des Abends sehr gut wieder, oder Romeo? … Romeo?"
+4,Schauspieler,BENVOLIA,,Was ist denn mit dem schon wieder los?
+4,Schauspieler,MERCUTIO,,Es wird doch wohl nicht immer noch dieser Liebeskummer sein…
+4,Schauspieler,BENVOLIA,,"(grinst) Oh, ich glaube den hat er überwunden."
+4,Schauspieler,MERCUTIO,,"Du meinst doch nicht etwa? … Das kann doch nicht sein ernst sein,... das ist doch."
+4,Schauspieler,ROMEO,,(verträumt) …. wahre Liebe!
+4,Schauspieler,MERCUTIO,,"Sie ist eine Capulet verdammt. Außerdem kennst du sie erst seit,... heute."
+4,Schauspieler,BENVOLIA,,"Hey, sie haben sich bestimmt drei Minuten unterhalten."
+4,Schauspieler,ROMEO,,Die Sprache der Liebe braucht keine Worte.
+4,Schauspieler,MERCUTIO,,"Bei deinem Gesülze wird mir schlecht. Also ich weiß ja nicht, wie es dir geht Benvolia, aber ich will jetzt nach Hause."
+4,Schauspieler,BENVOLIA,,Da stimme ich dir zu: Der Regen lädt nicht gerade zum Verweilen ein.
+4,Anweisung,,,"MERCUTIO und BENVOLIA gehen nach rechts ab. BENVOLIA hält kurz inne, bevor sie die Bühne verlässt."
+4,Schauspieler,BENVOLIA,,(zu ROMEO) Kommst du?
+4,Schauspieler,ROMEO,,"Äh, ich komme nach."
+4,Schauspieler,BENVOLIA,,Gut.
+4,Anweisung,,,BENVOLIA geht nach rechts ab.
+4,Schauspieler,ROMEO,,"Zwar regnet und stürmt es doch,... doch fühl ich mich der Sonne so nah. Ich,... ich muss sie einfach nochmal sehen."
+4,Anweisung,,,ROMEO rennt nach links raus.
+5,Szenenbeginn,,,Szene 5
+5,Anweisung,,,Von hinten wird das Geländer hereingefahren. JULIA kommt von rechts über die Erhöhung und legt sich hin.
+5,Schauspieler,JULIA,,"Dieser Montague,... er geht mir einfach nicht mehr aus dem Kopf,... ich glaube,... nein,... es ist verboten,... ich meine unsere beiden Familien hassen sich und,... aber was hat er denn getan,... ich meine, warum sollte ich ihn hassen?"
+5,Anweisung,,,ROMEO stürmt von links herein.
+5,Schauspieler,ROMEO,,(ruft) Julia! Julia Capulet!
+5,Schauspieler,JULIA,,"Das kann doch nicht,... (steht auf und stellt sich ans Geländer) Nicht so laut. Wenn ihr hier entdeckt werdet, dann,... töten sie euch."
+5,Schauspieler,ROMEO,,Dieses Risiko gehe ich ein. Ich musste euch einfach wiedersehen.
+5,Schauspieler,JULIA,,"(blickt sich um) Dann kommt hinauf zu mir. Dort auf dem Hof steht ihr doch, wie auf dem Präsentierteller."
+5,Anweisung,,,ROMEO klettert nach oben und steigt über das Geländer. JULIA hilft ihm.
+5,Schauspieler,ROMEO,,Habt Dank.
+5,Schauspieler,JULIA,,"Nun, jetzt wo du hier schon in meinen Gemächern stehst, können wir uns die Förmlichkeiten auch sparen oder?"
+5,Schauspieler,ROMEO,,Du hast Recht.
+5,Schauspieler,JULIA,,"(setzt sich) Also, was verschlägt dich bei diesem Regenwetter in mein Haus?"
+5,Schauspieler,ROMEO,,"(setzt sich neben sie) Ihr seid,... ich meine, du bist der Grund, warum ich hier bin. Du gibst meinem Leben neuen Sinn. Weil,... also ich glaube, dass ich mit dir vollkommen bin."
+5,Schauspieler,JULIA,,(schmunzelt) Das klingt sehr poetisch.
+5,Schauspieler,ROMEO,,(unsicher) Gefällt es dir nicht?
+5,Schauspieler,JULIA,,"(grinst) Doch, sehr. (horcht auf) Hörst du das?"
+5,Schauspieler,ROMEO,,Schritte…
+5,Schauspieler,JULIA,,"Schnell, versteck dich."
+5,Anweisung,,,ROMEO verschwindet hinter der Erhöhung. AMME & LADY CAPULET kommen von rechts.
+5,Schauspieler,LADY CAPULET,,"Julia, wie kannst du es wagen, dich einfach vom Fest zu schleichen?"
+5,Schauspieler,JULIA,,Mir ging es nicht gut und…
+5,Schauspieler,LADY CAPULET,,"Und du hast Graf Paris einfach stehen lassen. Sei froh, dass ich ihn beruhigen konnte. Wenn du ihn weiter so behandelst, verliert er noch sein Interesse."
+5,Schauspieler,JULIA,,"Sehr gut, ich habe nämlich auch gar kein Interesse an ihm."
+5,Schauspieler,LADY CAPULET,,"Junge Dame, das hatten wir bereits ausdiskutiert. Du wirst Graf Paris heiraten, ob du möchtest oder nicht. Gute Nacht."
+5,Anweisung,,,LADY CAPULET geht nach links ab. Die AMME bleibt zurück.
+5,Schauspieler,JULIA,,Das kann sie mir nicht antun. Warum ist sie so?
+5,Schauspieler,AMME,,"Sie meint es im Grunde nur gut mit dir, Kind. Sie möchte, dass es dir gut geht und an nichts fehlt."
+5,Schauspieler,JULIA,,Und dafür legt sie mir Fesseln an? Gebunden an ihre Entscheidung?
+5,Schauspieler,AMME,,"Kind, was wäre denn die Alternative?"
+5,Schauspieler,JULIA,,Ich muss dir etwas erzählen. Aber du darfst es niemandem sagen.
+5,Schauspieler,AMME,,Ich kann nicht einfach…
+5,Schauspieler,JULIA,,(flehend) Bitte versprich es mir.
+5,Schauspieler,AMME,,"Nun gut, versprochen, also, was gibt es?"
+5,Schauspieler,JULIA,,"Ich habe jemanden kennengelernt. Einen wahren Romantiker, der mich aufrichtig liebt. Auch jemand, der mich festhält, aber in dessen Armen ich frei bin. Der mich so sein lässt und mich so sieht, wie ich bin."
+5,Schauspieler,AMME,,"Das klingt wirklich schön, vielleicht kannst du ihn deiner Mutter vorstellen und sie überlegt es sich noch einmal anders."
+5,Schauspieler,JULIA,,"Ich glaube nicht, dass das geht…"
+5,Schauspieler,AMME,,"Sei mal nicht so pessimistisch. Wenn er kein Bettelknabe ist, besteht eine reale Chance."
+5,Schauspieler,JULIA,,"Das ist nicht das Problem, aber… aber, er ist ein Montague."
+5,Schauspieler,AMME,,"(setzt sich und fasst sich ans Herz) Kind, das,... das kannst du nicht ernst meinen. Du suchst dir jemanden unter den Erzfeinden der Familie."
+5,Schauspieler,JULIA,,"Ich habe ihn nicht gesucht,... nur gefunden."
+5,Schauspieler,AMME,,"Kind, das darf deine Mutter niemals erfahren. Du solltest dir das aus dem Kopf schlagen. Glaub mir, es ist zu deinem besten."
+5,Schauspieler,JULIA,,"Andere wissen immer, was das beste für mich ist. Das bin ich gewohnt."
+5,Schauspieler,AMME,,(steht auf) Du solltest besser noch einmal eine Nacht darüber schlafen. Morgen siehst du vielleicht klarer.
+5,Schauspieler,JULIA,,Das glaube ich nicht.
+5,Schauspieler,AMME,,Gute Nacht Julia.
+5,Anweisung,,,AMME geht nach rechts ab. JULIA legt sich auf das Bett und starrt an die Decke. ROMEO kommt hinter dem Bett hervor.
+5,Schauspieler,ROMEO,,(strahlt) So denkst du also über mich.
+5,Schauspieler,JULIA,,"Ja, nur ist das egal. Meine Mutter wird das niemals erlauben. Sie möchte mich mit diesem reichen Schnösel vermählen."
+5,Schauspieler,ROMEO,,Sei nicht so gekränkt. Ich habe die perfekte Idee.
+5,Schauspieler,JULIA,,"Ich glaube, es ist hoffnungslos."
+5,Schauspieler,ROMEO,,"Warte ab: Du kannst nur mit diesem Paris verheiratet werden, wenn du nicht schon verheiratet bist, oder?"
+5,Schauspieler,JULIA,,"Ja, so funktioniert das mit dem Heiraten."
+5,Schauspieler,ROMEO,,"Was ist, wenn wir einfach davor heiraten? Was wollen sie dann noch machen?"
+5,Schauspieler,JULIA,,(setzt sich auf) Wir heiraten? Das geht einfach so?
+5,Schauspieler,ROMEO,,"Nunja, einfach so,... ich kenne da jemanden: Schwester Laurentia. Sie wird uns helfen."
+5,Schauspieler,JULIA,,"Du hast Recht. Lass es uns versuchen. Es ist die einzige Möglichkeit, die ich sehe."
+5,Schauspieler,ROMEO,,"Dann lass uns nicht verweilen, sondern direkt aufbrechen. Ich zeige dir den Weg."
+5,Schauspieler,JULIA,,"Dann auf, ich muss zum Morgengrauen wieder zurück sein."
+5,Anweisung,,,ROMEO und JULIA klettern über das Geländer und gehen Hand in Hand nach links ab.
+6,Szenenbeginn,,,Szene 6
+6,Anweisung,,,MERCUTIO und BENVOLIA kommen mit Regenmänteln von links. Es regnet noch immer.
+6,Schauspieler,BENVOLIA,,"So, ich verabschiede mich hier. Trotz des Rauswurfs war es doch ein ereignisreicher Abend."
+6,Schauspieler,MERCUTIO,,Das kannst du laut sagen. Ich hoffe unser werter Herr Romeo hat sich nicht verlaufen.
+6,Schauspieler,BENVOLIA,,Der wird den Heimweg schon alleine finden.
+6,Schauspieler,MERCUTIO,,"Wahrscheinlich hast du Recht, doch ich glaube ich werde ihn doch noch einmal suchen gehen."
+6,Schauspieler,BENVOLIA,,Dann viel Glück dabei.
+6,Anweisung,,,"BENVOLIA geht nach hinten ab. MERCUTIO blickt ihr nach und möchte dann nach links gehen, doch da tritt ihm TYBALT entgegen."
+6,Schauspieler,TYBALT,,"Sieh an einer der drei Montagues. Sag, wo sind eure beiden anderen Begleiter?"
+6,Schauspieler,MERCUTIO,,Sie haben sich bereits verabschiedet. Da musst du wohl mit mir Vorlieb nehmen.
+6,Schauspieler,TYBALT,,"Schade, ich hätte euch mit Freuden zu dritt aufgeschlitzt. (zieht den Degen)"
+6,Schauspieler,MERCUTIO,,"(zieht seinen Degen) Keine Sorge, ich schaffe dich auch alleine."
+6,Anweisung,,,"Es entbrennt ein kurzer Kampf, den Mercutio verliert. Er bleibt schwer verletzt liegen und hält sich die Wunde."
+6,Schauspieler,TYBALT,,"Das war eine meiner leichtesten Übungen. Lasst euch das eine Warnung sein, euch zukünftig nicht mehr in unsere Angelegenheiten einzumischen."
+6,Anweisung,,,TYBALT geht nach links ab. Kurz darauf kommt LADY MONTAGUE von rechts.
+6,Schauspieler,LADY MONTAGUE,,"Mercutio, was sollte dieser Lärm mitten in der Nacht. Herrje, was ist denn mit dir passiert?"
+6,Schauspieler,MERCUTIO,,"(gepresst) Die Capulets, sie haben…"
+6,Schauspieler,LADY MONTAGUE,,Schone dich. Dafür sollen sie büßen. (ruft) Benvolia!
+6,Anweisung,,,BENVOLIA kommt von hinten.
+6,Schauspieler,BENVOLIA,,"Ich wollte gerade schlafen gehen und… oh Gott, das sieht nicht gut aus."
+6,Schauspieler,LADY MONTAGUE,,"Schnell, hilf mir, ihn reinzubringen."
+6,Anweisung,,,BENVOLIA und LADY MONTAGUE stützen MERCUTIO und bringen ihn nach rechts von der Bühne.
+7,Szenenbeginn,,,Szene 7
+7,Anweisung,,,LAURENTIA kommt mit einem Buch unterm Arm von links. Ihr folgt Romeo.
+7,Schauspieler,LAURENTIA,,Also ich habe das richtig verstanden? Ich soll noch heute Nacht eine Trauung vollziehen.
+7,Schauspieler,ROMEO,,"Ja, ich flehe euch an. Es duldet keinen Aufschub."
+7,Schauspieler,LAURENTIA,,"Nun, ich will mich der Liebe auch nicht in den Weg stellen, aber sagt, wer ist die Glückliche? Konntet ihr Rosalinde umstimmen?"
+7,Schauspieler,ROMEO,,"Nein, es ist,... wartet ich stelle sie euch vor."
+7,Anweisung,,,ROMEO geht nach links an den Vorhang und zieht am Arm JULIA hervor.
+7,Schauspieler,LAURENTIA,,"Eine Capulet? Ihr wisst schon, dass…"
+7,Schauspieler,ROMEO,,Das ist mir egal. Ich liebe sie und sie liebt mich.
+7,Schauspieler,LAURENTIA,,Aber eure Familien…
+7,Schauspieler,JULIA,,Könnten durch diese Heirat vielleicht endlich versöhnt werden.
+7,Schauspieler,ROMEO,,"Ich bitte euch von ganzem Herzen: Vollzieht die Trauung. Womöglich seid ihr diejenige, die dadurch die Fehde beenden kann."
+7,Schauspieler,JULIA,,Tut es für die Liebe.
+7,Schauspieler,LAURENTIA,,"(blickt sie nachdenklich an) Nun gut. Dann will ich mal alles vorbereiten. Und ihr, ihr übt euer Ehegelübde."
+7,Anweisung,,,LAURENTIA geht nach hinten ab.
+7,Schauspieler,ROMEO,,"(nimmt Julias Hände und blickt ihr tief in die Augen) Na dann, wollen wir mal: Ich verspreche dich zu lieben und zu ehren, alle Tage meines Lebens, denn…"
+7,Schauspieler,JULIA,,"Du hältsts mich fest und lässt mich frei,..."
+7,Schauspieler,ROMEO,,"…du lässt mich der Sonne näher sein, trotz Sturm und Regen,..."
+7,Schauspieler,JULIA,,… bist du da und gibst meinem Leben jetzt neuen Sinn.
+7,Schauspieler,ROMEO,,"Du lässt mich sein, so wie ich bin."
+7,Schauspieler,JULIA,,"Denn keiner liebt mich so,..."
+7,Schauspieler,ROMEO UND JULIA,,… wie du.
+7,Einspieler,,,Trauung
+7,Anweisung,,,"LAURENTIA bringt von hinten das Pult und stellt es auf die Anhöhe. ROMEO tritt vor. Von links kommen GLORIA und FRANCESCA und richten JULIA her, geben ihr Blumen und stecken ihr einen Schleier an. Dann tritt JULIA vor den Altar. JULIA und ROMEO halten sich an den Händen und schauen sich tief in die Augen, während LAURENTIA spricht. Schließlich gehen alle nach hinten ab."
+8,Szenenbeginn,,,Szene 8
+8,Anweisung,,,ROMEO und JULIA liegen gemeinsam hinten auf der Erhöhung. In der Mitte ist wieder das Geländer platziert. Ein Lichtstrahl trifft auf sie und weckt sie.
+8,Schauspieler,ROMEO,,Ich kann es immer noch nicht glauben.
+8,Schauspieler,JULIA,,Was?
+8,Schauspieler,ROMEO,,Dass ich dich gefunden habe.
+8,Schauspieler,JULIA,,Als hätte uns das Schicksal zusammengeführt.
+8,Schauspieler,ROMEO,,"Ich möchte eigentlich auch noch gar nicht aufbrechen, aber das Morgengrauen zwingt mich. Sie dürfen uns noch nicht sehen. Wir müssen wohl überlegen, wie wir es ihnen sagen."
+8,Schauspieler,JULIA,,"Ja, aber lass uns bald wieder treffen."
+8,Schauspieler,ROMEO,,"(steht auf) Sei unbesorgt, ich kann es jetzt schon kaum erwarten, dich wiederzusehen."
+8,Schauspieler,JULIA,,"Nun, dann bleib doch noch kurz."
+8,Schauspieler,ROMEO,,Ich würde wirklich gerne…
+8,Einspieler,,,Totenglocke
+8,Schauspieler,JULIA,,Hörst du das?
+8,Schauspieler,ROMEO,,Die Totenglocke… ich bekomme gerade ein ganz ungutes Gefühl. Ich glaube ich gehe jetzt besser schnell.
+8,Schauspieler,JULIA,,"Okay, pass auf dich auf. Hörst du."
+8,Anweisung,,,ROMEO klettert über das Geländer und geht nach links ab. JULIA geht in den Freeze. Das Licht wechselt nach links. LADY MONTAGUE und LAURENTIA kommen von links.
+8,Schauspieler,LADY MONTAGUE,,"Danke, dass ihr so schnell gekommen seid, Schwester, um ihm noch das letzte Sakrament zu spenden. Diese Capulets sollen für seinen Tod teuer bezahlen."
+8,Schauspieler,LAURENTIA,,"Ich verstehe euren Kummer, doch die Vergeltung wird nur noch mehr Leid bringen. Denkt ihr nicht, es wäre endlich Zeit, diesen Kreislauf aus Provokation und Gewalt zu brechen?"
+8,Schauspieler,LADY MONTAGUE,,Darüber möchte ich an diesem Tag nicht nachdenken. Nicht nachdem sie Mercutio getötet haben. Wir müssen ihn rächen.
+8,Schauspieler,LAURENTIA,,"Bei allem gebotenen Respekt, Lady Montague, aber das bringt ihn auch nicht mehr zurück."
+8,Anweisung,,,GLORIA kommt von links.
+8,Schauspieler,GLORIA,,"Lady Montague, euer Sohn ist zurückgekehrt."
+8,Schauspieler,LADY MONTAGUE,,"Endlich, bring ihn herein."
+8,Anweisung,,,GLORIA tritt zur Seite und ROMEO betritt die Bühne.
+8,Schauspieler,ROMEO,,"Er ist tot,... Mutter, wie konnte das passieren?"
+8,Schauspieler,LADY MONTAGUE,,Dieser Tybalt hat ihm auf dem Nachhauseweg aufgelauert und ihn tödlich verletzt.
+8,Schauspieler,ROMEO,,"Auf dem Nachhauseweg… ich,... ich hätte bei ihm bleiben sollen."
+8,Schauspieler,LADY MONTAGUE,,"Mein Sohn, spar dir noch ein paar Schuldgefühle für mich auf. Wo warst du die ganze Nacht? Ich wäre beinahe umgekommen, vor Sorge, dass auch dir etwas zugestoßen ist."
+8,Schauspieler,ROMEO,,"Ich war,... ich… (sieht Laurentia an) ich habe mich mit meinen Gefühlen beschäftigt."
+8,Schauspieler,LADY MONTAGUE,,"Was auch sonst. Du bleibst jetzt erst einmal hier, hörst du? Hier bist du in Sicherheit. Ich werde nun erst einmal alles für das Begräbnis vorbereiten."
+8,Anweisung,,,LADY MONTAGUE geht nach links ab. GLORIA und LAURENTIA folgen ihr. ROMEO sackt auf die Knie zusammen und bleibt im Freeze. Das Licht wechselt wieder nach rechts. JULIA löst sich aus dem Freeze. Die AMME kommt von rechts.
+8,Schauspieler,AMME,,"Kind, ein Glück, du bist hier."
+8,Schauspieler,JULIA,,"Warum so besorgt, liebe Amme?"
+8,Schauspieler,AMME,,"Dein Cousin Tybalt hat in der Nacht einen Montague getötet. Jetzt fürchtet deine Mutter ihre Rache. Nach allem, was du mir letzte Nacht erzählt hast, hatte ich Angst, dass du das Haus verlassen hast und dir im schlimmsten Fall etwas zugestoßen ist, aber jetzt bin ich beruhigt. Du musst unter allen Umständen erst einmal hierbleiben."
+8,Schauspieler,JULIA,,"Aber das darf nicht sein… das kann doch nicht. Tybalt,... warum hat er…?"
+8,Schauspieler,AMME,,"Du kennst doch deinen hitzköpfigen Cousin. Er nutzt jede Möglichkeit, um den Konflikt mit den Montagues zu suchen und da war ihm das unerlaubte Eindringen auf unseren Feierlichkeiten ein willkommener Anlass."
+8,Schauspieler,JULIA,,"(steht auf) Aber,... Amme,... ich muss meinen Geliebten sehen…"
+8,Schauspieler,AMME,,"Ich habe es dir doch gesagt, Kind. Das wird dich nur ins Unglück stürzen. Bleib hier in deinem Zimmer. Hier bist du sicher."
+8,Anweisung,,,AMME geht nach rechts ab. JULIA sackt auf die Knie zusammen.
+8,Schauspieler,JULIA,,"Romeo,... wo bist du?"
+8,Anweisung,,,JULIA geht in den Freeze. Das Licht wechselt nach links. ROMEO geht aus dem Freeze. BENVOLIA kommt von links.
+8,Schauspieler,BENVOLIA,,Da bist du. Wir haben uns solche Sorgen gemacht.
+8,Schauspieler,ROMEO,,Es ist alles meine Schuld Benvolia. Ich hätte bei euch bleiben sollen.
+8,Schauspieler,BENVOLIA,,"Es ist auch meine Schuld Romeo,... er wollte dich noch einmal suchen und ich habe ihn alleine losziehen lassen."
+8,Schauspieler,ROMEO,,"Mich suchen? Verdammt,... ich Narr. Was habe ich mit meinem unüberlegten Handeln nur angerichtet?"
+8,Schauspieler,BENVOLIA,,"Es war seine Entscheidung, noch einmal loszugehen. Dafür trägst du keine Schuld."
+8,Schauspieler,ROMEO,,"(steht auf) Wie dem auch sei, dieser Tybalt muss dafür bezahlen, was er getan hat."
+8,Schauspieler,BENVOLIA,,"(schlägt ihm auf die Schulter) Was auch immer du vorhast, du kannst auf mich zählen."
+8,Schauspieler,ROMEO,,"Sehr gut, dann auf."
+8,Anweisung,,,ROMEO geht mit BENVOLIA nach links ab. Das Licht wechselt nach rechts. JULIA geht aus dem Freeze.
+8,Schauspieler,JULIA,,"Oh Romeo, hoffentlich machst du nichts Dummes."
+8,Anweisung,,,JULIA steht auf und geht nach rechts ab.
+9,Szenenbeginn,,,Szene 9
+9,Anweisung,,,Die PRINZESSIN kommt von hinten. GLORIA und FRANCESCA stellen ihr einen Stuhl hin. Die PRINZESSIN setzt sich. GLORIA und FRANCESCA stellen sich links und rechts des Stuhles auf.
+9,Schauspieler,FRANCESCA,,"Eure Hoheit, Lady Montague bittet um eine Audienz."
+9,Schauspieler,PRINZESSIN,,Dann führt sie herein.
+9,Anweisung,,,FRANCESCA geht nach links und bittet LADY MONTAGUE herein.
+9,Schauspieler,LADY MONTAGUE,,"Meine Fürstin, ich komme mit einem wichtigen Anliegen zu euch."
+9,Schauspieler,PRINZESSIN,,"So sprecht, ich will euch anhören."
+9,Schauspieler,LADY MONTAGUE,,Es geschah ein fürchterliches Verbrechen: Ein Mitglied unserer Familie wurde ermordet.
+9,Schauspieler,PRINZESSIN,,"Wie schrecklich. Das soll nicht ungesühnt bleiben. Sagt, kennt ihr den Mörder?"
+9,Schauspieler,LADY MONTAGUE,,"Es war Tybalt, Prinzessin. Tybalt Capulet. Wir verlangen, dass er für sein Verbrechen zur Rechenschaft gezogen wird."
+9,Schauspieler,PRINZESSIN,,"Ihr habt ein Recht auf Gerechtigkeit. Dennoch will ich mir zuerst anhören, was er zu euren Anschuldigungen zu sagen hat, bevor ich ein Urteil fälle. (steht auf)"
+9,Anweisung,,,FRANCESCA und GLORIA tragen den Stuhl nach hinten von der Bühne.
+9,Schauspieler,PRINZESSIN,,"Ich werde dem Ganzen nun persönlich nachgehen. Seid versichert, dass ich die Angelegenheit sehr ernst nehme und der Täter seiner gerechten Strafe zugeführt wird."
+9,Schauspieler,LADY MONTAGUE,,"(verneigt sich knapp) Habt Dank, Prinzessin."
+9,Anweisung,,,PRINZESSIN geht nach rechts ab und LADY MONTAGUE nach links.
+10,Szenenbeginn,,,Szene 10
+10,Anweisung,,,ROMEO kommt mit BENVOLIA von links. Er hat einen Degen dabei.
+10,Schauspieler,ROMEO,,"(ruft) Komm raus, Tybalt. Ihr sollt eure gerechte Strafe erfahren."
+10,Anweisung,,,TYBALT kommt von rechts.
+10,Schauspieler,TYBALT,,"(zieht seinen Degen) Sieh an, da sind ja noch die anderen beiden. Ihr habt mir noch gefehlt."
+10,Schauspieler,ROMEO,,Schweigt. Ihr sollt für eure Untat bezahlen.
+10,Schauspieler,TYBALT,,"Kommt näher. Ich werde dafür sorgen, dass ihr euren Freund bald wiedertrefft."
+10,Anweisung,,,"ROMEO geht auf TYBALT los. Es entbrennt ein kurzer Kampf, doch ROMEO gelingt es TYBALT zu erstechen. Dieser sackt auf der Bühne zusammen."
+10,Schauspieler,BENVOLIA,,"Sehr gut Romeo, du hast es geschafft."
+10,Schauspieler,ROMEO,,"Mercutio, jetzt ist dein Tod gerächt, mein Freund."
+10,Anweisung,,,Von rechts stürmt LADY CAPULET herein und kniet sich zu TYBALT.
+10,Schauspieler,LADY CAPULET,,"Nein, was habt ihr getan? Dafür sollt ihr bezahlen."
+10,Schauspieler,ROMEO,,Wir haben nur die Gerechtigkeit wiederhergestellt.
+10,Anweisung,,,PRINZESSIN kommt von hinten.
+10,Schauspieler,PRINZESSIN,,"Was in dieser Stadt gerecht ist, entscheide immer noch ich."
+10,Schauspieler,ROMEO,,Prinzessin…
+10,Anweisung,,,BENVOLIA und ROMEO verneigen sich knapp.
+10,Schauspieler,PRINZESSIN,,"Deine Mutter hat mich über den Mord informiert, junger Montague, und jetzt, wo ich mich der Sache annehmen will, muss ich leider feststellen, dass du schon Selbstjustiz geübt hast."
+10,Schauspieler,ROMEO,,"Er hatte es verdient, meine Fürstin."
+10,Schauspieler,PRINZESSIN,,"Nun, das hätte ich zu entscheiden gehabt. Du warst nicht besser, hast gesetzlos ein Leben genommen."
+10,Schauspieler,ROMEO,,"Aber Prinzessin,..."
+10,Schauspieler,PRINZESSIN,,"Doch ich bin gerecht junger Montague. Ich verstehe, dass du deinen besten Freund rächen wolltest, doch wo kämen wir hin, wenn jeder das Unrecht, dass ihm widerfahren ist, nach eigenem Gutdünken richten würde. Deshalb musst auch du bestraft werden."
+10,Schauspieler,BENVOLIA,,Dann bestraft auch mich Prinzessin. Ich habe ihm geholfen.
+10,Schauspieler,PRINZESSIN,,"Es ehrt dich, dass du für ihn einstehen möchtest, doch den tödlichen Streich hat er selbst vollführt: Romeo Montague, ich verbanne dich hiermit aus der Stadt, deren Gesetze du missachtet hast. Sei gewarnt, nie wieder in unsere Mauern zurückzukehren. Das nächste Mal werde ich nicht mehr Gnade vor Recht ergehen lassen."
+10,Schauspieler,LADY CAPULET,,"Recht so. Verschwinde und komme nie wieder in die Nähe unseres Anwesens, sonst wirst du den Tod finden. Das schwöre ich."
+10,Anweisung,,,PRINZESSIN geht nach hinten ab. LADY CAPULET geht nach rechts ab.
+10,Schauspieler,BENVOLIA,,Ich werde mit dir kommen. Ich lasse dich nicht alleine gehen.
+10,Schauspieler,ROMEO,,"Nein, das ist Irrsinn. Rede mit Mutter und erkläre ihr alles,... und,... und es gibt hier jemanden, auf den du für mich aufpassen musst. Ich erkläre es dir auf dem Weg zum Tor."
+10,Anweisung,,,BENVOLIA und ROMEO gehen nach rechts ab. Die Bühne wird dunkel. TYBALT geht ab.
+11,Szenenbeginn,,,Szene 11
+11,Anweisung,,,JULIA kommt von rechts.
+11,Schauspieler,JULIA,,"Nein, das darf nicht wahr sein. Wieso,... wieso musste es so kommen?"
+11,Anweisung,,,JULIA geht nach links ab. LADY CAPULET und PARIS kommen von hinten.
+11,Schauspieler,PARIS,,Mein Beileid zu eurem Verlust.
+11,Schauspieler,LADY CAPULET,,"Ja, der Mord war wirklich schrecklich, doch wollen wir die Vermählung nicht noch länger anstehen lassen."
+11,Schauspieler,PARIS,,"Sehr gut, ich freue mich."
+11,Anweisung,,,LADY CAPULET und PARIS gehen nach rechts ab. Von links kommen Julia und die AMME. Die AMME trägt ein Kleid.
+11,Schauspieler,JULIA,,"Nein, ich werde kein Kleid für eine Hochzeit anprobieren. Ich bin bereits verheiratet. Das wisst ihr."
+11,Schauspieler,AMME,,Aber eurer Mutter habt ihr es nicht gesagt und dieser Romeo wurde für immer verbannt.
+11,Schauspieler,JULIA,,Das ist mir egal. Es muss einen Weg geben.
+11,Anweisung,,,JULIA geht nach rechts ab.
+11,Schauspieler,AMME,,"Julia, mein Kind,... so wartet doch."
+11,Anweisung,,,AMME geht nach rechts ab. LADY CAPULET kommt mit LAURENTIA von hinten.
+11,Schauspieler,LAURENTIA,,Ihr habt mich rufen lassen.
+11,Schauspieler,LADY CAPULET,,"Exakt, es geht um eine Vermählung."
+11,Schauspieler,LAURENTIA,,"Welch ein erfreulicher Anlass, um wen geht es denn?"
+11,Schauspieler,LADY CAPULET,,Um meine Tochter Julia.
+11,Anweisung,,,JULIA kommt von hinten und bleibt erschrocken stehen.
+11,Schauspieler,LAURENTIA,,Oh.
+11,Schauspieler,LADY CAPULET,,Was ist?
+11,Schauspieler,LAURENTIA,,"Nun, ihr müsst wissen, dass…"
+11,Schauspieler,JULIA,,Ich mich noch nicht für einen Trauspruch entschieden habe.
+11,Schauspieler,LADY CAPULET,,"Nun, wenn das die einzige Schwierigkeit ist, werden wir sicher eine Lösung finden."
+11,Schauspieler,JULIA,,Deshalb wollte ich auch jetzt noch einmal mit Schwester Laurentia sprechen… alleine.
+11,Schauspieler,LADY CAPULET,,"Da ich es sehr erfreulich finde, dass du dich jetzt anscheinend auf die Hochzeit vorbereitest, will ich mich natürlich nicht in den Weg stellen. Nehmt euch die Zeit."
+11,Anweisung,,,LADY CAPULET geht nach rechts ab.
+11,Schauspieler,JULIA,,"Schwester, ihr müsst mir helfen. Ich kann diesen Paris nicht heiraten. Ihr wisst wieso. Ich will nur mit Romeo zusammensein."
+11,Schauspieler,LAURENTIA,,"Keine Sorge, ich werde euch nicht mit Prinz Paris vermählen, aber ihr müsst eurer Mutter die Wahrheit sagen."
+11,Schauspieler,JULIA,,Das wird sie niemals akzeptieren.
+11,Schauspieler,LAURENTIA,,"Das muss sie aber. Ihr habt euch geschworen, euch zu lieben und zu ehren, bis dass der Tod euch scheide."
+11,Schauspieler,JULIA,,"Der Tod,... Schwester, ich habe eine Idee."
+11,Schauspieler,LAURENTIA,,Mir schwant Übles. Es wurde genug Blut vergossen.
+11,Schauspieler,JULIA,,"Nein, ihr versteht nicht. Ich täusche meinen Tod vor, dann kann Paris mich nicht heiraten und wenn alle denken, dass ich Tod bin, dann… dann verlasse ich die Stadt und brenne mit Romeo durch. Das ist es."
+11,Schauspieler,LAURENTIA,,"Nun, euren Tod vortäuschen, das ist sicherlich nicht einfach, aber…"
+11,Schauspieler,JULIA,,Ja?
+11,Schauspieler,LAURENTIA,,"…ich habe da noch eine Mixtur, die euch in einen tiefen Schlaf versetzt. So tief, dass man denken könnte, dass ihr tot wärt."
+11,Schauspieler,JULIA,,Das klingt fantastisch.
+11,Schauspieler,LAURENTIA,,"Wenn es euer Wunsch ist, dann will ich euch helfen. Ich werde einen Boten zu Romeo senden. Er wird euch aus der Gruft befreien."
+11,Schauspieler,JULIA,,So sei es.
+11,Anweisung,,,JULIA geht nach rechts ab. Die Bühne wird dunkel und LAURENTIA bleibt darauf stehen. Es donnert und man hört die Totenglocke und Wehklagen.
+12,Szenenbeginn,,,Szene 12
+12,Anweisung,,,Die Bühne wird wieder hell. GLORIA kommt von hinten.
+12,Schauspieler,GLORIA,,Hier bin ich Schwester. Ihr habt eine Aufgabe für mich?
+12,Schauspieler,LAURENTIA,,"So ist es. Streng vertraulich. Überbringt die Nachricht vom Tode Julia Capulets an Romeo Montague. Er soll sich zur Zeit in Mantua aufhalten. Und ganz wichtig: (zieht einen Brief hervor) Übergebe ihm diesen Brief, hörst du?"
+12,Schauspieler,GLORIA,,"Ja, klar verstanden, Schwester."
+12,Schauspieler,LAURENTIA,,"Sehr gut, und beeilt euch."
+12,Anweisung,,,GLORIA geht nach hinten ab. LAURENTIA geht nach links ab. Das Licht geht aus.
+13,Szenenbeginn,,,Szene 13
+13,Anweisung,,,ROMEO kommt von links. GLORIA folgt ihm.
+13,Schauspieler,ROMEO,,Das darf nicht wahr sein. Ihr müsst lügen.
+13,Schauspieler,GLORIA,,"Bedaure, aber es stimmt, so wahr ich hier stehe."
+13,Schauspieler,ROMEO,,Ich muss sie noch ein letztes Mal sehen. Noch ein letztes Mal…
+13,Schauspieler,GLORIA,,Dieser Brief ist auch für euch. Er ist von Schwester Laurentia.
+13,Anweisung,,,GLORIA überreicht ROMEO den Umschlag und dieser blick ihn kurz wortlos an.
+13,Schauspieler,ROMEO,,(lässt den Umschlag fallen) Ich brauche jetzt keine frommen Trostsprüche. Ich werde gleich aufbrechen.
+13,Anweisung,,,ROMEO stürmt nach rechts raus.
+13,Schauspieler,GLORIA,,"(ruft ihm hinterher) Der Brief,... Schwester Laurentia meinte, er sei wichtig. (zuckt mit den Schultern)"
+13,Anweisung,,,GLORIA setzt sich vorne an den Bühnenrand und geht in den Freeze.
+14,Szenenbeginn,,,Szene 14
+14,Einspieler,,,Gruft
+14,Anweisung,,,"FRANCESCA und PARIS kommen mit einem schwarzen Laken von links und rechts und spannen es vor die Erhöhung. LAURENTIA kommt und stellt Kerzen auf und geht dann wieder ab. Daraufhin kommt LADY CAPULET in schwarzem Mantel von links auf die Bühne und dreht sich zu ihnen. FRANCESCA und PARIS lassen den schwarzen Stoff fallen und dahinter liegt JULIA. LADY CAPULET verneigt sich sanft und legt JULIA eine BLUME in die Hand. Dann gehen alle nach rechts ab. Von links kommt ROMEO. Er trägt einen schwarzen Kapuzenmantel, sieht sich um und zieht dann die Kapuze ab. Dann sieht er JULIA und geht zu ihr."
+14,Schauspieler,ROMEO,,"Julia… (er kniet sich zu ihr) Nein,... nein, das darf nicht wahr sein.(er nimmt ihre Hand) Ich hätte bei dir bleiben müssen. Egal, welche Konsequenzen ich hätte fürchten müssen. Ich hätte dich beschützen müssen,... ich halt dich fest und lass dich frei. Weißt du noch? Das hast du gesagt. Es hat alles keinen Sinn mehr. Blieb mir in der Verbannung doch die Hoffnung, dich eines Tages wieder in die Arme schließen zu können,... doch jetzt ist sie dahin. Für immer. So bleibt mir nur eine Möglichkeit für immer mit dir zusammen zu sein. (nimmt Phiole von seinem Gürtel) So will ich dir folgen. In der Ewigkeit vereint. (trinkt aus der Phiole, hustet kurz) Leb Wohl du herzlose Welt."
+14,Anweisung,,,ROMEO sackt vor der Erhöhung zusammen. JULIA wacht kurz darauf langsam auf. Sie erblickt ROMEO.
+14,Schauspieler,JULIA,,"Romeo, du bist es du,... Romeo,... Romeo (kniet sich zu ihm) sag, dass das nicht wahr ist. Wieso hast du das getan? Meine Nachricht,... nein, das darf nicht,... es kann nicht,..."
+14,Anweisung,,,Das Licht wechselt zu GLORIA. Diese geht aus dem Freeze und steht auf. Sie liest den Brief vor.
+14,Schauspieler,GLORIA,,"Geliebter Romeo, mit brennendem Herzen schreibe ich dir diesen Brief, da ich endlich mit dir zusammen sein möchte. Schwester Laurentia und ich haben einen Plan: Ich täusche meinen Tod vor, sodass wir danach gemeinsam frei sein können. Die Schwester gibt mir dazu eine Tinktur, die mich in einen tiefen Schlaf versetzt. Ich warte in der Familiengruft, bis du mich holen kommst. Ich kann es kaum erwarten. Ich liebe dich, Julia."
+14,Anweisung,,,"GLORIA faltet den Brief zusammen, blick sich zu JULIA und ROMEO um und geht dann nach links ab. Das Licht wechselt wieder zu ROMEO und JULIA."
+14,Schauspieler,JULIA,,"Du liebeskranker Träumer… du hättest es wissen können,... du hättest es wissen müssen. Und jetzt soll ich ohne dich weiterleben? Mit der Lüge,... selbst ohne Schuld habe ich schon im Gefängnis gelebt und jetzt,... nein, ich will nicht. Ich wollte frei sein, selbst lieben, selbst bestimmen, und jetzt,... jetzt kann ich mir eine Welt ohne dich nicht mehr vorstellen. (nimmt Romeos Dolch) Wir sehen uns in der Ewigkeit. (rammt sich den Dolch in den Körper und sackt zusammen."
+14,Einspieler,,,Herzschlag Finale
+14,Anweisung,,,"Man hört wieder den Herzschlag. Das Licht blinkt im Takt leicht rot. Von links kommen LAURENTIA und PRINZESSIN, von rechts kommt GLORIA. Sie stellen sich an die Bühnenkante."
+14,Schauspieler,LAURENTIA,,"Verona, eine Stadt."
+14,Schauspieler,GLORIA,,Alt und ehrwürdig.
+14,Schauspieler,PRINZESSIN,,"Eine Stadt, in der zwei Familien in tiefer Fehde lagen."
+14,Schauspieler,LAURENTIA,,Sie hassten sich.
+14,Schauspieler,GLORIA,,Sie bekämpften sich.
+14,Anweisung,,,"JULIA und ROMEO stehen im Hintergrund auf, nehmen sich an die Hand und gehen in Slowmotion nach hinten in ein helles Gegenlicht ab."
+14,Schauspieler,PRINZESSIN,,"Und am Ende forderte ihre Gewalt das Leben zweier junger Menschen, die nichts anderes wollten, als sich zu lieben."
+14,Schauspieler,LAURENTIA,,Und erst viel zu spät erkannten sie…
+14,Schauspieler,GLORIA,,… was sie ihre Feindschaft über die ganzen Jahre gekostet hatte.
+14,Schauspieler,PRINZESSIN,,"Ihre Erkenntnis kam zu spät für Romeo und Julia und doch bleibt die Frage: Wie viele Leben müssen verloren gehen, bis die Menschheit erkennt, wozu Hass eigentlich führt?"
+14,Anweisung,,,Es wird dunkel. Der Herzschlag verstummt. ALLE gehen ab.
+14,Einspieler,,,Verbeugung
+14,Anweisung,,,ENDE

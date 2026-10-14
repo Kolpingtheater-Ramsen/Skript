@@ -562,12 +562,23 @@ def api_script(play_id):
         if not sheet_url:
             return jsonify({"error": "No sheet URL configured"}), 400
 
-        # Fetch CSV from Google Sheets
-        response = requests.get(_csv_export_url(sheet_url), timeout=30)
-        response.raise_for_status()
+        if sheet_url.startswith("/"):
+            local_source = re.fullmatch(r"/static/data/([A-Za-z0-9][A-Za-z0-9_.-]*\.csv)", sheet_url)
+            if not local_source:
+                return jsonify({"error": "Invalid local script source"}), 400
+            data_dir = os.path.realpath(os.path.join(app.static_folder, "data"))
+            csv_path = os.path.realpath(os.path.join(data_dir, local_source.group(1)))
+            if os.path.dirname(csv_path) != data_dir:
+                return jsonify({"error": "Invalid local script source"}), 400
+            with open(csv_path, "r", encoding="utf-8-sig", newline="") as source:
+                csv_content = source.read()
+        else:
+            # Fetch CSV from Google Sheets
+            response = requests.get(_csv_export_url(sheet_url), timeout=30)
+            response.raise_for_status()
+            csv_content = response.text
 
         # Parse CSV
-        csv_content = response.text
         reader = csv.DictReader(StringIO(csv_content))
         data = list(reader)
 

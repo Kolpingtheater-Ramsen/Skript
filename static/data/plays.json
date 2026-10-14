@@ -10,5 +10,9 @@
   "sommerstueck2026": {
     "name": "Sommerstück 2026 (Creepshow)",
     "sheet": "https://docs.google.com/spreadsheets/d/1lzFA0_S3MyYt_wKOVGI_5_h1QeCDSZ4byVAKfW1_ouM/edit?gid=382114612#gid=382114612"
+  },
+  "winterstueck2026": {
+    "name": "Winterstück 2026 (Romeo und Julia)",
+    "sheet": "/static/data/winterstueck2026.csv"
   }
 }
