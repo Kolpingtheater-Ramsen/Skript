@@ -7,17 +7,22 @@ import pytest
 import app as application
 
 
-def test_winter_script_route_reads_configured_csv(monkeypatch):
+@pytest.mark.parametrize("play_id", [
+    "sommerstueck2024",
+    "winterstueck2025",
+    "winterstueck2026",
+])
+def test_bundled_script_route_reads_configured_csv(monkeypatch, play_id):
     project_root = Path(application.__file__).resolve().parent
     monkeypatch.chdir(project_root)
     fetch = Mock(side_effect=AssertionError("Local scripts must not fetch a URL"))
     monkeypatch.setattr(application.requests, "get", fetch)
-    with (project_root / "static/data/winterstueck2026.csv").open(
+    with (project_root / f"static/data/{play_id}.csv").open(
         encoding="utf-8-sig", newline=""
     ) as source:
         expected = list(csv.DictReader(source))
 
-    response = application.app.test_client().get("/api/script/winterstueck2026")
+    response = application.app.test_client().get(f"/api/script/{play_id}")
 
     assert response.status_code == 200
     assert expected

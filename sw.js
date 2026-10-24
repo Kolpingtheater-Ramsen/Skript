@@ -1,5 +1,5 @@
 // Build version - replaced at build time
-const CACHE_VERSION = 'romeo-julia-20261014-v1';
+const CACHE_VERSION = 'nexus-schicksal-20261024-v1';
 const CACHE_NAME = `drehbuch-cache-${CACHE_VERSION}`;
 
 const ASSETS_TO_CACHE = [
@@ -41,6 +41,8 @@ const ASSETS_TO_CACHE = [
   '/static/js/cue-window.js',
   '/static/js/viewer-profile.js',
   '/static/data/plays.json',
+  '/static/data/sommerstueck2024.csv',
+  '/static/data/winterstueck2025.csv',
   '/static/data/winterstueck2026.csv',
   '/static/assets/logo.png',
   '/static/assets/theme-backgrounds/background-light.webp?v=theater-v2',

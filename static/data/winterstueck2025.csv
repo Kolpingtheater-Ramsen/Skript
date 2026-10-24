@@ -1,0 +1,331 @@
+Szene,Kategorie,Charakter,Mikrofon,Text/Anweisung
+0,Rolle,KLOTHO,1,Sophie
+0,Rolle,LACHESIS,2,Lina
+0,Rolle,ATROPOS,3,Nela
+0,Rolle,PAN,4,Niko
+0,Rolle,HADES,5,Raphael
+0,Rolle,EURYDIKE,6,Elena
+0,Rolle,NYX,7,Lena
+0,Rolle,MELINOE,8,Jule
+0,Rolle,PERSEPHONE,9,Vanessa
+0,Rolle,ATHENE,10,Lina K.
+0,Rolle,HERMES,11,Jakob
+0,Rolle,ORPHEUS,12,Theo
+1,Szenenbeginn,,,Szene 1
+1,Licht,,,C1
+1,Einspieler,,,Intro
+1,Licht,,,C2 sobald Hades zu sehen ist
+1,Anweisung,,,"Bodennebel steht auf der Bühne. Ein goldener Faden ist quer über die Bühne gespannt. KLOTHO, LACHESIS und ATROPOS kommen auf die Bühne und setzen sich. KLOTHO spinnt einen Faden, LACHESIS misst Fäden und ATROPOS schärft eine alte Schere. HADES steht mit PAN hinten im Nebel auf einer Erhebung. Das Licht scheint auf ihn."
+1,Schauspieler,HADES,,"Sieh an. Da sitzen sie. Spielen mit dem Schicksal der Sterblichen, als wären es Puppen."
+1,Schauspieler,PAN,,"Das mag vielleicht nur so aussehen, aber hinter allem steckt ein Plan: Der Faden wird zuerst gewebt, dann gemessen und schließlich geschnitten. Alles wird von ihnen geplant und vorherbestimmt."
+1,Licht,,,C3
+1,Schauspieler,HADES,,"Mag sein, dass es so scheint, dass sie nach einem Plan handeln, aber du kannst mir nicht erzählen, dass sie nicht auch einmal impulsiv sind. Einfach einen Lebensfaden schneiden, weil man den Drang danach verspürt. Diese Macht zu fühlen."
+1,Schauspieler,PAN,,"Hades, ich glaube ihr dürft nicht von euch auf andere schließen. Ihr seid der Herrscher des Totenreichs. Ich glaube nicht, dass ihr euch nach Macht sehnen müsst."
+1,Schauspieler,HADES,,"Ja, das triste Totenreich, das habe ich bekommen. Ich habe das schlechteste Los gezogen, wenn du mich fragst. Meine Brüder hat es da deutlich besser getroffen."
+1,Schauspieler,PAN,,"Euer Selbstmitleid in allen Ehren, aber ich denke, es hätte euch auch schlechter für euch kommen können."
+1,Schauspieler,HADES,,Wie? Ich könnte noch zur Hälfte Ziege sein oder was meinst du?
+1,Schauspieler,PAN,,"Euer Spott sorgt vielleicht für ein kurzes, erhebendes Gefühl, wird aber auch nicht von euren Minderwertigkeitskomplexen ablenken."
+1,Schauspieler,HADES,,"Pan, du kannst froh sein, dass ich deine Gesellschaft schätze. Hier unten ist ja sonst nichts los."
+1,Anweisung,,,HADES tritt herunter und geht zu den MOIREN. Der Fokus des Lichtes verschiebt sich. PAN folgt ihm.
+1,Schauspieler,KLOTHO,,"Ich spinne den Anfang, den Faden so leicht. Schenkt Leben und keins dem anderen gleicht."
+1,Schauspieler,LACHESIS,,"Ich messe die Länge, es gibt kein Entrinnen, das Schicksal kommt, für Sklaven und Herinnen."
+1,Schauspieler,ATROPOS,,"Ich schneide den Faden, nehme ihn behände und bestimme schließlich das unumkehrbare Ende."
+1,Schauspieler,HADES,,Seid gegrüßt. Ich habe ein Anliegen an euch.
+1,Schauspieler,ATROPOS,,"Was ist euer Begehr, Hades, Fürst des Totenreichs?"
+1,Schauspieler,HADES,,"Ihr schmeichelt mir. Sagt, ich habe mich gerade mit meinem Freund hier darüber unterhalten, ob ihr nicht das Verlangen nach Macht habt. Immerhin entscheidet ihr über das Schicksal jedes Sterblichen. Wie berauschend muss es sein, ein Leben mit einem Schnitt zu beenden?"
+1,Schauspieler,KLOTHO,,"Das ist nur unsere Aufgabe: Ich spinne den Faden,..."
+1,Schauspieler,LACHESIS,,… ich messe den Faden…
+1,Schauspieler,ATROPOS,,"… und ich schneide den Faden, wenn die Stunde reif ist."
+1,Schauspieler,HADES,,"Die Stunde sagt ihr? Aber wer bestimmt den Augenblick? Das seid doch ihr, als Herrinnen des Schicksals?"
+1,Schauspieler,PAN,,"Hades, versucht ihr diese Kinder mit euren verführerischen Worten auf einen Irrweg zu führen?"
+1,Schauspieler,HADES,,"Ich sage euch, ihr seid die wahren Götter! Alle sind Spielbälle für euch, ihr habt die Macht. Habt ihr niemals die Lust verspürt, sie auszukosten?"
+1,Schauspieler,LACHESIS,,Wir lassen uns nicht von Gefühlen leiten.
+1,Schauspieler,HADES,,"Aber ihr könntet. Wer sollte euch daran hindern? (deutet auf den goldenen Faden) Sagt, wem ist dieser Faden?"
+1,Schauspieler,KLOTHO,,Ich habe ihn für die Nymphe Eurydike gesponnen.
+1,Schauspieler,HADES,,Nie gehört.
+1,Schauspieler,PAN,,"Wenn ich unserem Totenfürst etwas auf die Sprünge helfen darf, sie ist die Geliebte des Dichters Orpheus und für ihre Schönheit bekannt."
+1,Schauspieler,HADES,,"Wenn das so ist, zeigt sie mir."
+1,Anweisung,,,Ein Tuch fällt und EURYDIKE steht auf der Bühne. Sie riecht an einer Blume.
+1,Schauspieler,HADES,,Wahrhaft eine Schönheit. Sie würde sich hier unten in dieser trostlosen Umgebung gut machen. Eine Blume inmitten der Schatten. (zu LACHESIS) Was meint ihr?
+1,Schauspieler,LACHESIS,,(misst den Faden) Der Faden ist noch lang.
+1,Schauspieler,HADES,,Wie lieblich würde ihre Stimme die Stille hier unten durchbrechen. Alles was uns trennt ist ein Schnitt.
+1,Schauspieler,ATROPOS,,"Ein Schnitt, sagt ihr…"
+1,Schauspieler,KLOTHO,,"Aber das wäre Willkür,..."
+1,Schauspieler,HADES,,"Das ist keine Willkür: Das ist Schicksal! Und ihr seid das Schicksal. Wer kann es also festlegen, außer ihr?"
+1,Anweisung,,,"ATROPOS, LACHESIS und KLOTHO schauen sich kurz und durchdringlich an. Dann hebt ATROPOS die Schere."
+1,Schauspieler,LACHESIS,,Dann werde ich es anders bemessen…
+1,Schauspieler,KLOTHO,,"Eurydike,... vergib uns,..."
+1,Schauspieler,ATROPOS,,Dann ist es entschieden.
+1,Anweisung,,,ATROPOS schneidet in einer großen Geste in der Luft.
+1,Einspieler,,,Donnerschlag
+1,Anweisung,,,"Der goldene Faden reißt mit einem lauten Donnerknall, es blitzt und EURYDIKE bricht zusammen. Die beiden Enden des Fadens bleiben auf der Bühne liegen."
+1,Schauspieler,PAN,,(zu HADES) Ihr habt es tatsächlich geschafft. Ihr habt das Schicksal überlistet.
+1,Schauspieler,HADES,,Eine meiner leichtesten Übungen. Nun komm mit. Wir müssen die Schönheit hier unten gebührend empfangen.
+1,Anweisung,,,"PAN und HADES gehen nach links ab. ATROPOS, LACHESIS und KLOTHO bleiben versteinert stehen und blicken bedrückt zu Boden. NYX kommt langsam von rechts."
+1,Schauspieler,NYX,,"Meine Töchter, was habe ich für ein lautes Donnern vernommen? Spielt ihr etwa mit dem Schicksal der Sterblichen?"
+1,Schauspieler,KLOTHO,,"Mutter, du siehst uns zu?"
+1,Schauspieler,LACHESIS,,"Wir messen nur, wie es uns aufgetragen ist."
+1,Schauspieler,ATROPOS,,"Und schneiden zu gegebener Zeit, wenn die Stunde ruft."
+1,Anweisung,,,NYX nimmt ein Ende des goldenen Fadens.
+1,Schauspieler,NYX,,Dies ist ein besonderer Faden. Das wisst ihr? Er strahlte vor Unschuld und doch habt ihr ihn geschnitten.
+1,Schauspieler,KLOTHO,,"Wir haben gesponnen,..."
+1,Schauspieler,LACHESIS,,"…gemessen,..."
+1,Schauspieler,ATROPOS,,"… und geschnitten, wie es unsere Aufgabe ist."
+1,Schauspieler,NYX,,Dieser Faden gehört der Nymphe Eurydike.
+1,Schauspieler,KLOTHO,,(kleinlaut) Das wissen wir Mutter.
+1,Schauspieler,LACHESIS,,Ihr war ein anderes Schicksal zugemessen.
+1,Schauspieler,ATROPOS,,Und doch haben wir es geändert.
+1,Schauspieler,NYX,,"Schicksal ist kein Glücksspiel. Es ist keine Münze, die man wirft. Schicksal ist keine Laune, die sich täglich ändert. Was ihr getan habt, war leichtsinnig!"
+1,Schauspieler,ATROPOS,,Aber hätte sie nicht früher oder später das Schicksal des Todes ereilt? Was macht es für einen Unterschied?
+1,Schauspieler,NYX,,"So eine Frage können auch nur diejenigen Stellen, die selbst vom Fluch der Sterblichkeit befreit sind. Jede Stunde, ja jede Minute bekommt einen unüberschätzbaren Wert. Jede Erfahrung ist viel wertvoller und ihr habt sie ihr genommen. Niemals wieder wird sie in die Arme ihres Geliebten Orpheus zurückkehren können. Stattdessen habt ihr mit eurem törichten Handeln die Unterwelt um eine unschuldige Seele bereichert. (deutet auf Eurydike) Ihr habt euch von Hades Zunge verführen lassen."
+1,Schauspieler,KLOTHO,,"Mutter, wir wollten nur einmal fühlen, wie es ist, wenn wir frei entscheiden können."
+1,Schauspieler,LACHESIS,,Doch da ist nur Leere in mir.
+1,Schauspieler,ATROPOS,,"Wir waren zu schnell,... zu gierig."
+1,Schauspieler,NYX,,"Dann müsst ihr jetzt lernen, was es bedeutet, dass die Schuld euer Herz schwer macht. Ihr habt nicht nur Eurydike um ihr Leben gebracht, nein, ihr habt die Vorbestimmung, das Schicksal selbst ins Wanken gebracht."
+1,Einspieler,,,I should have died long ago
+1,Anweisung,,,Das Licht geht aus. Danach gehen alle von der Bühne. Nur EURYDIKE bleibt liegen.
+2,Szenenbeginn,,,Szene 2
+2,Anweisung,,,Ein Scheinwerfer leuchtet auf EURYDIKE. Diese kommt langsam zu Bewusstsein und tastet nach der Blume.
+2,Schauspieler,EURYDIKE,,"Was,... was ist passiert? Wo bin ich? Warum schmerzt mein Fuß so?"
+2,Anweisung,,,PERSEPHONE kommt mit DIENERIN von links. EURYDIKE schreckt zusammen. PERSEPHONE hebt beschwichtigend die Hand. Die DIENERIN hat eine Schale und einen Schwamm dabei. Dann setzt sie sich zu EURYDIKE.
+2,Schauspieler,PERSEPHONE,,Du musst keine Angst haben Sterbliche. (untersucht EURYDIKE und wäscht sie grob mit dem Schwamm)
+2,Schauspieler,EURYDIKE,,"Sagt mir, wo bin ich?"
+2,Schauspieler,PERSEPHONE,,Was glaubst du?
+2,Schauspieler,EURYDIKE,,Bitte spielt nicht mit mir.
+2,Schauspieler,PERSEPHONE,,Im Reich der Toten.
+2,Schauspieler,EURYDIKE,,"Das kann nicht sein,... (windet sich aus Persephones Arm) wer seid ihr?"
+2,Schauspieler,PERSEPHONE,,"Ich bin Persephone, die Frau des Hades. Herrscher über dieses Schattenreich."
+2,Schauspieler,EURYDIKE,,"(steht auf) Nein, das kann nicht sein, das muss ein Irrtum sein."
+2,Schauspieler,PERSEPHONE,,(kühl) Dein Faden wurde geschnitten. Der Weg ist versperrt. Es ist vorbei.
+2,Anweisung,,,EURYDIKE sinkt zusammen und hält die Blume fest umklammert. HADES und PAN kommen von rechts. DIENERIN geht mit Schale und Schwamm nach rechts ab.
+2,Schauspieler,HADES,,"Ah, da ist sie und wie ich sehe, wurde sie schon in Empfang genommen."
+2,Anweisung,,,HADES tritt neben EURYDIKE.
+2,Schauspieler,HADES,,"Was klammert ihr euch so an diese Blüte? Ihr seid die wahre Blume, die diese düsteren Hallen erhellt. (Eurydike regt sich nicht, sodass Hades ihr die Hand hin hält) Was ist? Wollt ihr nicht aufstehen?"
+2,Schauspieler,EURYDIKE,,"Ihr habt mich geraubt. Ich fühle es,.... tief in mir. Das war nicht mein Schicksal, das war Gewalt."
+2,Schauspieler,HADES,,"Spielt das eine Rolle? Letztlich ist es doch nur von Bedeutung, dass du jetzt hier bist."
+2,Einspieler,,,Harfenspiel
+2,Schauspieler,HADES,,Was ist das?
+2,Schauspieler,PERSEPHONE,,"Das ist Orpheus. Hörst du denn nicht, wie er ein Klagelied spielt, über seinen Verlust."
+2,Schauspieler,EURYDIKE,,"Orpheus, er muss hier sein. Das fühle ich."
+2,Schauspieler,PERSEPHONE,,Mach dich nicht lächerlich. Du bist jetzt hier. Alleine. Es ist vorbei.
+2,Schauspieler,EURYDIKE,,"Nein,... er ist ganz nah."
+2,Anweisung,,,EURYDIKE steht auf und rennt nach links ab.
+2,Schauspieler,HADES,,"Sie wird noch früh genug erkennen, dass es keinen Sinn hat. Sie wird sich mit ihrem Schicksal abfinden. (blickt Persephone an) Was ist?"
+2,Schauspieler,PERSEPHONE,,"Ich sehe doch, wie du sie anschaust."
+2,Schauspieler,HADES,,"Aber Liebste, ich habe doch nur Augen für dich. Du bist meine Blüte hier unten, im Schattenreich."
+2,Anweisung,,,HADES hält PERSEPHONE den Arm hin. Diese hängt sich zögernd ein.
+2,Schauspieler,PERSEPHONE,,"Nunja, vielleicht,... vielleicht habe ich es mir nur eingebildet."
+2,Anweisung,,,BEIDE gehen nach links ab. PAN bleibt auf der Bühne und setzt sich.
+3,Szenenbeginn,,,Szene 3
+3,Anweisung,,,"KLOTHO, LACHESIS und ATROPOS kommen von links. PAN sieht sie."
+3,Schauspieler,PAN,,"Sieh an. Die stolzen Herrscherinnen des Schicksals. So kleinlaut und bedrückt. Wie Kinder, die beim Spielen etwas zerbrochen haben."
+3,Schauspieler,KLOTHO,,"Wir haben nicht gespielt,... wir sind der Versuchung erlegen."
+3,Schauspieler,LACHESIS,,"Wir wollten wissen, wie sich Macht anfühlt."
+3,Schauspieler,ATROPOS,,Und deshalb haben wir ein unschuldiges Schicksal falsch bemessen.
+3,Schauspieler,PAN,,"(lacht) Köstlich, wirklich köstlich,... tagtäglich bestimmt ihr über das Schicksal unzähliger Sterblicher und dieses eine beliebige Schicksal nimmt euch mit."
+3,Schauspieler,KLOTHO,,Das ist es.
+3,Schauspieler,LACHESIS,,Es war beliebig. Falsch bemessen.
+3,Schauspieler,ATROPOS,,Es war anders vorherbestimmt.
+3,Schauspieler,PAN,,Vorherbestimmt? Was heißt das schon?
+3,Schauspieler,KLOTHO,,"Wir haben gemerkt, dass etwas nicht stimmte und doch haben wir es getan."
+3,Schauspieler,LACHESIS,,Hades hat uns getestet und wir haben ihm nachgegeben.
+3,Schauspieler,ATROPOS,,"Der Schnitt war zu schnell, zu unüberlegt, getrieben von der Versuchung."
+3,Schauspieler,PAN,,Es ist geschehen. Der Faden ist geschnitten und die Blume welkt.
+3,Anweisung,,,HERMES kommt von links.
+3,Schauspieler,HERMES,,Da seid ihr. Ich bringe Kunde aus der Oberwelt.
+3,Schauspieler,PAN,,"Hermes,... unser göttlicher Bote. Sagt, was ihr uns berichten könnt."
+3,Schauspieler,HERMES,,"Orpheus trauert über den Tod seiner geliebten Eurydike so sehr, dass er den Weg in die Unterwelt angetreten hat."
+3,Schauspieler,LACHESIS,,Aber das darf nicht sein. Sein Schicksal war anders bemessen.
+3,Schauspieler,PAN,,Mit eurer törichten Tat habt ihr nicht nur das Schicksal von Eurydike verändert.
+3,Schauspieler,HERMES,,"Orpheus ist bereits am Ufer des Styx. Wenn er den Fährmann überzeugen kann, so steht er bald vor den Toren des Schattenreichs."
+3,Schauspieler,KLOTHO,,Noch nie ist ein Sterblicher in das Reich des Todes eingedrungen und hat es lebend wieder verlassen.
+3,Schauspieler,ATROPOS,,So wird auch sein Faden bald enden. Was haben wir nur getan?
+3,Schauspieler,PAN,,"Ein junges Liebesglück ins Unheil gestürzt, das habt ihr getan."
+3,Schauspieler,HERMES,,"Dennoch ist es nicht wahrscheinlich, dass Orpheus es schafft in die Unterwelt einzudringen."
+3,Schauspieler,PAN,,Seid euch da mal nicht so sicher. Die Kunst öffnet einem alle Türen. Ich spreche da aus Erfahrung.
+3,Schauspieler,HERMES,,Wenn ihr das sagt. Wir werden es sehr bald wissen.
+3,Schauspieler,ATROPOS,,Sein Ende soll noch nicht gekommen sein. Das spüre ich.
+3,Schauspieler,PAN,,"Naja, das Schicksal ist unberechenbar, wie ihr erst kürzlich bewiesen habt. Warum also nicht auch neues Leben schenken?"
+3,Schauspieler,LACHESIS,,"Nein, das geht nicht."
+3,Schauspieler,ATROPOS,,"Was geschnitten wurde, wurde geschnitten."
+3,Schauspieler,HERMES,,"(legt Hand auf KLOTHO Schulter) Ich sehe euren Zweifel. Es ist ein Anfang von Einsicht. Wenn Orpheus es wirklich schaffen sollte, in die Tiefen des Hades vorzudringen, ist es an euch zu entscheiden: Werdet ihr bei eurer Wahl bleiben oder sie widerrufen? Es liegt bei euch."
+3,Anweisung,,,Es wird dunkel. PAN und HERMES gehen in der Dunkelheit ab.
+4,Szenenbeginn,,,Szene 4
+4,Anweisung,,,"KLOTHO sitzt am Bühnenrand, LACHESIS liegt auf einer Erhöhung und ATROPOS geht nervös auf und ab."
+4,Schauspieler,ATROPOS,,Was wir getan haben war nicht richtig. Das stimmt. Aber dennoch können wir es nicht rückgängig machen.
+4,Schauspieler,KLOTHO,,"Aber warum nicht? Wir wissen doch, dass es falsch war. Lass mich den Faden reparieren."
+4,Schauspieler,ATROPOS,,"Damit öffnen wir doch der Willkür noch weiter die Tür. Wir würden eine Entscheidung, die wir von Emotionen getrieben begangen haben, durch eine weitere von Gefühlen getriebene Entscheidung vermeintlich beheben. Doch Feuer bekämpft man nicht mit Feuer."
+4,Schauspieler,LACHESIS,,"Wisst ihr, was mir Angst macht? Ich empfinde auf einmal Mitgefühl für diese Sterbliche."
+4,Schauspieler,ATROPOS,,"Ja, weil wir aus der Emotion heraus gehandelt haben. Wir wollten die Macht spüren, die Hades uns angepriesen hat."
+4,Schauspieler,LACHESIS,,"Ich wusste nicht, dass wir etwas empfinden können. Stets haben wir nur stoisch unsere Pflicht getan. Die Versuchung war zu groß."
+4,Schauspieler,KLOTHO,,"Ich verstehe, was du sagst. Seit dem Schnitt ist alles anders. Ich kann nicht mehr klar denken. Ich fühle Schuld,... und große Trauer."
+4,Anweisung,,,ATHENE tritt miit NYX von rechts auf.
+4,Schauspieler,NYX,,(zu Athene) Hier sind sie.
+4,Schauspieler,ATHENE,,Ich habe von eurer Tat gehört. Von eurem unbedachten Handeln.
+4,Schauspieler,NYX,,"Das ist Athene. Vielleicht kann sie euch die Weisheit geben, wie ihr mit eurem Handeln umgehen könnt."
+4,Schauspieler,LACHESIS,,"Sag uns, wie wir handeln können. Sollen wir unsere Tat rückgängig machen oder machen wir dann alles nur noch schlimmer?"
+4,Schauspieler,ATHENE,,"Eure Tat berührt nicht nur ein Leben, sondern hat das Gefüge des Schicksals ins Wanken gebracht. Rückgängigmachen ist nicht weise. Ihr solltet aus eurem Fehler lernen, sodass so etwas nie wieder geschieht."
+4,Schauspieler,ATROPOS,,Aber diese Einsicht hilft Eurydike nicht. Sie liegt nun tot im Schattenreich.
+4,Schauspieler,ATHENE,,"Ihr könnt die Vergangenheit nicht ändern. Was geschehen ist, ist geschehen. Aber lasst euch von eurer Schuld nicht lähmen. Die Zukunft könnt ihr noch gestalten."
+4,Schauspieler,KLOTHO,,"Heißt das, dass wir ihren Faden wieder aufnehmen können?"
+4,Schauspieler,ATROPOS,,"Aber das bedeutet doch, dass wir uns wieder von Gefühlen leiten lassen."
+4,Schauspieler,ATHENE,,Ihr seid die Hüterinnen des Schicksals und nicht seine Sklavinnen. Ihr habt eine Verantwortung und für diese Verantwortung müsst ihr einen klaren Verstand haben. Ihr dürft euch nicht von der Versuchung leiten lassen.
+4,Schauspieler,LACHESIS,,"Wir haben aus Überheblichkeit geschnitten und nicht aus Verantwortung,..."
+4,Schauspieler,NYX,,"Ich merke, ihr spürt euer Herz. Es ist schwer. Auch auf das dürft ihr hören. Nur mit dem Maßband könnt ihr niemals den Wert des Lebens verstehen. Das gelingt nur mit dem Herzen."
+4,Schauspieler,LACHESIS,,"Das heißt, wenn wir unseren Fehler erkennen, dann können wir ihn nicht rückgängig machen, aber die Verantwortung dafür übernehmen."
+4,Schauspieler,ATHENE,,So ist es. Wahre Weisheit erwächst aus dem Erkennen der Fehler.
+4,Schauspieler,LACHESIS,,"(nickt KLOTHO und ATROPOS zu) Ich glaube, dann wissen wir, was zu tun ist."
+4,Anweisung,,,"LACHESIS, KLOTHO und ATROPOS gehen nach hinten ab."
+4,Schauspieler,NYX,,Habe Dank für deinen Ratschlag.
+4,Schauspieler,ATHENE,,"Es war notwendig. Wenn das Schicksal ins Wanken gerät, worauf können wir uns noch verlassen."
+4,Anweisung,,,ATHENE und NYX gehen nach rechts ab.
+5,Szenenbeginn,,,Szene 5
+5,Anweisung,,,PAN und HERMES kommen von hinten.
+5,Schauspieler,HERMES,,Ich hasse den Weg ins Schattenreich. Er ist immer sehr lang und beschwerlich.
+5,Schauspieler,PAN,,Ihr hättet als göttlicher Bote besser eure Berufsbeschreibung lesen sollen.
+5,Schauspieler,HERMES,,"Egal was passiert, ihr habt immer einen Witz auf den Lippen. Eure zuversicht hätte ich gerne."
+5,Schauspieler,PAN,,"Das ist keine Zuversicht, aber mit Humor lässt sich vieles leichter ertragen. Gerade in so einer trostlosen Umgebung."
+5,Schauspieler,HERMES,,Warum seid ihr dann hier unten?
+5,Schauspieler,PAN,,"In dieser Einsamkeit kommen einem die besten Ideen für neue Lieder und Gedichte. Außerdem liebe ich es, Hades den Spiegel vorzuhalten."
+5,Anweisung,,,HADES kommt von links. PERSEPHONE folgt ihm.
+5,Schauspieler,HADES,,Von ihr ist weit und breit keine Spur. Sie entzieht sich mir.
+5,Schauspieler,PERSEPHONE,,"Aber Liebster,lass sie doch. Nach und nach wird ihr die Einsamkeit den Verstand rauben, dann ist sie nur noch ein Schatten ihrer selbst."
+5,Schauspieler,HADES,,"Schade drum. So verwelkt ihre Blüte,... wie schade um diese trostlose Unterwelt."
+5,Anweisung,,,PERSEPHONE sieht ihn böse an.
+5,Schauspieler,HADES,,"Ich meine natürlich, außer dir, meine Geliebte, gab es nur noch Eurydike, die etwas Ästhetik ins Schattenreich gebracht hat."
+5,Schauspieler,PERSEPHONE,,Das will ich meinen.
+5,Schauspieler,HADES,,"Wie dem auch sei, vielleicht läuft sie uns noch über den Weg."
+5,Anweisung,,,HADES geht nach rechts ab.
+5,Schauspieler,PERSEPHONE,,"Melinoe, komm heraus."
+5,Anweisung,,,MELINOE tritt von links auf die Bühne.
+5,Schauspieler,MELINOE,,"Ja, Mutter?"
+5,Schauspieler,PERSEPHONE,,"Du hast uns belauscht, habe ich recht?"
+5,Schauspieler,MELINOE,,"Ich muss doch wissen, was euch bedrückt, Mutter."
+5,Schauspieler,PERSEPHONE,,Mich bedrückt gar nichts.
+5,Schauspieler,MELINOE,,"Seid ihr sicher? Es scheint ganz, als würde euch die Anwesenheit dieser Eurydike missfallen."
+5,Schauspieler,PERSEPHONE,,Das geht dich nichts an.
+5,Schauspieler,MELINOE,,"Mir liegt euer Wohlbefinden sehr am Herzen, Mutter. Wenn ihr es wünscht, werde ich diese Eurydike finden, bevor Hades sie erreicht."
+5,Schauspieler,PERSEPHONE,,"Und du glaubst, dass dir das gelingt?"
+5,Schauspieler,MELINOE,,Selbstverständlich. Ich werde es euch beweisen.
+5,Schauspieler,PERSEPHONE,,"Nun denn, dann geh und streue Dunkelheit in ihr Herz, sodass sie hier unten in ihrer Verzweiflung vergeht."
+5,Schauspieler,MELINOE,,Mit dem größten Vergnügen.
+5,Anweisung,,,MELINOE geht nach rechts ab. PAN und HERMES treten aus dem Hintergrund heraus.
+5,Schauspieler,PAN,,"Sieh an, die stolze Persephone ist verletzt von der Schönheit einer Sterblichen."
+5,Schauspieler,PERSEPHONE,,Spottet nur. Nicht mehr lange und Eurydike wird in ihrem Leid ersticken. Dann hat Hades wieder nur Augen für mich.
+5,Schauspieler,HERMES,,"Habt ihr kein schlechtes Gewissen ihr gegenüber. Erst stirbt sie aus Willkür und nun quält ihr sie im Jenseits. Was hat sie getan, das dieses Unheil rechtfertigt? Die Welt ist nicht gerecht, doch sind im Ende nicht alle gleich?"
+5,Schauspieler,PERSEPHONE,,"So ist es, doch sie ist nicht gleich. Sie ist so schön, dass mein Gemahl sie begehrt und keine Augen mehr für mich hat."
+5,Schauspieler,PAN,,"Eine Göttin mit gekränktem Ego. Da darfst du nicht auf Gerechtigkeit hoffen, Hermes."
+5,Schauspieler,PERSEPHONE,,Verschont mich mit eurer Moral. Ich werde nun meinen Gemahl aufsuchen.
+5,Anweisung,,,PERSEPHONE geht nach links ab.
+5,Schauspieler,HERMES,,Lasst uns diese Eurydike suchen.
+5,Schauspieler,PAN,,"Gerne, diese ganze Situation verspricht echtes “Drama”."
+5,Anweisung,,,HERMES und PAN gehen nach rechts ab.
+6,Szenenbeginn,,,Szene 6
+6,Einspieler,,,I should have died long ago
+6,Anweisung,,,"Die Schicksalsfäden fallen von der Decke. EURYDIKE irrt über die Bühne und verheddert sich immer wieder in den Fäden, die sie wie gefangen halten."
+6,Schauspieler,EURYDIKE,,"(Panik & Verzweiflung) Ich muss hier weg, aber die Fäden des Schicksals halten mich hier fest. Gefangen, gefesselt im Reich des Todes. Gebunden, verdammt hier auf die Rettung zu warten. (Hoffnung) Mein Herz schlägt hoffnungsvoll, wenn ich nur an ihn denke: Orpheus, er ist auf dem Weg zu mir. Er wird mich retten. Ich spüre seine Nähe. Unser letzter gemeinsamer Morgen: Die Erinnerung gibt mir Kraft und sein Lied, dieses eine Lied, das meine geschundene Seele streichelt. (Zweifel) Was ist nur, wenn ich meine Liebe nie wieder sehen werde? (Hoffnung) Nein, Eurydike, so darfst du nicht denken. Bewahr dir den letzten Funken Hoffnung, sonst veerlierst du dich selbst. Ich darf nicht vergessen, wie es sich anfühlt, fröhlich zu sein. Ich darf nicht in der Dunkelheit versinken."
+6,Anweisung,,,EURYDIKE kämpft mit den Fäden und stolpert schließlich auf die Knie. MELINOE kommt von rechts.
+6,Schauspieler,MELINOE,,Sieh an. Die schöne Eurydike. Gefangen in ihrem Schicksal.
+6,Schauspieler,EURYDIKE,,Wer ist da?
+6,Schauspieler,MELINOE,,"Ich bin gekommen, um dich mit der Realität zu konfrontieren. Um dir deine Illusion von der heilen Welt zu nehmen."
+6,Schauspieler,EURYDIKE,,Verschwindet! Warum wollt ihr Geister mich so quälen? Was habe ich euch getan.
+6,Schauspieler,MELINOE,,Ich bin nur der Spiegel deiner Angst. Ich projiziere dir nur deine eigenen Gedanken.
+6,Schauspieler,EURYDIKE,,Das stimmt nicht. Ich glaube fest an meine Rettung.
+6,Schauspieler,MELINOE,,"Oh nein, du zweifelst. Er wird nicht kommen, hörst du. Ein Sterblicher hat noch nie die Unterwelt lebend verlassen."
+6,Schauspieler,EURYDIKE,,"Aber Orpheus ist nicht wie alle anderen. Er ist stark, gewappnet mit seiner Kunst, sie gibt mir Hoffnung."
+6,Schauspieler,MELINOE,,"Aber deine Seele ist schon schwach. All diese Schicksale, die du hier siehst, wurden bereits geschnitten. Du gehörst jetzt auch dazu. Sie rufen und zerren nach dir."
+6,Schauspieler,EURYDIKE,,"Nein, sie werden mich nicht brechen. Ich werde mich an Orpheus erinnern. Ich werde mich erinnern,..."
+6,Schauspieler,MELINOE,,Mit jeder Minute schwindet deine Hoffnung. Wem machst du hier etwas vor? Dir bleiben nur Erinnerungen und diese welken genauso wie deine Blume.
+6,Schauspieler,EURYDIKE,,"Nein,... ich darf nicht,.... vergessen."
+6,Schauspieler,MELINOE,,Es ist aus kleine Nymphe. Dein Schicksal ist besiegelt.
+6,Anweisung,,,EURYDIKE bleibt liegen und MELINOE geht siegesgewiss nach rechts ab.
+7,Szenenbeginn,,,Szene 7
+7,Anweisung,,,"KLOTHO, LACHESIS und ATROPOS kommen von hinten."
+7,Schauspieler,LACHESIS,,"Seht, da liegt sie."
+7,Schauspieler,KLOTHO,,Hoffentlich ist es nicht zu spät.
+7,Anweisung,,,"KLOTHO, LACHESIS und ATROPOS knien sich um EURYDIKE."
+7,Schauspieler,ATROPOS,,Sie hat sich in den Fäden verheddert. Ihr Schicksal erdrückt sie.
+7,Schauspieler,KLOTHO,,"Wir dürfen das nicht zulassen. So wie es passiert, ist es falsch!"
+7,Schauspieler,ATROPOS,,"Wir sollen also wieder eingreifen? Unser falscher Schnitt hat sie hierher gebracht, ja, aber wenn wir es wieder rückgängig machen,... dann öffnen wir eine Tür, die wir nie wieder schließen können,..."
+7,Schauspieler,LACHESIS,,"Erinnerst du dich nicht an Athenes Rat? Wir sind die Hüterinnen des Schicksals und nicht seine Sklavinnen. Es ist uns nicht verboten, auf unser Herz zu hören."
+7,Anweisung,,,PAN und HERMES kommen von rechts.
+7,Schauspieler,PAN,,Ihr seid hier? Trauert ihr immer noch über euren Schnitt?
+7,Schauspieler,KLOTHO,,Lasst uns und verschwindet.
+7,Schauspieler,HERMES,,"Wir haben aber Neuigkeiten für euch, die euch vielleicht helfen könnten. Ihr werdet es nicht glauben, aber Orpheus hat es tatsächlich geschafft und hat den Styx überquert. Er ist nun in der Unterwelt angekommen. Er wird bald hier sein."
+7,Schauspieler,PAN,,"Absurd, dass ein Sterblicher es geschafft hat, aber auch gleichzeitig beeindruckend, was die Macht der Liebe und der Kunst alles schaffen kann."
+7,Schauspieler,LACHESIS,,"Das ist es: Er wird Eurydike retten. Nicht wir, denn es ist sein…"
+7,Schauspieler,"KLOTHO, ATROPOS, LACHESIS",,(gleichzeitig)... Schicksal.
+7,Schauspieler,ATROPOS,,"Wenn er es tatsächlich schafft, dann ist es vorherbestimmt. So müssen wir auch nicht unseren Schnitt rückgängig machen."
+7,Schauspieler,KLOTHO,,"(hört Eurydikes Herzschlag) Aber sie ist schwach. Wir müssen dafür sorgen, dass sie nicht zum Schatten geworden ist, bis ihr Geliebter hier ist."
+7,Schauspieler,LACHESIS,,Wir müssen ihren Verstand klar halten. Unser aller Identität ist die Erinnerung. Sie muss sie sich bewahren.
+7,Schauspieler,KLOTHO,,Wir müssen sie in ihren Faden einweben. So bleiben die Erinnerungen ein Teil von ihr.
+7,Einspieler,,,I should have died long ago
+7,Schauspieler,ATROPOS,,Dann lasst uns keine Zeit verlieren. Sie hält es nicht mehr lange aus.
+7,Schauspieler,HERMES,,"Viel Erfolg bei eurem Vorhaben, Hüterinnen!"
+7,Anweisung,,,"PAN und HERMES gehen nach rechts ab. ATROPOS macht eine ausladende Geste, daraufhin donnert und blitzt es und die Fäden fallen von der Decke. KLOTHO, LACHESIS und ATROPOS binden EURYDIKE von den Fäden los. Dann tragen sie sie nach hinten und hängen sie in ihren goldenen Faden. Diesen hält sie mit ausgebreiteten Armen fest und schwebt an ihm in der Luft. KLOTHO, LACHESIS und ATROPOS bleiben davor stehen, halten kurz inne und gehen dann nach links ab."
+8,Szenenbeginn,,,Szene 8
+8,Anweisung,,,EURYDIKE hängt am Faden. ATHENE und NYX kommen von rechts.
+8,Schauspieler,ATHENE,,Sie haben wahrhaftig weise gehandelt.
+8,Schauspieler,NYX,,"Sie haben aus ihrem Fehler gelernt. Hoffen wir, dass sie ihre Erkenntnis in der Zukunft nutzen."
+8,Schauspieler,ATHENE,,"Vorerst bleibt abzuwarten, was aus Eurydikes Schicksal wird."
+8,Einspieler,,,The Song of Orpheus
+8,Schauspieler,NYX,,"Hörst du das? Ihr Geliebter, er ist fast da."
+8,Schauspieler,ATHENE,,"Lass uns zurückhalten. Wir haben nicht in der Hand, wie es weitergeht. Ab jetzt ist es wieder Schicksal."
+8,Anweisung,,,ATHENE und NYX gehen nach rechts ab.
+8,Schauspieler,EURYDIKE,,"(wacht langsam auf) Orpheus,... sein Lied…"
+8,Anweisung,,,"KLOTHO, LACHESIS und ATROPOS kommen von hinten."
+8,Schauspieler,KLOTHO,,"Bleib ruhig, kleine Nymphe. Er wird gleich hier sein."
+8,Schauspieler,LACHESIS,,Dann ist dein Leid vorbei.
+8,Schauspieler,EURYDIKE,,"Wer,... wer seid ihr?"
+8,Schauspieler,LACHESIS,,Wir sind die Hüterinnen des Schicksals.
+8,Schauspieler,EURYDIKE,,"Sagt, habt ihr mich hierher gebracht?"
+8,Schauspieler,ATROPOS,,"Ja, aber wir wachen auch darüber, dass du hier unten nicht vergehst."
+8,Schauspieler,LACHESIS,,Dein Geliebter ist nah. Seine Liebe hat ihm die Tore zum Totenreich geöffnet.
+8,Anweisung,,,"EURYDIKE wird abgesetzt. Sie geht auf wackeligen Beinen ein paar Schritte nach vorne. Die Bühne wird von Schritt zu Schritt immer heller, das Lautenspiel wird lauter. Schließlich bleibt EURYDIKE im Faden hängen."
+8,Schauspieler,EURYDIKE,,Da ist er!
+8,Schauspieler,ATROPOS,,Noch nie hat ein Sterblicher so etwas vollbracht.
+8,Anweisung,,,Die Bühne verdunkelt sich schlagartig wieder und der Lautenklang verstummt. EURYDIKE sackt zusammen. HADES stürmt von hinten auf die Bühne. Ihm folgt ORPHEUS. Von rechts kommen MELINOE und PERSEPHONE.
+8,Schauspieler,HADES,,"Was erdreistest du dich? Kommst hier in mein Reich und stellst Forderungen. Ich sollte dich für immer dazu verdammen, hierzubleiben."
+8,Schauspieler,ORPHEUS,,"Nur zu, so lange ich bei Eurydike bleiben kann."
+8,Schauspieler,HADES,,"Liebeskranker Narr. Wie ihr wünscht, dann sollt ihr hier gemeinsam vergehen."
+8,Schauspieler,KLOTHO,,Aber das könnt ihr nicht machen.
+8,Schauspieler,HADES,,Und warum?
+8,Schauspieler,LACHESIS,,Wir haben seinen Faden bemessen. Er wird es wieder aus der Unterwelt schaffen.
+8,Schauspieler,HADES,,"Wie ihr meint, aber sie bleibt hier! (deutet auf Eurydike)"
+8,Schauspieler,ORPHEUS,,"(stürzt zur schwachen Eurydike) Meine Geliebte, was habt ihr nur mit ihr gemacht?"
+8,Schauspieler,HADES,,"Seltsam, warum ist sie so schwach?"
+8,Schauspieler,MELINOE,,"Sagen wir, ich hatte meine Freude dabei, sie zur Verzweiflung zu treiben."
+8,Schauspieler,HADES,,"Scheint ganz, als sei ihre Blüte verwelkt."
+8,Schauspieler,KLOTHO,,Lasst sie doch mit Orpheus gehen.
+8,Schauspieler,LACHESIS,,Belohnt ihn für seinen Mut und seine Opferbereitschaft.
+8,Schauspieler,HADES,,Warum sollte ich das machen?
+8,Schauspieler,PERSEPHONE,,"Es scheint mir, als läge dir doch etwas an ihr."
+8,Schauspieler,HADES,,"Aber nicht doch,... mir ist das aber zu,... einfach."
+8,Schauspieler,MELINOE,,Es braucht einen Kniff. Eine Prüfung.
+8,Schauspieler,HADES,,"So ist es: Sie darf ihn in etwas Entfernung begleiten. Allerdings darf er sie nicht sehen, bis er wieder in der Oberwelt angekommen ist. Sollte er sich davor aus Sehnsucht oder gar aus Zweifel zu ihr umdrehen, so soll sie für immer in mein Reich verdammt sein. Wenn sein Blick zu ihr zurückfällt, ist es vorbei für sie."
+8,Schauspieler,ATROPOS,,So sei es. Das ist dann ihr Schicksal.
+8,Anweisung,,,"KLOTHO, LACHESIS und ATROPOS befreien EURYDIKE aus dem Lebensfaden und helfen ihr auf."
+8,Einspieler,,,Gang aus der Unterwelt
+8,Schauspieler,ORPHEUS,,"(zeitgleich steht er von Eurydike auf und geht nach hinten) Habt Dank für eure Gnade, Fürst der Unterwelt."
+8,Schauspieler,HADES,,Dankt mir nicht zu früh. Noch seid ihr nicht zurück an der Oberfläche.
+8,Schauspieler,MELINOE,,"(zu Persephone) Glaubst du, sie werden es schaffen."
+8,Schauspieler,PERSEPHONE,,"Sie ist zwar schwach, doch ihre Liebe scheint stark."
+8,Schauspieler,HADES,,Wir werden sie bald wieder sehen. Da bin ich mir sicher.
+8,Anweisung,,,"HADES, PERSEPHONE und MELINOE gehen nach rechts ab. EURYDIKE dreht sich daraufhin nach hinten um. Auf dem Podest steht Orpheus mit dem Rücken zu ihr."
+8,Schauspieler,KLOTHO,,Leb wohl Eurydike.
+8,Schauspieler,EURYDIKE,,"Mein Geliebter, ich komme mit dir."
+8,Anweisung,,,"KLOTHO, ATROPOS und LACHESIS blicken EURYDIKE nach. Es donnert als ORPHEUS sich umdreht. EURYDIKE sinkt auf der Bühne zusammen. ORPHEUS verschwindet. Die Bühne wird dunkel. EURYDIKE geht im Dunkeln ab."
+9,Szenenbeginn,,,Szene 9
+9,Anweisung,,,Das Licht geht an und KLOTHO kniet in der Mitte und LACHESIS und ATROPOS stehen links und rechts von ihr auf der Bühne und halten jeweils ein Ende des goldenen Fadens in der Hand. Ihr Blick ist nach vorne gerichtet.
+9,Schauspieler,KLOTHO,,Der Faden ist nun endgültig geschnitten. Orpheus Zweifel waren zu stark.
+9,Schauspieler,ATROPOS,,"Seine Liebe zu ihr mag den Tod fast besiegt haben, doch der Zweifel hat gezeigt, dass er eben doch nur ein normaler Sterblicher war."
+9,Schauspieler,LACHESIS,,"Das mag sein, aber es scheint mir, als bliebe uns doch noch etwas."
+9,Schauspieler,KLOTHO,,"Aber sie ist für immer weg. Wer weiß, was ohne unser Eingreifen geschehen wäre. Wahrscheinlich würde sie noch leben.Nur weil wir uns diese Freiheit genommen haben, unsere Macht auszunutzen."
+9,Schauspieler,LACHESIS,,"Aber das ist es doch: Ihr Schicksal bleibt in uns. Es hat uns gezeigt, dass wir auch in der scheinbar größten Freiheit doch immer noch Verantwortung für unsere Taten tragen."
+9,Schauspieler,ATROPOS,,"Eurydikes reine Seele hat dafür bezahlt, dass wir uns der Verantwortung unseres Handelns bewusst werden."
+9,Schauspieler,LACHESIS,,"Und, dass ich mit meinem Maßband niemals den Wert eines Menschenlebens erfassen kann."
+9,Schauspieler,ATROPOS,,Dieser Faden hier wird nicht mehr heilen. Aber er wird uns daran erinnern. An unsere Verantwortung.
+9,Anweisung,,,"KLOTHO, ATROPOS und LACHESIS bleiben im Freeze stehen. ATHENE und NYX kommen von hinten und bleiben auf der Erhöhung stehen."
+9,Schauspieler,ATHENE,,Da siehst du Nyx: Aus dem Fehler folgt eine Erkenntnis und aus der Erkenntnis erwächst Weisheit.
+9,Schauspieler,NYX,,"Und wer erkennt, dass aus dem Missbrauch von Freiheit Schuld erwächst, hat den ersten Schritt zur Weisheit getan."
+9,Anweisung,,,Die Bühne wird dunkel. Alle gehen ab. ENDE

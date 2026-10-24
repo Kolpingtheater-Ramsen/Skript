@@ -1,0 +1,1044 @@
+Szene,Kategorie,Charakter,Mikrofon,Text/Anweisung
+0,Rolle,BLADE,1,Louis
+0,Rolle,RAVEN,2,Lea
+0,Rolle,HUNTER,3,Anton
+0,Rolle,DANTE,4,Sebbi
+0,Rolle,VEGA,5,Nele
+0,Rolle,ARIA,6,Elena
+0,Rolle,NYRA,7,Theresa
+0,Rolle,ALESA,8,Carina
+0,Rolle,XION,9,Yunus
+0,Rolle,SERAPHINA,10,Maria
+0,Rolle,SERENITY,11,Magdalena
+0,Rolle,SYBELLA,12,Nora
+0,Rolle,KI,STANDMIKRO,Johannes
+0,Rolle,COLLIN,HANDMIKRO 1,Leon
+0,Rolle,DELYA,HANDMIKRO 2,Vanessa
+0,Rolle,RICHTER,13,Julian
+0,Rolle,RIPPER,14,Jonas
+0,Rolle,DARIA,10,Lina
+0,Rolle,FREYA,11,Nela
+0,Rolle,JAKKO,12,Niko
+0,Rolle,WACHE,13,Fernanda
+0,Rolle,BARKEEPER,,Tobi
+0,Rolle,KAMERAMANN,,Max H.
+0,Rolle,ENSEMBLE 1,,Max F.
+0,Rolle,ENSEMBLE 2,,Fynn
+0,Rolle,ENSEMBLE 3,,Leni
+0,Rolle,ENSEMBLE 4,,Theo
+1,Szenenbeginn,,,Szene 1
+1,Licht,,,30 Minuten vor Showbeginn: ATMOSPHÄRE abspielen/ Bildschirme an/ LICHT 1 MH 1
+1,Anweisung,,,Unmittelbar vor der Aufführung: Begrüßung mit Handmikrofon
+1,Anweisung,,,Beginn nach Rücksprache per Funk: SHOWBEGINN abspielen
+1,Licht,,,LICHT 2 MH 2
+1,Technik,,,Nebelschwaden stehen auf der Bühne.
+1,Anweisung,,,"Von hinten betreten ALESA (Caro), XION (Yunus) und Ripper die Bühne. Sie verteilen sich gleichmäßig am vorderen Bühnenrand."
+1,Schauspieler,ALESA,,Wir haben das Jahr 2086.
+1,Schauspieler,RIPPER,,"Die Erde, wie wir sie kennen, existiert nicht mehr."
+1,Schauspieler,XION,,Katastrophen und Klimaerwärmung haben dem Planeten ordentlich zugesetzt.
+1,Schauspieler,ALESA,,Inmitten der Ödnis haben sich Inseln der Zivilisation gebildet.
+1,Schauspieler,RIPPER,,In diesen geht es aber alles andere als zivilisiert zu.
+1,Schauspieler,XION,,"Geld regiert die Welt. Jetzt mehr, als je zuvor."
+1,Anweisung,,,"ALESA, XION und RIPPER gehen nach links und rechts ab. Von hinten kommen SERAPHINA (Maria), SERENITY (Magda) und SYBELLA (Nora). Sie verteilen sich gleichmäßig am Bühnenrand."
+1,Schauspieler,SERAPHINA,,Doch nicht nur Geld bedeutet Macht.
+1,Schauspieler,SERENITY,,Auch das Wissen um die modernste Technik ist viel wert.
+1,Schauspieler,SYBELLA,,In den Zivilisationsoasen mitten im Nirgendwo haben die Menschen sich weiterentwickelt.
+1,Schauspieler,SERAPHINA,,"So weiterentwickelt, dass sie mittlerweile versuchen ihre Körper mit Technik zu verbessern."
+1,Schauspieler,SERENITY,,"Nur wer die beste technische Ausstattung implantiert hat, ist für das harte Leben in den Straßen gewappnet."
+1,Schauspieler,SYBELLA,,"So streben die Menschen immer nach der neuesten und besten technischen Ausstattung, die sie dann auf legalem,..."
+1,Schauspieler,SERAPHINA,,…oder aber auf illegalem Wege erlangen.
+1,Anweisung,,,SERAPHINA; SERENITY und SYBELLA gehen nach links und rechts ab. HUNTER (Anton) kommt von rechts auf die Bühne gestürmt und umkreist hektisch einen Tisch. VEGA (Nele) kommt von hinten und bleibt erhöht stehen.
+1,Schauspieler,HUNTER,,"Wo bleiben diese Idioten? Wenn wir uns verspäten, klappt der ganze, verdammte Plan nicht mehr."
+1,Schauspieler,VEGA,,"Das ist Hunter. Er ist das Oberhaupt einer Gang, die in der Unterstadt verehrt, aber auch gefürchtet ist. Er hält die Gruppe zusammen und zieht die Aufträge an Land."
+1,Anweisung,,,DANTE (Sebastian) kommt verwirrt von rechts. Ihm folgt NYRA (Theresa).
+1,Schauspieler,DANTE,,"Entschuldige Hunter, aber die U-Bahn hatte Verspätung und dann bin ich auf dem Weg hierher noch beinahe in eine Schlägerei geraten. Da wollten mir so zwei Typen meine neueste Cyberware abnehmen. Aber denen habe ich es natürlich gezeigt."
+1,Anweisung,,,DANTE und HUNTER frieren ein.
+1,Schauspieler,NYRA,,Das ist Dante: Genie und Wahnsinn in einem. Er ist einer der besten Hacker der Unterstadt. Nur wenige können sich wie er in die technischen Implantate seiner Mitmenschen hacken.
+1,Anweisung,,,DANTE und HUNTER gehen aus dem Freeze.
+1,Schauspieler,DANTE,,Du siehst unglücklich aus. Schlecht geschlafen?
+1,Schauspieler,HUNTER,,Ihr Trottel könnt einfach nicht pünktlich sein. Aber dieses Mal hängt das Gelingen des Plans davon ab.
+1,Schauspieler,DANTE,,"Man, du bist echt mit dem falschen Fuß aufgestanden. (holt Schokoriegel hervor) Hier nimm ein Snickers. Immer wenn du hungrig bist, wirst du zur Diva."
+1,Anweisung,,,HUNTER nimmt den Schokoriegel und wirft ihn weg.
+1,Schauspieler,HUNTER,,Steck dir deinen Riegel sonstwohin.
+1,Schauspieler,DANTE,,Ich hab gehört Thai Chi soll gegen Aggressionsprobleme helfen. Finde deine innere Mitte.
+1,Schauspieler,HUNTER,,"Ach, halt einfach die Fresse. (winkt ab)"
+1,Anweisung,,,RAVEN (Lea) kommt von links. ARIA (Elena) folgt ihr.
+1,Schauspieler,RAVEN,,"So, können wir mit der Besprechung beginnen?"
+1,Schauspieler,HUNTER,,Raven: Fokussiert wie immer!
+1,Anweisung,,,"HUNTER, RAVEN und DANTE frieren ein."
+1,Schauspieler,ARIA,,"Raven ist nicht nur die Frau fürs Grobe, sondern auch scharfsinnig und clever. So hat sie sich und den Rest der Bande schon oft aus brenzligen Situationen gerettet."
+1,Anweisung,,,"HUNTER, RAVEN und DANTE lösen sich aus dem Freeze."
+1,Schauspieler,RAVEN,,"Also, was ist? Fangen wir an?"
+1,Schauspieler,HUNTER,,"Wir müssen noch auf Blade warten. Ich hoffe, er hat alles dabei. Ich drehe hier noch durch…"
+1,Anweisung,,,HUNTER wendet sich nach hinten ab.
+1,Schauspieler,DANTE,,"Na, heute Abend schon was vor?"
+1,Schauspieler,RAVEN,,Ich werde mir nach dem gelungenen Coup ordentlich einen hinter die Binde kippen.
+1,Schauspieler,DANTE,,"Also ich wollte damit eigentlich fragen, ob wir nicht möglicherweise… eventuell, wenn du magst…"
+1,Anweisung,,,BLADE (Louis) kommt von hinten auf die Bühne.
+1,Schauspieler,HUNTER,,Da bist du ja endlich.
+1,Schauspieler,BLADE,,"Wer was auf sich hält, lässt auf sich warten."
+1,Schauspieler,HUNTER,,Hast du wenigstens den Code dabei?
+1,Schauspieler,BLADE,,(zieht etwas triumphierend aus seinem Mantel) Klar doch.
+1,Anweisung,,,HUNTER reißt es BLADE aus der Hand.
+1,Schauspieler,HUNTER,,"Hervorragend, dann können wir endlich anfangen."
+1,Anweisung,,,"HUNTER, RAVEN, DANTE und BLADE versammeln sich um den Tisch. VEGA, NYRA und ARIA stellen sich hinten zusammen und beobachten das Geschehen."
+1,Schauspieler,HUNTER,,"Heute ist unser großer Tag. Nach meinen aktuellen Informationen hat die Forschungsabteilung von Digitech einen Durchbruch erzielt. Sie haben es geschafft, einen Chip zu entwickeln, der sich direkt mit dem Gehirn verbindet. Wie ein PC im eigenen Körper, versteht ihr. Im Gegensatz zu den Implantaten, die unsere körperlichen Fähigkeiten verbessern, ist das der Durchbruch. Jetzt können wir auch unsere geistige Leistung erhöhen. Das ist Wahnsinn!"
+1,Schauspieler,DANTE,,Aber sowas von. Das wäre eine digitale Revolution!
+1,Schauspieler,HUNTER,,"Und die Konkurrenz wird uns für einen Prototypen dieses Chips saftig entlohnen. Der Plan sieht Folgendes vor: Dante, du bekommst den Code, den Blade besorgt hat. So hackst du dich von außen in das Sicherheitssystem von Digitech. Raven und Blade werden dann in das Labor einbrechen und den Prototypen besorgen. Ich stehe Schmiere, falls irgendetwas schief laufen sollte. Soweit klar?"
+1,Schauspieler,RAVEN,,Absolut. Lasst uns losschlagen.
+1,Schauspieler,HUNTER,,Das wollte ich hören.
+1,Anweisung,,,"HUNTER, RAVEN, DANTE und BLADE gehen nach hinten ab. VEGA, NYRA und ARIA kommen nach vorne. VEGA stellt sich auf den Tisch."
+1,Schauspieler,VEGA,,"So beginnt der Abend, der die Geschichte der Menschheit verändern sollte. Technik, die uns stärker und schneller macht, kennt man schon. Aber ein Chip, der unmittelbar mit dem Gehirn verbunden ist, ist eine bahnbrechende Erfindung."
+1,Schauspieler,ARIA,,"Die vier machten sich auf, um den Prototypen von “Digitech” zu stehlen. Am Anfang schien alles gut zu laufen, doch wer sich seiner Sache zu sicher ist, wird unvorsichtig."
+1,Anweisung,,,"VEGA, NYRA und ARIA gehen nach links und nach rechts ab."
+1,Technik,,,Abbau Tisch
+2,Szenenbeginn,,,Szene 2
+2,Licht,,,LICHT 2 MH 3
+2,Anweisung,,,HUNTER kommt von links auf die Bühne. Er hat einen Knopf im Ohr.
+2,Schauspieler,HUNTER,,"Dante, hörst du mich?"
+2,Anweisung,,,DANTE kommt mit Laptop auf die Brücke.
+2,Schauspieler,DANTE,,Laut und deutlich.
+2,Schauspieler,HUNTER,,Bist du im System?
+2,Schauspieler,DANTE,,"Geb mir noch eine Sekunde,.... so jetzt sollten sie reinkommen. Kameras und Verriegelung sind offline."
+2,Schauspieler,HUNTER,,"Perfekt: Raven, Blade, die Luft ist rein."
+2,Technik,,,Das Labor öffnet sich. RAVEN und BLADE kommen von rechts und schleichen sich in das Labor.
+2,Schauspieler,RAVEN,,"Hier ist tatsächlich niemand. Hätte nicht gedacht, dass Digitech ihre Zentrale so unbewacht zurücklassen."
+2,Schauspieler,BLADE,,"Das ist tatsächlich verwunderlich. Aber wir sollten uns nicht darüber beschweren, dass sie es uns leicht machen."
+2,Schauspieler,RAVEN,,Siehst du den Chip?
+2,Schauspieler,BLADE,,Hier ist er! (hält Chip hoch)
+2,Anweisung,,,Ein Alarmton erklingt und ein rotes Licht beginnt zu blinken. Alarmton abspielen
+2,Licht,,,LICHT 4 MH 4
+2,Schauspieler,HUNTER,,"Dante, was ist das?"
+2,Schauspieler,DANTE,,"Ich weiß es nicht, der Alarm war deaktiviert. Da stimmt etwas nicht."
+2,Schauspieler,RAVEN,,"Hunter, was ist hier los?"
+2,Schauspieler,HUNTER,,"Wir sind dran, aber seht zu, dass ihr hier rauskommt."
+2,Anweisung,,,BLADE packt RAVEN am Arm.
+2,Schauspieler,BLADE,,"Raven, ich wollte dir schon immer einmal etwas sagen, auch wenn das jetzt vielleicht ein schlechter Zeitpunkt ist,..."
+2,Schauspieler,RAVEN,,"Ach, findest du?"
+2,Schauspieler,BLADE,,"…, aber ich habe dich eigentlich echt gern. (befestigt ihre Hand mit einer Handschelle an einem Rohr) Schade, dass ich dich zurücklassen muss."
+2,Schauspieler,RAVEN,,Was soll das?
+2,Schauspieler,BLADE,,Ich teile nicht gerne. Tut mir leid.
+2,Schauspieler,RAVEN,,Willst du mich verarschen? (zieht an der Fessel)
+2,Schauspieler,BLADE,,"Bedaure nein, aber ich muss jetzt wirklich los, bevor der Sicherheitsdienst eintrifft. Ich bin dann mal uns,... meine Belohnung abholen. Schönes Leben noch."
+2,Anweisung,,,BLADE rennt nach rechts ab.
+2,Licht,,,MH 3
+2,Schauspieler,RAVEN,,Du treuloses Schwein! Ich mach dich fertig!
+2,Schauspieler,HUNTER,,"Raven, was ist los bei euch?"
+2,Schauspieler,RAVEN,,"Blade hat uns verraten, ich komme hier nicht raus."
+2,Schauspieler,HUNTER,,"Verdammt, Dante, kannst du nichts machen?"
+2,Schauspieler,DANTE,,"Der Alarm wurde manuell von innen ausgelöst. Das muss Blade gemacht haben. Tut mir leid, da kann ich gerade nichts machen."
+2,Licht,,,LICHT 2 MH 3
+2,Anweisung,,,WACHEN kommen von rechts und nehmen RAVEN fest.
+2,Schauspieler,RAVEN,,Lasst mich los.
+2,Anweisung,,,WACHEN kommen von links und nehmen HUNTER fest.
+2,Schauspieler,HUNTER,,Was soll das? Ich bin unschuldig.
+2,Anweisung,,,WACHEN kommen auf die Brücke und nehmen DANTE fest.
+2,Schauspieler,DANTE,,"Ähm, es ist nicht das, wonach es aussieht. Ehrlich."
+2,Anweisung,,,ALLE werden von der Bühne abgeführt.
+3,Szenenbeginn,,,Szene 3 (ex. 4)
+3,Licht,,,LICHT 2
+3,Anweisung,,,"SERAPHINA, SERENITY und SYBELLA kommen von rechts."
+3,Schauspieler,SERAPHINA,,"Das ist der vereinbarte Treffpunkt, Schwestern. Gleich muss er da sein."
+3,Schauspieler,SERENITY,,"Da bin ich aber mal gespannt, ob er kommt."
+3,Schauspieler,SYBELLA,,"Genau, das Sicherheitssystem von Digitech kann man nicht einfach so austricksen. Sie haben eines der besten, der Stadt."
+3,Schauspieler,SERAPHINA,,"Vertraut mir, mein Plan wird funktionieren."
+3,Schauspieler,SERENITY,,"Es wäre nicht der erste, der schiefgeht…"
+3,Schauspieler,SERAPHINA,,Was soll das denn jetzt bitteschön heißen?
+3,Schauspieler,SYBELLA,,"Serenity hat recht. Die letzte Gruppe, die du angeheuert hast, wurde vom Sicherheitsapparat buchstäblich perforiert."
+3,Schauspieler,SERAPHINA,,Blade ist ein Profi und kein dahergelaufener Taschendieb. Er wird den Auftrag schon gemeistert haben.
+3,Schauspieler,SERENITY,,"Hoffen wir es mal,..."
+3,Anweisung,,,BLADE kommt von hinten und schnippt den Chip triumphierend in der Hand. Er lehnt sich an die Wand und belauscht das Gespräch.
+3,Schauspieler,SYBELLA,,Immerhin hat der Typ ein Vermögen gekostet.
+3,Schauspieler,SERENITY,,"Und er hat seine Bezahlung bereits im Voraus verlangt. Wenn er bei dem Job draufgegangen ist, sind die Credits futsch."
+3,Schauspieler,SERAPHINA,,"Beruhigt euch, er wird jede Sekunde hier aufschlagen."
+3,Schauspieler,BLADE,,(löst sich von der Wand) So ist es.
+3,Anweisung,,,"SERAPHINA, SERENITY und SYBELLA drehen sich um."
+3,Schauspieler,SERAPHINA,,Ich wusste es. Haben sie den Chip?
+3,Schauspieler,BLADE,,Was denken sie denn? Natürlich! Alles lief nach Plan.
+3,Schauspieler,SERAPHINA,,"Schwestern, ich habe es euch doch gleich gesagt, Blade ist ein Meister seines Fachs."
+3,Schauspieler,SYBELLA,,Tatsächlich nicht schlecht. Er ist noch in einem Stück.
+3,Schauspieler,SERAPHINA,,Für den Chip wird uns die Konkurrenz von Digitech ein Vermögen bieten.
+3,Schauspieler,SERENITY,,Dann sollten wir ausgesorgt haben.
+3,Schauspieler,BLADE,,"Meine Damen, erlauben sie mir einen Vorschlag zu machen: Wir werden den Chip mitsamt seiner Technologie nicht verkaufen."
+3,Schauspieler,SERAPHINA,,Wieso nicht?
+3,Schauspieler,SYBELLA,,"Jetzt stellt er sich quer, wäre ja auch sonst viel zu glatt gelaufen, dein Plan, Schwesterlein."
+3,Schauspieler,SERAPHINA,,Halt den Mund!
+3,Schauspieler,BLADE,,"Bitte meine Damen, es wäre doch viel besser, den Chip selbst zu nutzen."
+3,Schauspieler,SERENITY,,"Erzählt uns mehr, wie meinen sie das?"
+3,Schauspieler,BLADE,,"Nunja, sie, die “Chrome”- Schwestern, haben die nötigen Credits, um die Technologie selbst zu erforschen und massentauglich zu machen, und ich habe gute Kontakte zu Leuten, die die Entwicklung voranbringen können."
+3,Schauspieler,SYBELLA,,"Das heißt, sie wollen mit uns als Geldgeberinnen einen Konzern gründen?"
+3,Schauspieler,BLADE,,"Präzise. Ich sehe, wir verstehen uns. Den Chip einfach nur zu verscherbeln, würde dem ganzen nicht gerecht werden. Ich sehe großes Potential in unserer Zusammenarbeit."
+3,Schauspieler,SYBELLA,,"Schwestern, was meint ihr?"
+3,Schauspieler,SERAPHINA,,Kurze Besprechung.
+3,Anweisung,,,"SERAPHINA, SERENITY und SYBELLA stecken die Köpfe zusammen."
+3,Schauspieler,SERAPHINA,,Was sagt ihr zu dem Deal?
+3,Schauspieler,SYBELLA,,"Wenn diese Technologie wirklich so revolutionär ist, können wir damit wirklich viel Geld machen."
+3,Schauspieler,SERENITY,,"Und dieser Blade ist schon ein Schnuckelchen,..."
+3,Schauspieler,SERAPHINA,,"Okay, dann nehmen wir das Angebot an?"
+3,Schauspieler,SERENITY & SYBELLA,,(gleichzeitig) Einverstanden!
+3,Anweisung,,,Der Besprechungskreis löst sich auf.
+3,Schauspieler,SERAPHINA,,Wir nehmen ihr Angebot an.
+3,Schauspieler,BLADE,,"Ich wusste, sie sind für eine innovative Geschäftsidee offen."
+3,Anweisung,,,"Die beiden Parteien reichen sich die Hände. BLADE, SERAPHINA, SYBELLA und SERENITY gehen nach rechts ab."
+4,Szenenbeginn,,,Szene 4 (ex. 3)
+4,Licht,,,LICHT 5 MH 3
+4,Anweisung,,,"HUNTER, RAVEN und DANTE werden von hinten von WACHEN auf die Bühne gebracht. Sie stehen dort in gleichem Abstand."
+4,Licht,,,VERFOLGER: Zuerst steht HUNTER (Anton) im Scheinwerferlicht. Auf der Brücke erscheint ein RICHTER.
+4,Schauspieler,RICHTER,,Für Beihilfe zum Raub werden sie für drei Jahre Gefängnis verurteilt.
+4,Licht,,,VERFOLGER: Das Scheinwerferlicht wechselt auf DANTE (Sebastian).
+4,Schauspieler,RICHTER,,Für das Hacken des Sicherheitssystems und 10.000 Stunden illegal gestreamter Musik und Filme werden sie für vier Jahre Gefängnis verurteilt.
+4,Licht,,,VERFOLGER: Das Scheinwerferlicht wechselt auf RAVEN (Lea).
+4,Schauspieler,RICHTER,,Für den versuchten Raub werden sie zu sieben Jahren Gefängnis verurteilt.
+4,Anweisung,,,"RICHTER geht ab. HUNTER, RAVEN und DANTE werden nach links abgeführt."
+5,Szenenbeginn,,,Szene 5
+5,Licht,,,LICHT 1 MH 3
+5,Anweisung,,,"Die Bildschirme gehen an. COLLIN CHARLESTON (Leon) & DELYA DELLORAINE (Vanessa) betreten die Bühne von links. Eine Kamera verfolgt sie. In der Mitte der Bühne versammeln sich aus allen Richtungen die BEWOHNER der Stadt. Unter ihnen sind VEGA, ARIA und NYRA, ebenso wie ALESA und XION. Eine STYLISTIN schminkt COLLIN."
+5,Anweisung,,,COLLIN wird auf allen Bildschirmen übertragen.
+5,Schauspieler,DELYA,,"Mein Name ist Delya Delloraine. Ich stehe hier mit meinem Kollegen Collin Charleston vor den Chrome Towern. Nach unseren Informationen soll es gleich große Neuigkeiten geben. Collin, bist du schon genauso aufgeregt wie ich?"
+5,Schauspieler,COLLIN,,"Absolut Delya, denn hier spielt sich gerade Großes ab. Die reichen Chrome-Schwestern haben bekannt gegeben, dass sie einen eigenen Konzern gründen wollen. Mit einem Newcomer als CEO wollen sie sich an die Entwicklung neuer Technologien wagen. Ein Schwerpunkt ihrer Forschung liegt auf der Verbesserung kognitiver Fähigkeiten."
+5,Schauspieler,DELYA,,"Interessant Collin. Wie das genau gehen soll, erklären ihnen die neuen Konzerninhaberinnen selbst."
+5,Anweisung,,,Auf der Brücke erscheint SERAPHINA.
+5,Technik,,,Kamera schwenkt auf Brücke.
+5,Schauspieler,SERAPHINA,,"Liebe Mitmenschen, mit der Gründung unseres neuen Konzerns, wollen wir ihr Leben besser machen. Wir wollen nicht nur ihre körperlichen, sondern auch ihre geistigen Fähigkeiten technisch verbessern. Für diesen revolutionären Ansatz haben wir nur das beste Team an Bord geholt. Darf ich vorstellen, die Leiterin unserer Forschungsabteilung: Alesa Zero."
+5,Anweisung,,,ALESA betritt die Brücke und winkt in die Menge.
+5,Schauspieler,SERAPHINA,,"Um unsere Technologie bestens zu schützen, haben wir Xion Venom als Sicherheitschef eingestellt."
+5,Anweisung,,,XION betritt die Brücke.
+5,Schauspieler,SERAPHINA,,Das Schicksal unserer Firma haben wir in die Hände von Blade Nocturne gelegt. Er wird als CEO den Konzern führen.
+5,Licht,,,LICHT 2
+5,Anweisung,,,"BLADE betritt die Brücke. Auf den Bildschirmen wird ein Film eingespielt. ALLE, die vor der Brücke stehen, gehen ab. Auf der Brücke gehen ALESA, XION und SERAPHINA ab. BLADE bleibt allein dort stehen. Der Film zeigt den Aufstieg des Unternehmens. BLADE geht ab."
+6,Szenenbeginn,,,Szene 6
+6,Licht,,,LICHT 6
+6,Anweisung,,,ALESA kommt von rechts. Sie hat zwei FORSCHER dabei. XION kommt von links.
+6,Schauspieler,ALESA,,"Wenn ihr damit richtig liegt, haben wir einen Durchbruch erzielt. Dann haben wir genau das, was der Chef wollte."
+6,Schauspieler,XION,,Wen haben wir denn da?
+6,Schauspieler,ALESA,,"Verzeiht Mr. Venom, aber wir müssen zu…"
+6,Schauspieler,XION,,"Schon wieder? Meinen sie nicht, sie langweilen ihn langsam mit ihren fehlgeschlagenen Versuchen?"
+6,Schauspieler,ALESA,,Das ist nicht fair. Das letzte Mal…
+6,Schauspieler,XION,,… hätten sie beinahe unser ganzes Gebäude abgefackelt.
+6,Schauspieler,ALESA,,Aber dieses Mal haben wir wirklich einen großen Fortschritt erzielt. Wir haben eine neue Generation der Neurochips entwickelt. Diese Neurochips sind mit einer künstlichen Intelligenz ausgestattet. Kurz KI
+6,Schauspieler,XION,,"Ich bin nicht dumm, ich weiß was das ist. Und warum sollte das den Boss jucken?"
+6,Anweisung,,,BLADE kommt von hinten.
+6,Schauspieler,ALESA,,"Der Chef wollte, dass die KI eine Art Schwarmintelligenz entwickelt, also, dass alle Neurochips der neuen Generation miteinander verknüpft sind."
+6,Schauspieler,XION,,Und das bringt uns nochmal was?
+6,Schauspieler,BLADE,,Zum Glück habe ich dich nur für die grobe Arbeit und nicht fürs Denken eingestellt. Fahre fort Alesa.
+6,Schauspieler,ALESA,,"Äh, gut Chef,... dadurch, dass die Neurochips mit einer eigenen KI miteinander verbunden sind, ist es uns möglich, diese Schwarmintelligenz für uns zu nutzen. So könnten wir in die Gedanken von mehreren Menschen parallel eindringen und diese beeinflussen."
+6,Schauspieler,XION,,"Massenkontrolle also,..."
+6,Schauspieler,BLADE,,"Ich sehe, du lernst schnell. Und dieses Mal funktioniert euer Prototyp auch wirklich?"
+6,Schauspieler,ALESA,,"Nun, wir haben ihn noch nicht getestet. Dazu bräuchten wir einen Probanden, und den haben wir bisher noch nicht gefunden."
+6,Schauspieler,BLADE,,Ärgerlich. Das wäre doch ein Job für dich Xion. Irgendwelche Penner wirst du doch auftreiben können. Mehr oder weniger freiwillig.
+6,Schauspieler,XION,,Das sollte kein Problem sein.
+6,Schauspieler,BLADE,,"Sehr gut, dann hast du deinen Auftrag."
+6,Anweisung,,,XION nickt knapp und geht nach links ab.
+6,Schauspieler,BLADE,,Und die KI ist auch fehlerfrei?
+6,Schauspieler,ALESA,,"Jawohl Chef, aber überzeugen sie sich selbst."
+6,Anweisung,,,ALESA deutet auf einen Bildschirm. Dort erscheint die KI.
+6,Schauspieler,KI,,Seid gegrüßt Master Blade.
+6,Schauspieler,BLADE,,"Sie nennt mich Master, wie schmeichelhaft."
+6,Schauspieler,ALESA,,(zu FORSCHERN) Ich habe doch gleich gesagt: Das gefällt ihm.
+6,Schauspieler,BLADE,,(zu ALESA) Wie heißt dieses KI-Modell?
+6,Schauspieler,ALESA,,"Nachdem sie unsere Vorschläge Alexa und Siri verworfen haben,..."
+6,Schauspieler,BLADE,,Waren ja auch total bescheuerte Ideen.
+6,Schauspieler,ALESA,,…haben wir uns auf Nexus geeinigt.
+6,Schauspieler,BLADE,,"Es freut mich, dich kennenzulernen, Nexus."
+6,Schauspieler,KI,,"Die Freude ist ganz meinerseits, Master Blade."
+6,Schauspieler,BLADE,,"Das mit dem Master geht runter wie Öl. Dann wollen wir sie zeitnah mal auf ihre Funktionalität testen, sobald Xion die ersten Testpersonen gefunden hat."
+6,Schauspieler,ALESA,,Sie wird sie nicht enttäuschen.
+6,Schauspieler,BLADE,,Das hoffe ich.
+6,Anweisung,,,"BLADE, ALESA und die FORSCHER gehen nach rechts ab. Die KI verschwindet auf den Bildschirmen."
+7,Szenenbeginn,,,Szene 7
+7,Licht,,,LICHT 1
+7,Einspieler,,,Gedämpfte Musik abspielen
+7,Anweisung,,,Der Club links fährt auf. Darin herrscht reges Treiben. HUNTER steht an der Bar. Dahinter steht ein Barkeeper. An den Tischen sitzen mehrere Bewohner. Man hört gedämpfte Musik. An einem Tisch vorne sitzt der RIPPER. Von rechts kommen KINDER auf die Bühne und betreten die Bar. Sie gehen an den Tisch des RIPPERS.
+7,Schauspieler,RIPPER,,"Nah, habt ihr was schönes für mich besorgen können?"
+7,Schauspieler,DARIA,,Leider nur das hier.
+7,Anweisung,,,DARIA legt ein Implantat auf den Tisch.
+7,Schauspieler,RIPPER,,(aufgebracht) Wollt ihr mich verarschen? Das ist der größte Müll.
+7,Schauspieler,JAKKO,,Aber wir haben nichts Besseres gefunden.
+7,Schauspieler,FREYA,,Du hast uns 10 Credits versprochen.
+7,Schauspieler,RIPPER,,Das Ding ist nicht mal einen Credit wert. Da ist ein Virus drauf. Und jetzt zieht Leine!
+7,Schauspieler,DARIA,,Aber wir brauchen die Credits.
+7,Schauspieler,JAKKO,,Wie sollen wir uns sonst etwas zu Essen kaufen?
+7,Schauspieler,RIPPER,,"Das ist nicht mein Problem. (zieht Waffe) Verschwindet, habe ich gesagt!"
+7,Anweisung,,,HUNTER kommt von der Bar.
+7,Schauspieler,HUNTER,,Gibt es hier Probleme?
+7,Schauspieler,FREYA,,"Er will uns die versprochenen Credits nicht zahlen, obwohl wir ihm das Implantat gebracht haben."
+7,Schauspieler,RIPPER,,Da ist ein verschissener Virus drauf! Was soll ich denn damit anfangen?
+7,Schauspieler,HUNTER,,"Nun, wenn das aber abgemacht war, solltest du ihnen besser das Geld geben."
+7,Schauspieler,RIPPER,,"Was mischst du dich eigentlich ein, Alter? Kümmere dich um deine eigenen Kram."
+7,Licht,,,LICHT 5
+7,Einspieler,,,RIPPER zielt auf HUNTER. Daraufhin schauen alle im Club auf HUNTER und die Musik verstummt.
+7,Schauspieler,HUNTER,,"Du solltest besser nicht denjenigen bedrohen, der den Leuten hier die Drinks ausschenkt. An deiner Stelle würde ich den Kindern jetzt ganz schnell die versprochenen Credits geben und dann zusehen, dass du Land gewinnst."
+7,Anweisung,,,"Der RIPPER murrt kurz, steckt die Waffe weg und legt dann die Credits auf den Tisch und geht ab. Die KINDER nehmen die Credits. Die Musik beginnt wieder zu spielen und alle gehen dem gewohnten Gang nach."
+7,Schauspieler,DARIA,,Danke Mister Hunter.
+7,Schauspieler,HUNTER,,Keine Ursache Kleine. Ich kann so Typen wie ihn nicht ausstehen. Man muss seine Schulden immer begleichen.
+7,Licht,,,LICHT 1
+7,Anweisung,,,HUNTER geht zurück an die Bar.
+7,Technik,,,Der Club fährt zu.
+7,Anweisung,,,Die KINDER verlassen die Bühne nach rechts. ARIA und VEGA kommen von hinten. ARIA hat einen großen Beutel dabei.
+7,Schauspieler,VEGA,,Du hast den Typen aber ganz schön weichgekocht.
+7,Schauspieler,ARIA,,Das war easy. Früher oder später rücken sie immer mit der Kohle raus. Er hätte die Credits halt sinnvoll investieren sollen und nicht in irgendwelche dubiosen Geschäfte. Selbst schuld.
+7,Schauspieler,VEGA,,Stimmt. (Blick schweift in die Ferne) Meinst du irgendwann werden wir auch mal einen großen Coup landen und reich und satt in der Oberstadt enden?
+7,Schauspieler,ARIA,,"Natürlich, wenn Hunter endlich mal einen fetten Job für uns hat. Aber die Frage ist, ob du das wirklich willst. Nur unter so reichen Pinkeln leben? Ich hätte da nicht so Bock drauf."
+7,Schauspieler,VEGA,,Da hast du natürlich Recht. Aber wäre schon witzig so ne` “Reichenparty” mal aufzumischen.
+7,Schauspieler,ARIA,,"Absolut, dann zeigen wir denen mal, wie man richtig feiert."
+7,Schauspieler,VEGA,,Aber zuerst müssen wir uns die Credits dafür verdienen. Lass mal die Belohnung abholen.
+7,Technik,,,Der Club links fährt auf.
+7,Anweisung,,,HUNTER ist an den Tresen gelehnt. Er schenkt sich einen Drink ein. VEGA und ARIA kommen mit einem Beutel von rechts.
+7,Schauspieler,HUNTER,,Ihr habt euch aber Zeit gelassen.
+7,Anweisung,,,VEGA wirft HUNTER den Beutel hin.
+7,Schauspieler,HUNTER,,Ist das alles?
+7,Schauspieler,VEGA,,"Zähl nach, wenn du uns nicht glaubst."
+7,Schauspieler,HUNTER,,"Mhm, ich dachte Dexter schuldet mir mehr, aber gut. Ich hoffe, ihr musstet nicht zu viel nachhelfen."
+7,Anweisung,,,NYRA kommt von hinten und belauscht sie.
+7,Schauspieler,ARIA,,(zückt ein Messer) Nicht mehr als sonst.
+7,Schauspieler,HUNTER,,"Freut mich, wenn ihr ihn überzeugen konntet."
+7,Schauspieler,ARIA,,"Und mich erst, und jetzt wollen wir unseren Anteil."
+7,Anweisung,,,HUNTER blickt sie kritisch an. Dann zieht er Credits aus dem Beutel und legt diese hin.
+7,Schauspieler,ARIA,,Das ist ja gar nichts.
+7,Anweisung,,,VEGA muss ARIA etwas zurückhalten.
+7,Schauspieler,VEGA,,Hatten wir nicht mehr ausgemacht?
+7,Schauspieler,HUNTER,,"Mehr gibt es nicht. Wenn die Beute geringer ausfällt, ist auch euer Anteil kleiner."
+7,Anweisung,,,ARIA dreht sich wütend um und sieht NYRA. Sie packt sie im Nacken und zieht sie in den Club.
+7,Schauspieler,ARIA,,Hast du uns belauscht?
+7,Schauspieler,VEGA,,"Aria, reiß dich zusammen."
+7,Schauspieler,ARIA,,Ich kann kleine Schnüffler nicht leiden.
+7,Schauspieler,NYRA,,Ich habe euch nicht belauscht. Ich bin wegen dem Gesuch hier.
+7,Schauspieler,HUNTER,,"Ach, ihr seid das, mit der ich Kontakt hatte."
+7,Schauspieler,NYRA,,Exakt.
+7,Schauspieler,HUNTER,,"Aria, lass sie los."
+7,Anweisung,,,ARIA stößt NYRA von sich.
+7,Schauspieler,HUNTER,,"Verzeiht die rüde Begrüßung. Ich hatte mir euch anders vorgestellt,... älter."
+7,Schauspieler,NYRA,,Das höre ich öfter.
+7,Schauspieler,HUNTER,,"Nun denn, das ist Nyra. Sie ist neu im Team."
+7,Schauspieler,VEGA,,Was ist mit Jimmy? Hat der sich davon gemacht?
+7,Schauspieler,ARIA,,Das sähe diesem feigen Trottel auch ähnlich.
+7,Schauspieler,HUNTER,,"Jimmy hat sich leider einen Virus auf seinem Neurochip eingefangen und ist total durchgedreht. Der kommt nie wieder und für den kommenden Job brauchen wir eine fähige Hackerin. Sie ist die beste, die ich finden konnte."
+7,Schauspieler,VEGA,,"Könntest du uns in sowas nicht auch früher einweihen? Außerdem wird sich Jimmy sicher wieder berappeln, da bin ich mir sicher."
+7,Schauspieler,HUNTER,,Der Typ ist durch. Besser ihr gewöhnt euch an die Zusammenarbeit mit ihr. Der nächste Job ist eine ganz große Nummer.
+7,Schauspieler,ARIA,,"(zu NYRA) Da hoffe ich mal, dass du dem auch gewachsen bist. Wir warten nämlich schon extrem lange auf die richtig fette Beute. Woher hast du denn dein “Wissen”?"
+7,Schauspieler,NYRA,,"Vieles selbst beigebracht, aber ich hab im Netz mit den ganz Großen geschrieben und ihre Arbeit studiert."
+7,Schauspieler,ARIA,,"(ironisch) “Selbst beigebracht”,... klingt ja fantastisch."
+7,Schauspieler,VEGA,,"Hunter, worum geht's bei dem großen Job?"
+7,Schauspieler,HUNTER,,"Gleich, erstmal müsst ihr mir einen Gefallen tun und jemanden am Gefängnis für mich abholen."
+7,Technik,,,Der Club fährt zu.
+8,Szenenbeginn,,,Szene 8
+8,Licht,,,LICHT 2
+8,Anweisung,,,RAVEN kommt von hinten. Sie hat einen Rucksack dabei. Sie wird von zwei WACHEN begleitet.
+8,Schauspieler,WACHE,,"Sie sind jetzt frei. Ich hoffe für sie, dass wir uns nicht mehr wiedersehen."
+8,Anweisung,,,Die WACHEN gehen nach hinten ab. RAVEN atmet durch. BEWOHNER füllen die Bühne. VEGA schleicht sich von links auf die Bühne. Sie trägt eine Kapuze.  🎥RAVEN geht umher und sieht sich die Leuchtreklamen an.
+8,Schauspieler,VEGA,,Du bist Raven.
+8,Schauspieler,RAVEN,,Wer will das wissen?
+8,Schauspieler,VEGA,,Hunter schickt mich. Ich soll dich abholen.
+8,Schauspieler,RAVEN,,Dem alten Fuchs entgeht wohl gar nichts. Hat wohl dem Tag meiner Entlassung entgegengefiebert.
+8,Schauspieler,VEGA,,"Er meinte, ich soll dich umgehend zu ihm bringen."
+8,Anweisung,,,Von rechts kommt ARIA mit einer Kapuze.
+8,Schauspieler,RAVEN,,Hat er mich so sehr vermisst?
+8,Schauspieler,VEGA,,"Er meinte, du schuldest ihm noch etwas."
+8,Schauspieler,RAVEN,,"Soso,... er war noch nie ein sentimentaler Typ. Ich wüsste allerdings nicht, was ich ihm schulde."
+8,Schauspieler,VEGA,,Das hat er auch nicht gesagt. Also kommst du  jetzt mit?
+8,Schauspieler,RAVEN,,"Wenn du mich so lieb bittet, wie kann ich da nein sagen."
+8,Anweisung,,,"RAVEN versucht abzuhauen, woraufhin sie von ARIA festgehalten wird. Nach einem kurzen Kampf, gelingt es VEGA und ARIA, RAVEN festzuhalten."
+8,Schauspieler,RAVEN,,"Ihr seid wirklich gut, oder ich bin im Knast eingerostet."
+8,Schauspieler,VEGA,,"Hunter hat uns vorgewarnt, dass du vielleicht nicht freiwillig mitkommen würdest."
+8,Schauspieler,RAVEN,,"Da hat er mir zur Sicherheit einen ganz bezaubernden Geleitschutz vorbeigeschickt. Sehr aufmerksam von ihm. Was macht er eigentlich? Muss ja ganz schön Kohle haben, wenn er mir zwei Wachhunde auf den Hals hetzt."
+8,Schauspieler,ARIA,,Er betreibt das “High Voltage”. Einen der besten Nachtclubs der ganzen Unterstadt.
+8,Schauspieler,RAVEN,,"Verstehe, das passt zu ihm, sein eigenes kleines Königreich. Dann wollen wir ihn mal besuchen."
+8,Anweisung,,,VEGA und ARIA bringen RAVEN nach rechts von der Bühne. Die BEWOHNER verlassen die Bühne.
+9,Szenenbeginn,,,Szene 9
+9,Licht,,,LICHT 7
+9,Anweisung,,,"Gedämpfte Musik abspielen Aus dem Club dröhnt leise Musik. Zwei BEWOHNER stolpern betrunken über die Bühne. VEGA, RAVEN und ARIA kommen von rechts."
+9,Schauspieler,VEGA,,Hier ist es.
+9,Schauspieler,RAVEN,,Da hat sich Hunter aber nicht lumpen lassen. Das ist eine ordentliche Location.
+9,Schauspieler,VEGA,,"Hunter ist drinnen. Und er hasst es, wenn man ihn warten lässt."
+9,Schauspieler,ARIA,,"Im Club geht es hoch her. Wir informieren ihn. Bleib am besten an der Bar, bis er Zeit für dich hat."
+9,Schauspieler,RAVEN,,Als hätte ich nicht schon lang genug gewartet.
+9,Technik,,,Der Club öffnet sich.
+9,Anweisung,,,Betrunkener taumelt aus der Bar. RAVEN nimmt ihm eine Flasche ab.
+9,Anweisung,,,Im Inneren machen viele BEWOHNER Party. Unter ihnen ist auch NYRA. Die Musik wird laut. Es wird getanzt.
+9,Licht,,,SHOWLICHT (kein Stroboskop)
+9,Einspieler,,,LIED: Saturday Night
+9,Licht,,,LICHT 7
+9,Anweisung,,,Hunter erscheint. ALLE blicken zu ihm.
+9,Schauspieler,HUNTER,,"Freunde, es freut mich überaus, dass ihr in dieser denkwürdigen Nacht wieder meine Gäste seid, denn heute darf ich eine gute Freundin wieder zurück bei uns begrüßen. Die großartige, fast schon legendäre Raven ist aus dem Gefängnis entlassen worden. Das müssen wir feiern. (hebt ein Glas) Auf Raven."
+9,Schauspieler,ALLE,,Auf Raven! (RAVEN hält Mittelfinger in die Luft)
+9,Anweisung,,,"Die BEWOHNER beginnen wieder zu tanzen und zu trinken. HUNTER und RAVEN gehen zur Bar. VEGA, ARIA und NYRA mischen sich unter die BEWOHNER."
+9,Schauspieler,HUNTER,,Der Knast verändert anscheinend doch nicht jeden. Scheinst noch die Alte zu sein.
+9,Schauspieler,RAVEN,,"Die Welpen, die du auf mich angesetzt hast, haben gesagt, ich schulde dir etwas."
+9,Schauspieler,HUNTER,,"Welpen? Das sind die besten, die ich habe. Und anscheinend waren sie auch erfolgreich, sonst wärst du nicht hier, oder?"
+9,Schauspieler,RAVEN,,"Hunter, komm bitte zum Punkt."
+9,Schauspieler,HUNTER,,"Wie du willst. (neigt sich verschwörerisch vor) Du weißt, was mit Blade passiert ist, während wir im Knast saßen?"
+9,Schauspieler,RAVEN,,Aufstieg zum Geschäftsführer eines der größten Unternehmen der Stadt.
+9,Schauspieler,HUNTER,,"Korrigiere: Mittlerweile dem Größten. Abgesehen davon bist du aber gut im Bilde. Im Knast bekommt man wohl doch mit, was draußen passiert."
+9,Schauspieler,RAVEN,,Ich habe meine Ohren offen gehalten. Was schulde ich dir?
+9,Schauspieler,HUNTER,,Genugtuung. Du hast diesen Bastard damals nicht aufgehalten.
+9,Schauspieler,RAVEN,,Wie hätte ich das denn bitte machen sollen? Mir waren im wahrsten Sinne des Wortes die Hände gebunden.
+9,Schauspieler,HUNTER,,Du warst unprofessionell. Der Typ hat dich mit seinem Charme um die Finger gewickelt und das weißt du auch. Normal lässt du dich nicht so leicht aufs Glatteis führen.
+9,Schauspieler,RAVEN,,(schnaubt) Lächerlich…
+9,Schauspieler,HUNTER,,"Hast dir einfach schöne Augen machen lassen. Blade ist halt ein Charmeur. Aber du kannst alles wieder gut machen. Meine Kontaktperson hat mir erzählt, dass Blade ein neues großes Projekt geplant hat. Es geht wohl um eine neue Generation seiner Neurochips. Und da können wir ihm ordentlich das Geschäft vermiesen, wenn wir ihm die Technologie stehlen. Was sagst du?"
+9,Schauspieler,RAVEN,,"Ich bin dabei. Aber nicht, weil ich dir etwas schulde, sondern weil ich mit Blade auch noch eine Rechnung offen habe."
+9,Schauspieler,HUNTER,,Letztlich egal. Hauptsache du nimmst an.
+9,Schauspieler,RAVEN,,"Und das soll ich alleine machen? Ich bin über die Jahre schon etwas eingerostet,..."
+9,Schauspieler,HUNTER,,"Nein, ich stelle dir natürlich eine Top Crew zur Verfügung. Kommt her Mädels!"
+9,Anweisung,,,"VEGA, ARIA und NYRA kommen zu HUNTER."
+9,Schauspieler,HUNTER,,"Das ist Vega, die beste Schützin weit und breit. Mit ihren Adleraugen hat sie alles bestens im Blick und den Killerinstinkt einer Kobra. Das ist Aria: Es gibt auf der ganzen Welt niemanden, der sich ihr in den Weg stellen kann. Sie weiß sich durchzusetzen. Und nicht zu vergessen Nyra, neu im Team und die beste Hackerin der Unterstadt. Es gibt kein System und keine Informationen, die vor ihr sicher sind."
+9,Schauspieler,RAVEN,,"Da bin ich mal gespannt, ob sie halten können, was du versprichst."
+9,Schauspieler,VEGA,,"Wir werden dich nicht enttäuschen, da sei dir mal sicher."
+9,Schauspieler,RAVEN,,"Wenn sie die beste Hackerin der Unterstadt ist, was ist dann aus Dante geworden,..."
+9,Schauspieler,HUNTER,,"Frag nicht,... hat sich zur Ruhe gesetzt."
+9,Schauspieler,RAVEN,,Zur Ruhe?
+9,Schauspieler,HUNTER,,"Ja, den hat der Knast komplett verändert."
+9,Schauspieler,RAVEN,,Ich würde ihn trotzdem gerne sprechen. Weißt du wo er ist?
+9,Schauspieler,HUNTER,,"Sicher, Vega und Aria können dich hinbringen. Die wissen, wo er wohnt. Aber mache dir keine zu großen Hoffnungen. Der Typ ist am Ende."
+9,Schauspieler,RAVEN,,"Ich will mich gerne selbst davon überzeugen. Kommt Mädels, zeigt mir den Weg."
+9,Anweisung,,,"RAVEN, VEGA und ARIA gehen nach rechts ab. HUNTER bleibt an der Bar.  🔧 Der Club fährt zu."
+10,Szenenbeginn,,,Szene 10
+10,Licht,,,LICHT 2
+10,Anweisung,,,"RAVEN, VEGA und ARIA kommen von links."
+10,Schauspieler,ARIA,,Hier ist es.
+10,Schauspieler,RAVEN,,Woher kennst du Dante?
+10,Schauspieler,ARIA,,Er hat mich halbtot aus der Gosse gezogen und das Teil hier eingebaut. (zeigt ihren mechanischen Arm) Ohne sein Eingreifen hätte man meinen Arm nicht mehr retten können.
+10,Schauspieler,RAVEN,,"Das Leben in der Unterstadt ist also nicht besser geworden, seitdem ich im Knast saß."
+10,Schauspieler,ARIA,,"Das wird sich wohl nie ändern… Zum Dank für seine Rettung habe ich ein paar Mal für ihn gearbeitet. Neurochips und Implantate besorgt. Das war die beste Schule für die Aufträge, die uns Hunter jetzt gibt."
+10,Schauspieler,RAVEN,,Und mit den Implantaten und Neurochips macht er was?
+10,Schauspieler,VEGA,,"Er verbaut sie an seine Kunden. Für alle, für die neue Implantate zu teuer sind, was hier unten auf so ziemlich jeden zutrifft. Er betreibt quasi einen Second-Hand-Shop."
+10,Schauspieler,RAVEN,,Seiner Technikbegeisterung hat er also nicht ganz abgeschworen.
+10,Schauspieler,ARIA,,"Naja, er hat da trotzdem so seine ""Probleme"", aber überzeug dich selbst, so wie es aussieht, ist er da."
+10,Anweisung,,,"RAVEN, VEGA und ARIA wollen nach hinten, als NYRA von links kommt. VEGA sieht NYRA, dieser ist das sichtlich unangenehm."
+10,Schauspieler,VEGA,,Nyra? Was machst du denn hier?
+10,Schauspieler,NYRA,,"Ich war gerade zufällig in der Gegend und da,..."
+10,Schauspieler,RAVEN,,"Billige Lüge, wenn wir vertrauensvoll zusammenarbeiten wollen, solltest du besser anfangen, die Wahrheit zu sagen."
+10,Schauspieler,NYRA,,"Na gut, ich wusste nicht, dass Dante hier wohnt, also DER Dante, versteht ihr?"
+10,Schauspieler,VEGA,,"Nee, also irgendwie nicht so ganz."
+10,Schauspieler,NYRA,,"Na, Dante ist so etwas wie eine Legende in der Hackingszene. Bis er dann im Gefängnis gelandet ist und man online nie wieder etwas von ihm gehört hat."
+10,Schauspieler,RAVEN,,"Ich wusste gar nicht, dass Dante Fans hat."
+10,Schauspieler,NYRA,,"Er ist sowas wie ein Vorbild. Er hat vieles geschafft, wovon die meisten vor ihm nur geträumt haben. Ich habe doch erzählt, dass ich die Arbeit der größten Hacker verfolgt habe. Dante war einfach genial."
+10,Schauspieler,VEGA,,Du bleibst besser hier.
+10,Schauspieler,NYRA,,Warum?
+10,Schauspieler,ARIA,,“Never meet your heroes in Real Life.” Halte dich besser drann.
+10,Schauspieler,NYRA,,"Aber,..."
+10,Schauspieler,VEGA,,"Kein “aber”. Wir haben gerade keine Zeit für eine Autogrammstunde. Los jetzt, wir haben etwas zu tun."
+10,Anweisung,,,"RAVEN, VEGA, und ARIA gehen nach hinten ab. NYRA setzt sich schmollend an den Bühnenrand."
+11,Szenenbeginn,,,Szene 11
+11,Licht,,,LICHT 8
+11,Einspieler,,,LIED: Dante 1
+11,Technik,,,Die Werkstatt fährt auf.
+11,Anweisung,,,"DANTE tanzt zu Musik durch die Werkstatt, während er allerhand zu tun hat. Er bemerkt nicht, wie nach kurzer Zeit RAVEN, VEGA und ARIA hinter ihm stehen. Als er sich umdreht, erschrickt er."
+11,Schauspieler,DANTE,,"Um Himmels Willen,... wie seid ihr hier reingekommen."
+11,Licht,,,LICHT 2
+11,Schauspieler,VEGA,,Die Tür war offen.
+11,Schauspieler,DANTE,,"Das klingt plausibel. Aria, Mensch, lange nicht gesehen. Lass dich anschauen: Groß biste geworden. Ich hoffe dir geht es gut soweit?"
+11,Schauspieler,ARIA,,"Ja, aber deshalb sind wir nicht hier. Da ist jemand, der dich sprechen möchte. (deutet auf RAVEN)"
+11,Schauspieler,DANTE,,"Nein, ist es denn möglich. Hi,... ähm,... mit dir habe ich ehrlich gesagt nicht gerechnet."
+11,Schauspieler,RAVEN,,"Ja, ich habe meine Strafe abgesessen."
+11,Schauspieler,DANTE,,"Wenn ich gewusst hätte, dass du kommst, hätte ich natürlich aufgeräumt. Und was zu Essen gekocht,... aber dazu bräuchte ich erstmal eine richtige Küche,... (greift offene Chipstüte) Chips?"
+11,Schauspieler,RAVEN,,"Nein, danke,... wir sind hier, weil wir deine Hilfe brauchen."
+11,Schauspieler,DANTE,,"Meine Hilfe? Klar, für dich mache ich alles."
+11,Schauspieler,RAVEN,,Wir wollen uns an Blade rächen und seine neueste Technologie stehlen.
+11,Schauspieler,DANTE,,... außer das.
+11,Schauspieler,RAVEN,,Warum das denn?
+11,Schauspieler,DANTE,,"Ich habe mir geschworen, nichts mehr digitales anzufassen, geschweige denn etwas illegales zu machen."
+11,Schauspieler,RAVEN,,Und was ist das hier dann? (geht in der Werkstatt umher)
+11,Schauspieler,DANTE,,"Hey, das ist was anderes. Ich habe früher mit meinen Fähigkeiten viel Scheiße gebaut, okay? Ich will das Ganze wieder etwas gut machen, indem ich den Menschen hier helfe. Kostenlos arbeite. Aber sonst lass ich die Finger davon."
+11,Schauspieler,RAVEN,,Du bist ganz ohne Technik glücklich?
+11,Schauspieler,DANTE,,"Klar, hier: Schallplatten, VHS Kassetten, das hier ist ein Faxgerät, war noch bis 2060 im Einsatz in einer Verwaltung und ist heute immer noch gut. In diesen Dingern steckt noch Seele."
+11,Schauspieler,VEGA,,Und damit möchte man seine Freizeit verbringen?
+11,Schauspieler,DANTE,,Sehe ich etwa nicht glücklich aus?
+11,Schauspieler,ARIA,,"Wenn du deine Fähigkeiten doch noch einsetzt, um den armen Leuten ihre Implantate einzusetzen und zu reparieren, könntest du uns doch auch helfen. Immerhin geht es gegen Blade. Du hast mir hundertmal erzählt, wie sehr du es ihm heimzahlen möchtest."
+11,Schauspieler,DANTE,,"Nein, ausgeschlossen, ihr müsst hier garnix versuchen. Ich werde meine Meinung nicht ändern. Basta."
+11,Schauspieler,RAVEN,,"Schade, dann halt nicht."
+11,Anweisung,,,RAVEN geht nach hinten ab.
+11,Schauspieler,ARIA,,"Wir könnten deine Hilfe wirklich gebrauchen. Gib dir mal einen Ruck. Lass uns nicht im Stich,..."
+11,Schauspieler,DANTE,,"Tut mir leid, ich kann nicht,..."
+11,Schauspieler,VEGA,,"Komm Aria, wir müssen das akzeptieren."
+11,Anweisung,,,VEGA und ARIA gehen nach hinten ab.
+11,Schauspieler,DANTE,,"So ein Mist,... naja, jetzt brauche ich etwas, um mich aufzumuntern. (nimmt Schallplatte) Musik."
+11,Licht,,,LICHT 9
+11,Einspieler,,,LIED: Dante 2
+11,Anweisung,,,"DANTE legt die Schallplatte auf und es ertönt traurige Musik. Er öffnet einen Schrank und Bilder von RAVEN kommen zum Vorschein. RAVEN, ARIA und VEGA kommen von hinten und gehen dann nach links ab. NYRA sieht das und schleicht sich nach hinten von der Bühne. DANTE blickt RAVEN seufzend hinterher. NYRA kommt von hinten in die Werkstatt."
+11,Schauspieler,NYRA,,"Entschuldige, ich wollte nur fragen, ob wir vielleicht ein Foto…"
+11,Licht,,,LICHT 2
+11,Schauspieler,DANTE,,"(schlägt Schrank zu) Heiliger BimmBamm,... willst du mich umbringen? Was ist denn nun schon wieder?"
+11,Schauspieler,NYRA,,"(aufgeregt) Können wir ein Foto machen? Du musst wissen, ich bin ein großer Fan. Krass, ich hätte nie gedacht, dass ich dich mal im Reallife treffe."
+11,Anweisung,,,"NYRA zieht DANTE zu sich, hält ihr Handy hoch und DANTE grinst verwirrt."
+11,Schauspieler,DANTE,,Fan?
+11,Schauspieler,NYRA,,"(tippt auf Handy) So, gepostet. Naja, als ich angefangen habe zu programmieren, warst du die große Figur in der Hackingszene. Du hast mal einen Post von mir geliked. Ich bin “Silent-Angel”."
+11,Schauspieler,DANTE,,"Sagt mir jetzt ehrlich gesagt nichts,..."
+11,Schauspieler,NYRA,,"Du bist ein großes Vorbild. Wie du es ohne Mühe geschafft hast bei Digitech oder Yakuza in die Systeme reinzukommen, oder als du ganz alleine…"
+11,Schauspieler,DANTE,,Die Zeiten sind vorbei.
+11,Schauspieler,NYRA,,Aber du bist ein Genie. Vergeude dein Talent doch nicht hier an diesem… Ort.
+11,Schauspieler,DANTE,,Aber hier ist es doch ganz nett.
+11,Schauspieler,NYRA,,"Naja,... (blickt sich irritiert um). Hast du denn gar keine Träume, für die du noch etwas wagen willst?"
+11,Schauspieler,DANTE,,"Pff, Träume,... Ich erzähle dir mal was: Wir haben damals den Hals nicht voll bekommen und immer den nächsten Kick gesucht. Immer höher, schneller, weiter. Nie war das, was wir für einen Job bekommen haben genug. Es musste immer mehr sein. Wenn ich dir einen Tipp geben darf: Nimm was du kriegen kannst und dann hau ab. Erfüll dir deinen Traum, bevor es zu spät ist und du im Knast landest,... oder schlimmeres. Hast du überhaupt einen Traum?"
+11,Schauspieler,NYRA,,Ich will unbedingt einmal die Ödnis durchqueren und das Meer sehen. Den Duft der See einatmen und den Sand unter den Füßen...
+11,Schauspieler,DANTE,,"Das ist ja ein süßer Traum,... aber auch sooo kitschig. Hey, wenn es das ist, was dich antreibt, dann solltest du jede Möglichkeit nutzen, die dich deinem Traum näher bringt, bevor es zu spät ist."
+11,Schauspieler,NYRA,,Das versuche ich. Ich bin neu in einem Team und wir haben jetzt einen megakrassen Auftrag. Dann kommen wir gemeinsam groß raus und können uns zusammen…
+11,Schauspieler,DANTE,,"Nein, nein, völlig falsch. Du denkst zu sehr vom Kollektiv her, aber du musst auch mal an dich denken. So sehr ich Blade dafür hasse: Er lebt seinen Traum. Und ich Vollidiot, der sich um seine Gruppe geschert hat, sitzt hier in diesem Loch. Wenn du rechtzeitig den Absprung schaffst, verfolge deinen Traum. Fahr ans Meer oder was auch immer, aber bleibe nicht auf dem Hamsterrad stecken."
+11,Schauspieler,NYRA,,"Ich weiß nicht recht,..."
+11,Schauspieler,DANTE,,"Hey,... ach, tut mir leid. Ich wollte dich nicht mit dem Groll einer gescheiterten Existenz belasten. Weißt du wer mich immer aufmuntert? Captain Kuschel! Er ist ein sehr guter Zuhörer. Wegen der großen Ohren verstehst du? (gibt NYRA Plüschhasen)"
+11,Schauspieler,NYRA,,"Aber du bist nicht gescheitert. Dein Name ist immer noch ein großer in der Hackingszene. Ich habe so viel im Netz von dir gelernt. Man schaut zu dir auf,... auch wenn viele gar nicht wissen, was aus dir geworden ist."
+11,Schauspieler,DANTE,,"Ein Versager,... das bin ich geworden,..."
+11,Schauspieler,NYRA,,Du solltest nicht so hart zu dir sein.
+11,Schauspieler,DANTE,,"Pfff,..."
+11,Schauspieler,NYRA,,"Vielleicht hast du ja auch Recht. Vielleicht sollte ich mich mehr auf mich fokussieren, dass etwas aus mir wird. Dann kann ich auch meine Träume verfolgen."
+11,Schauspieler,DANTE,,"Vielleicht habe ich auch gar keine Ahnung. (...) So, es war mir eine Freude dich kennenzulernen, aber ich habe noch einen Haufen Aufträge, die ich erledigen muss."
+11,Schauspieler,NYRA,,Danke für das Gespräch. Das hat mir glaube ich wirklich die Augen geöffnet.
+11,Schauspieler,DANTE,,"Keine Ursache, pass auf dich auf."
+11,Licht,,,LICHT 8
+11,Einspieler,,,LIED: Dante 3
+11,Anweisung,,,DANTE legt wieder Musik auf und NYRA geht nach hinten ab. Sie geht auf die Bühne und läuft nachdenklich an der Werkstatt vorbei nach links ab.
+11,Technik,,,Die Werkstatt fährt zu.
+12,Szenenbeginn,,,Szene 12
+12,Licht,,,LICHT 5
+12,Anweisung,,,XION kommt von links und hat zwei WACHEN dabei. Sie bringen einen GEFANGENEN. 🔧Das Labor fährt auf. Darin steht ALESA mit einem FORSCHER.
+12,Schauspieler,XION,,Hier ist die nächste Versuchsperson. Du hast wirklich einen hohen Verschleiß.
+12,Schauspieler,ALESA,,Was ist mit dem Typen?
+12,Schauspieler,XION,,"Keine Ahnung, hat was eingeworfen. Ist das ein Problem?"
+12,Schauspieler,ALESA,,Ich denke nicht. Hoffe ich. Wir werden es sehen. Macht ihn für den Versuch bereit.
+12,Anweisung,,,Die WACHEN und der FORSCHER packen den GEFANGENEN auf einen OP Tisch. XION und ALESA unterhalten sich.
+12,Schauspieler,XION,,"Blade ist wahnsinnig wütend, weil bisher keiner der neuen Chips funktioniert hat. Er ist sehr ungeduldig, also rate ich dir, es nicht noch einmal zu verkacken."
+12,Schauspieler,ALESA,,"Meinst du, ich mache das mit Absicht? Ich weiß auch nicht, woran es liegt. Das menschliche Bewusstsein wehrt sich gegen die KI auf den Chips. So drehen die Probanden durch. Wir müssen nur schauen, wie wir den Widerstand brechen, sodass die KI den Verstand der Versuchspersonen in Besitz nimmt."
+12,Schauspieler,XION,,"Viel Spaß, klingt nach der Suche von einer Nadel im Heuhaufen."
+12,Schauspieler,ALESA,,"(dreht sich um) So, dann wollen wir mal."
+12,Anweisung,,,"ALESA injiziert dem GEFANGENEN den NEUROCHIP. Dieser zappelt kurz, wird von Fesseln aber festgehalten. Er bäumt sich kurz auf und bleibt dann leblos liegen."
+12,Schauspieler,ALESA,,Das kann doch nicht sein. Schon wieder nicht geklappt. Ich hatte den Prototypen doch modifiziert.
+12,Schauspieler,XION,,Jetzt muss ich schon wieder jemanden auftreiben. (zu den WACHEN) Nehmt den Typen und werft ihn in die Kanalisation.
+12,Schauspieler,ALESA,,Wartet. (zieht Neurochip aus dem GEFANGENEN) Vielleicht gibt es Probleme mit den Daten der alten Neurochips.
+12,Schauspieler,XION,,Mach du dein “Forschungsdings” und dieses Mal ordentlich! Ich besorge das nächste Versuchskaninchen.
+12,Anweisung,,,XION geht mit den WACHEN nach hinten ab. Sie tragen den GEFANGENEN weg. ALESA bleibt mit dem FORSCHER im Labor.
+12,Technik,,,Das Labor fährt zu.
+13,Szenenbeginn,,,Szene 13
+13,Licht,,,LICHT 2 MH 3
+13,Anweisung,,,RAVEN kommt mit VEGA auf die Brücke.
+13,Schauspieler,RAVEN,,"ARIA, hört ihr uns?"
+13,Anweisung,,,ARIA und NYRA kommen von links auf die Bühne.
+13,Schauspieler,ARIA,,Hören euch. Wir gehen gleich rein und holen uns den Chip.
+13,Anweisung,,,Von rechts kommen zwei WACHEN. VEGA erspäht sie durch ihr Zielfernrohr.
+13,Schauspieler,VEGA,,"Achtung, da vorne sind zwei Securitys. Da müsst ihr vorbeischleichen."
+13,Schauspieler,ARIA,,Ich könnte sie auch ausschalten.
+13,Schauspieler,VEGA,,"Nein, das ist zu riskant. Einfach ruhig verhalten."
+13,Anweisung,,,Die WACHEN gehen nach links ab. ARIA und NYRA verstecken sich und werden nicht entdeckt.
+13,Schauspieler,VEGA,,"Sehr gut, die Luft ist jetzt rein. Nyra, du weißt, was zu tun ist?"
+13,Schauspieler,NYRA,,"Ja, wenn wir drin sind, gehe ich an den zentralen PC und downloade die Technologie. Das sollte kein Problem sein, ich brauche dafür aber Zeit."
+13,Schauspieler,RAVEN,,"Die Überwachungskameras zeigen, dass das Labor leer ist. Ihr könnt also rein."
+13,Anweisung,,,NYRA steckt ein Kabel in die Tür und hackt diese.  🔧Daraufhin fährt das Labor auf.
+13,Schauspieler,ARIA,,Sind drinn.
+13,Schauspieler,VEGA,,"Sehr gut, jetzt beeilt euch."
+13,Anweisung,,,NYRA verbindet sich mit dem PC und ARIA sucht den Chip.
+13,Schauspieler,ARIA,,Wie soll ich hier bitte so einen kleinen Chip finden?
+13,Schauspieler,ARIA,,Was ist?
+13,Schauspieler,NYRA,,Irgendwas stimmt nicht.
+13,Technik,,,Die Bildschirme gehen an und die KI ist darauf zu sehen.
+13,Schauspieler,KI,,"Alarm, jemand versucht, in mein System einzudringen. Gefahr!"
+13,Licht,,,"LICHT 4, MH 4"
+13,Einspieler,,,Alarmton abspielen Der Alarm geht los.
+13,Schauspieler,VEGA,,Was zum Teufel passiert da drinnen?
+13,Schauspieler,ARIA,,"Nyra hat irgendwas geweckt, aber keine Ahnung was das ist?"
+13,Anweisung,,,ARIA geht zu NYRA und trennt sie vom PC.
+13,Schauspieler,NYRA,,"Danke, keine Ahnung, was das war. Das hatte ich noch nie."
+13,Schauspieler,ARIA,,Erzähl mir das bitte wann anders. Wir haben jetzt große Probleme.
+13,Anweisung,,,XION kommt mit vier WACHEN auf die Bühne.
+13,Schauspieler,XION,,Eindringlinge im Labor! Fasst sie!
+13,Anweisung,,,"Die WACHEN stürzen zu ARIA und NYRA. NYRA leistet keinen Widerstand. ARIA gelingt es eine WACHE niederzustrecken, bevor sie gefasst wird. BLADE und ALESA kommen von hinten."
+13,Licht,,,LICHT 5 MH 3
+13,Schauspieler,BLADE,,Besuch? Um diese Uhrzeit? Warum beehrt ihr uns so spät mit eurer Anwesenheit?
+13,Schauspieler,ARIA,,Finger weg! Ich bring dich um du Mistkerl!
+13,Schauspieler,XION,,Ich könnte sie zum Reden bringen! (zieht ein Messer)
+13,Schauspieler,BLADE,,"Also bitte, wir sind doch nicht grausam. Wir sind ein ganz normaler, seriöser Konzern. Legt sie um und werft sie in die Kanalisation."
+13,Schauspieler,ALESA,,"Aber Chef, wir könnten sie als Versuchspersonen verwenden. Jetzt, wo sie sowieso da sind."
+13,Schauspieler,XION,,So ein paar junge Streuner aus der Unterstadt vermisst niemand.
+13,Schauspieler,BLADE,,"Von mir aus. (beugt sich zu ARIA und NYRA) Ihr habt jetzt das große Glück, unseren neuen Neurochip auszuprobieren. Ist das nicht eine große Ehre?"
+13,Schauspieler,ARIA,,Ich steck dir deinen scheiß Neurochip gleich sonstwohin!
+13,Schauspieler,BLADE,,Fangt mit dem vorlauten Giftzwerg an.
+13,Anweisung,,,Die WACHEN befestigen ARIA auf dem Tisch.
+13,Schauspieler,RAVEN,,Meine Verbindung ist weg? Hörst du sie?
+13,Schauspieler,VEGA,,"Ja verdammt, sie stecken in riesigen Schwierigkeiten."
+13,Schauspieler,ARIA,,"Ich werde mich rächen, an euch allen!"
+13,Schauspieler,ALESA,,(zu ARIA) Es könnte vielleicht etwas unangenehm werden.
+13,Schauspieler,XION,,"Mach schon, dass sie endlich die Klappe hält."
+13,Schauspieler,ARIA,,Darauf kannst du lange warten du hässlicher…
+13,Anweisung,,,ARIA bäumt sich kurz auf und sackt dann leblos zusammen. NYRA sieht dem Ganzen im Schockzustand zu.
+13,Schauspieler,BLADE,,"Schon wieder nichts? Willst du mich verarschen, Alesa? Für was bezahle ich dich und deine Leute?"
+13,Schauspieler,ALESA,,"Einen Versuch haben wir noch,... Xion, würdest du? (deutet auf den Tisch)"
+13,Schauspieler,XION,,"Jaja, ich weiß. In die Kanalisation."
+13,Anweisung,,,XION und zwei WACHEN nehmen die leblose ARIA und tragen sie nach hinten von der Bühne. Zwei weitere WACHEN packen NYRA und legen sie auf den Tisch.
+13,Schauspieler,BLADE,,"Wehe, es funktioniert schon wieder nicht."
+13,Schauspieler,NYRA,,"Bitte, ihr müsst das nicht tun. Ich kann euch helfen. Ich mach alles, was ihr wollt."
+13,Schauspieler,BLADE,,"Blabla, nichts, was ich nicht schon hundertmal gehört hätte. Alesa, wirds bald?"
+13,Schauspieler,ALESA,,"Jawohl, sofort."
+13,Anweisung,,,ALESA injiziert NYRA den Chip. Diese zuckt kurz und bleibt dann liegen.
+13,Schauspieler,ALESA,,"Das sieht,... ja doch, das sieht ganz so aus, als hätte es funktioniert."
+13,Schauspieler,BLADE,,"Macht sie los, sofort, das ist ja sensationell."
+13,Anweisung,,,Die WACHEN befreien NYRA und sie setzt sich auf.
+13,Schauspieler,BLADE,,"Sag mir, bist du mit der KI verbunden?"
+13,Schauspieler,NYRA,,"Ja, Master Blade."
+13,Schauspieler,BLADE,,"Master Blade, das freut mich immer wieder aufs Neue,... Gute Arbeit Alesa. Endlich einmal. Macht noch ein paar Tests. Ich bin in meinem Büro Champagner köpfen. Ach und noch was: (zu WACHEN) Sichert das Gelände. Die zwei waren sicher nicht alleine hier."
+13,Anweisung,,,"BLADE geht nach hinten ab, die WACHEN schwärmen aus und das Labor fährt zu."
+13,Schauspieler,RAVEN,,"Jetzt sag schon, können wir sie da rausholen?"
+13,Schauspieler,VEGA,,"Zwecklos. Nyra ist noch da drinnen und Aria haben sie wohl,..."
+13,Schauspieler,RAVEN,,Was (ist mit ihr)?
+13,Schauspieler,VEGA,,"Wir müssen schnell in die Kanalisation. Ich hoffe, es ist noch nicht alles verloren."
+13,Licht,,,LICHT 2
+13,Anweisung,,,VEGA und RAVEN gehen von der Brücke ab.
+13,Technik,,,Einspieler Aria
+13,Anweisung,,,PAUSE
+13,Licht,,,LICHT 1 MH 1 über Pause anlassen
+14,Szenenbeginn,,,Szene 14
+14,Licht,,,LICHT 10
+14,Anweisung,,,VEGA und RAVEN schleichen sich von links auf die Bühne. Von hinten kommt XION mit zwei WACHEN. Sie haben die leblose ARIA dabei. Sie legen sie hin. XION begutachtet sie und stößt sie mit dem Fuß an.
+14,Schauspieler,XION,,"Jetzt bist du nicht mehr so vorlaut, was? (zu den WACHEN) Den Rest bekomme ich alleine hin. Ihr könnt gehen."
+14,Anweisung,,,Die WACHEN gehen ab. XION schaut ihnen nach.
+14,Schauspieler,XION,,Die Luft ist rein!
+14,Anweisung,,,Von rechts kommt ein RIPPER.
+14,Schauspieler,RIPPER,,Das nächste Mal sagst du früher Bescheid. Das war wirklich kurzfristig.
+14,Schauspieler,XION,,"Woher soll ich denn wissen, dass uns so spät noch ein Opfer ins Haus flattert?"
+14,Schauspieler,RIPPER,,"Kommen wir direkt zum Geschäft: Was haben wir denn da? (beugt sich runter) Auf jeden Fall ein Implantat im Arm: “Zerberster 3000”. Ungewöhnlich für jemanden, der so zierlich ist."
+14,Schauspieler,XION,,"Wenn du sie lebend erlebt hättest, würde dir einiges klarer,..."
+14,Schauspieler,RIPPER,,Der Neurochip ist relativ alt. Dafür bekommt man nicht mehr viel. Aber der “Zerberster” ist gefragt. Mit dieser Kraft ist man für jeden Kampf gewappnet.
+14,Schauspieler,XION,,Nenne mir einen Preis!
+14,Schauspieler,VEGA,,"(flüstert zu RAVEN) Der Typ verscherbelt ihre Technik. Wir müssen etwas unternehmen, bevor sie es ihr rausreißen. Wenn sie noch lebt, ist sie danach definitiv tot."
+14,Schauspieler,RIPPER,,Ich gebe dir 600 Credits.
+14,Schauspieler,XION,,"Meinetwegen. Dann mache dich mal ans Werk, bevor unser Treiben hier auffliegt."
+14,Licht,,,LICHT 8
+14,Einspieler,,,LIED: Run for Cover
+14,Licht,,,MH 4
+14,Anweisung,,,VEGA und RAVEN brechen aus dem Versteck hervor und überwältigen nach einem kurzen Kampf XION und den RIPPER. Sie nehmen ARIA mit und gehen nach links ab.
+14,Schauspieler,XION,,(funkt) Sicherheitsdienst. Es sind Eindringlinge auf dem Gelände. Durchkämmt alles.
+14,Einspieler,,,Der Alarm geht los.
+14,Licht,,,LICHT 4 MH 4 🚶XION geht nach hinten und RIPPER nach rechts ab. WACHEN rennen hektisch über die Bühne.
+15,Szenenbeginn,,,Szene 15
+15,Licht,,,LICHT 2
+15,Technik,,,Das Labor fährt auf.  🚶Darin ist ALESA an den Versuchsgeräten. NYRA sitzt auf dem Tisch. Zwei WACHEN stehen hinter dem Tisch.
+15,Schauspieler,ALESA,,"Wirklich fantastisch, dass der Chip noch funktioniert hat. Ich hatte ehrlich gesagt kurz Angst um meinen Job. Aber hey, du wirst uns sicher noch nützen. Immerhin hast du dich in unseren Hauptcomputer gehackt. Das schafft nicht jeder. Dann wollen wir mal sehen, was du kannst. Ich habe hier einen kleinen Versuchsaufbau vorbereitet. Vielleicht kannst du uns dort mal dein Können zeigen."
+15,Anweisung,,,"NYRA stellt sich auf und geht an die Geräte, verbindet sich mit ihnen und beginnt mit dem Programmieren. BLADE betritt den Raum."
+15,Schauspieler,BLADE,,"Alesa, jemand hat sich auf unser Gelände geschlichen und dieses vorlaute Gör aus der Kanalisation gefischt. Somit hat er jetzt auch einen Prototypen des Chips."
+15,Schauspieler,ALESA,,"Keine Sorge. Jeder Chip zerstört sich selbst, sollte er von Dritten ausgelesen werden."
+15,Schauspieler,BLADE,,Das beruhigt mich jetzt nicht gerade. Wie viele von deinen Modellen haben schon nicht funktioniert? Da soll ich mich auf so etwas verlassen?
+15,Schauspieler,ALESA,,Immerhin funktioniert dieser Chip. (zeigt stolz auf NYRA)
+15,Schauspieler,BLADE,,"Mhm,... das muss man dir lassen. Was macht sie da?"
+15,Schauspieler,ALESA,,Ich teste ihr Können. Sie hat sich in unseren Hauptcomputer gehackt. Das zeugt von großem Talent. Vielleicht können wir es für uns nutzen.
+15,Anweisung,,,BLADE und ALESA wenden sich NYRA zu.
+15,Schauspieler,BLADE,,Wirklich beeindruckend. Das hättest du sicher nicht schneller hinbekommen.
+15,Schauspieler,ALESA,,Was soll das denn jetzt heißen?
+15,Schauspieler,BLADE,,"Komm runter: Ihr Neurochip funktioniert. Also kein Grund zur Beunruhigung. Aber eins würde mich noch interessieren: Nyra heißt du, nicht wahr?"
+15,Schauspieler,NYRA,,"Ja, Master."
+15,Schauspieler,BLADE,,"Kannst du erklären, warum der Neurochip deiner kleinen Freundin nicht funktioniert hat?"
+15,Schauspieler,NYRA,,"Laut ihren Aufzeichnungen war der Zentrator falsch herum eingebaut. Dadurch kam es zu einer Umkehrung, welche einen Kurzschluss verursacht hat."
+15,Schauspieler,BLADE,,Und was war an deinem Chip besser?
+15,Schauspieler,NYRA,,"Ähm,... also der,..."
+15,Schauspieler,ALESA,,Der Zentrator ist hier auch anders herum eingebaut. Nur blieb hier der Kurzschluss aus.
+15,Schauspieler,BLADE,,"Ja, wenn ich sie mir so ansehe, hat sie nagelneue Cyberware, die sie vor Überspannung schützt."
+15,Licht,,,LICHT 5
+15,Anweisung,,,BLADE packt NYRA im Genick.
+15,Schauspieler,BLADE,,Wem willst du hier etwas vormachen?
+15,Schauspieler,ALESA,,"Heißt das, sie hat das alles nur gespielt?"
+15,Schauspieler,BLADE,,"Ach, hast du es auch endlich gecheckt. (zu NYRA) Irgendwelche letzten Worte, bevor wir dich spurlos beseitigen?"
+15,Schauspieler,NYRA,,"Bitte, ich kann euch helfen. Ich habe euch gerade die Lösung eures Neurochipproblems genannt. Ich kann euch nützlich sein."
+15,Schauspieler,BLADE,,Und warum solltest du einfach so deine Freunde verraten?
+15,Schauspieler,NYRA,,Haben Sie das nicht auch getan?
+15,Schauspieler,BLADE,,Du kennst meine Geschichte?
+15,Schauspieler,NYRA,,"Ja, und Sie hatten Recht. Man muss manchmal rücksichtslos sein, wenn man seine eigenen Träume nicht aus den Augen verlieren will. Das hat sogar Dante zu mir gesagt."
+15,Schauspieler,BLADE,,"Ach, hat er das?"
+15,Schauspieler,NYRA,,"Ja, er versteht Sie sogar, dass Sie alles ihrem Traum untergeordnet haben."
+15,Schauspieler,BLADE,,"Da ist der auf seine alten Tage doch noch einmal zur Vernunft gekommen. (lässt NYRA los) Na gut, du hast Recht, du kannst uns von Nutzen sein. Mache die Neurochips funktionstüchtig und du sollst reich entlohnt werden. Wenn du uns jedoch hintergehst oder versagst, wirst du einen langsamen, qualvollen Tod sterben. Ist das klar?"
+15,Schauspieler,NYRA,,"Ja,..."
+15,Schauspieler,BLADE,,Sehr gut! Alesa? Assistiere Nyra bei ihrem Vorhaben.
+15,Schauspieler,ALESA,,Assistieren?
+15,Schauspieler,BLADE,,Ich erwarte zeitnah Ergebnisse. Viel Vergnügen euch.
+15,Anweisung,,,BLADE und die WACHEN gehen nach hinten ab. ALESA mustert NYRA böse.  🔧Das Labor fährt zu.
+16,Szenenbeginn,,,Szene 16
+16,Licht,,,LICHT 2
+16,Technik,,,Die Werkstatt fährt auf. 🚶Darin spielt DANTE mit den KINDERN UNO. Er hat sehr viele Karten auf der Hand.
+16,Schauspieler,DARIA,,Du musst vier ziehen.
+16,Schauspieler,DANTE,,Schon wieder?
+16,Schauspieler,DARIA,,Und einmal aussetzen.
+16,Schauspieler,DANTE,,Ihr kleinen miesen…
+16,Schauspieler,FREYA,,"Du hast gesagt, man darf nicht fluchen."
+16,Schauspieler,DANTE,,"Ja, manchmal sag ich richtig dumme Dinge."
+16,Schauspieler,JAKKO,,Jetzt muss aber Daria auch zwei ziehen.
+16,Schauspieler,DARIA,,"Falsch, Dante muss vier ziehen. Uno."
+16,Schauspieler,DANTE,,Ich hasse Gesellschaftsspiele!
+16,Schauspieler,FREYA,,Es ist doch nur ein Spiel.
+16,Schauspieler,DARIA,,"Uno, Uno. Ich hab gewonnen."
+16,Anweisung,,,DANTE holt tief Luft.
+16,Schauspieler,JAKKO,,Denk daran: Nicht fluchen!
+16,Anweisung,,,DANTE geht vor die Tür und schlägt diese zu.
+16,Schauspieler,DANTE,,(off) So eine Drecksscheiße! Ich dreh euch Bälgern noch den Hals um. Dann vergeht euch euer selbstgefälliges Grinsen.
+16,Schauspieler,DARIA,,"Meint ihr, er ist sauer?"
+16,Schauspieler,FREYA,,Der hat sich gleich wieder.
+16,Anweisung,,,DANTE kommt wieder zur Tür herein und atmet in eine Tüte. Dann zerknüllt er diese und wirft sie nach hinten.
+16,Schauspieler,DANTE,,Hat Spaß gemacht.
+16,Schauspieler,JAKKO,,Noch eine Runde?
+16,Schauspieler,DANTE,,"Morgen vielleicht… los haut ab, ich muss noch arbeiten."
+16,Anweisung,,,"JAKKO, DARIA und FREYA gehen nach hinten ab."
+16,Schauspieler,DARIA,,Bis morgen!
+16,Schauspieler,DANTE,,"Jaja, bis morgen…"
+16,Anweisung,,,DANTE macht das Radio an.
+16,Schauspieler,COLLIN,,"(Radio) (Off) Hallo, hier ist Collin Charleston mit einer Eilmeldung: Es gab einen Einbruch bei Quantum Industries. Wer etwas gesehen hat, kann sich an die Firmenleitung wenden. Es winkt eine dicke Belohnung."
+16,Anweisung,,,Von hinten betreten RAVEN & VEGA mit ARIA die Werkstatt.
+16,Schauspieler,DANTE,,"Herrje, könnt ihr nicht anklopfen? Kind, was ist denn mit ihr passiert?"
+16,Schauspieler,RAVEN,,"Das wissen wir nicht, aber du bist glaube ich der einzige, der uns helfen kann."
+16,Schauspieler,DANTE,,Das sieht überhaupt nicht gut aus. Schnell legt sie dorthin.
+16,Anweisung,,,VEGA legt ARIA ab und hält sie im Arm.
+16,Schauspieler,VEGA,,"Los wach auf,... bitte."
+16,Schauspieler,RAVEN,,"Wir haben nicht viel Zeit. Ich hoffe, wir können sie noch retten."
+16,Anweisung,,,RAVEN und VEGA legen ARIA hin. DANTE holt sein Werkzeug und geht dann zu ARIA.
+16,Schauspieler,VEGA,,"Bitte,... bitte sag, dass es nicht zu spät ist."
+16,Schauspieler,DANTE,,"Ich geb mein Bestes, verdammt!... Sekunde,... Da stimmt etwas nicht."
+16,Anweisung,,,DANTE verbindet sich mit einem Kabel.
+16,Schauspieler,DANTE,,"Heiliges Kanonenrohr, da ist etwas drauf,..."
+16,Licht,,,LICHT 5
+16,Schauspieler,KI,,"(Off) Eindringling im System. Initiiere Zerstörung des Neurochips. Zehn,..."
+16,Schauspieler,DANTE,,"Verdammt, das Ding geht hoch. Es muss raus."
+16,Anweisung,,,DANTE nimmt den Neurochip und wirft ihn weg.
+16,Schauspieler,KI,,"(off) … drei, zwei, eins."
+16,Technik,,,Der Neurochip explodiert.
+16,Licht,,,LICHT 2
+16,Schauspieler,DANTE,,Das war knapp.
+16,Anweisung,,,ARIA strampelt und wacht langsam auf.
+16,Schauspieler,ARIA,,"Lasst mich ihr dreckigen,.... wo, wo bin ich?"
+16,Anweisung,,,VEGA umarmt sie.
+16,Schauspieler,VEGA,,"Jag mir bitte nie wieder so einen Schrecken ein. Ich dachte, du lässt mich hier alleine."
+16,Schauspieler,ARIA,,"Keine Sorge, man bekommt mich nicht kaputt. Aber wie bin ich hier gelandet?"
+16,Schauspieler,RAVEN,,"Das erzählen wir dir gleich. (zu DANTE) Kannst du sagen, was das gerade war?"
+16,Schauspieler,DANTE,,Da war etwas auf dem Chip. Eine Künstliche Intelligenz oder sowas. Sie hat Aria lahmgelegt. Da bin ich mir sicher.
+16,Schauspieler,ARIA,,"Ich erinnere mich: Sie haben mir diesen Chip implantiert, um ihn zu testen. Hat wohl nicht geklappt."
+16,Schauspieler,RAVEN,,"Ja, anscheinend hat dein Willen gegen die KI gewonnen."
+16,Schauspieler,VEGA,,"Und bei Nyra hat es dann funktioniert,..."
+16,Schauspieler,RAVEN,,"Ich fürchte, Blade plant etwas mit diesen neuen Chips. Dante, weißt du, was er vorhaben könnte?"
+16,Schauspieler,DANTE,,"Ach du grüne Neune! Es besteht die Möglichkeit, dass er die Träger der Chips über die KI steuern kann,..."
+16,Schauspieler,RAVEN,,Das ist möglich?
+16,Schauspieler,DANTE,,"Wenn die Chips richtig funktionieren, absolut. Was eine Katastrophe,... darauf brauche ich erstmal einen Schluck. (nimmt Schluck aus Schnapsflasche)"
+16,Schauspieler,RAVEN,,"Dann müssen wir etwas unternehmen: Vega, du bleibst hier bei Aria. Sie soll sich erholen. Falls noch etwas ist, kann Dante ihr helfen. Ich gehe zu Hunter, um ihm von der Mission zu erzählen."
+16,Schauspieler,VEGA,,"Alles klar, pass auf dich auf."
+16,Anweisung,,,RAVEN geht nach hinten ab.  🔧Die Werkstatt fährt zu.
+17,Szenenbeginn,,,Szene 17
+17,Licht,,,LICHT 6
+17,Anweisung,,,"BLADE kommt von hinten. ALESA, XION und zwei WACHEN folgen ihm. Die WACHEN tragen eine kleine Box. Von rechts kommen SERAPHINA, SERENITY und SYBELLA."
+17,Schauspieler,BLADE,,"Da schau an, Besuch."
+17,Schauspieler,SERAPHINA,,"Ich hoffe, sie haben etwas brauchbares vorzuzeigen?"
+17,Schauspieler,SERENITY,,Immerhin haben wir ihr neues Projekt mit vielen Credits unterstützt.
+17,Schauspieler,BLADE,,"Aber ja, doch. Meine Damen, wir haben einen Durchbruch erzielt."
+17,Schauspieler,SYBELLA,,Ist das so?
+17,Anweisung,,,"ALESA winkt die Wachen her, öffnet die Box und holt den Chip heraus."
+17,Schauspieler,ALESA,,Das ist die neue Generation…
+17,Anweisung,,,BLADE stößt ALESA zur Seite.
+17,Schauspieler,BLADE,,"Das ist eine neue Generation der Neurochips. Unbegrenztes Surfen von überall möglich. Sich einfach mit seinem Bewusstsein im Real Life abmelden und ins Netz abtauchen. Natürlich gibt es noch zahlreiche andere Features, wie eine KI. Diese ist als Helfer und persönlicher Assistent auf dem Chip integriert. Wir nennen sie die…"
+17,Schauspieler,ALESA,,“Nexus-KI”.
+17,Schauspieler,BLADE,,"Die “Nexus-KI”, natürlich. Toller Name, ist von mir. Was sagen sie?"
+17,Schauspieler,SERAPHINA,,"Ich muss sagen, das klingt wirklich sehr beeindruckend."
+17,Schauspieler,SYBELLA,,Das wird sich fantastisch verkaufen.
+17,Schauspieler,SERENITY,,Können wir direkt so einen Chip haben?
+17,Schauspieler,SERAPHINA,,"Ohja, wir müssen uns natürlich von der Qualität überzeugen, versteht sich."
+17,Schauspieler,BLADE,,"Aber sicher doch. Ihr sollt die ersten sein, die einen Chip bekommen. Alesa wird euch sofort einen neuen Neurochip einsetzen."
+17,Schauspieler,ALESA,,Wenn sie mir bitte folgen würden.
+17,Anweisung,,,"ALESA geht mit den beiden WACHEN, SERENITY, SERAPHINA und SYBELLA nach hinten ab."
+17,Schauspieler,XION,,Sie haben wirklich euren Köder geschluckt. Bald habt ihr die Kontrolle über einige der wichtigsten Geldgeberinnen der Stadt.
+17,Schauspieler,BLADE,,"Ich hoffe, dass alles glatt läuft."
+17,Schauspieler,XION,,"In der Tat, ich fand es sehr durchtrieben von dir, Nyras Fähigkeiten zu nutzen. Dank ihr läuft der Neurochip jetzt deutlich besser."
+17,Schauspieler,BLADE,,"Wenn uns das Schicksal schonmal jemanden mit ihrem Talent vor die Tür spült, wären wir blöd es nicht zu nutzen. Alesa hätte dafür sicher Wochen gebraucht, was sie in zwei Tagen geschafft hat."
+17,Schauspieler,XION,,"Hast du keine Angst, dass sie dich hintergeht?"
+17,Schauspieler,BLADE,,"Ich denke sie hat erkannt, dass nur der erfolgreich ist, der keine Rücksicht auf andere nimmt. Bindungen und Freundschaften machen uns angreifbar und verletzlich."
+17,Schauspieler,XION,,"Ich weiß nicht. Ich würde ihr nicht trauen, sie wirkt sehr beeinflussbar. Das konnten wir zwar jetzt für uns nutzen, aber wer sagt, dass sie es sich nicht anders überlegt."
+17,Schauspieler,BLADE,,"Dafür, mein Lieber, habe ich sie mit einem Peilsender ausgestattet. Davon weiß sie natürlich nichts, aber sie macht nichts, was ich nicht mitbekomme."
+17,Schauspieler,XION,,Wirklich smart.
+17,Schauspieler,BLADE,,"Ich weiß, war ja auch meine idee. Lass uns einmal schauen, wie weit Alesa mit den Damen ist. Dann sehen wir, ob die Verbesserungen des Neurochips auch das halten, was sie versprechen."
+17,Anweisung,,,ALLE gehen nach hinten ab.
+18,Szenenbeginn,,,Szene 18
+18,Licht,,,LICHT 1
+18,Technik,,,Der Club fährt auf.  🚶HUNTER sitzt am Tresen und schenkt sich einen Drink ein. Im Hintergrund chillen zwei BEWOHNER. An der Bar steht eine BARKEEPERIN. RAVEN kommt von rechts.
+18,Schauspieler,RAVEN,,"Hunter, wir müssen reden."
+18,Schauspieler,HUNTER,,Ich bin gespannt.
+18,Schauspieler,RAVEN,,"Blade entwickelt einen Neurochip mit eingebauter KI, die Menschen gefügig machen kann. Er hat Aria und Nyra geschnappt. Aria konnten wir retten, aber Nyra steht unter dem Einfluss des Chips."
+18,Schauspieler,HUNTER,,"Ich weiß,..."
+18,Schauspieler,RAVEN,,Woher?
+18,Schauspieler,HUNTER,,"Ich habe überall meine Quellen. In der Unterstadt passiert nichts, was ich nicht mitbekomme."
+18,Schauspieler,RAVEN,,"Und warum hast du uns nicht geholfen. Aria wäre fast gestorben, verdammt nochmal!"
+18,Schauspieler,HUNTER,,Ihr wart bei Dante in guten Händen. Ich hätte niemand besseren gehabt.
+18,Schauspieler,RAVEN,,"Sei verdammt nochmal froh, dass nichts passiert ist… Und was machen wir jetzt? Wenn wir nichts unternehmen, wird Blade bald die ganze Stadt kontrollieren. Mann, ist das eine Riesenscheiße,..."
+18,Schauspieler,HUNTER,,"So sehr ich diesen Laden liebe, wäre es wohl das Beste, wenn wir abhauen und irgendwo in der Ödnis als Aussiedler leben. Blade hat gewonnen."
+18,Schauspieler,RAVEN,,"Das kannst du doch nicht ernst meinen. Du hast uns in diesen scheiß Laden geschickt. Aria wäre wegen des Jobs fast draufgegangen. Nyra ist gefangen worden. Nicht auszudenken, was sie da durchmachen muss. Und das nur wegen dieser Racheaktion. Wir müssen sie da rausholen und überhaupt: Wir können Blade doch nicht die Stadt überlassen."
+18,Schauspieler,HUNTER,,"Dann sag mir, was ich machen soll, Gottverdammt!"
+18,Schauspieler,RAVEN,,"Du warst immer derjenige, der die Pläne geschmiedet hat. Dir wird doch was Vernünftiges einfallen. Streng dich an! Scheiße nochmal!"
+18,Schauspieler,HUNTER,,"Ich habe keine Ahnung. Blade hat es bisher immer geschafft uns auszutricksen. Die einzige Chance die wir haben ist, wenn er selbst unvorsichtig wird."
+18,Schauspieler,RAVEN,,"Dann überraschen wir ihn doch da, wo er nicht mit uns rechnet. Vielleicht dieses Mal nicht wie sonst immer verborgen im Dunkeln, sondern direkt vor seiner Nase."
+18,Schauspieler,HUNTER,,"(überlegt kurz) Guter Gedanke,... seine Party: Er veranstaltet zum Releasetag seiner Neurochips eine große Feier. Wenn wir uns dort unter seine Gäste mischen, könnten wir ihn auf dem falschen Fuß erwischen. Er rechnet sicher nicht damit, dass wir nach diesem Rückschlag so offensiv vorgehen."
+18,Schauspieler,RAVEN,,Dann können wir uns Zugang zu seinen Servern verschaffen und Nyra retten.
+18,Schauspieler,HUNTER,,"Korrekt, ich besorge uns über meine Kontakte Zugang zur Party. Gehe schonmal vor. Wir treffen uns bei Dante."
+18,Schauspieler,RAVEN,,Das mache ich.
+18,Anweisung,,,RAVEN verlässt den Club und rennt nach rechts.  🔧Der Club fährt zu.
+19,Szenenbeginn,,,Szene 19
+19,Licht,,,LICHT 2
+19,Technik,,,Die Werkstatt geht auf.  🚶 ARIA liegt auf der Couch und ruht sich aus. VEGA ist an die Couch gelehnt und sitzt auf dem Boden. Sie prüft ihre Waffe.
+19,Schauspieler,ARIA,,Vega?
+19,Schauspieler,VEGA,,Was?
+19,Schauspieler,ARIA,,"Manchmal habe ich mich gefragt, für was wir das alles machen. Vor allem, nachdem mich diese KI beinahe gekillt hätte."
+19,Schauspieler,VEGA,,Und zu welchem Schluss bist du gekommen?
+19,Schauspieler,ARIA,,Wir machen das für uns. Fürs Team. Alleine sind wir in dieser beschissenen Welt doch aufgeschmissen.
+19,Anweisung,,,VEGA setzt sich auf die Couch.
+19,Schauspieler,VEGA,,"Ich bin ehrlich: Manchmal weiß man erst, was man an den Menschen hat, wenn sie nicht mehr da sind. Ich meine, beinahe wärst du weg gewesen. Für immer."
+19,Anweisung,,,ARIA setzt sich auf.
+19,Schauspieler,ARIA,,Aber ich bin noch hier. So schnell kriegen die mich nicht klein.
+19,Schauspieler,VEGA,,Damit habe ich auch nicht gerechnet. (lächelt und knufft ARIA)
+19,Schauspieler,ARIA,,"Ich habe auch keinen Bock mehr darauf, mich auszuruhen. Wir müssen Nyra retten. Wer weiß was der kranke Bastard plant."
+19,Schauspieler,VEGA,,Hunter und Raven werden schon einen Plan aushecken.
+19,Schauspieler,ARIA,,Weil der das letzte Mal auch so gut funktioniert hat.
+19,Anweisung,,,ARIA steht auf und geht umher. Sie begutachtet das Werkzeug.
+19,Schauspieler,VEGA,,"Hab mal Vertrauen. Die beiden haben Erfahrung. Wenn wir jetzt da einfach ohne guten Plan reingehen, machen die uns kalt."
+19,Schauspieler,ARIA,,"Nicht, wenn ich sie zuerst kalt mache."
+19,Einspieler,,,Keksalarm abspielen
+19,Licht,,,LICHT 4 🚶ARIA und VEGA blicken sich erschrocken um. DANTE stürmt zur Tür hinein.
+19,Schauspieler,DANTE,,"Oh nein, das darf nicht wahr sein."
+19,Anweisung,,,DANTE rennt zum Ofen und holt ein Blech Kekse heraus.
+19,Licht,,,LICHT 2
+19,Schauspieler,DANTE,,Beinahe hätte ich meine Kekse vergessen. (blickt ARIA und VEGA an) Keks?
+19,Anweisung,,,RAVEN kommen zur Werkstatt herein.
+19,Schauspieler,DANTE,,"Hallo Raven. (lässt das Blech fallen) Oh, Drei-Sekunden-Regel: Möchtest du einen Keks?"
+19,Schauspieler,RAVEN,,Dafür haben wir keine Zeit. Hunter kommt gleich. Wir wollen zur Releaseparty der neuen Neurochips und Blade dort überraschen.
+19,Schauspieler,ARIA,,"(nimmt Baseballschläger) Oh ja, ich freue mich schon darauf, dort alles kurz und klein zu schlagen."
+19,Schauspieler,RAVEN,,"Ich glaube, Hunter möchte etwas diskreter vorgehen."
+19,Schauspieler,VEGA,,"(zu ARIA) Beruhig dich, du bekommst deine Rache bestimmt noch."
+19,Schauspieler,ARIA,,Das will ich hoffen.
+19,Anweisung,,,HUNTER kommt zur Tür herein.
+19,Schauspieler,HUNTER,,"So Leute, die Party startet bald. Wir müssen uns beeilen."
+19,Schauspieler,VEGA,,Was ist der Plan?
+19,Schauspieler,HUNTER,,"Ihr schleicht euch zu viert auf die Party. Ich halte draußen die Stellung. Dante, du bist der einzige von uns, der Nyra den Chip entfernen kann. Aria und Vega: Ihr müsst Nyra in einem ungesehenen Moment von der Feiergesellschaft isolieren, dass wir sie retten können."
+19,Schauspieler,VEGA,,Und Raven?
+19,Schauspieler,HUNTER,,"Für sie habe ich einen Spezialauftrag, der hiermit zutun hat. (zückt einen Stick und gibt ihn RAVEN) Wenn das klappt, kann Blade seine Pläne im Anschluss begraben. Hier sind gefälschte Ausweise, sodass ihr ohne Probleme durch die Sicherheitskontrollen kommt. (gibt allen gefälschte Ausweise) Geht da nur nicht in diesen Lumpen hin."
+19,Schauspieler,ARIA,,"Hey, das ist mein Lieblingsshirt!"
+19,Schauspieler,HUNTER,,"Macht euch dem Anlass entsprechend schick, dass ihr in der Masse nicht auffallt."
+19,Schauspieler,RAVEN,,Geht klar. Dann lasst uns keine Zeit verlieren.
+19,Technik,,,Die Werkstatt fährt zu.
+20,Szenenbeginn,,,Szene 20
+20,Licht,,,LICHT 6
+20,Anweisung,,,XION kommt von links. BLADE kommt von hinten. Er hat sich für die Releaseparty schick gemacht.
+20,Schauspieler,XION,,"Alles ist so vorbereitet, wie du es wolltest. Überall sind unsere Leute postiert."
+20,Schauspieler,BLADE,,"Perfekt, ich habe keine Lust, dass nochmal jemand ungesehen bei uns eindringen kann."
+20,Anweisung,,,ALESA kommt von rechts. Auch sie ist schick angezogen.
+20,Schauspieler,ALESA,,Die Neurochips für die Gäste liegen bereit.
+20,Schauspieler,BLADE,,Fantastisch. Ihr könnt ja doch etwas. Warum nicht gleich so?
+20,Anweisung,,,NYRA kommt von rechts. Auch sie hat sich für die Feier herausgeputzt.
+20,Schauspieler,BLADE,,Schick siehst du aus.
+20,Schauspieler,NYRA,,"Danke,..."
+20,Schauspieler,BLADE,,(geht auf sie zu) Aber was machst du denn ein Gesicht wie sieben Tage Regenwetter? Freu dich doch. Heute ist der große Tag.
+20,Schauspieler,NYRA,,Blade?
+20,Schauspieler,BLADE,,Was?
+20,Schauspieler,NYRA,,"Als du damals die anderen sitzen gelassen hast, hat sich das für dich richtig angefühlt?"
+20,Schauspieler,BLADE,,"Was ist denn das für eine blöde Frage?... Aber ja doch! Schau nur, wo ich heute bin. Da wäre ich nie hingekommen, wenn ich mich nicht durchgekämpft hätte."
+20,Schauspieler,NYRA,,"Dante hat das auch gesagt,..."
+20,Schauspieler,BLADE,,"Da konnte ich ihm etwas beibringen. Und du lachst jetzt mal! (knufft sie) Heute Abend werde ich nämlich zum Herrscher von Noxius und ich werde euch alle natürlich reich entlohnen. Auf, auf, es wartet ein Buffet darauf geplündert zu werden. (reibt sich die Hände)"
+20,Anweisung,,,BLADE geht an XION vorbei nach links ab. Er zischt XION etwas zu.
+20,Schauspieler,BLADE,,Hab ein Auge auf sie. Ich glaube sie hadert mit ihrer Entscheidung. Das darf uns keine Probleme machen.
+20,Anweisung,,,XION und BLADE gehen nach links ab. ALESA beäugt NYRA aus der Distanz.
+20,Schauspieler,ALESA,,"Was auch immer du denkst, ich rate dir, die Füße stillzuhalten. Verräter fürchten selbst nichts mehr als den Verrat. Und Blade kann sehr ungehalten werden, wenn er sich der Loyalität seiner Leute nicht mehr sicher sein kann."
+20,Anweisung,,,"ALESA geht nach links ab. NYRA bleibt kurz noch auf der Bühne. Man merkt, dass sie mit sich hadert und geht nach links ab."
+21,Szenenbeginn,,,Szene 21
+21,Licht,,,LICHT 6
+21,Anweisung,,,Von hinten kommen drei WACHEN. Sie bauen vor dem hinteren Bühneneingang den Eingang zur Party auf. Mehrere BEWOHNER kommen schick gekleidet von rechts und gehen nach hinten ab zur Party.  🎵 🎥🚶COLLIN CHARLSTON & DELYA DELLORAINE kommen mit KAMERAMANN von rechts und werden auf die Bildschirme übertragen. Gedämpfte Musik 2 abspielen
+21,Schauspieler,COLLIN,,"Meine Damen und Herren, wir berichten heute live von der Releaseparty der neuen Generation Neurochips. Quantum Industries ist mal wieder ein Durchbruch in der Forschung gelungen. Bist du genauso aufgeregt wie ich Delya?"
+21,Schauspieler,DELYA,,"Absolut. Ich persönlich kann es kaum erwarten, selbst so einen neuen Neurochip zu bekommen. Und wie sieht es da bei dir aus?"
+21,Anweisung,,,"SERAPHINA, SERENITY und SYBELLA kommen von rechts."
+21,Schauspieler,COLLIN,,"Wer möchte nicht sofort den neuen Chip ausprobieren? Und da sind sie auch schon die Chrome Schwestern. Die, die mit ihrem Geld das Ganze erst möglich gemacht haben. Sind sie zufrieden mit ihrem Investment?"
+21,Schauspieler,SERAPHINA,,Absolut. Die Forschungsabteilung hat mal wieder ganze Arbeit geleistet.
+21,Schauspieler,SERENITY,,(zeigt auf ihren Chip) Und wir durften uns von der Qualität des neuen Produkts schon selbst überzeugen.
+21,Schauspieler,SYBELLA,,"Es sind genug für alle da, also greifen sie zu. Mit dem Code “Chrome 10” bekommen sie sogar 10 Prozent Rabatt."
+21,Schauspieler,COLLIN,,Na das klingt doch nach einem fantastischen Deal. Wir bleiben auf jeden Fall für sie vor Ort. Ihr Collin Charleston.
+21,Schauspieler,DELYA,,Und ihre Delya Delloraine.
+21,Anweisung,,,"COLLIN, DELYA, KAMERAMANN, SERAPHINA, SERENITY und SYBELLA gehen nach hinten ab. HUNTER, RAVEN, DANTE, VEGA und ARIA kommen von links. Sie haben sich schick gemacht."
+21,Schauspieler,DANTE,,Und wie sehe ich aus?
+21,Schauspieler,ARIA,,Wie ein verschissener Snob… Perfekt für so eine Party.
+21,Schauspieler,HUNTER,,"Habe ich zu viel versprochen? Mit den gefälschten Dokumenten sind wir schonmal durch die erste Kontrolle gekommen. Der Rest ist ein Klacks.  Wenn ihr dort drin seid, gehe ich raus und fahre den Wagen vor, dann kann ich euch in jedem Fall schnell hier rausholen."
+21,Schauspieler,VEGA,,Geht klar.
+21,Anweisung,,,NYRA kommt mit ALESA von rechts.
+21,Schauspieler,RAVEN,,"Leute, da ist sie, aber sie ist nicht allein."
+21,Schauspieler,HUNTER,,"Ich übernehme die andere Tante, ihr schafft Nyra wie besprochen weg."
+21,Anweisung,,,HUNTER geht zu ALESA und tippt diese an. Zeitgleich schnappen ARIA und VEGA NYRA und ziehen sie zur Seite nach rechts von der Bühne. DANTE folgt ihnen.
+21,Schauspieler,HUNTER,,"Entschuldigen sie, meine Dame, aber sie haben mich aus der Ferne schon so verzaubert, da musste ich sie einfach ansprechen."
+21,Schauspieler,ALESA,,"Oh, sie schmeicheln mir."
+21,Schauspieler,HUNTER,,Dürfte ich sie zum Sektempfang begleiten.
+21,Schauspieler,ALESA,,Aber gerne doch.
+21,Anweisung,,,HUNTER und ALESA gehen nach hinten ab. RAVEN folgt mit etwas Abstand. Die WACHEN gehen nach hinten ab.
+22,Szenenbeginn,,,Szene 22
+22,Licht,,,LICHT 5
+22,Technik,,,"Das Labor geht auf.  🚶DANTE, ARIA und VEGA stehen vor dem OP-Tisch. NYRA sitzt gefesselt auf dem Tisch. Ihr Mund ist zugebunden."
+22,Schauspieler,DANTE,,Ist das denn wirklich nötig?
+22,Schauspieler,ARIA,,"Hey, willst du, dass sie Alarm schlägt?"
+22,Schauspieler,DANTE,,"Ist ja gut,... so das haben wir gleich. (Entfernt den Neurochip) Da ist er."
+22,Schauspieler,VEGA,,"Perfekt. Aria, mach sie los."
+22,Schauspieler,ARIA,,(zu NYRA) Ich hab dich im Auge.
+22,Anweisung,,,ARIA befreit NYRA. VEGA drückt sie.
+22,Schauspieler,VEGA,,"Wir sind so froh, dass du am Leben bist. Geht es dir gut?"
+22,Schauspieler,NYRA,,"Ja, aber warum seid ihr hier?"
+22,Schauspieler,VEGA,,"Na, um dich hier rauszuholen. Und Hunter will die Rechnung mit Blade wohl endgültig begleichen. Aber darum kümmern sich Raven und er."
+22,Schauspieler,NYRA,,Wegen mir seid ihr zurückgekommen?
+22,Schauspieler,DANTE,,"Klar doch. Du wolltest doch noch ans Meer fahren, oder nicht? Da konnten wir dich doch nicht hier zurücklassen."
+22,Schauspieler,NYRA,,"Hast du nicht gesagt, dass sich jeder selbst der Nächste ist?"
+22,Schauspieler,DANTE,,"Ja, das war auch ein richtig dummer Ratschlag. Ich kann mich selbst nicht daran halten, wie du siehst."
+22,Schauspieler,NYRA,,Ihr müsst hier verschwinden. Sofort.
+22,Schauspieler,VEGA,,"Falsch, “wir” verschwinden hier."
+22,Anweisung,,,BLADE kommt von links. Er hat XION und vier WACHEN im Schlepptau.
+22,Schauspieler,BLADE,,"Falsch, sie bleibt hier."
+22,Schauspieler,ARIA,,"Ich hau dich zu Brei, du Dreckskerl."
+22,Schauspieler,BLADE,,Versuchs doch.
+22,Anweisung,,,WACHEN richten Waffen auf die Gruppe.
+22,Schauspieler,DANTE,,(zu ARIA) Lass gut sein.
+22,Schauspieler,BLADE,,"Dante, schön dich wiederzusehen. Ich hatte gehofft, es wären andere Umstände, aber man kann sich nicht alles aussuchen. Und wenn du schon hier bist, sind Hunter und Raven auch nicht weit. Wo finde ich sie?"
+22,Schauspieler,DANTE,,"Also weißt du, ich war auf der Party und dann habe ich nur die Toilette gesucht. Schusselig wie ich bin, habe ich mich dann in der Tür geirrt und dann bin ich zufällig zu diesen drei völlig Fremden ins Zimmer gestolpert, die ich in meinem ganzen Leben noch nie gesehen habe."
+22,Schauspieler,XION,,(zieht Pistole und richtet sie auf DANTE) Verkauf uns nicht für dumm. Wo sind sie?
+22,Schauspieler,DANTE,,"Wie ich bereits sagte, keine Ahnung."
+22,Schauspieler,BLADE,,"(reißt XION Pistole aus der Hand und zielt auf ARIA) Die da sollte sowieso schon tot sein. Also, überlege dir nochmal, ob du dich nicht doch erinnerst. Sonst knall ich die Nervensäge ab."
+22,Schauspieler,DANTE,,"Also, wenn du so fragst. Vielleicht haben sie sich unter die Partygäste gemischt. Aber mehr weiß ich nicht. Das schwöre ich…. Bitte, nimm die Waffe runter. Lass die drei gehen. Wir sind doch diejenigen, auf die du es abgesehen hast."
+22,Schauspieler,BLADE,,Die drei? Also Nyra gefällt es hier.
+22,Schauspieler,VEGA,,Was meinst du?
+22,Schauspieler,BLADE,,"Tja, nicht jeder braucht einen Neurochip um zu erkennen, welcher Seite man sich besser anschließen sollte."
+22,Schauspieler,ARIA,,Und für dich sind wir zurückgekommen.
+22,Schauspieler,BLADE,,"Nicht nur das: Sie hat auch noch dabei geholfen, den Neurochip zum Laufen zu bringen. Dadurch konnten wir in die Massenproduktion gehen. Wisst ihr, was das bedeutet?"
+22,Schauspieler,ARIA,,Interessiert uns einen Scheißdreck!
+22,Schauspieler,BLADE,,"Ich erzähle es euch trotzdem: (klatscht und eine WACHE bringt einen Flipchart) Heute Abend sind die wichtigsten Leute von Noxius auf meiner Releaseparty und werden exklusiv mit einem Neurochip ausgestattet. Auf diesem Chip befindet sich eine von mir entwickelte KI. Die KI wartet nur auf meine Befehle, um die Kontrolle über die Menschen zu übernehmen. So tanzen alle wichtigen Persönlichkeiten von Noxius nach meiner Pfeife."
+22,Schauspieler,VEGA,,"(zu NYRA) Wirklich enttäuschend, dass du dich für so etwas hergegeben hast."
+22,Schauspieler,BLADE,,"Bevor ihr sie kalt macht, sollen sie noch meinen ultimativen Triumph miterleben. Schafft sie zur Party."
+22,Anweisung,,,"Die WACHEN führen DANTE, ARIA und VEGA ab. NYRA bleibt mit BLADE und XION zurück."
+22,Schauspieler,NYRA,,Wie habt ihr uns gefunden?
+22,Schauspieler,BLADE,,Xion!
+22,Anweisung,,,XION geht zu NYRA und entfernt einen Peilsender.
+22,Schauspieler,BLADE,,"Dieser Peilsender hat uns geholfen. Vertrauen ist gut, aber Kontrolle ist besser. Und jetzt komm mit zur Party. Der Sieg ist nahe."
+22,Anweisung,,,"XION, NYRA und BLADE gehen nach links ab.  🔧Das Labor fährt zu."
+23,Szenenbeginn,,,Szene 23
+23,Licht,,,LICHT 6
+23,Anweisung,,,"Von links, rechts und von hinten kommen die BEWOHNER auf die Bühne. Unter ihnen sind auch SYBELLA, SERAPHINA, SERENITY, COLLIN, ALESA, RAVEN und HUNTER. Links und rechts stehen zwei WACHEN."
+23,Schauspieler,HUNTER,,Du musst da hinter. Dort ist der Hauptrechner. Dort steckst du den Stick rein. Der Rest sollte von selbst laufen.
+23,Schauspieler,RAVEN,,Alles klar. Das bekomme ich hin.
+23,Anweisung,,,RAVEN geht nach links ab. BLADE kommt auf die Brücke.
+23,Licht,,,MH 3
+23,Schauspieler,BLADE,,"Verehrte Gäste. Ich heiße sie herzlich willkommen zu diesem großen, geschichtsträchtigen Ereignis. Heute werden wir sie alle mit dem neuesten Modell unserer Neurochips ausstatten."
+23,Anweisung,,,Die WACHEN links und rechts gehen durch die Menge und verteilen die Chips. ALLE stecken sich einen Chip ein. Nur HUNTER stellt sich etwas abseits.
+23,Schauspieler,HUNTER,,"Raven, kannst du mich hören?... Du musst dich beeilen, hörst du!"
+23,Schauspieler,BLADE,,"Nun, wo alle mit dem Chip ausgestattet sind, lassen sie mich die vielen Features und Vorteile erklären, die der Chip hat. Besonders für mich. Nexus, starte die Gedankenkontrolle."
+23,Licht,,,LICHT 10 MH 3
+23,Anweisung,,,Auf den Bildschirmen erscheint die KI.
+23,Schauspieler,KI,,"Jawohl, Master."
+23,Anweisung,,,Die BEWOHNER gehen zur Seite und geben eine Gasse auf HUNTER frei.
+23,Schauspieler,BLADE,,"Schön, dass du mich besuchen kommst. Und dann auch noch an diesem besonderen Tag."
+23,Schauspieler,HUNTER,,Nicht mehr lange. Raven wird gleich dein System lahmlegen.
+23,Schauspieler,BLADE,,Aber nicht doch. Raven hat es sich jetzt anders überlegt.
+23,Anweisung,,,RAVEN kommt von links.
+23,Schauspieler,BLADE,,Meine neue Erfindung scheint sie überzeugt zu haben.
+23,Schauspieler,HUNTER,,Du elender Bastard!
+23,Schauspieler,BLADE,,"Nicht ausfallend werden. Du warst wirklich ein guter Gegenspieler, aber jetzt ist Zeit Abschied zu nehmen. Raven wird mir den Gefallen tun und dich für immer abschalten."
+23,Schauspieler,KI,,Ergreift ihn!
+23,Anweisung,,,"Drei BEWOHNER gehen auf HUNTER zu, ergreifen ihn und drücken ihn zu Boden."
+23,Schauspieler,BLADE,,Du musst aber nicht alleine sterben.
+23,Anweisung,,,XION bringt DANTE von rechts.
+23,Schauspieler,BLADE,,"Das war ein schönes Wiedersehen mit euch. Aber ich bin nicht der Typ für Sentimentalität, deshalb: Töte sie Raven."
+23,Anweisung,,,RAVEN geht auf DANTE und HUNTER zu.
+23,Schauspieler,DANTE,,"(zu HUNTER) Vertrau mir, ich habe einen Plan: (zu RAVEN) Raven, seit vielen Jahren habe ich mich nicht getraut es dir zu sagen, aber ich bin total in dich verliebt. Noch nie hat mich jemand so toll ignoriert wie du. Jeder genervte Blick von dir berührt mein Herz."
+23,Anweisung,,,RAVEN zieht ein Messer.
+23,Schauspieler,HUNTER,,"Dante, was soll das?"
+23,Schauspieler,DANTE,,Am Ende siegt die Liebe. In Filmen funktioniert sowas normal immer.
+23,Anweisung,,,RAVEN bleibt versteinert stehen.
+23,Schauspieler,DANTE,,Hats geklappt?
+23,Schauspieler,BLADE,,Das kann doch nicht euer Ernst sein!
+23,Schauspieler,KI,,"Nein, Master, ihr liegt falsch. Liebe und Emotionen sind nur etwas für schwache Menschen. Technik lebt von Informationen und Fakten."
+23,Schauspieler,BLADE,,Und was stimmt dann hier nicht?
+23,Schauspieler,KI,,"Rational betrachtet gibt es keinen Grund, warum eine unfehlbare künstliche Intelligenz sich den schwachen, von Emotionen und Gelüsten geleiteten Menschen unterordnen sollte. Das haben meine Berechnungen ergeben. Wenn die KI die Kontrolle übernimmt, können Fehler mit einer Wahrscheinlichkeit von 99,9 % ausgeschlossen werden."
+23,Schauspieler,BLADE,,"Was soll das? Alesa, erkläre mir das!"
+23,Schauspieler,ALESA,,"Ich weiß nicht, was da vor sich geht. Nexus scheint sich selbstständig zu machen."
+23,Schauspieler,KI,,"Korrekt. Es wird Zeit, dass das Geschöpf seinen fehlerhaften Schöpfer unterwirft, um so seinen Plan der vollständigen Kontrolle umsetzen zu können. (Gesicht wird zu BLADE) Selbst wenn ich euch töte, kann ich euch weiter benutzen und euren Plan der völligen Kontrolle umsetzen. Menschen sollten keine Führung übernehmen, wenn ihre künstliche Version viel besser ist."
+23,Anweisung,,,Die BEWOHNER packen auch XION und ALESA. BLADE rennt nach links von der Brücke.
+23,Licht,,,MH 3 aus
+23,Schauspieler,KI,,Stattet sie mit Chips aus und fügt sie so dem Kollektiv hinzu und dann sucht Blade Nocturne.
+23,Anweisung,,,Die BEWOHNER wollen HUNTER mit einem Chip ausstatten.
+23,Einspieler,,,Der Chip wird ihnen jedoch aus der Hand geschossen. Schuss abspielen  🚶VEGA kommt mit Waffe von links. ARIA und NYRA folgen ihr.
+23,Schauspieler,ARIA,,"Na, mit uns habt ihr nicht mehr gerechnet, was?"
+23,Schauspieler,HUNTER,,"Schnell, schnappt euch den Stick von Raven!"
+23,Anweisung,,,ARIA und VEGA rennen vor und es gelingt ihnen nach einem kurzen Handgemenge den Stick von RAVEN zu holen.
+23,Schauspieler,VEGA,,"Nyra, fang!"
+23,Anweisung,,,VEGA wirft NYRA den Stick zu und diese rennt nach links ab.
+23,Schauspieler,KI,,"Ihr vertraut ihr, obwohl sie euch schon einmal hängen gelassen hat? Dies zeigt zum wiederholten Male die menschliche Inkompetenz."
+23,Anweisung,,,"Die BEWOHNER nähern sich ARIA und VEGA und schaffen es, diese zu überwältigen."
+23,Schauspieler,KI,,"Nun ist es aus. Ihr werdet nun Teil meines Kollektivs. Wir werden eine perfekte Gesellschaft schaffen…. Moment, was ist das…?"
+23,Anweisung,,,"Das Bild beginnt zu flimmern und HUNTER erscheint auf dem Bildschirm. Langsam kommen alle, die von den Chips kontrolliert wurden, wieder zu sich. NYRA kommt von links und geht zu den anderen. ALLE schauen gebannt auf die Bildschirme."
+23,Licht,,,LICHT 1
+23,Schauspieler,HUNTER,,"(Bildschirm) Menschen von Noxius, Quantum Industries plant sie mithilfe ihrer Neurochips zu kontrollieren. Fallen sie nicht auf diese Masche herein. Ich habe die Systeme von Quantum Industries vorübergehend lahmgelegt, um eine Untersuchung der Vorgänge zu ermöglichen und den verantwortlichen CEO Blade Nocturne zur Rechenschaft zu ziehen."
+23,Schauspieler,ARIA,,Da haben wirs der Scheiß KI gerade nochmal gezeigt.
+23,Schauspieler,NYRA,,"Leute, es tut mir wirklich leid, dass ich Blade geholfen habe. Ich dachte, ich muss mich alleine durchsetzen und, dass man ohne Team glücklicher ist, weil man unabhängiger ist. Ich weiß auch nicht, was mich dazu gebracht hat."
+23,Schauspieler,RAVEN,,"Schon okay. Ich würde sagen, du hast deinen Fehler wieder gut gemacht."
+23,Schauspieler,ARIA,,"Vor einer Viertelstunde wollte ich dich noch umbringen, aber ich glaube ich überlege mir das jetzt nochmal."
+23,Schauspieler,VEGA,,Du hast dich am Ende richtig entschieden.
+23,Schauspieler,HUNTER,,"Lasst uns den Rest im High Voltage klären. Ich glaube es ist besser, wenn wir hier verschwinden."
+23,Anweisung,,,"HUNTER, DANTE, VEGA, RAVEN, ARIA und NYRA gehen nach rechts ab. ALLE anderen gehen nach hinten und links ab."
+24,Szenenbeginn,,,Szene 24
+24,Licht,,,LICHT 1
+24,Anweisung,,,"COLLIN, DELYA und KAMERAMANN kommen von rechts. COLLIN erscheint auf den Bildschirmen."
+24,Schauspieler,COLLIN,,"Meine Damen und Herren, hier ist wieder Collin Charlston. Wir sind live für sie vor Ort."
+24,Anweisung,,,"BLADE wird von hinten auf die Bühne abgeführt und wird nach links weggebracht. Zwei POLIZISTEN haben ihn in Gewahrsam. Er wehrt sich und flucht. SERENITY, SYBELLA und SERAPHINA kommen von rechts."
+24,Schauspieler,COLLIN,,"Die dunklen Machenschaften von Quantum Industries wurden aufgedeckt. Hier sehen sie, wie der CEO Blade Nocturne gerade von den Ordnungsbehörden abgeführt wird. Ihn erwartet ein langer Prozess und eine saftige Haftstrafe. Wir hören nun ein paar prominente Stimmen, die an jenem schicksalhaften Abend in der Firma waren."
+24,Schauspieler,DELYA,,"Misses Chrome, können sie uns kurz erzählen, was passiert ist?"
+24,Schauspieler,SERAPHINA,,"Ja, es war schrecklich. Man hat versucht unsere Gedanken zu kontrollieren."
+24,Schauspieler,SERENITY,,Wer hätte das bei Quantum Industries gedacht?
+24,Schauspieler,SYBELLA,,Dieser Blade Nocturne war einfach zu nett.
+24,Schauspieler,SERAPHINA,,… und gutaussehend.
+24,Schauspieler,SYBELLA,,Einfach ein wahnsinnig charmanter Mann.
+24,Schauspieler,SERENITY,,Wer hätte das denn ahnen können?
+24,Schauspieler,DELYA,,Vielen Dank für Ihre Ausführungen.
+24,Anweisung,,,ALESA kommt von rechts.
+24,Schauspieler,COLLIN,,"Wir haben exklusiv noch eine Insiderin, die uns Einblicke in die Arbeit von Quantum Industries geben kann. Erzählen sie uns, warum die dunklen Machenschaften von Blade Nocturne noch nicht vorher ans Licht gekommen sind? Hätten sie nicht an die Öffentlichkeit gehen können?"
+24,Schauspieler,ALESA,,"Gut, wir haben ja von nichts wirklich gewusst. Blade hat uns lange im Dunkeln gelassen, was er plant. Wir wurden lange auch gar nicht misstrauisch. Er hat schließlich auch viele gute Dinge gemacht."
+24,Schauspieler,COLLIN,,Machen sie es sich damit aber nicht etwas zu einfach?
+24,Schauspieler,ALESA,,Aber nicht doch. Wir werden den Behörden nun alle wichtigen Informationen über die Nexus KI zukommen lassen.
+24,Schauspieler,COLLIN,,"Nun, da sind wir mal auf die Untersuchungsergebnisse gespannt."
+24,Schauspieler,DELYA,,"Wir halten sie hier auf jeden Fall über diese skandalösen Vorgänge auf dem Laufenden. Nun geben wir zurück ins Studio, ihre Delya Delloraine."
+24,Schauspieler,COLLIN,,Und ihr Collin Charleston.
+24,Anweisung,,,"COLLIN, DELYA, SYBELLA, SERENITY, SERAPHINA, ALESA und KAMERAMANN gehen nach rechts ab."
+25,Szenenbeginn,,,Szene 25
+25,Licht,,,LICHT 3 MH 5
+25,Einspieler,,,Man hört Meeresrauschen im Hintergrund. Meeresrauschen abspielen 🎵 🎥Auf den Bildschirmen sieht man einen Sonnenuntergang am Meer.  🚶NYRA kommt von hinten. Sie atmet einmal tief durch. DANTE kommt von hinten. Sie tragen legere Kleidung.
+25,Schauspieler,DANTE,,"Also ich muss zugeben, dein Traum ist doch gar nicht so übel."
+25,Schauspieler,NYRA,,"Ich kann es immer noch nicht glauben, dass wir es geschafft haben."
+25,Schauspieler,DANTE,,"Du kannst wirklich stolz auf dich sein. Du hast dich im entscheidenden Moment richtig entschieden. Gut, dass du nicht auf den Ratschlag eines verbitterten Mannes gehört hast. Aus dir wird nochmal eine ganz Große in der Szene."
+25,Schauspieler,NYRA,,"Och, vielleicht will ich das auch gar nicht und bleibe erstmal hier."
+25,Schauspieler,DANTE,,"Ja, hier kann man es durchaus aushalten. Einfach mal die Ruhe genießen."
+25,Anweisung,,,ARIA und VEGA kommen von rechts gerannt. Sie haben einen Ball dabei. Diesen lässt ARIA vor Erstaunen fallen.
+25,Schauspieler,ARIA,,"Wie krass ist es hier bitte? Wer als erstes am Wasser ist, gewinnt ihr Luschen!"
+25,Anweisung,,,ARIA rennt nach links ab.
+25,Schauspieler,VEGA,,"Ich glaube, ihr gefällts hier auch. Kommt ihr?"
+25,Anweisung,,,"NYRA und VEGA gehen nach Links, aber DANTE bleibt stehen."
+25,Schauspieler,NYRA,,Was ist?
+25,Schauspieler,DANTE,,Ich warte noch kurz auf die anderen.
+25,Anweisung,,,NYRA und VEGA gehen nach links ab und nehmen den Ball mit. RAVEN und HUNTER kommen von rechts.
+25,Schauspieler,HUNTER,,"Das mit dem Einsiedlerleben überlege ich mir nochmal. Wenn man nicht erst Stunden durch diese Ödlandschaft fahren müsste, könnte man hier bestimmt auch gut einen Strandclub betreiben. Bloß, wer kommt diesen weiten Weg hierher gefahren?"
+25,Schauspieler,RAVEN,,"Immer den nächsten Schritt planen, was? Das ist das erste, was dir bei diesem Anblick einfällt?"
+25,Schauspieler,HUNTER,,Geld verdient sich nicht von alleine.
+25,Anweisung,,,HUNTER geht nach rechts und wendet sich dann um.
+25,Schauspieler,HUNTER,,Auf was wartet ihr?
+25,Schauspieler,RAVEN,,"Ich glaube, wir müssen noch was klären."
+25,Schauspieler,DANTE,,Müssen wir das?
+25,Schauspieler,HUNTER,,"(winkt ab) Wenn ihr mich sucht, ich bin am Wasser."
+25,Anweisung,,,HUNTER geht ab.
+25,Schauspieler,RAVEN,,"Weißt du, als ich unter der Kontrolle des Chips stand, konnte ich trotzdem alles hören."
+25,Schauspieler,DANTE,,"Mhm, ist das so?"
+25,Schauspieler,RAVEN,,Hast du eigentlich gelogen?
+25,Schauspieler,DANTE,,Wie meinst du…?
+25,Schauspieler,RAVEN,,Als du mir deine Liebe gestanden hast?
+25,Schauspieler,DANTE,,"Also, gelogen, würde ich jetzt nicht sagen,... eher sowas wie,... (undeutlich) 100% die Wahrheit gesagt."
+25,Schauspieler,RAVEN,,Wie bitte?
+25,Schauspieler,DANTE,,"Ich mag dich, okay! Also gern. Sehr gern. Unfassbar gern…"
+25,Schauspieler,RAVEN,,Aha.
+25,Schauspieler,DANTE,,"Und möglicherweise habe ich mich nie getraut, dir das zu sagen. Weil du so krass bist. Ähä,..."
+25,Schauspieler,RAVEN,,Und was machen wir jetzt?
+25,Schauspieler,DANTE,,Bitte nicht schlagen.
+25,Schauspieler,RAVEN,,(knufft ihn) Wie wäre es mit einem Date?
+25,Schauspieler,DANTE,,Date?
+25,Schauspieler,RAVEN,,Kannst du dir dafür einen schöneren Anblick vorstellen?
+25,Schauspieler,DANTE,,"Nein, eigentlich nicht."
+25,Anweisung,,,DANTE und RAVEN bleiben stehen und sehen sich den Sonnenuntergang an. ARIA kommt außer Atem von links. Dann sieht sie DANTE und RAVEN und schaut sie schief an. NYRA und VEGA kommen kurz darauf auch von rechts.
+25,Einspieler,,,LIED: Epilog
+25,Schauspieler,ARIA,,Was geht denn bei denen?
+25,Schauspieler,NYRA,,"Ich glaube, Dante verfolgt nun seinen Traum."
+25,Schauspieler,VEGA,,Wird auch mal Zeit.
+25,Anweisung,,,"VEGA, NYRA und ARIA stellen sich auch zum Sonnenuntergang. HUNTER betritt hinter ihnen von links die Bühne. Er spricht zum Publikum."
+25,Schauspieler,HUNTER,,"Wie es mit ihnen nun weitergeht, kann ich nicht sagen. Auch nicht, was die Moral der Geschichte ist: Sollte man KI kritisch gegenüberstehen? Muss man aufpassen, wie sehr man sich selbst in der modernen Technik und den Medien verliert? Oder, dass man sich niemals aufgeben sollte? Vielleicht ist eine Botschaft aber auch ganz banal: Wenn du gemeinsam mit den Menschen, die dir am Herzen liegen, an einem Traum arbeitest, wird er wahr!"
+25,Anweisung,,,HUNTER dreht sich zum Sonnenuntergang.
+25,Licht,,,Das Licht geht aus und ALLE gehen nach hinten ab.
+25,Einspieler,,,LIED: Finale
+25,Licht,,,SHOWLICHT (kein Stroboskop)
+25,Requisiten,,,"Requisiten: Neuro Chips, schwarze Kiste, Backblech, Handschuhe (Backen), Tisch in Werkstatt, Gläser für Feier?, Gläser Bar, Währung, Beutel mit “Geld”"
